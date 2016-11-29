@@ -41,7 +41,7 @@ interface ConfigInterface
      * Get configuration of the specified topic.
      *
      * @param string $topicName
-     * @return array
+     * @return string[]
      * @throws LocalizedException
      */
     public function getTopic($topicName);

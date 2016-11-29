@@ -8,7 +8,6 @@ namespace Magento\Framework\App;
 use Magento\Framework\App\Filesystem\DirectoryList;
 use Magento\Framework\ObjectManager\ConfigLoaderInterface;
 use Magento\Framework\Filesystem;
-use Psr\Log\LoggerInterface;
 
 /**
  * Entry point for retrieving static resources like JS, CSS, images by requested public path
@@ -43,9 +42,6 @@ class StaticResource implements \Magento\Framework\AppInterface
 
     /** @var Filesystem */
     private $filesystem;
-
-    /** @var LoggerInterface */
-    private $logger;
 
     /**
      * @param State $state
@@ -109,7 +105,6 @@ class StaticResource implements \Magento\Framework\AppInterface
      */
     public function catchException(Bootstrap $bootstrap, \Exception $exception)
     {
-        $this->getLogger()->critical($exception->getMessage());
         if ($bootstrap->isDeveloperMode()) {
             $this->response->setHttpResponseCode(404);
             $this->response->setHeader('Content-Type', 'text/plain');
@@ -165,20 +160,5 @@ class StaticResource implements \Magento\Framework\AppInterface
             $this->filesystem = $this->objectManager->get(Filesystem::class);
         }
         return $this->filesystem;
-    }
-
-    /**
-     * Retrieves LoggerInterface instance
-     *
-     * @return LoggerInterface
-     * @deprecated
-     */
-    private function getLogger()
-    {
-        if (!$this->logger) {
-            $this->logger = $this->objectManager->get(LoggerInterface::class);
-        }
-
-        return $this->logger;
     }
 }

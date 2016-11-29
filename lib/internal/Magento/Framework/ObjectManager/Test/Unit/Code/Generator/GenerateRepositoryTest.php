@@ -23,7 +23,7 @@ class GenerateRepositoryTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->ioObjectMock = $this->getMock(
-            \Magento\Framework\Code\Generator\Io::class,
+            '\Magento\Framework\Code\Generator\Io',
             [],
             [],
             '',
@@ -39,23 +39,23 @@ class GenerateRepositoryTest extends \PHPUnit_Framework_TestCase
         require_once __DIR__ . '/_files/Sample.php';
         /** @var \PHPUnit_Framework_MockObject_MockObject $model */
         $model = $this->getMock(
-            \Magento\Framework\ObjectManager\Code\Generator\Repository::class,
+            'Magento\Framework\ObjectManager\Code\Generator\Repository',
             [
                 '_validateData'
             ],
             [
-                \Magento\Framework\ObjectManager\Code\Generator\Sample::class,
+                '\Magento\Framework\ObjectManager\Code\Generator\Sample',
                 null,
                 $this->ioObjectMock,
                 null,
                 null,
-                $this->getMock(\Magento\Framework\Filesystem\FileResolver::class)
+                $this->getMock('Magento\Framework\Filesystem\FileResolver')
             ]
         );
 
         $this->ioObjectMock->expects($this->once())
             ->method('generateResultFileName')
-            ->with('\\' . \Magento\Framework\ObjectManager\Code\Generator\SampleRepository::class)
+            ->with('\Magento\Framework\ObjectManager\Code\Generator\SampleRepository')
             ->willReturn('SampleRepository.php');
 
         $repositoryCode = file_get_contents(__DIR__ . '/_files/SampleRepository.txt');

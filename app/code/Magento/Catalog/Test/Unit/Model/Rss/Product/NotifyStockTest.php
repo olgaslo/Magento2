@@ -28,7 +28,6 @@ class NotifyStockTest extends \PHPUnit_Framework_TestCase
      */
 
     protected $productFactory;
-
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject|\Magento\Catalog\Model\Product
      */
@@ -56,13 +55,13 @@ class NotifyStockTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->product = $this->getMock(\Magento\Catalog\Model\Product::class, [], [], '', false);
-        $this->productFactory = $this->getMock(\Magento\Catalog\Model\ProductFactory::class, ['create'], [], '', false);
+        $this->product = $this->getMock('Magento\Catalog\Model\Product', [], [], '', false);
+        $this->productFactory = $this->getMock('Magento\Catalog\Model\ProductFactory', ['create'], [], '', false);
         $this->productFactory->expects($this->any())->method('create')->will($this->returnValue($this->product));
 
-        $this->stock = $this->getMock(\Magento\CatalogInventory\Model\ResourceModel\Stock::class, [], [], '', false);
+        $this->stock = $this->getMock('Magento\CatalogInventory\Model\ResourceModel\Stock', [], [], '', false);
         $this->stockFactory = $this->getMock(
-            \Magento\CatalogInventory\Model\ResourceModel\StockFactory::class,
+            'Magento\CatalogInventory\Model\ResourceModel\StockFactory',
             ['create'],
             [],
             '',
@@ -70,12 +69,12 @@ class NotifyStockTest extends \PHPUnit_Framework_TestCase
         );
         $this->stockFactory->expects($this->any())->method('create')->will($this->returnValue($this->stock));
 
-        $this->status = $this->getMock(\Magento\Catalog\Model\Product\Attribute\Source\Status::class);
-        $this->eventManager = $this->getMock(\Magento\Framework\Event\Manager::class, [], [], '', false);
+        $this->status = $this->getMock('Magento\Catalog\Model\Product\Attribute\Source\Status');
+        $this->eventManager = $this->getMock('Magento\Framework\Event\Manager', [], [], '', false);
 
         $this->objectManagerHelper = new ObjectManagerHelper($this);
         $this->notifyStock = $this->objectManagerHelper->getObject(
-            \Magento\Catalog\Model\Rss\Product\NotifyStock::class,
+            'Magento\Catalog\Model\Rss\Product\NotifyStock',
             [
                 'productFactory' => $this->productFactory,
                 'stockFactory' => $this->stockFactory,
@@ -89,7 +88,7 @@ class NotifyStockTest extends \PHPUnit_Framework_TestCase
     {
         /** @var \Magento\Catalog\Model\ResourceModel\Product\Collection $productCollection */
         $productCollection =
-            $this->getMock(\Magento\Catalog\Model\ResourceModel\Product\Collection::class, [], [], '', false);
+            $this->getMock('Magento\Catalog\Model\ResourceModel\Product\Collection', [], [], '', false);
         $this->product->expects($this->once())->method('getCollection')->will($this->returnValue($productCollection));
 
         $productCollection->expects($this->once())->method('addAttributeToSelect')->will($this->returnSelf());

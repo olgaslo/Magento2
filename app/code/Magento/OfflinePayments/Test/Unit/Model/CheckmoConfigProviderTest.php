@@ -22,15 +22,15 @@ class CheckmoConfigProviderTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->methodMock = $this->getMock(\Magento\OfflinePayments\Model\Checkmo::class, [], [], '', false);
+        $this->methodMock = $this->getMock('Magento\OfflinePayments\Model\Checkmo', [], [], '', false);
 
-        $paymentHelperMock = $this->getMock(\Magento\Payment\Helper\Data::class, [], [], '', false);
+        $paymentHelperMock = $this->getMock('Magento\Payment\Helper\Data', [], [], '', false);
         $paymentHelperMock->expects($this->once())
             ->method('getMethodInstance')
             ->with(Checkmo::PAYMENT_METHOD_CHECKMO_CODE)
             ->willReturn($this->methodMock);
 
-        $this->escaperMock = $this->getMock(\Magento\Framework\Escaper::class);
+        $this->escaperMock = $this->getMock('Magento\Framework\Escaper');
         $this->escaperMock->expects($this->any())
             ->method('escapeHtml')
             ->willReturnArgument(0);

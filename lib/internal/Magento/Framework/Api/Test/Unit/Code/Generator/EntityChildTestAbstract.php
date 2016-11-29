@@ -44,20 +44,20 @@ abstract class EntityChildTestAbstract extends \PHPUnit_Framework_TestCase
         require_once __DIR__ . '/Sample.php';
 
         $this->ioObjectMock = $this->getMock(
-            \Magento\Framework\Code\Generator\Io::class,
+            'Magento\Framework\Code\Generator\Io',
             [],
             [],
             '',
             false
         );
         $this->classGenerator = $this->getMock(
-            \Magento\Framework\Code\Generator\ClassGenerator::class,
+            'Magento\Framework\Code\Generator\ClassGenerator',
             [],
             [],
             '',
             false
         );
-        $this->definedClassesMock = $this->getMockBuilder(\Magento\Framework\Code\Generator\DefinedClasses::class)
+        $this->definedClassesMock = $this->getMockBuilder('Magento\Framework\Code\Generator\DefinedClasses')
             ->disableOriginalConstructor()->getMock();
 
         $objectManager = new ObjectManager($this);

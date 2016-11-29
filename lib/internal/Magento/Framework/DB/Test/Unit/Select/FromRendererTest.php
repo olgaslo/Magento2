@@ -37,15 +37,15 @@ class FromRendererTest extends \PHPUnit_Framework_TestCase
     {
         $objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
         $this->quoteMock = $this->getMock(
-            \Magento\Framework\DB\Platform\Quote::class,
+            '\Magento\Framework\DB\Platform\Quote',
             ['quoteTableAs', 'quoteIdentifier'],
             [],
             '',
             false
         );
-        $this->selectMock = $this->getMock(\Magento\Framework\DB\Select::class, ['getPart'], [], '', false);
+        $this->selectMock = $this->getMock('\Magento\Framework\DB\Select', ['getPart'], [], '', false);
         $this->model = $objectManager->getObject(
-            \Magento\Framework\DB\Select\FromRenderer::class,
+            '\Magento\Framework\DB\Select\FromRenderer',
             ['quote' => $this->quoteMock]
         );
     }

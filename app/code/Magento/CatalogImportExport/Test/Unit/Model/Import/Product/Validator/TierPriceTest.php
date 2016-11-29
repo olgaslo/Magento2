@@ -28,23 +28,17 @@ class TierPriceTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->groupRepositoryInterface = $this->getMock(
-            \Magento\Customer\Model\ResourceModel\GroupRepository::class,
+            'Magento\Customer\Model\ResourceModel\GroupRepository',
             [],
             [],
             '',
             false
         );
-        $this->searchCriteriaSearch = $this->getMock(\Magento\Framework\Api\SearchCriteria::class, [], [], '', false);
-        $this->searchCriteriaBuilder = $this->getMock(
-            \Magento\Framework\Api\SearchCriteriaBuilder::class,
-            [],
-            [],
-            '',
-            false
-        );
+        $this->searchCriteriaSearch = $this->getMock('Magento\Framework\Api\SearchCriteria', [], [], '', false);
+        $this->searchCriteriaBuilder = $this->getMock('Magento\Framework\Api\SearchCriteriaBuilder', [], [], '', false);
         $this->searchCriteriaBuilder->expects($this->any())->method('create')->willReturn($this->searchCriteriaSearch);
         $this->storeResolver = $this->getMock(
-            \Magento\CatalogImportExport\Model\Import\Product\StoreResolver::class,
+            'Magento\CatalogImportExport\Model\Import\Product\StoreResolver',
             [],
             [],
             '',
@@ -53,7 +47,7 @@ class TierPriceTest extends \PHPUnit_Framework_TestCase
 
         $this->objectManagerHelper = new ObjectManagerHelper($this);
         $this->tierPrice = $this->objectManagerHelper->getObject(
-            \Magento\CatalogImportExport\Model\Import\Product\Validator\TierPrice::class,
+            'Magento\CatalogImportExport\Model\Import\Product\Validator\TierPrice',
             [
                 'groupRepository' => $this->groupRepositoryInterface,
                 'searchCriteriaBuilder' => $this->searchCriteriaBuilder,
@@ -64,15 +58,9 @@ class TierPriceTest extends \PHPUnit_Framework_TestCase
 
     protected function processInit($groupId)
     {
-        $searchResult = $this->getMock(
-            \Magento\Customer\Api\Data\GroupSearchResultsInterface::class,
-            [],
-            [],
-            '',
-            false
-        );
+        $searchResult = $this->getMock('Magento\Customer\Api\Data\GroupSearchResultsInterface', [], [], '', false);
         $this->groupRepositoryInterface->expects($this->once())->method('getList')->willReturn($searchResult);
-        $group = $this->getMock(\Magento\Customer\Model\Data\Group::class, [], [], '', false);
+        $group = $this->getMock('Magento\Customer\Model\Data\Group', [], [], '', false);
         $group->expects($this->once())->method('getId')->willReturn($groupId);
         $searchResult->expects($this->once())->method('getItems')->willReturn([$group]);
         return $this->tierPrice->init(null);

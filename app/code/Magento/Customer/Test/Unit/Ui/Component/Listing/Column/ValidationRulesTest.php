@@ -18,13 +18,11 @@ class ValidationRulesTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->validationRules = $this->getMockBuilder(
-            \Magento\Customer\Ui\Component\Listing\Column\ValidationRules::class
-        )
+        $this->validationRules = $this->getMockBuilder('Magento\Customer\Ui\Component\Listing\Column\ValidationRules')
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->validationRule = $this->getMockBuilder(\Magento\Customer\Api\Data\ValidationRuleInterface::class)
+        $this->validationRule = $this->getMockBuilder('Magento\Customer\Api\Data\ValidationRuleInterface')
             ->disableOriginalConstructor()
             ->getMock();
 

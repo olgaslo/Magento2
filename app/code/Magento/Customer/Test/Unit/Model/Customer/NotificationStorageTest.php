@@ -32,8 +32,7 @@ class NotificationStorageTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->cache = $this->getMockBuilder(\Magento\Framework\Cache\FrontendInterface::class)
-            ->getMockForAbstractClass();
+        $this->cache = $this->getMockBuilder('Magento\Framework\Cache\FrontendInterface')->getMockForAbstractClass();
         $this->model = new NotificationStorage($this->cache);
     }
 

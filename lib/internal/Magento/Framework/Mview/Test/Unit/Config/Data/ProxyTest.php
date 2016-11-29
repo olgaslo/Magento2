@@ -29,9 +29,9 @@ class ProxyTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->objectManagerMock = $this->getMock(\Magento\Framework\ObjectManagerInterface::class);
+        $this->objectManagerMock = $this->getMock('Magento\Framework\ObjectManagerInterface');
         $this->dataMock = $this->getMock(
-            \Magento\Framework\Mview\Config\Data::class, [], [], '', false
+            'Magento\Framework\Mview\Config\Data', [], [], '', false
         );
     }
 
@@ -39,14 +39,15 @@ class ProxyTest extends \PHPUnit_Framework_TestCase
     {
         $this->objectManagerMock->expects($this->once())
             ->method('get')
-            ->with(\Magento\Framework\Mview\Config\Data::class)
+            ->with('Magento\Framework\Mview\Config\Data')
             ->will($this->returnValue($this->dataMock));
         $this->dataMock->expects($this->once())
             ->method('merge')
             ->with(['some_config']);
 
         $this->model = new Proxy(
-            $this->objectManagerMock, \Magento\Framework\Mview\Config\Data::class,
+            $this->objectManagerMock,
+            'Magento\Framework\Mview\Config\Data',
             true
         );
 
@@ -57,14 +58,15 @@ class ProxyTest extends \PHPUnit_Framework_TestCase
     {
         $this->objectManagerMock->expects($this->once())
             ->method('create')
-            ->with(\Magento\Framework\Mview\Config\Data::class)
+            ->with('Magento\Framework\Mview\Config\Data')
             ->will($this->returnValue($this->dataMock));
         $this->dataMock->expects($this->once())
             ->method('merge')
             ->with(['some_config']);
 
         $this->model = new Proxy(
-            $this->objectManagerMock, \Magento\Framework\Mview\Config\Data::class,
+            $this->objectManagerMock,
+            'Magento\Framework\Mview\Config\Data',
             false
         );
 
@@ -75,7 +77,7 @@ class ProxyTest extends \PHPUnit_Framework_TestCase
     {
         $this->objectManagerMock->expects($this->once())
             ->method('get')
-            ->with(\Magento\Framework\Mview\Config\Data::class)
+            ->with('Magento\Framework\Mview\Config\Data')
             ->will($this->returnValue($this->dataMock));
         $this->dataMock->expects($this->once())
             ->method('get')
@@ -83,7 +85,8 @@ class ProxyTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue('some_value'));
 
         $this->model = new Proxy(
-            $this->objectManagerMock, \Magento\Framework\Mview\Config\Data::class,
+            $this->objectManagerMock,
+            'Magento\Framework\Mview\Config\Data',
             true
         );
 
@@ -94,7 +97,7 @@ class ProxyTest extends \PHPUnit_Framework_TestCase
     {
         $this->objectManagerMock->expects($this->once())
             ->method('create')
-            ->with(\Magento\Framework\Mview\Config\Data::class)
+            ->with('Magento\Framework\Mview\Config\Data')
             ->will($this->returnValue($this->dataMock));
         $this->dataMock->expects($this->once())
             ->method('get')
@@ -102,7 +105,8 @@ class ProxyTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue('some_value'));
 
         $this->model = new Proxy(
-            $this->objectManagerMock, \Magento\Framework\Mview\Config\Data::class,
+            $this->objectManagerMock,
+            'Magento\Framework\Mview\Config\Data',
             false
         );
 

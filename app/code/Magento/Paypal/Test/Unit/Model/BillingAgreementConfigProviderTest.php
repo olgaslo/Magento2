@@ -24,12 +24,12 @@ class BillingAgreementConfigProviderTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->currentCustomerMock = $this->getMockBuilder(\Magento\Customer\Helper\Session\CurrentCustomer::class)
+        $this->currentCustomerMock = $this->getMockBuilder('Magento\Customer\Helper\Session\CurrentCustomer')
             ->setMethods(['getCustomerId'])
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->agreementFactoryMock = $this->getMockBuilder(\Magento\Paypal\Model\Billing\AgreementFactory::class)
+        $this->agreementFactoryMock = $this->getMockBuilder('Magento\Paypal\Model\Billing\AgreementFactory')
             ->setMethods(['create'])
             ->disableOriginalConstructor()
             ->getMock();
@@ -63,7 +63,7 @@ class BillingAgreementConfigProviderTest extends \PHPUnit_Framework_TestCase
 
         $this->currentCustomerMock->expects($this->once())->method('getCustomerId')->willReturn($customerId);
 
-        $agreementMock = $this->getMockBuilder(\Magento\Paypal\Model\Billing\Agreement::class)
+        $agreementMock = $this->getMockBuilder('Magento\Paypal\Model\Billing\Agreement')
             ->disableOriginalConstructor()
             ->getMock();
 

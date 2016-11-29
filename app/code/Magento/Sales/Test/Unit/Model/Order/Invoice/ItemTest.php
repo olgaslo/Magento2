@@ -42,28 +42,28 @@ class ItemTest extends \PHPUnit_Framework_TestCase
     {
         $this->objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
         $this->orderItemFactoryMock = $this->getMock(
-            \Magento\Sales\Model\Order\ItemFactory::class,
+            'Magento\Sales\Model\Order\ItemFactory',
             ['create'],
             [],
             '',
             false
         );
         $this->invoiceMock = $this->getMock(
-            \Magento\Sales\Model\Order\Invoice::class,
+            'Magento\Sales\Model\Order\Invoice',
             [],
             [],
             '',
             false
         );
         $this->orderMock = $this->getMock(
-            \Magento\Sales\Model\Order::class,
+            'Magento\Sales\Model\Order',
             [],
             [],
             '',
             false
         );
         $this->orderItemMock = $this->getMock(
-            \Magento\Sales\Model\Order\Item::class,
+            'Magento\Sales\Model\Order\Item',
             [
                 'load', 'isDummy', 'getIsQtyDecimal', 'getQtyToInvoice', 'getQtyInvoiced', 'getTaxInvoiced',
                 'getBaseTaxInvoiced', 'getDiscountTaxCompensationInvoiced',
@@ -79,7 +79,7 @@ class ItemTest extends \PHPUnit_Framework_TestCase
             false
         );
         $this->item = $this->objectManager->getObject(
-            \Magento\Sales\Model\Order\Invoice\Item::class,
+            'Magento\Sales\Model\Order\Invoice\Item',
             [
                 'orderItemFactory' => $this->orderItemFactoryMock
             ]

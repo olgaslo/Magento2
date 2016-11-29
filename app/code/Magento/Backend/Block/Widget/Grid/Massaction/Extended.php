@@ -66,7 +66,7 @@ class Extended extends \Magento\Backend\Block\Widget
     public function _construct()
     {
         parent::_construct();
-        $this->setErrorText($this->escapeHtml(__('Please select items.')));
+        $this->setErrorText($this->escapeJsQuote(__('Please select items.')));
     }
 
     /**
@@ -88,7 +88,7 @@ class Extended extends \Magento\Backend\Block\Widget
     public function addItem($itemId, array $item)
     {
         $this->_items[$itemId] = $this->getLayout()->createBlock(
-            \Magento\Backend\Block\Widget\Grid\Massaction\Item::class
+            'Magento\Backend\Block\Widget\Grid\Massaction\Item'
         )->setData(
             $item
         )->setMassaction(

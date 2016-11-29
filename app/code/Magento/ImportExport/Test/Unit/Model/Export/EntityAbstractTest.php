@@ -21,7 +21,7 @@ class EntityAbstractTest extends \PHPUnit_Framework_TestCase
     {
         /** @var $model \Magento\ImportExport\Model\Export\AbstractEntity */
         $model = $this->getMockForAbstractClass(
-            \Magento\ImportExport\Model\Export\AbstractEntity::class,
+            'Magento\ImportExport\Model\Export\AbstractEntity',
             [],
             'Stub_UnitTest_Magento_ImportExport_Model_Export_Entity_TestSetAndGet',
             false

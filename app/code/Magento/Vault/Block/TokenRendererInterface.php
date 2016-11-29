@@ -28,10 +28,4 @@ interface TokenRendererInterface
      * @return string
      */
     public function render(PaymentTokenInterface $token);
-
-    /**
-     * Get payment token
-     * @return PaymentTokenInterface|null
-     */
-    public function getToken();
 }

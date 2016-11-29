@@ -12,9 +12,6 @@ use Magento\Framework\Api\SortOrder;
 use Magento\TestFramework\ObjectManager;
 use Magento\TestFramework\TestCase\WebapiAbstract;
 
-/**
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
- */
 class CartRepositoryTest extends WebapiAbstract
 {
     /**
@@ -41,13 +38,13 @@ class CartRepositoryTest extends WebapiAbstract
     {
         $this->objectManager = \Magento\TestFramework\Helper\Bootstrap::getObjectManager();
         $this->filterBuilder = $this->objectManager->create(
-            \Magento\Framework\Api\FilterBuilder::class
+            'Magento\Framework\Api\FilterBuilder'
         );
         $this->sortOrderBuilder = $this->objectManager->create(
-            \Magento\Framework\Api\SortOrderBuilder::class
+            'Magento\Framework\Api\SortOrderBuilder'
         );
         $this->searchCriteriaBuilder = $this->objectManager->create(
-            \Magento\Framework\Api\SearchCriteriaBuilder::class
+            'Magento\Framework\Api\SearchCriteriaBuilder'
         );
     }
 
@@ -72,7 +69,7 @@ class CartRepositoryTest extends WebapiAbstract
     protected function getCart($reservedOrderId)
     {
         /** @var $cart \Magento\Quote\Model\Quote */
-        $cart = $this->objectManager->get(\Magento\Quote\Model\Quote::class);
+        $cart = $this->objectManager->get('Magento\Quote\Model\Quote');
         $cart->load($reservedOrderId, 'reserved_order_id');
         if (!$cart->getId()) {
             throw new \InvalidArgumentException('There is no quote with provided reserved order ID.');

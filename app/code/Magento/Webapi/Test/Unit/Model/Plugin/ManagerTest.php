@@ -43,7 +43,7 @@ class ManagerTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->integrationServiceMock = $this->getMockBuilder(
-            \Magento\Integration\Api\IntegrationServiceInterface::class
+            '\Magento\Integration\Api\IntegrationServiceInterface'
         )->disableOriginalConstructor()->setMethods(
             [
                 'findByName',
@@ -58,7 +58,7 @@ class ManagerTest extends \PHPUnit_Framework_TestCase
         )->getMock();
 
         $this->integrationAuthorizationServiceMock = $this->getMockBuilder(
-            \Magento\Integration\Api\AuthorizationServiceInterface::class
+            '\Magento\Integration\Api\AuthorizationServiceInterface'
         )->disableOriginalConstructor()->setMethods(
             [
                 'grantPermissions',
@@ -68,14 +68,14 @@ class ManagerTest extends \PHPUnit_Framework_TestCase
         )->getMock();
 
         $this->subjectMock = $this->getMock(
-            \Magento\Integration\Model\ConfigBasedIntegrationManager::class,
+            'Magento\Integration\Model\ConfigBasedIntegrationManager',
             [],
             [],
             '',
             false
         );
 
-        $this->integrationConfigMock = $this->getMockBuilder(\Magento\Integration\Model\IntegrationConfig::class)
+        $this->integrationConfigMock = $this->getMockBuilder('Magento\Integration\Model\IntegrationConfig')
             ->disableOriginalConstructor()
             ->setMethods([])
             ->getMock();

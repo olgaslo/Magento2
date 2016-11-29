@@ -28,12 +28,12 @@ class FormTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->contextMock = $this->getMockBuilder(\Magento\Framework\View\Element\UiComponent\ContextInterface::class)
+        $this->contextMock = $this->getMockBuilder('Magento\Framework\View\Element\UiComponent\ContextInterface')
             ->getMockForAbstractClass();
-        $this->filterBuilderMock = $this->getMockBuilder(\Magento\Framework\Api\FilterBuilder::class)
+        $this->filterBuilderMock = $this->getMockBuilder('Magento\Framework\Api\FilterBuilder')
             ->disableOriginalConstructor()
             ->getMock();
-        $this->processorMock = $this->getMockBuilder(\Magento\Framework\View\Element\UiComponent\Processor::class)
+        $this->processorMock = $this->getMockBuilder('Magento\Framework\View\Element\UiComponent\Processor')
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -70,7 +70,7 @@ class FormTest extends \PHPUnit_Framework_TestCase
 
         /** @var DataProviderInterface|\PHPUnit_Framework_MockObject_MockObject $dataProviderMock */
         $dataProviderMock =
-            $this->getMockBuilder(\Magento\Framework\View\Element\UiComponent\DataProvider\DataProviderInterface::class)
+            $this->getMockBuilder('Magento\Framework\View\Element\UiComponent\DataProvider\DataProviderInterface')
             ->getMock();
         $dataProviderMock->expects($this->once())
             ->method('getRequestFieldName')
@@ -88,7 +88,7 @@ class FormTest extends \PHPUnit_Framework_TestCase
             ->willReturn($fieldId);
 
         /** @var Filter|\PHPUnit_Framework_MockObject_MockObject $filterMock */
-        $filterMock = $this->getMockBuilder(\Magento\Framework\Api\Filter::class)
+        $filterMock = $this->getMockBuilder('Magento\Framework\Api\Filter')
                 ->disableOriginalConstructor()
                 ->getMock();
 
@@ -124,7 +124,7 @@ class FormTest extends \PHPUnit_Framework_TestCase
 
         /** @var DataProviderInterface|\PHPUnit_Framework_MockObject_MockObject $dataProviderMock */
         $dataProviderMock =
-            $this->getMockBuilder(\Magento\Framework\View\Element\UiComponent\DataProvider\DataProviderInterface::class)
+            $this->getMockBuilder('Magento\Framework\View\Element\UiComponent\DataProvider\DataProviderInterface')
                 ->getMock();
         $dataProviderMock->expects($this->once())
             ->method('getRequestFieldName')
@@ -142,7 +142,7 @@ class FormTest extends \PHPUnit_Framework_TestCase
             ->willReturn($fieldId);
 
         /** @var Filter|\PHPUnit_Framework_MockObject_MockObject $filterMock */
-        $filterMock = $this->getMockBuilder(\Magento\Framework\Api\Filter::class)
+        $filterMock = $this->getMockBuilder('Magento\Framework\Api\Filter')
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -183,7 +183,7 @@ class FormTest extends \PHPUnit_Framework_TestCase
 
         /** @var DataProviderInterface|\PHPUnit_Framework_MockObject_MockObject $dataProviderMock */
         $dataProviderMock =
-            $this->getMockBuilder(\Magento\Framework\View\Element\UiComponent\DataProvider\DataProviderInterface::class)
+            $this->getMockBuilder('Magento\Framework\View\Element\UiComponent\DataProvider\DataProviderInterface')
                 ->getMock();
         $dataProviderMock->expects($this->once())
             ->method('getRequestFieldName')
@@ -201,7 +201,7 @@ class FormTest extends \PHPUnit_Framework_TestCase
             ->willReturn($fieldId);
 
         /** @var Filter|\PHPUnit_Framework_MockObject_MockObject $filterMock */
-        $filterMock = $this->getMockBuilder(\Magento\Framework\Api\Filter::class)
+        $filterMock = $this->getMockBuilder('Magento\Framework\Api\Filter')
             ->disableOriginalConstructor()
             ->getMock();
 

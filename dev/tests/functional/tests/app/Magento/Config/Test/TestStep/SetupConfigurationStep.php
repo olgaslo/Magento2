@@ -8,8 +8,6 @@ namespace Magento\Config\Test\TestStep;
 
 use Magento\Mtf\Fixture\FixtureFactory;
 use Magento\Mtf\TestStep\TestStepInterface;
-use Magento\Mtf\Util\Command\Cli\Cache;
-use Magento\PageCache\Test\Page\Adminhtml\AdminCache;
 
 /**
  * Setup configuration using handler.
@@ -22,13 +20,6 @@ class SetupConfigurationStep implements TestStepInterface
      * @var FixtureFactory
      */
     protected $fixtureFactory;
-
-    /**
-     * Admin cache page.
-     *
-     * @var AdminCache
-     */
-    private $adminCache;
 
     /**
      * Configuration data.
@@ -45,44 +36,18 @@ class SetupConfigurationStep implements TestStepInterface
     protected $rollback;
 
     /**
-     * Flush cache.
-     *
-     * @var bool
-     */
-    protected $flushCache;
-
-    /**
-     * Cli command to do operations with cache.
-     *
-     * @var Cache
-     */
-    private $cache;
-
-    /**
      * Preparing step properties.
      *
      * @constructor
      * @param FixtureFactory $fixtureFactory
-     * @param AdminCache $adminCache
-     * @param Cache $cache
      * @param string $configData
      * @param bool $rollback
-     * @param bool $flushCache
      */
-    public function __construct(
-        FixtureFactory $fixtureFactory,
-        AdminCache $adminCache,
-        Cache $cache,
-        $configData = null,
-        $rollback = false,
-        $flushCache = false
-    ) {
+    public function __construct(FixtureFactory $fixtureFactory, $configData = null, $rollback = false)
+    {
         $this->fixtureFactory = $fixtureFactory;
-        $this->adminCache = $adminCache;
         $this->configData = $configData;
         $this->rollback = $rollback;
-        $this->flushCache = $flushCache;
-        $this->cache = $cache;
     }
 
     /**
@@ -106,11 +71,7 @@ class SetupConfigurationStep implements TestStepInterface
                 $config->persist();
                 $result[] = $config;
             }
-            if ($this->flushCache) {
-                $this->cache->flush();
-            }
         }
-
 
         return ['config' => $result];
     }

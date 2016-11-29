@@ -66,71 +66,71 @@ class UserTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->userDataMock = $this->getMockBuilder(\Magento\User\Helper\Data::class)
+        $this->userDataMock = $this->getMockBuilder('Magento\User\Helper\Data')
             ->disableOriginalConstructor()
             ->setMethods([])
             ->getMock();
-        $this->contextMock = $this->getMockBuilder(\Magento\Framework\Model\Context::class)
+        $this->contextMock = $this->getMockBuilder('Magento\Framework\Model\Context')
             ->disableOriginalConstructor()
             ->setMethods([])
             ->getMock();
-        $this->resourceMock = $this->getMockBuilder(\Magento\User\Model\ResourceModel\User::class)
+        $this->resourceMock = $this->getMockBuilder('Magento\User\Model\ResourceModel\User')
             ->disableOriginalConstructor()
             ->setMethods([])
             ->getMock();
-        $this->collectionMock = $this->getMockBuilder(\Magento\Framework\Data\Collection\AbstractDb::class)
+        $this->collectionMock = $this->getMockBuilder('Magento\Framework\Data\Collection\AbstractDb')
             ->disableOriginalConstructor()
             ->setMethods([])
             ->getMockForAbstractClass();
-        $coreRegistry = $this->getMockBuilder(\Magento\Framework\Registry::class)
+        $coreRegistry = $this->getMockBuilder('Magento\Framework\Registry')
             ->disableOriginalConstructor()
             ->setMethods([])
             ->getMock();
-        $this->eventManagerMock = $this->getMockBuilder(\Magento\Framework\Event\ManagerInterface::class)
+        $this->eventManagerMock = $this->getMockBuilder('Magento\Framework\Event\ManagerInterface')
             ->disableOriginalConstructor()
             ->setMethods(['dispatch'])
             ->getMockForAbstractClass();
-        $this->validatorObjectFactoryMock = $this->getMockBuilder(\Magento\Framework\Validator\DataObjectFactory::class)
+        $this->validatorObjectFactoryMock = $this->getMockBuilder('Magento\Framework\Validator\DataObjectFactory')
             ->disableOriginalConstructor()->setMethods(['create'])
             ->getMock();
-        $this->roleFactoryMock = $this->getMockBuilder(\Magento\Authorization\Model\RoleFactory::class)
+        $this->roleFactoryMock = $this->getMockBuilder('Magento\Authorization\Model\RoleFactory')
             ->disableOriginalConstructor()
             ->setMethods(['create'])
             ->getMock();
-        $this->transportMock = $this->getMockBuilder(\Magento\Framework\Mail\TransportInterface::class)
+        $this->transportMock = $this->getMockBuilder('Magento\Framework\Mail\TransportInterface')
             ->disableOriginalConstructor()
             ->setMethods([])
             ->getMock();
-        $this->transportBuilderMock = $this->getMockBuilder(\Magento\Framework\Mail\Template\TransportBuilder::class)
+        $this->transportBuilderMock = $this->getMockBuilder('Magento\Framework\Mail\Template\TransportBuilder')
             ->disableOriginalConstructor()
             ->setMethods([])
             ->getMock();
-        $this->storetMock = $this->getMockBuilder(\Magento\Store\Model\Store::class)
+        $this->storetMock = $this->getMockBuilder('Magento\Store\Model\Store')
             ->disableOriginalConstructor()
             ->setMethods([])
             ->getMock();
-        $this->storeManagerMock = $this->getMockBuilder(\Magento\Store\Model\StoreManagerInterface::class)
-            ->disableOriginalConstructor()
-            ->setMethods([])
-            ->getMock();
-
-        $this->configMock = $this->getMockBuilder(\Magento\Backend\App\ConfigInterface::class)
+        $this->storeManagerMock = $this->getMockBuilder('Magento\Store\Model\StoreManagerInterface')
             ->disableOriginalConstructor()
             ->setMethods([])
             ->getMock();
 
-        $this->validationRulesMock = $this->getMockBuilder(\Magento\User\Model\UserValidationRules::class)
+        $this->configMock = $this->getMockBuilder('Magento\Backend\App\ConfigInterface')
             ->disableOriginalConstructor()
             ->setMethods([])
             ->getMock();
 
-        $this->encryptorMock = $this->getMockBuilder(\Magento\Framework\Encryption\EncryptorInterface::class)
+        $this->validationRulesMock = $this->getMockBuilder('Magento\User\Model\UserValidationRules')
+            ->disableOriginalConstructor()
+            ->setMethods([])
+            ->getMock();
+
+        $this->encryptorMock = $this->getMockBuilder('Magento\Framework\Encryption\EncryptorInterface')
             ->setMethods(['validateHash'])
             ->getMockForAbstractClass();
 
         $objectManagerHelper = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
         $this->model = $objectManagerHelper->getObject(
-            \Magento\User\Model\User::class,
+            'Magento\User\Model\User',
             [
                 'eventManager' => $this->eventManagerMock,
                 'userData' => $this->userDataMock,
@@ -196,7 +196,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
 
         $this->transportBuilderMock->expects($this->exactly(2))
             ->method('setTemplateModel')
-            ->with($this->equalTo(\Magento\Email\Model\BackendTemplate::class))
+            ->with($this->equalTo('Magento\Email\Model\BackendTemplate'))
             ->willReturnSelf();
         $this->transportBuilderMock->expects($this->exactly(2))
             ->method('setTemplateOptions')
@@ -232,7 +232,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
             ->with($storeId)
             ->willReturn($this->storetMock);
 
-        $this->assertInstanceOf(\Magento\User\Model\User::class, $this->model->sendNotificationEmailsIfRequired());
+        $this->assertInstanceOf('\Magento\User\Model\User', $this->model->sendNotificationEmailsIfRequired());
     }
 
     /**
@@ -259,7 +259,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
             ->willReturn('sender');
         $this->transportBuilderMock->expects($this->once())
             ->method('setTemplateModel')
-            ->with($this->equalTo(\Magento\Email\Model\BackendTemplate::class))
+            ->with($this->equalTo('Magento\Email\Model\BackendTemplate'))
             ->willReturnSelf();
         $this->transportBuilderMock->expects($this->once())
             ->method('setTemplateOptions')
@@ -290,7 +290,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
             ->with($storeId)
             ->willReturn($this->storetMock);
 
-        $this->assertInstanceOf(\Magento\User\Model\User::class, $this->model->sendPasswordResetConfirmationEmail());
+        $this->assertInstanceOf('\Magento\User\Model\User', $this->model->sendPasswordResetConfirmationEmail());
     }
 
     /**
@@ -342,7 +342,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
             ->willReturn(true);
         $this->model->setIsActive(false);
         $this->setExpectedException(
-            \Magento\Framework\Exception\AuthenticationException::class,
+            'Magento\\Framework\\Exception\\AuthenticationException',
             'You did not sign in correctly or your account is temporarily disabled.'
         );
         $this->model->verifyIdentity($password);
@@ -362,7 +362,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
         $this->model->setIsActive(true);
         $this->resourceMock->expects($this->once())->method('hasAssigned2Role')->willReturn(false);
         $this->setExpectedException(
-            \Magento\Framework\Exception\AuthenticationException::class,
+            'Magento\\Framework\\Exception\\AuthenticationException',
             'You need more permissions to access this.'
         );
         $this->model->verifyIdentity($password);
@@ -412,7 +412,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
     public function testValidateOk()
     {
         /** @var $validatorMock \Magento\Framework\Validator\DataObject|\PHPUnit_Framework_MockObject_MockObject */
-        $validatorMock = $this->getMockBuilder(\Magento\Framework\Validator\DataObject::class)
+        $validatorMock = $this->getMockBuilder('Magento\Framework\Validator\DataObject')
             ->disableOriginalConstructor()
             ->setMethods([])
             ->getMock();
@@ -431,7 +431,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
     {
         $messages = ['Invalid username'];
         /** @var $validatorMock \Magento\Framework\Validator\DataObject|\PHPUnit_Framework_MockObject_MockObject */
-        $validatorMock = $this->getMockBuilder(\Magento\Framework\Validator\DataObject::class)
+        $validatorMock = $this->getMockBuilder('Magento\Framework\Validator\DataObject')
             ->disableOriginalConstructor()
             ->setMethods([])
             ->getMock();
@@ -451,7 +451,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
     {
         $data = [1, 2, 3];
         $this->resourceMock->expects($this->once())->method('saveExtra')->with($this->model, serialize($data));
-        $this->assertInstanceOf(\Magento\User\Model\User::class, $this->model->saveExtra($data));
+        $this->assertInstanceOf('Magento\User\Model\User', $this->model->saveExtra($data));
     }
 
     /**
@@ -469,14 +469,14 @@ class UserTest extends \PHPUnit_Framework_TestCase
     public function testGetRole()
     {
         $roles = ['role'];
-        $roleMock = $this->getMockBuilder(\Magento\Authorization\Model\Role::class)
+        $roleMock = $this->getMockBuilder('Magento\Authorization\Model\Role')
             ->disableOriginalConstructor()
             ->setMethods([])
             ->getMock();
         $this->roleFactoryMock->expects($this->once())->method('create')->willReturn($roleMock);
         $this->resourceMock->expects($this->once())->method('getRoles')->with($this->model)->willReturn($roles);
         $roleMock->expects($this->once())->method('load')->with($roles[0]);
-        $this->assertInstanceOf(\Magento\Authorization\Model\Role::class, $this->model->getRole());
+        $this->assertInstanceOf('Magento\Authorization\Model\Role', $this->model->getRole());
     }
 
     /**
@@ -485,7 +485,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
     public function testDeleteFromRole()
     {
         $this->resourceMock->expects($this->once())->method('deleteFromRole')->with($this->model);
-        $this->assertInstanceOf(\Magento\User\Model\User::class, $this->model->deleteFromRole());
+        $this->assertInstanceOf('Magento\User\Model\User', $this->model->deleteFromRole());
     }
 
     /**
@@ -515,7 +515,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
     {
         $roles = ['role'];
         $result = 1;
-        $roleMock = $this->getMockBuilder(\Magento\Authorization\Model\Role::class)
+        $roleMock = $this->getMockBuilder('Magento\Authorization\Model\Role')
             ->disableOriginalConstructor()
             ->setMethods([])
             ->getMock();
@@ -601,7 +601,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
     public function testChangeResetPasswordLinkToken()
     {
         $token = '1';
-        $this->assertInstanceOf(\Magento\User\Model\User::class, $this->model->changeResetPasswordLinkToken($token));
+        $this->assertInstanceOf('Magento\User\Model\User', $this->model->changeResetPasswordLinkToken($token));
         $this->assertEquals($token, $this->model->getRpToken());
         $this->assertInternalType('string', $this->model->getRpTokenCreatedAt());
     }
@@ -643,7 +643,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
     public function testCheckPasswordChangeEqualToCurrent()
     {
         /** @var $validatorMock \Magento\Framework\Validator\DataObject|\PHPUnit_Framework_MockObject_MockObject */
-        $validatorMock = $this->getMockBuilder(\Magento\Framework\Validator\DataObject::class)
+        $validatorMock = $this->getMockBuilder('Magento\Framework\Validator\DataObject')
             ->disableOriginalConstructor()
             ->setMethods([])
             ->getMock();
@@ -671,7 +671,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
     public function testCheckPasswordChangeEqualToPrevious()
     {
         /** @var $validatorMock \Magento\Framework\Validator\DataObject|\PHPUnit_Framework_MockObject_MockObject */
-        $validatorMock = $this->getMockBuilder(\Magento\Framework\Validator\DataObject::class)
+        $validatorMock = $this->getMockBuilder('Magento\Framework\Validator\DataObject')
             ->disableOriginalConstructor()
             ->setMethods([])
             ->getMock();
@@ -702,7 +702,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
     public function testCheckPasswordChangeValid()
     {
         /** @var $validatorMock \Magento\Framework\Validator\DataObject|\PHPUnit_Framework_MockObject_MockObject */
-        $validatorMock = $this->getMockBuilder(\Magento\Framework\Validator\DataObject::class)
+        $validatorMock = $this->getMockBuilder('Magento\Framework\Validator\DataObject')
             ->disableOriginalConstructor()
             ->setMethods([])
             ->getMock();
@@ -765,14 +765,14 @@ class UserTest extends \PHPUnit_Framework_TestCase
 
         if ($lockExpires) {
             $this->setExpectedException(
-                \Magento\Framework\Exception\State\UserLockedException::class,
+                '\Magento\Framework\Exception\State\UserLockedException',
                 __('Your account is temporarily disabled.')
             );
         }
 
         if (!$verifyIdentityResult) {
             $this->setExpectedException(
-                \Magento\Framework\Exception\AuthenticationException::class,
+                '\Magento\Framework\Exception\AuthenticationException',
                 __('You have entered an invalid password for current user.')
             );
         }

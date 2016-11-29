@@ -14,7 +14,6 @@ define([
             template: 'ui/grid/exportButton',
             selectProvider: 'ns = ${ $.ns }, index = ids',
             checked: '',
-            additionalParams: [],
             modules: {
                 selections: '${ $.selectProvider }'
             }
@@ -23,18 +22,6 @@ define([
         initialize: function () {
             this._super()
                 .initChecked();
-        },
-
-        /** @inheritdoc */
-        initConfig: function () {
-            this._super();
-
-            _.each(this.additionalParams, function (value, key) {
-                key = 'additionalParams.' + key;
-                this.imports[key] = value;
-            }, this);
-
-            return this;
         },
 
         initObservable: function () {
@@ -66,9 +53,6 @@ define([
                 result.search = data.params.search;
                 result.namespace = data.params.namespace;
                 result[itemsType] = data[itemsType];
-                _.each(this.additionalParams, function (param, key) {
-                    result[key] = param;
-                });
 
                 if (!result[itemsType].length) {
                     result[itemsType] = false;

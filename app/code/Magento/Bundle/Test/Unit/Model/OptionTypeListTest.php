@@ -25,9 +25,9 @@ class OptionTypeListTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->typeMock = $this->getMock(\Magento\Bundle\Model\Source\Option\Type::class, [], [], '', false);
+        $this->typeMock = $this->getMock('\Magento\Bundle\Model\Source\Option\Type', [], [], '', false);
         $this->typeFactoryMock = $this->getMock(
-            \Magento\Bundle\Api\Data\OptionTypeInterfaceFactory::class,
+            '\Magento\Bundle\Api\Data\OptionTypeInterfaceFactory',
             ['create'],
             [],
             '',
@@ -45,7 +45,7 @@ class OptionTypeListTest extends \PHPUnit_Framework_TestCase
             ->method('toOptionArray')
             ->willReturn([['value' => 'value', 'label' => 'label']]);
 
-        $typeMock = $this->getMock(\Magento\Bundle\Api\Data\OptionTypeInterface::class);
+        $typeMock = $this->getMock('\Magento\Bundle\Api\Data\OptionTypeInterface');
         $typeMock->expects($this->once())->method('setCode')->with('value')->willReturnSelf();
         $typeMock->expects($this->once())->method('setLabel')->with('label')->willReturnSelf();
         $this->typeFactoryMock->expects($this->once())->method('create')->willReturn($typeMock);

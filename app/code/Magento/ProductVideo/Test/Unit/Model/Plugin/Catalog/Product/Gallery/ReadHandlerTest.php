@@ -41,7 +41,7 @@ class ReadHandlerTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->product = $this->getMock(
-            \Magento\Catalog\Model\Product::class,
+            'Magento\Catalog\Model\Product',
             [],
             [],
             '',
@@ -49,7 +49,7 @@ class ReadHandlerTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->attribute = $this->getMock(
-            \Magento\Eav\Model\Entity\Attribute::class,
+            'Magento\Eav\Model\Entity\Attribute',
             [],
             [],
             '',
@@ -60,7 +60,7 @@ class ReadHandlerTest extends \PHPUnit_Framework_TestCase
             ->willReturn('media_gallery');
 
         $this->resourceModel = $this->getMock(
-            \Magento\Catalog\Model\ResourceModel\Product\Gallery::class,
+            'Magento\Catalog\Model\ResourceModel\Product\Gallery',
             [],
             [],
             '',
@@ -68,7 +68,7 @@ class ReadHandlerTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->mediaGalleryReadHandler = $this->getMock(
-            \Magento\Catalog\Model\Product\Gallery\ReadHandler::class,
+            'Magento\Catalog\Model\Product\Gallery\ReadHandler',
             [],
             [],
             '',
@@ -78,7 +78,7 @@ class ReadHandlerTest extends \PHPUnit_Framework_TestCase
         $objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
 
         $this->subject = $objectManager->getObject(
-            \Magento\ProductVideo\Model\Plugin\Catalog\Product\Gallery\ReadHandler::class,
+            'Magento\ProductVideo\Model\Plugin\Catalog\Product\Gallery\ReadHandler',
             [
                 'resourceModel' => $this->resourceModel
             ]

@@ -74,14 +74,11 @@ class ReviewTest extends \PHPUnit_Framework_TestCase
         $this->initCollectionMocks();
 
         $helper = new ObjectManager($this);
-        $this->block = $helper->getObject(
-            ReviewBlock::class,
-            [
-                'context' => $this->context,
-                'registry' => $this->registry,
-                'collectionFactory' => $this->collectionFactory,
-            ]
-        );
+        $this->block = $helper->getObject(ReviewBlock::class, [
+            'context' => $this->context,
+            'registry' => $this->registry,
+            'collectionFactory' => $this->collectionFactory,
+        ]);
     }
 
     /**
@@ -171,10 +168,10 @@ class ReviewTest extends \PHPUnit_Framework_TestCase
         $this->storeManager->expects(static::any())
             ->method('getStore')
             ->willReturn($this->store);
-        $this->urlBuilder = $this->getMockBuilder(\Magento\Framework\UrlInterface::class)->getMockForAbstractClass();
-        $this->requestMock = $this->getMockBuilder(\Magento\Framework\App\RequestInterface::class)
+        $this->urlBuilder = $this->getMockBuilder('Magento\Framework\UrlInterface')->getMockForAbstractClass();
+        $this->requestMock = $this->getMockBuilder('Magento\Framework\App\RequestInterface')
             ->getMockForAbstractClass();
-        $this->context = $this->getMockBuilder(\Magento\Framework\View\Element\Template\Context::class)
+        $this->context = $this->getMockBuilder('Magento\Framework\View\Element\Template\Context')
             ->disableOriginalConstructor()
             ->getMock();
         $this->context->expects($this->any())->method('getRequest')->willReturn($this->requestMock);

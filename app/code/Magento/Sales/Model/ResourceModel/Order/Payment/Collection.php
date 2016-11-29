@@ -63,10 +63,7 @@ class Collection extends AbstractCollection implements OrderPaymentSearchResultI
      */
     protected function _construct()
     {
-        $this->_init(
-            \Magento\Sales\Model\Order\Payment::class,
-            \Magento\Sales\Model\ResourceModel\Order\Payment::class
-        );
+        $this->_init('Magento\Sales\Model\Order\Payment', 'Magento\Sales\Model\ResourceModel\Order\Payment');
     }
 
     /**

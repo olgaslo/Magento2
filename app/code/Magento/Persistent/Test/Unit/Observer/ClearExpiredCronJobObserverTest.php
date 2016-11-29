@@ -42,24 +42,18 @@ class ClearExpiredCronJobObserverTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->collectionFactoryMock =
-            $this->getMock(
-                \Magento\Store\Model\ResourceModel\Website\CollectionFactory::class,
-                ['create'],
-                [],
-                '',
-                false
-            );
+            $this->getMock('Magento\Store\Model\ResourceModel\Website\CollectionFactory', ['create'], [], '', false);
         $this->sessionFactoryMock = $this->getMock(
-            \Magento\Persistent\Model\SessionFactory::class,
+            'Magento\Persistent\Model\SessionFactory',
             ['create'],
             [],
             '',
             false
         );
-        $this->scheduleMock = $this->getMock(\Magento\Cron\Model\Schedule::class, [], [], '', false);
-        $this->sessionMock = $this->getMock(\Magento\Persistent\Model\Session::class, [], [], '', false);
+        $this->scheduleMock = $this->getMock('\Magento\Cron\Model\Schedule', [], [], '', false);
+        $this->sessionMock = $this->getMock('\Magento\Persistent\Model\Session', [], [], '', false);
         $this->websiteCollectionMock
-            = $this->getMock(\Magento\Store\Model\ResourceModel\Website\Collection::class, [], [], '', false);
+            = $this->getMock('\Magento\Store\Model\ResourceModel\Website\Collection', [], [], '', false);
 
         $this->model = new \Magento\Persistent\Observer\ClearExpiredCronJobObserver(
             $this->collectionFactoryMock,

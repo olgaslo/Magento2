@@ -78,11 +78,6 @@ class Import extends \Magento\ImportExport\Model\AbstractModel
      */
     const FIELD_FIELD_MULTIPLE_VALUE_SEPARATOR = '_import_multiple_value_separator';
 
-    /**
-     * Allow multiple values wrapping in double quotes for additional attributes.
-     */
-    const FIELDS_ENCLOSURE = 'fields_enclosure';
-
     /**#@-*/
 
     /**
@@ -238,7 +233,9 @@ class Import extends \Magento\ImportExport\Model\AbstractModel
                 ) {
                     throw new \Magento\Framework\Exception\LocalizedException(
                         __(
-                            'The entity adapter object must be an instance of %1 or %2.', \Magento\ImportExport\Model\Import\Entity\AbstractEntity::class, \Magento\ImportExport\Model\Import\AbstractEntity::class
+                            'The entity adapter object must be an instance of %1 or %2.',
+                            'Magento\ImportExport\Model\Import\Entity\AbstractEntity',
+                            'Magento\ImportExport\Model\Import\AbstractEntity'
                         )
                     );
                 }
@@ -610,10 +607,7 @@ class Import extends \Magento\ImportExport\Model\AbstractModel
         foreach (array_keys($relatedIndexers) as $indexerId) {
             try {
                 $indexer = $this->indexerRegistry->get($indexerId);
-
-                if (!$indexer->isScheduled()) {
-                    $indexer->invalidate();
-                }
+                $indexer->invalidate();
             } catch (\InvalidArgumentException $e) {
             }
         }

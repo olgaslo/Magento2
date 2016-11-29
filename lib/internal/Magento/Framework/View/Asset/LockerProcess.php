@@ -59,6 +59,7 @@ class LockerProcess implements LockerProcessInterface
 
     /**
      * @inheritdoc
+     * @throws FileSystemException
      */
     public function lockProcess($lockName)
     {
@@ -93,18 +94,14 @@ class LockerProcess implements LockerProcessInterface
      * Check whether generation process has already locked
      *
      * @return bool
+     * @throws FileSystemException
      */
     private function isProcessLocked()
     {
         if ($this->tmpDirectory->isExist($this->lockFilePath)) {
-            try {
-                $lockTime = (int)$this->tmpDirectory->readFile($this->lockFilePath);
-                if ((time() - $lockTime) >= self::MAX_LOCK_TIME) {
-                    $this->tmpDirectory->delete($this->lockFilePath);
-
-                    return false;
-                }
-            } catch (FileSystemException $e) {
+            $lockTime = (int) $this->tmpDirectory->readFile($this->lockFilePath);
+            if ((time() - $lockTime) >= self::MAX_LOCK_TIME) {
+                $this->tmpDirectory->delete($this->lockFilePath);
 
                 return false;
             }

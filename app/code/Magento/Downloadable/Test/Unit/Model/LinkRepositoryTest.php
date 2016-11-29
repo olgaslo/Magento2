@@ -7,9 +7,6 @@ namespace Magento\Downloadable\Test\Unit\Model;
 
 use Magento\Downloadable\Model\LinkRepository;
 
-/**
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
- */
 class LinkRepositoryTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -74,9 +71,9 @@ class LinkRepositoryTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->repositoryMock = $this->getMock(\Magento\Catalog\Model\ProductRepository::class, [], [], '', false);
-        $this->productTypeMock = $this->getMock(\Magento\Downloadable\Model\Product\Type::class, [], [], '', false);
-        $this->linkDataObjectFactory = $this->getMockBuilder(\Magento\Downloadable\Api\Data\LinkInterfaceFactory::class)
+        $this->repositoryMock = $this->getMock('\Magento\Catalog\Model\ProductRepository', [], [], '', false);
+        $this->productTypeMock = $this->getMock('\Magento\Downloadable\Model\Product\Type', [], [], '', false);
+        $this->linkDataObjectFactory = $this->getMockBuilder('\Magento\Downloadable\Api\Data\LinkInterfaceFactory')
             ->setMethods(
                 [
                     'create',
@@ -84,33 +81,36 @@ class LinkRepositoryTest extends \PHPUnit_Framework_TestCase
             )
             ->disableOriginalConstructor()
             ->getMock();
-        $this->sampleDataObjectFactory = $this->getMockBuilder(
-            \Magento\Downloadable\Api\Data\SampleInterfaceFactory::class
-        )->setMethods(['create'])
+        $this->sampleDataObjectFactory = $this->getMockBuilder('\Magento\Downloadable\Api\Data\SampleInterfaceFactory')
+            ->setMethods(
+                [
+                    'create',
+                ]
+            )
             ->disableOriginalConstructor()
             ->getMock();
         $this->contentValidatorMock = $this->getMock(
-            \Magento\Downloadable\Model\Link\ContentValidator::class,
+            '\Magento\Downloadable\Model\Link\ContentValidator',
             [],
             [],
             '',
             false
         );
         $this->contentUploaderMock = $this->getMock(
-            \Magento\Downloadable\Api\Data\File\ContentUploaderInterface::class
+            '\Magento\Downloadable\Api\Data\File\ContentUploaderInterface'
         );
         $this->jsonEncoderMock = $this->getMock(
-            \Magento\Framework\Json\EncoderInterface::class
+            '\Magento\Framework\Json\EncoderInterface'
         );
         $this->linkFactoryMock = $this->getMock(
-            \Magento\Downloadable\Model\LinkFactory::class,
+            '\Magento\Downloadable\Model\LinkFactory',
             ['create'],
             [],
             '',
             false
         );
         $this->productMock = $this->getMock(
-            \Magento\Catalog\Model\Product::class,
+            '\Magento\Catalog\Model\Product',
             [
                 '__wakeup',
                 'getTypeId',
@@ -169,7 +169,7 @@ class LinkRepositoryTest extends \PHPUnit_Framework_TestCase
     protected function getLinkMock(array $linkData)
     {
         $linkMock = $this->getMock(
-            \Magento\Downloadable\Api\Data\LinkInterface::class,
+            '\Magento\Downloadable\Api\Data\LinkInterface',
             [],
             [],
             '',
@@ -315,11 +315,11 @@ class LinkRepositoryTest extends \PHPUnit_Framework_TestCase
         $this->repositoryMock->expects($this->any())->method('get')->with($productSku, true)
             ->will($this->returnValue($this->productMock));
         $this->productMock->expects($this->any())->method('getData')->will($this->returnValue($productId));
-        $storeMock = $this->getMock(\Magento\Store\Model\Store::class, [], [], '', false);
+        $storeMock = $this->getMock('\Magento\Store\Model\Store', [], [], '', false);
         $storeMock->expects($this->any())->method('getWebsiteId')->will($this->returnValue($websiteId));
         $this->productMock->expects($this->any())->method('getStore')->will($this->returnValue($storeMock));
         $existingLinkMock = $this->getMock(
-            \Magento\Downloadable\Model\Link::class,
+            '\Magento\Downloadable\Model\Link',
             [
                 '__wakeup',
                 'getId',
@@ -383,11 +383,11 @@ class LinkRepositoryTest extends \PHPUnit_Framework_TestCase
         $this->repositoryMock->expects($this->any())->method('get')->with($productSku, true)
             ->will($this->returnValue($this->productMock));
         $this->productMock->expects($this->any())->method('getData')->will($this->returnValue($productId));
-        $storeMock = $this->getMock(\Magento\Store\Model\Store::class, [], [], '', false);
+        $storeMock = $this->getMock('\Magento\Store\Model\Store', [], [], '', false);
         $storeMock->expects($this->any())->method('getWebsiteId')->will($this->returnValue($websiteId));
         $this->productMock->expects($this->any())->method('getStore')->will($this->returnValue($storeMock));
         $existingLinkMock = $this->getMock(
-            \Magento\Downloadable\Model\Link::class,
+            '\Magento\Downloadable\Model\Link',
             [
                 '__wakeup',
                 'getId',
@@ -462,7 +462,7 @@ class LinkRepositoryTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue($this->productMock));
         $this->productMock->expects($this->any())->method('getData')->will($this->returnValue($productId));
         $existingLinkMock = $this->getMock(
-            \Magento\Downloadable\Model\Link::class,
+            '\Magento\Downloadable\Model\Link',
             ['__wakeup', 'getId', 'load', 'save', 'getProductId'],
             [],
             '',
@@ -484,7 +484,7 @@ class LinkRepositoryTest extends \PHPUnit_Framework_TestCase
     {
         $linkId = 1;
         $linkMock = $this->getMock(
-            \Magento\Downloadable\Model\Link::class,
+            '\Magento\Downloadable\Model\Link',
             [],
             [],
             '',
@@ -506,7 +506,7 @@ class LinkRepositoryTest extends \PHPUnit_Framework_TestCase
     {
         $linkId = 1;
         $linkMock = $this->getMock(
-            \Magento\Downloadable\Model\Link::class,
+            '\Magento\Downloadable\Model\Link',
             [],
             [],
             '',
@@ -541,7 +541,7 @@ class LinkRepositoryTest extends \PHPUnit_Framework_TestCase
         ];
 
         $linkMock = $this->getMock(
-            \Magento\Downloadable\Model\Link::class,
+            '\Magento\Downloadable\Model\Link',
             [
                 'getId',
                 'getStoreTitle',
@@ -558,7 +558,7 @@ class LinkRepositoryTest extends \PHPUnit_Framework_TestCase
             false
         );
 
-        $linkInterfaceMock = $this->getMock(\Magento\Downloadable\Api\Data\LinkInterface::class);
+        $linkInterfaceMock = $this->getMock('\Magento\Downloadable\Api\Data\LinkInterface');
 
         $this->repositoryMock->expects($this->once())
             ->method('get')

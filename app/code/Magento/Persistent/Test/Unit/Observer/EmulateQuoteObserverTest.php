@@ -7,9 +7,6 @@
 
 namespace Magento\Persistent\Test\Unit\Observer;
 
-/**
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
- */
 class EmulateQuoteObserverTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -71,21 +68,21 @@ class EmulateQuoteObserverTest extends \PHPUnit_Framework_TestCase
     {
         $eventMethods = ['getRequest', 'dispatch', '__wakeUp'];
         $this->customerRepository = $this->getMockForAbstractClass(
-            \Magento\Customer\Api\CustomerRepositoryInterface::class,
+            'Magento\Customer\Api\CustomerRepositoryInterface',
             [],
             '',
             false
         );
-        $this->customerSessionMock = $this->getMock(\Magento\Customer\Model\Session::class, [], [], '', false);
-        $this->sessionHelperMock = $this->getMock(\Magento\Persistent\Helper\Session::class, [], [], '', false);
-        $this->helperMock = $this->getMock(\Magento\Persistent\Helper\Data::class, [], [], '', false);
-        $this->observerMock = $this->getMock(\Magento\Framework\Event\Observer::class, [], [], '', false);
-        $this->checkoutSessionMock = $this->getMock(\Magento\Checkout\Model\Session::class, [], [], '', false);
-        $this->eventMock = $this->getMock(\Magento\Framework\Event::class, $eventMethods, [], '', false);
-        $this->requestMock = $this->getMock(\Magento\Framework\App\Request\Http::class, [], [], '', false);
-        $this->customerMock = $this->getMock(\Magento\Customer\Api\Data\CustomerInterface::class, [], [], '', false);
+        $this->customerSessionMock = $this->getMock('Magento\Customer\Model\Session', [], [], '', false);
+        $this->sessionHelperMock = $this->getMock('Magento\Persistent\Helper\Session', [], [], '', false);
+        $this->helperMock = $this->getMock('Magento\Persistent\Helper\Data', [], [], '', false);
+        $this->observerMock = $this->getMock('Magento\Framework\Event\Observer', [], [], '', false);
+        $this->checkoutSessionMock = $this->getMock('\Magento\Checkout\Model\Session', [], [], '', false);
+        $this->eventMock = $this->getMock('Magento\Framework\Event', $eventMethods, [], '', false);
+        $this->requestMock = $this->getMock('\Magento\Framework\App\Request\Http', [], [], '', false);
+        $this->customerMock = $this->getMock('Magento\Customer\Api\Data\CustomerInterface', [], [], '', false);
         $this->sessionMock =
-            $this->getMock(\Magento\Persistent\Model\Session::class, ['getCustomerId', '__wakeUp'], [], '', false);
+            $this->getMock('\Magento\Persistent\Model\Session', ['getCustomerId', '__wakeUp'], [], '', false);
         $this->model = new \Magento\Persistent\Observer\EmulateQuoteObserver(
             $this->sessionHelperMock,
             $this->helperMock,
@@ -155,7 +152,7 @@ class EmulateQuoteObserverTest extends \PHPUnit_Framework_TestCase
     public function testExecuteWhenShoppingCartIsPersistent()
     {
         $customerId = 1;
-        $quoteMock = $this->getMock(\Magento\Quote\Model\Quote::class, [], [], '', false);
+        $quoteMock = $this->getMock('\Magento\Quote\Model\Quote', [], [], '', false);
         $this->helperMock
             ->expects($this->once())
             ->method('canProcess')

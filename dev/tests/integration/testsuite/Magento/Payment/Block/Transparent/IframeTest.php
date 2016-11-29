@@ -20,9 +20,9 @@ class IframeTest extends \PHPUnit_Framework_TestCase
     {
         /** @var $block Iframe */
         $block = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->get(
-            \Magento\Framework\View\LayoutInterface::class
+            'Magento\Framework\View\LayoutInterface'
         )->createBlock(
-            \Magento\Payment\Block\Transparent\Iframe::class
+            'Magento\Payment\Block\Transparent\Iframe'
         );
 
         $block->setTemplate('transparent/iframe.phtml');

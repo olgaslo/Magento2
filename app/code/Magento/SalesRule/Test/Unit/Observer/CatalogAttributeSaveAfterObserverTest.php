@@ -17,13 +17,14 @@ class CatalogAttributeSaveAfterObserverTest extends \PHPUnit_Framework_TestCase
      */
     protected $checkSalesRulesAvailability;
 
+
     protected function setUp()
     {
         $helper = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
         $this->initMocks();
 
         $this->model = $helper->getObject(
-            \Magento\SalesRule\Observer\CatalogAttributeSaveAfterObserver::class,
+            'Magento\SalesRule\Observer\CatalogAttributeSaveAfterObserver',
             [
                 'checkSalesRulesAvailability' => $this->checkSalesRulesAvailability
             ]
@@ -33,7 +34,7 @@ class CatalogAttributeSaveAfterObserverTest extends \PHPUnit_Framework_TestCase
     protected function initMocks()
     {
         $this->checkSalesRulesAvailability = $this->getMock(
-            \Magento\SalesRule\Observer\CheckSalesRulesAvailability::class,
+            'Magento\SalesRule\Observer\CheckSalesRulesAvailability',
             [],
             [],
             '',
@@ -44,10 +45,10 @@ class CatalogAttributeSaveAfterObserverTest extends \PHPUnit_Framework_TestCase
     public function testCatalogAttributeSaveAfter()
     {
         $attributeCode = 'attributeCode';
-        $observer = $this->getMock(\Magento\Framework\Event\Observer::class, [], [], '', false);
-        $event = $this->getMock(\Magento\Framework\Event::class, ['getAttribute', '__wakeup'], [], '', false);
+        $observer = $this->getMock('Magento\Framework\Event\Observer', [], [], '', false);
+        $event = $this->getMock('Magento\Framework\Event', ['getAttribute', '__wakeup'], [], '', false);
         $attribute = $this->getMock(
-            \Magento\Catalog\Model\ResourceModel\Eav\Attribute::class,
+            'Magento\Catalog\Model\ResourceModel\Eav\Attribute',
             ['dataHasChangedFor', 'getIsUsedForPromoRules', 'getAttributeCode', '__wakeup'],
             [],
             '',

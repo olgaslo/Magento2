@@ -43,31 +43,31 @@ class DateRangeTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->contextMock = $this->getMockForAbstractClass(
-            \Magento\Framework\View\Element\UiComponent\ContextInterface::class,
+            'Magento\Framework\View\Element\UiComponent\ContextInterface',
             [],
             '',
             false
         );
-        $processor = $this->getMockBuilder(\Magento\Framework\View\Element\UiComponent\Processor::class)
+        $processor = $this->getMockBuilder('Magento\Framework\View\Element\UiComponent\Processor')
             ->disableOriginalConstructor()
             ->getMock();
         $this->contextMock->expects($this->any())->method('getProcessor')->willReturn($processor);
         $this->uiComponentFactory = $this->getMock(
-            \Magento\Framework\View\Element\UiComponentFactory::class,
+            'Magento\Framework\View\Element\UiComponentFactory',
             ['create'],
             [],
             '',
             false
         );
         $this->filterBuilderMock = $this->getMock(
-            \Magento\Framework\Api\FilterBuilder::class,
+            'Magento\Framework\Api\FilterBuilder',
             [],
             [],
             '',
             false
         );
         $this->filterModifierMock = $this->getMock(
-            \Magento\Ui\Component\Filters\FilterModifier::class,
+            'Magento\Ui\Component\Filters\FilterModifier',
             ['applyFilterModifier'],
             [],
             '',
@@ -105,7 +105,7 @@ class DateRangeTest extends \PHPUnit_Framework_TestCase
     {
         /** @var FormDate $uiComponent */
         $uiComponent = $this->getMock(
-            \Magento\Ui\Component\Form\Element\DataType\Date::class,
+            'Magento\Ui\Component\Form\Element\DataType\Date',
             [],
             [],
             '',
@@ -127,7 +127,7 @@ class DateRangeTest extends \PHPUnit_Framework_TestCase
             ->with(UiContext::FILTER_VAR)
             ->willReturn($filterData);
         $dataProvider = $this->getMockForAbstractClass(
-            \Magento\Framework\View\Element\UiComponent\DataProvider\DataProviderInterface::class,
+            'Magento\Framework\View\Element\UiComponent\DataProvider\DataProviderInterface',
             [],
             '',
             false

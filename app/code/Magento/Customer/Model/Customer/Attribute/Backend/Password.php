@@ -8,7 +8,6 @@ namespace Magento\Customer\Model\Customer\Attribute\Backend;
 use Magento\Framework\Exception\LocalizedException;
 
 /**
- * @deprecated
  * Customer password attribute backend
  */
 class Password extends \Magento\Eav\Model\Entity\Attribute\Backend\AbstractBackend
@@ -63,7 +62,6 @@ class Password extends \Magento\Eav\Model\Entity\Attribute\Backend\AbstractBacke
     }
 
     /**
-     * @deprecated
      * @param \Magento\Framework\DataObject $object
      * @return bool
      */

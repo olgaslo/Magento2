@@ -37,6 +37,7 @@ class DeleteFiles extends \Magento\Cms\Controller\Adminhtml\Wysiwyg\Images
         parent::__construct($context, $coreRegistry);
     }
 
+
     /**
      * Delete file from media storage
      *
@@ -51,12 +52,12 @@ class DeleteFiles extends \Magento\Cms\Controller\Adminhtml\Wysiwyg\Images
             $files = $this->getRequest()->getParam('files');
 
             /** @var $helper \Magento\Cms\Helper\Wysiwyg\Images */
-            $helper = $this->_objectManager->get(\Magento\Cms\Helper\Wysiwyg\Images::class);
+            $helper = $this->_objectManager->get('Magento\Cms\Helper\Wysiwyg\Images');
             $path = $this->getStorage()->getSession()->getCurrentPath();
             foreach ($files as $file) {
                 $file = $helper->idDecode($file);
                 /** @var \Magento\Framework\Filesystem $filesystem */
-                $filesystem = $this->_objectManager->get(\Magento\Framework\Filesystem::class);
+                $filesystem = $this->_objectManager->get('Magento\Framework\Filesystem');
                 $dir = $filesystem->getDirectoryRead(DirectoryList::MEDIA);
                 $filePath = $path . '/' . $file;
                 if ($dir->isFile($dir->getRelativePath($filePath))) {

@@ -15,9 +15,7 @@ class CookieLifetimeValidatorTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $objectManager = \Magento\TestFramework\Helper\Bootstrap::getObjectManager();
-        $this->model = $objectManager->create(
-            \Magento\Framework\Session\Config\Validator\CookieLifetimeValidator::class
-        );
+        $this->model = $objectManager->create('Magento\Framework\Session\Config\Validator\CookieLifetimeValidator');
     }
 
     public function testNonNumeric()

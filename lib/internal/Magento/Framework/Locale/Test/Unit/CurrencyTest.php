@@ -45,21 +45,20 @@ class CurrencyTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->mockEventManager = $this
-            ->getMockBuilder(\Magento\Framework\Event\Manager::class)
+            ->getMockBuilder('\Magento\Framework\Event\Manager')
             ->disableOriginalConstructor()
             ->getMock();
         $this->mockLocaleResolver = $this
-            ->getMockBuilder(\Magento\Framework\Locale\Resolver::class)
+            ->getMockBuilder('\Magento\Framework\Locale\Resolver')
             ->disableOriginalConstructor()
             ->getMock();
         $this->mockCurrencyFactory = $this
-            ->getMockBuilder(\Magento\Framework\CurrencyFactory::class)
+            ->getMockBuilder('\Magento\Framework\CurrencyFactory')
             ->disableOriginalConstructor()
             ->getMock();
 
         $this->testCurrencyObject = (new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this))
-            ->getObject(
-                \Magento\Framework\Locale\Currency::class,
+            ->getObject('Magento\Framework\Locale\Currency',
                 [
                     'eventManager'     => $this->mockEventManager,
                     'localeResolver'   => $this->mockLocaleResolver,

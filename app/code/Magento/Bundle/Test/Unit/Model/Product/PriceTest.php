@@ -7,9 +7,6 @@ namespace Magento\Bundle\Test\Unit\Model\Product;
 
 use Magento\Framework\TestFramework\Unit\Helper\ObjectManager as ObjectManagerHelper;
 
-/**
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
- */
 class PriceTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -65,35 +62,33 @@ class PriceTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->ruleFactoryMock = $this->getMock(
-            \Magento\CatalogRule\Model\ResourceModel\RuleFactory::class,
+            'Magento\CatalogRule\Model\ResourceModel\RuleFactory',
             ['create'],
             [],
             '',
             false
         );
-        $this->storeManagerMock = $this->getMock(\Magento\Store\Model\StoreManagerInterface::class);
-        $this->localeDateMock = $this->getMock(\Magento\Framework\Stdlib\DateTime\TimezoneInterface::class);
-        $this->customerSessionMock = $this->getMock(\Magento\Customer\Model\Session::class, [], [], '', false);
-        $this->eventManagerMock = $this->getMock(\Magento\Framework\Event\ManagerInterface::class);
-        $this->catalogHelperMock = $this->getMock(\Magento\Catalog\Helper\Data::class, [], [], '', false);
-        $this->storeMock = $this->getMock(\Magento\Store\Model\Store::class, [], [], '', false);
-        $this->priceCurrency = $this->getMockBuilder(
-            \Magento\Framework\Pricing\PriceCurrencyInterface::class
-        )->getMock();
-        $this->groupManagement = $this->getMockBuilder(\Magento\Customer\Api\GroupManagementInterface::class)
+        $this->storeManagerMock = $this->getMock('\Magento\Store\Model\StoreManagerInterface');
+        $this->localeDateMock = $this->getMock('\Magento\Framework\Stdlib\DateTime\TimezoneInterface');
+        $this->customerSessionMock = $this->getMock('\Magento\Customer\Model\Session', [], [], '', false);
+        $this->eventManagerMock = $this->getMock('\Magento\Framework\Event\ManagerInterface');
+        $this->catalogHelperMock = $this->getMock('\Magento\Catalog\Helper\Data', [], [], '', false);
+        $this->storeMock = $this->getMock('\Magento\Store\Model\Store', [], [], '', false);
+        $this->priceCurrency = $this->getMockBuilder('Magento\Framework\Pricing\PriceCurrencyInterface')->getMock();
+        $this->groupManagement = $this->getMockBuilder('Magento\Customer\Api\GroupManagementInterface')
             ->getMockForAbstractClass();
         $tpFactory = $this->getMock(
-            \Magento\Catalog\Api\Data\ProductTierPriceInterfaceFactory::class,
+            'Magento\Catalog\Api\Data\ProductTierPriceInterfaceFactory',
             ['create'],
             [],
             '',
             false
         );
-        $scopeConfig = $this->getMock(\Magento\Framework\App\Config\ScopeConfigInterface::class);
+        $scopeConfig = $this->getMock('Magento\Framework\App\Config\ScopeConfigInterface');
 
         $objectManagerHelper = new ObjectManagerHelper($this);
         $this->model = $objectManagerHelper->getObject(
-            \Magento\Bundle\Model\Product\Price::class,
+            'Magento\Bundle\Model\Product\Price',
             [
                 'ruleFactory' => $this->ruleFactoryMock,
                 'storeManager' => $this->storeManagerMock,
@@ -154,7 +149,7 @@ class PriceTest extends \PHPUnit_Framework_TestCase
 
     public function testGetTotalBundleItemsPriceWithNoCustomOptions()
     {
-        $productMock = $this->getMockBuilder(\Magento\Catalog\Model\Product::class)
+        $productMock = $this->getMockBuilder('Magento\Catalog\Model\Product')
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -171,12 +166,12 @@ class PriceTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetTotalBundleItemsPriceWithEmptyOptions($value)
     {
-        $dataObjectMock = $this->getMockBuilder(\Magento\Framework\DataObject::class)
+        $dataObjectMock = $this->getMockBuilder('Magento\Framework\DataObject')
             ->setMethods(['getValue'])
             ->disableOriginalConstructor()
             ->getMock();
 
-        $productMock = $this->getMockBuilder(\Magento\Catalog\Model\Product::class)
+        $productMock = $this->getMockBuilder('Magento\Catalog\Model\Product')
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -211,20 +206,20 @@ class PriceTest extends \PHPUnit_Framework_TestCase
     {
         $storeId = 1;
 
-        $dataObjectMock = $this->getMockBuilder(\Magento\Framework\DataObject::class)
+        $dataObjectMock = $this->getMockBuilder('Magento\Framework\DataObject')
             ->setMethods(['getValue'])
             ->disableOriginalConstructor()
             ->getMock();
 
-        $productMock = $this->getMockBuilder(\Magento\Catalog\Model\Product::class)
+        $productMock = $this->getMockBuilder('Magento\Catalog\Model\Product')
             ->disableOriginalConstructor()
             ->getMock();
 
-        $productTypeMock = $this->getMockBuilder(\Magento\Bundle\Model\Product\Type::class)
+        $productTypeMock = $this->getMockBuilder('Magento\Bundle\Model\Product\Type')
             ->disableOriginalConstructor()
             ->getMock();
 
-        $selectionsMock = $this->getMockBuilder(\Magento\Bundle\Model\ResourceModel\Selection\Collection::class)
+        $selectionsMock = $this->getMockBuilder('Magento\Bundle\Model\ResourceModel\Selection\Collection')
             ->disableOriginalConstructor()
             ->getMock();
 

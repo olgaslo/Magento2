@@ -207,15 +207,13 @@ class Block implements Layout\ReaderInterface
         $elementRemove = filter_var($currentElement->getAttribute('remove'), FILTER_VALIDATE_BOOLEAN);
         if ($elementRemove) {
             $scheduledStructure->setElementToRemoveList($elementName);
-            return;
-        } elseif ($currentElement->getAttribute('remove')) {
-            $scheduledStructure->unsetElementFromListToRemove($elementName);
+        } else {
+            $data = $scheduledStructure->getStructureElementData($elementName, []);
+            $data['attributes'] = $this->mergeBlockAttributes($data, $currentElement);
+            $this->updateScheduledData($currentElement, $data);
+            $this->evaluateArguments($currentElement, $data);
+            $scheduledStructure->setStructureElementData($elementName, $data);
         }
-        $data = $scheduledStructure->getStructureElementData($elementName, []);
-        $data['attributes'] = $this->mergeBlockAttributes($data, $currentElement);
-        $this->updateScheduledData($currentElement, $data);
-        $this->evaluateArguments($currentElement, $data);
-        $scheduledStructure->setStructureElementData($elementName, $data);
     }
 
     /**

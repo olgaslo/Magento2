@@ -22,14 +22,14 @@ use Magento\Ui\Test\Block\Adminhtml\DataGrid;
  * 3. Sort grid using provided columns
  * 5. Perform Asserts
  *
- * @group Ui
+ * @group Ui_(CS)
  * @ZephyrId MAGETWO-41328
  */
 class GridSortingTest extends Injectable
 {
     /* tags */
-    const SEVERITY = 'S2';
     const MVP = 'no';
+    const DOMAIN = 'CS';
     /* end tags */
 
     /**

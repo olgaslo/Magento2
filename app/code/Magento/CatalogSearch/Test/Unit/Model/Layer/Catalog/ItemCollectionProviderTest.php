@@ -12,19 +12,13 @@ class ItemCollectionProviderTest extends \PHPUnit_Framework_TestCase
 {
     public function testGetCollection()
     {
-        $categoryMock = $this->getMock(\Magento\Catalog\Model\Category::class, [], [], '', false);
+        $categoryMock = $this->getMock('Magento\Catalog\Model\Category', [], [], '', false);
 
-        $collectionMock = $this->getMock(
-            \Magento\Catalog\Model\ResourceModel\Product\Collection::class,
-            [],
-            [],
-            '',
-            false
-        );
+        $collectionMock = $this->getMock('Magento\Catalog\Model\ResourceModel\Product\Collection', [], [], '', false);
         $collectionMock->expects($this->once())->method('addCategoryFilter')->with($categoryMock);
 
         $collectionFactoryMock = $this->getMock(
-            \Magento\Catalog\Model\ResourceModel\Product\CollectionFactory::class,
+            'Magento\Catalog\Model\ResourceModel\Product\CollectionFactory',
             ['create'],
             [],
             '',
@@ -34,7 +28,7 @@ class ItemCollectionProviderTest extends \PHPUnit_Framework_TestCase
 
         $objectManager = new ObjectManagerHelper($this);
         $provider = $objectManager->getObject(
-            \Magento\CatalogSearch\Model\Layer\Category\ItemCollectionProvider::class,
+            'Magento\CatalogSearch\Model\Layer\Category\ItemCollectionProvider',
             ['collectionFactory' => $collectionFactoryMock]
         );
 

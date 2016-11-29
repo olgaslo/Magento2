@@ -69,9 +69,9 @@ class CartRepositoryTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->quoteRepositoryMock = $this->getMock(\Magento\Quote\Api\CartRepositoryInterface::class);
+        $this->quoteRepositoryMock = $this->getMock('\Magento\Quote\Api\CartRepositoryInterface');
         $this->messageFactoryMock = $this->getMock(
-            \Magento\GiftMessage\Model\MessageFactory::class,
+            'Magento\GiftMessage\Model\MessageFactory',
             [
                 'create',
                 '__wakeup'
@@ -80,9 +80,9 @@ class CartRepositoryTest extends \PHPUnit_Framework_TestCase
             '',
             false
         );
-        $this->messageMock = $this->getMock(\Magento\GiftMessage\Model\Message::class, [], [], '', false);
+        $this->messageMock = $this->getMock('Magento\GiftMessage\Model\Message', [], [], '', false);
         $this->quoteItemMock = $this->getMock(
-            \Magento\Quote\Model\Quote\Item::class,
+            '\Magento\Quote\Model\Quote\Item',
             [
                 'getGiftMessageId',
                 '__wakeup'
@@ -92,7 +92,7 @@ class CartRepositoryTest extends \PHPUnit_Framework_TestCase
             false
         );
         $this->quoteMock = $this->getMock(
-            \Magento\Quote\Model\Quote::class,
+            '\Magento\Quote\Model\Quote',
             [
                 'getGiftMessageId',
                 'getItemById',
@@ -104,11 +104,11 @@ class CartRepositoryTest extends \PHPUnit_Framework_TestCase
             '',
             false
         );
-        $this->storeManagerMock = $this->getMock(\Magento\Store\Model\StoreManagerInterface::class);
+        $this->storeManagerMock = $this->getMock('Magento\Store\Model\StoreManagerInterface');
         $this->giftMessageManagerMock =
-            $this->getMock(\Magento\GiftMessage\Model\GiftMessageManager::class, [], [], '', false);
-        $this->helperMock = $this->getMock(\Magento\GiftMessage\Helper\Message::class, [], [], '', false);
-        $this->storeMock = $this->getMock(\Magento\Store\Model\Store::class, [], [], '', false);
+            $this->getMock('Magento\GiftMessage\Model\GiftMessageManager', [], [], '', false);
+        $this->helperMock = $this->getMock('Magento\GiftMessage\Helper\Message', [], [], '', false);
+        $this->storeMock = $this->getMock('Magento\Store\Model\Store', [], [], '', false);
         $this->cartRepository = new \Magento\GiftMessage\Model\CartRepository(
             $this->quoteRepositoryMock,
             $this->storeManagerMock,

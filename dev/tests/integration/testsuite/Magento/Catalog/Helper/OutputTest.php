@@ -15,7 +15,7 @@ class OutputTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->_helper = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->get(
-            \Magento\Catalog\Helper\Output::class
+            'Magento\Catalog\Helper\Output'
         );
     }
 
@@ -92,7 +92,7 @@ class OutputTest extends \PHPUnit_Framework_TestCase
     {
         $attributeName = 'description';
         $attribute = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->get(
-            \Magento\Eav\Model\Config::class
+            'Magento\Eav\Model\Config'
         )->getAttribute(
             $entityCode,
             $attributeName

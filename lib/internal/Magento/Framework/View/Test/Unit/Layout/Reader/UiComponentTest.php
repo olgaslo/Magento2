@@ -30,11 +30,11 @@ class UiComponentTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->helper = $this->getMockBuilder(\Magento\Framework\View\Layout\ScheduledStructure\Helper::class)
+        $this->helper = $this->getMockBuilder('Magento\Framework\View\Layout\ScheduledStructure\Helper')
             ->setMethods(['scheduleStructure'])
             ->disableOriginalConstructor()
             ->getMock();
-        $this->context = $this->getMockBuilder(\Magento\Framework\View\Layout\Reader\Context::class)
+        $this->context = $this->getMockBuilder('Magento\Framework\View\Layout\Reader\Context')
             ->setMethods(['getScheduledStructure', 'setElementToIfconfigList'])
             ->disableOriginalConstructor()
             ->getMock();
@@ -55,13 +55,7 @@ class UiComponentTest extends \PHPUnit_Framework_TestCase
      */
     public function testInterpret($element)
     {
-        $scheduleStructure = $this->getMock(
-            \Magento\Framework\View\Layout\ScheduledStructure::class,
-            [],
-            [],
-            '',
-            false
-        );
+        $scheduleStructure = $this->getMock('\Magento\Framework\View\Layout\ScheduledStructure', [], [], '', false);
         $this->context->expects($this->any())->method('getScheduledStructure')->will(
             $this->returnValue($scheduleStructure)
         );
@@ -104,7 +98,7 @@ class UiComponentTest extends \PHPUnit_Framework_TestCase
     {
         $xml = simplexml_load_string(
             '<parent_element>' . $xml . '</parent_element>',
-            \Magento\Framework\View\Layout\Element::class
+            'Magento\Framework\View\Layout\Element'
         );
         return $xml->{$elementType};
     }

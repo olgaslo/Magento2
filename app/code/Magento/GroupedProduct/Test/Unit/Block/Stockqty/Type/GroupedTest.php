@@ -20,9 +20,9 @@ class GroupedTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
-        $this->registry = $this->getMock(\Magento\Framework\Registry::class, [], [], '', false);
+        $this->registry = $this->getMock('Magento\Framework\Registry', [], [], '', false);
         $this->block = $objectManager->getObject(
-            \Magento\GroupedProduct\Block\Stockqty\Type\Grouped::class,
+            'Magento\GroupedProduct\Block\Stockqty\Type\Grouped',
             ['registry' => $this->registry]
         );
     }
@@ -35,10 +35,10 @@ class GroupedTest extends \PHPUnit_Framework_TestCase
     public function testGetIdentities()
     {
         $productTags = ['catalog_product_1'];
-        $childProduct = $this->getMock(\Magento\Catalog\Model\Product::class, [], [], '', false);
+        $childProduct = $this->getMock('Magento\Catalog\Model\Product', [], [], '', false);
         $childProduct->expects($this->once())->method('getIdentities')->will($this->returnValue($productTags));
         $typeInstance = $this->getMock(
-            \Magento\GroupedProduct\Model\Product\Type\Grouped::class,
+            'Magento\GroupedProduct\Model\Product\Type\Grouped',
             [],
             [],
             '',
@@ -51,7 +51,7 @@ class GroupedTest extends \PHPUnit_Framework_TestCase
         )->will(
             $this->returnValue([$childProduct])
         );
-        $product = $this->getMock(\Magento\Catalog\Model\Product::class, [], [], '', false);
+        $product = $this->getMock('Magento\Catalog\Model\Product', [], [], '', false);
         $product->expects($this->once())->method('getTypeInstance')->will($this->returnValue($typeInstance));
         $this->registry->expects(
             $this->any()

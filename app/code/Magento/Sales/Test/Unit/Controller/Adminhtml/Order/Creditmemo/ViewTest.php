@@ -8,7 +8,6 @@ namespace Magento\Sales\Test\Unit\Controller\Adminhtml\Order\Creditmemo;
 /**
  * Class ViewTest
  * @SuppressWarnings(PHPMD.TooManyFields)
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
 class ViewTest extends \PHPUnit_Framework_TestCase
 {
@@ -107,64 +106,62 @@ class ViewTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $titleMock = $this->getMockBuilder(\Magento\Framework\App\Action\Title::class)
+        $titleMock = $this->getMockBuilder('Magento\Framework\App\Action\Title')
             ->disableOriginalConstructor()
             ->getMock();
-        $this->invoiceMock = $this->getMockBuilder(\Magento\Sales\Model\Order\Invoice::class)
+        $this->invoiceMock = $this->getMockBuilder('Magento\Sales\Model\Order\Invoice')
             ->disableOriginalConstructor()
             ->getMock();
-        $this->creditmemoMock = $this->getMockBuilder(\Magento\Sales\Model\Order\Creditmemo::class)
+        $this->creditmemoMock = $this->getMockBuilder('Magento\Sales\Model\Order\Creditmemo')
             ->disableOriginalConstructor()
             ->setMethods(['getInvoice', 'getOrder', 'cancel', 'getId', '__wakeup'])
             ->getMock();
-        $this->requestMock = $this->getMockBuilder(\Magento\Framework\App\Request\Http::class)
+        $this->requestMock = $this->getMockBuilder('Magento\Framework\App\Request\Http')
             ->disableOriginalConstructor()
             ->getMock();
-        $this->responseMock = $this->getMockBuilder(\Magento\Framework\App\Response\Http::class)
+        $this->responseMock = $this->getMockBuilder('Magento\Framework\App\Response\Http')
             ->disableOriginalConstructor()
             ->getMock();
-        $this->objectManagerMock = $this->getMock(\Magento\Framework\ObjectManagerInterface::class);
-        $this->messageManagerMock = $this->getMockBuilder(\Magento\Framework\Message\Manager::class)
+        $this->objectManagerMock = $this->getMock('Magento\Framework\ObjectManagerInterface');
+        $this->messageManagerMock = $this->getMockBuilder('Magento\Framework\Message\Manager')
             ->disableOriginalConstructor()
             ->getMock();
-        $this->sessionMock = $this->getMockBuilder(\Magento\Backend\Model\Session::class)
+        $this->sessionMock = $this->getMockBuilder('Magento\Backend\Model\Session')
             ->disableOriginalConstructor()
             ->getMock();
-        $this->helperMock = $this->getMockBuilder(\Magento\Backend\Helper\Data::class)
+        $this->helperMock = $this->getMockBuilder('Magento\Backend\Helper\Data')
             ->disableOriginalConstructor()
             ->getMock();
-        $this->contextMock = $this->getMockBuilder(\Magento\Backend\App\Action\Context::class)
+        $this->contextMock = $this->getMockBuilder('Magento\Backend\App\Action\Context')
             ->disableOriginalConstructor()
             ->getMock();
         $this->contextMock->expects($this->any())
             ->method('getHelper')
             ->will($this->returnValue($this->helperMock));
-        $this->actionFlagMock = $this->getMockBuilder(\Magento\Framework\App\ActionFlag::class)
+        $this->actionFlagMock = $this->getMockBuilder('Magento\Framework\App\ActionFlag')
             ->disableOriginalConstructor()
             ->getMock();
-        $this->loaderMock = $this->getMockBuilder(\Magento\Sales\Controller\Adminhtml\Order\CreditmemoLoader::class)
+        $this->loaderMock = $this->getMockBuilder('Magento\Sales\Controller\Adminhtml\Order\CreditmemoLoader')
             ->disableOriginalConstructor()
             ->getMock();
-        $this->pageConfigMock = $this->getMockBuilder(\Magento\Framework\View\Page\Config::class)
+        $this->pageConfigMock = $this->getMockBuilder('Magento\Framework\View\Page\Config')
             ->disableOriginalConstructor()
             ->getMock();
-        $this->pageTitleMock = $this->getMockBuilder(\Magento\Framework\View\Page\Title::class)
+        $this->pageTitleMock = $this->getMockBuilder('Magento\Framework\View\Page\Title')
             ->disableOriginalConstructor()
             ->getMock();
-        $this->resultPageFactoryMock = $this->getMockBuilder(\Magento\Framework\View\Result\PageFactory::class)
-            ->disableOriginalConstructor()
-            ->setMethods(['create'])
-            ->getMock();
-        $this->resultPageMock = $this->getMockBuilder(\Magento\Backend\Model\View\Result\Page::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-        $this->resultForwardFactoryMock = $this->getMockBuilder(
-            \Magento\Backend\Model\View\Result\ForwardFactory::class
-        )
+        $this->resultPageFactoryMock = $this->getMockBuilder('Magento\Framework\View\Result\PageFactory')
             ->disableOriginalConstructor()
             ->setMethods(['create'])
             ->getMock();
-        $this->resultForwardMock = $this->getMockBuilder(\Magento\Backend\Model\View\Result\Forward::class)
+        $this->resultPageMock = $this->getMockBuilder('Magento\Backend\Model\View\Result\Page')
+            ->disableOriginalConstructor()
+            ->getMock();
+        $this->resultForwardFactoryMock = $this->getMockBuilder('Magento\Backend\Model\View\Result\ForwardFactory')
+            ->disableOriginalConstructor()
+            ->setMethods(['create'])
+            ->getMock();
+        $this->resultForwardMock = $this->getMockBuilder('Magento\Backend\Model\View\Result\Forward')
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -198,7 +195,7 @@ class ViewTest extends \PHPUnit_Framework_TestCase
 
         $objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
         $this->controller = $objectManager->getObject(
-            \Magento\Sales\Controller\Adminhtml\Order\Creditmemo\View::class,
+            'Magento\Sales\Controller\Adminhtml\Order\Creditmemo\View',
             [
                 'context' => $this->contextMock,
                 'creditmemoLoader' => $this->loaderMock,
@@ -225,7 +222,7 @@ class ViewTest extends \PHPUnit_Framework_TestCase
             ->willReturnSelf();
 
         $this->assertInstanceOf(
-            \Magento\Backend\Model\View\Result\Forward::class,
+            'Magento\Backend\Model\View\Result\Forward',
             $this->controller->execute()
         );
     }
@@ -235,10 +232,10 @@ class ViewTest extends \PHPUnit_Framework_TestCase
      */
     public function testExecute($invoice)
     {
-        $layoutMock = $this->getMockBuilder(\Magento\Framework\View\Layout::class)
+        $layoutMock = $this->getMockBuilder('Magento\Framework\View\Layout')
             ->disableOriginalConstructor()
             ->getMock();
-        $blockMock = $this->getMockBuilder(\Magento\Sales\Block\Adminhtml\Order\Creditmemo\View::class)
+        $blockMock = $this->getMockBuilder('Magento\Sales\Block\Adminhtml\Order\Creditmemo\View')
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -271,7 +268,7 @@ class ViewTest extends \PHPUnit_Framework_TestCase
             ->willReturn($this->pageConfigMock);
 
         $this->assertInstanceOf(
-            \Magento\Backend\Model\View\Result\Page::class,
+            'Magento\Backend\Model\View\Result\Page',
             $this->controller->execute()
         );
     }

@@ -60,7 +60,7 @@ namespace Magento\Framework\Code\Test\Unit\Generator {
             /**
              * @var AutoloaderInterface | \PHPUnit_Framework_MockObject_MockObject $autoloaderMock
              */
-            $autoloaderMock = $this->getMock(\Magento\Framework\Autoload\AutoloaderInterface::class);
+            $autoloaderMock = $this->getMock('\Magento\Framework\Autoload\AutoloaderInterface');
             $autoloaderMock->expects($this->once())->method('findFile')->with($classOnDisc)->willReturn(true);
             AutoloaderRegistry::registerAutoloader($autoloaderMock);
             $this->assertTrue($this->model->isClassLoadable($classOnDisc));

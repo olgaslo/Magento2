@@ -96,11 +96,11 @@ abstract class Store extends Action
         }
         try {
             /** @var \Magento\Backup\Model\Db $backupDb */
-            $backupDb = $this->_objectManager->create(\Magento\Backup\Model\Db::class);
+            $backupDb = $this->_objectManager->create('Magento\Backup\Model\Db');
             /** @var \Magento\Backup\Model\Backup $backup */
-            $backup = $this->_objectManager->create(\Magento\Backup\Model\Backup::class);
+            $backup = $this->_objectManager->create('Magento\Backup\Model\Backup');
             /** @var Filesystem $filesystem */
-            $filesystem = $this->_objectManager->get(\Magento\Framework\Filesystem::class);
+            $filesystem = $this->_objectManager->get('Magento\Framework\Filesystem');
             $backup->setTime(time())
                 ->setType('db')
                 ->setPath($filesystem->getDirectoryRead(DirectoryList::VAR_DIR)->getAbsolutePath('backups'));

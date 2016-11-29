@@ -93,7 +93,7 @@ class Value extends AbstractModel implements \Magento\Catalog\Api\Data\ProductCu
      */
     protected function _construct()
     {
-        $this->_init(\Magento\Catalog\Model\ResourceModel\Product\Option\Value::class);
+        $this->_init('Magento\Catalog\Model\ResourceModel\Product\Option\Value');
     }
 
     /**
@@ -200,7 +200,7 @@ class Value extends AbstractModel implements \Magento\Catalog\Api\Data\ProductCu
                 'store_id',
                 $this->getOption()->getStoreId()
             );
-
+            $this->unsetData('option_type_id');
             if ($this->getData('is_delete') == '1') {
                 if ($this->getId()) {
                     $this->deleteValues($this->getId());

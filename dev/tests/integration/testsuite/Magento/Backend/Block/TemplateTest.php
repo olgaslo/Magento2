@@ -21,9 +21,9 @@ class TemplateTest extends \PHPUnit_Framework_TestCase
     {
         parent::setUp();
         $this->_block = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->get(
-            \Magento\Framework\View\LayoutInterface::class
+            'Magento\Framework\View\LayoutInterface'
         )->createBlock(
-            \Magento\Backend\Block\Template::class
+            'Magento\Backend\Block\Template'
         );
     }
 

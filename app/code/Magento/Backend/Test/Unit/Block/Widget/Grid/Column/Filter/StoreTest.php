@@ -27,13 +27,13 @@ class StoreTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->context = $this->getMock(\Magento\Backend\Block\Context::class, [], [], '', false);
-        $this->helper = $this->getMock(\Magento\Framework\DB\Helper::class, [], [], '', false);
-        $this->store = $this->getMock(\Magento\Store\Model\System\Store::class, [], [], '', false);
+        $this->context = $this->getMock('Magento\Backend\Block\Context', [], [], '', false);
+        $this->helper = $this->getMock('Magento\Framework\DB\Helper', [], [], '', false);
+        $this->store = $this->getMock('Magento\Store\Model\System\Store', [], [], '', false);
 
         $this->objectManagerHelper = new ObjectManagerHelper($this);
         $this->store = $this->objectManagerHelper->getObject(
-            \Magento\Backend\Block\Widget\Grid\Column\Filter\Store::class,
+            'Magento\Backend\Block\Widget\Grid\Column\Filter\Store',
             [
                 'context' => $this->context,
                 'resourceHelper' => $this->helper,

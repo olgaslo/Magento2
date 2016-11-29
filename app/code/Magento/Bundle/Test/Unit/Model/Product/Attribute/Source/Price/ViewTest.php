@@ -31,15 +31,9 @@ class ViewTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->option = $this->getMock(
-            \Magento\Eav\Model\ResourceModel\Entity\Attribute\Option::class,
-            [],
-            [],
-            '',
-            false
-        );
+        $this->option = $this->getMock('Magento\Eav\Model\ResourceModel\Entity\Attribute\Option', [], [], '', false);
         $this->optionFactory = $this->getMock(
-            \Magento\Eav\Model\ResourceModel\Entity\Attribute\OptionFactory::class,
+            'Magento\Eav\Model\ResourceModel\Entity\Attribute\OptionFactory',
             ['create'],
             [],
             '',
@@ -48,17 +42,11 @@ class ViewTest extends \PHPUnit_Framework_TestCase
         $this->optionFactory->expects($this->any())
             ->method('create')
             ->will($this->returnValue($this->option));
-        $this->attribute = $this->getMock(
-            \Magento\Eav\Model\Entity\Attribute\AbstractAttribute::class,
-            [],
-            [],
-            '',
-            false
-        );
+        $this->attribute = $this->getMock('Magento\Eav\Model\Entity\Attribute\AbstractAttribute', [], [], '', false);
 
         $this->model = (new ObjectManager($this))
             ->getObject(
-                \Magento\Bundle\Model\Product\Attribute\Source\Price\View::class,
+                'Magento\Bundle\Model\Product\Attribute\Source\Price\View',
                 [
                     'optionFactory' => $this->optionFactory,
                 ]
@@ -86,7 +74,7 @@ class ViewTest extends \PHPUnit_Framework_TestCase
     {
         $existValue = 1;
 
-        $this->assertInstanceOf(\Magento\Framework\Phrase::class, $this->model->getOptionText($existValue));
+        $this->assertInstanceOf('Magento\Framework\Phrase', $this->model->getOptionText($existValue));
     }
 
     /**

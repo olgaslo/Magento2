@@ -8,9 +8,6 @@ namespace Magento\Tax\Test\Unit\Model\Quote;
 
 use \Magento\Framework\TestFramework\Unit\Helper\ObjectManager;
 
-/**
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
- */
 class GrandTotalDetailsPluginTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -39,6 +36,11 @@ class GrandTotalDetailsPluginTest extends \PHPUnit_Framework_TestCase
     protected $subjectMock;
 
     /**
+     * @var \Closure|\PHPUnit_Framework_MockObject_MockObject
+     */
+    protected $closureMock;
+
+    /**
      * @var \Magento\Framework\TestFramework\Unit\Helper\ObjectManager
      */
     protected $objectManagerHelper;
@@ -50,34 +52,32 @@ class GrandTotalDetailsPluginTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->subjectMock = $this->getMockBuilder(\Magento\Quote\Model\Cart\TotalsConverter::class)
+        $this->subjectMock = $this->getMockBuilder('\Magento\Quote\Model\Cart\TotalsConverter')
             ->disableOriginalConstructor()
             ->getMock();
 
         $this->totalSegmentExtensionFactoryMock = $this->getMockBuilder(
-            \Magento\Quote\Api\Data\TotalSegmentExtensionFactory::class
+            '\Magento\Quote\Api\Data\TotalSegmentExtensionFactory'
         )->disableOriginalConstructor()
             ->getMock();
 
-        $this->detailsFactoryMock = $this->getMockBuilder(
-            \Magento\Tax\Api\Data\GrandTotalDetailsInterfaceFactory::class
-        )
+        $this->detailsFactoryMock = $this->getMockBuilder('\Magento\Tax\Api\Data\GrandTotalDetailsInterfaceFactory')
             ->disableOriginalConstructor()
             ->setMethods(['create'])
             ->getMock();
 
-        $this->ratesFactoryMock = $this->getMockBuilder(\Magento\Tax\Api\Data\GrandTotalRatesInterfaceFactory::class)
+        $this->ratesFactoryMock = $this->getMockBuilder('\Magento\Tax\Api\Data\GrandTotalRatesInterfaceFactory')
             ->disableOriginalConstructor()
             ->setMethods(['create'])
             ->getMock();
 
-        $this->taxConfigMock = $this->getMockBuilder(\Magento\Tax\Model\Config::class)
+        $this->taxConfigMock = $this->getMockBuilder('\Magento\Tax\Model\Config')
             ->disableOriginalConstructor()
             ->getMock();
 
         $this->objectManagerHelper = new ObjectManager($this);
         $this->model = $this->objectManagerHelper->getObject(
-            \Magento\Tax\Model\Quote\GrandTotalDetailsPlugin::class,
+            '\Magento\Tax\Model\Quote\GrandTotalDetailsPlugin',
             [
                 'totalSegmentExtensionFactory' => $this->totalSegmentExtensionFactoryMock,
                 'ratesFactory' => $this->ratesFactoryMock,
@@ -89,7 +89,7 @@ class GrandTotalDetailsPluginTest extends \PHPUnit_Framework_TestCase
 
     protected function setupTaxTotal(array $data)
     {
-        $taxTotalMock = $this->getMockBuilder(\Magento\Quote\Model\Quote\Address\Total::class)
+        $taxTotalMock = $this->getMockBuilder('\Magento\Quote\Model\Quote\Address\Total')
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -102,7 +102,7 @@ class GrandTotalDetailsPluginTest extends \PHPUnit_Framework_TestCase
 
     protected function setupTaxRateFactoryMock(array $taxRate)
     {
-        $taxRateMock = $this->getMockBuilder(\Magento\Tax\Api\Data\GrandTotalRatesInterface::class)
+        $taxRateMock = $this->getMockBuilder('\Magento\Tax\Api\Data\GrandTotalRatesInterface')
             ->getMock();
 
         $this->ratesFactoryMock->expects($this->once())
@@ -123,7 +123,7 @@ class GrandTotalDetailsPluginTest extends \PHPUnit_Framework_TestCase
 
     protected function setupTaxDetails(array $taxDetails)
     {
-        $taxDetailsMock = $this->getMockBuilder(\Magento\Tax\Api\Data\GrandTotalDetailsInterface::class)
+        $taxDetailsMock = $this->getMockBuilder('\Magento\Tax\Api\Data\GrandTotalDetailsInterface')
             ->getMock();
 
         $this->detailsFactoryMock->expects($this->once())
@@ -148,7 +148,7 @@ class GrandTotalDetailsPluginTest extends \PHPUnit_Framework_TestCase
         return $taxDetailsMock;
     }
 
-    public function testAfterProcess()
+    public function testAroundProcess()
     {
         $taxRate = [
             'percent' => 8.25,
@@ -179,7 +179,7 @@ class GrandTotalDetailsPluginTest extends \PHPUnit_Framework_TestCase
         ];
 
         $extensionAttributeMock = $this->getMockBuilder(
-            \Magento\Quote\Api\Data\TotalSegmentExtensionInterface::class
+            '\Magento\Quote\Api\Data\TotalSegmentExtensionInterface'
         )->setMethods(
             [
                 'setTaxGrandtotalDetails',
@@ -191,7 +191,7 @@ class GrandTotalDetailsPluginTest extends \PHPUnit_Framework_TestCase
             ->with([$taxDetailsMock])
             ->willReturnSelf();
 
-        $taxSegmentMock = $this->getMockBuilder(\Magento\Quote\Model\Cart\TotalSegment::class)
+        $taxSegmentMock = $this->getMockBuilder('\Magento\Quote\Model\Cart\TotalSegment')
             ->disableOriginalConstructor()
             ->getMock();
         $taxSegmentMock->expects($this->once())
@@ -206,7 +206,11 @@ class GrandTotalDetailsPluginTest extends \PHPUnit_Framework_TestCase
             'tax' => $taxSegmentMock,
         ];
 
-        $result = $this->model->afterProcess($this->subjectMock, $totalSegments, $addressTotals);
+        $this->closureMock = function () use ($totalSegments) {
+            return $totalSegments;
+        };
+
+        $result = $this->model->aroundProcess($this->subjectMock, $this->closureMock, $addressTotals);
         $this->assertEquals($totalSegments, $result);
     }
 }

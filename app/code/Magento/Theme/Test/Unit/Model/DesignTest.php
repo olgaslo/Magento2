@@ -50,25 +50,21 @@ class DesignTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $context = $this->getMockBuilder(\Magento\Framework\Model\Context::class)
+        $context = $this->getMockBuilder('Magento\Framework\Model\Context')
             ->disableOriginalConstructor()
             ->getMock();
-        $this->registry = $this->getMockBuilder(
-            \Magento\Framework\Registry::class
-        )->disableOriginalConstructor()->getMock();
-        $this->localeDate = $this->getMockBuilder(
-            \Magento\Framework\Stdlib\DateTime\TimezoneInterface::class
-        )->getMock();
-        $this->dateTime = $this->getMockBuilder(\Magento\Framework\Stdlib\DateTime::class)
+        $this->registry = $this->getMockBuilder('Magento\Framework\Registry')->disableOriginalConstructor()->getMock();
+        $this->localeDate = $this->getMockBuilder('Magento\Framework\Stdlib\DateTime\TimezoneInterface')->getMock();
+        $this->dateTime = $this->getMockBuilder('Magento\Framework\Stdlib\DateTime')
             ->disableOriginalConstructor()
             ->getMock();
-        $this->resource = $this->getMockBuilder(\Magento\Theme\Model\ResourceModel\Design::class)
+        $this->resource = $this->getMockBuilder('Magento\Theme\Model\ResourceModel\Design')
             ->disableOriginalConstructor()
             ->getMock();
-        $this->resourceCollection = $this->getMockBuilder(\Magento\Theme\Model\ResourceModel\Design\Collection::class)
+        $this->resourceCollection = $this->getMockBuilder('Magento\Theme\Model\ResourceModel\Design\Collection')
             ->disableOriginalConstructor()
             ->getMock();
-        $this->cacheManager = $this->getMockBuilder(\Magento\Framework\App\CacheInterface::class)->getMock();
+        $this->cacheManager = $this->getMockBuilder('Magento\Framework\App\CacheInterface')->getMock();
 
         $context->expects($this->any())
             ->method('getCacheManager')
@@ -179,7 +175,7 @@ class DesignTest extends \PHPUnit_Framework_TestCase
      */
     public function testChangeDesign()
     {
-        $design = $this->getMockBuilder(\Magento\Framework\View\DesignInterface::class)->getMock();
+        $design = $this->getMockBuilder('Magento\Framework\View\DesignInterface')->getMock();
 
         $this->model->setDesign('test');
         /** @var $design \Magento\Framework\View\DesignInterface */

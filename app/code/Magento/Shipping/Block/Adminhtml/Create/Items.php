@@ -84,7 +84,7 @@ class Items extends \Magento\Sales\Block\Adminhtml\Items\AbstractItems
     {
         $this->addChild(
             'submit_button',
-            \Magento\Backend\Block\Widget\Button::class,
+            'Magento\Backend\Block\Widget\Button',
             [
                 'label' => __('Submit Shipment'),
                 'class' => 'save submit-button primary',

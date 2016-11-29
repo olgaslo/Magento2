@@ -22,10 +22,10 @@ class DesignAbstractionTest extends \PHPUnit_Framework_TestCase
 
         $objectManager = \Magento\TestFramework\Helper\Bootstrap::getObjectManager();
         $layoutUtility = new \Magento\Framework\View\Utility\Layout($this);
-        $appState = $objectManager->get(\Magento\Framework\App\State::class);
+        $appState = $objectManager->get('Magento\Framework\App\State');
         $appState->setAreaCode(\Magento\Backend\App\Area\FrontNameResolver::AREA_CODE);
         $processorMock = $this->getMock(
-            \Magento\Framework\View\Layout\Processor::class,
+            'Magento\Framework\View\Layout\Processor',
             ['isPageLayoutDesignAbstraction'],
             [],
             '',
@@ -39,7 +39,7 @@ class DesignAbstractionTest extends \PHPUnit_Framework_TestCase
             )
         );
         $processorFactoryMock = $this->getMock(
-            \Magento\Framework\View\Layout\ProcessorFactory::class,
+            'Magento\Framework\View\Layout\ProcessorFactory',
             ['create'],
             [],
             '',
@@ -56,9 +56,9 @@ class DesignAbstractionTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->_block = new DesignAbstraction(
-            $objectManager->get(\Magento\Framework\View\Element\Template\Context::class),
+            $objectManager->get('Magento\Framework\View\Element\Template\Context'),
             $processorFactoryMock,
-            $objectManager->get(\Magento\Theme\Model\ResourceModel\Theme\CollectionFactory::class),
+            $objectManager->get('Magento\Theme\Model\ResourceModel\Theme\CollectionFactory'),
             $appState,
             [
                 'name' => 'design_abstractions',

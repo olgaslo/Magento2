@@ -6,7 +6,6 @@
 namespace Magento\Catalog\Controller\Adminhtml\Category;
 
 use Magento\Store\Model\StoreManagerInterface;
-use Magento\Catalog\Api\Data\CategoryAttributeInterface;
 
 /**
  * Class Save
@@ -50,11 +49,6 @@ class Save extends \Magento\Catalog\Controller\Adminhtml\Category
     private $storeManager;
 
     /**
-     * @var \Magento\Eav\Model\Config
-     */
-    private $eavConfig;
-
-    /**
      * Constructor
      *
      * @param \Magento\Backend\App\Action\Context $context
@@ -62,35 +56,31 @@ class Save extends \Magento\Catalog\Controller\Adminhtml\Category
      * @param \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory
      * @param \Magento\Framework\View\LayoutFactory $layoutFactory
      * @param StoreManagerInterface $storeManager
-     * @param \Magento\Eav\Model\Config $eavConfig
      */
     public function __construct(
         \Magento\Backend\App\Action\Context $context,
         \Magento\Framework\Controller\Result\RawFactory $resultRawFactory,
         \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory,
         \Magento\Framework\View\LayoutFactory $layoutFactory,
-        StoreManagerInterface $storeManager,
-        \Magento\Eav\Model\Config $eavConfig = null
+        StoreManagerInterface $storeManager
     ) {
         parent::__construct($context);
         $this->resultRawFactory = $resultRawFactory;
         $this->resultJsonFactory = $resultJsonFactory;
         $this->layoutFactory = $layoutFactory;
         $this->storeManager = $storeManager;
-        $this->eavConfig = $eavConfig
-            ?: \Magento\Framework\App\ObjectManager::getInstance()->get(\Magento\Eav\Model\Config::class);
     }
 
     /**
      * Filter category data
      *
-     * @deprecated
      * @param array $rawData
      * @return array
      */
     protected function _filterCategoryPostData(array $rawData)
     {
         $data = $rawData;
+        // @todo It is a workaround to prevent saving this data in category model and it has to be refactored in future
         if (isset($data['image']) && is_array($data['image'])) {
             if (!empty($data['image']['delete'])) {
                 $data['image'] = null;
@@ -136,7 +126,7 @@ class Save extends \Magento\Catalog\Controller\Adminhtml\Category
         $this->storeManager->setCurrentStore($store->getCode());
         $parentId = isset($categoryPostData['parent']) ? $categoryPostData['parent'] : null;
         if ($categoryPostData) {
-            $category->addData($categoryPostData);
+            $category->addData($this->_filterCategoryPostData($categoryPostData));
             if ($isNewCategory) {
                 $parentCategory = $this->getParentCategory($parentId, $storeId);
                 $category->setPath($parentCategory->getPath());
@@ -258,30 +248,18 @@ class Save extends \Magento\Catalog\Controller\Adminhtml\Category
     }
 
     /**
-     * Sets image attribute data to false if image was removed
+     * Image data preprocessing
      *
      * @param array $data
+     *
      * @return array
      */
     public function imagePreprocessing($data)
     {
-        $entityType = $this->eavConfig->getEntityType(CategoryAttributeInterface::ENTITY_TYPE_CODE);
-
-        foreach ($entityType->getAttributeCollection() as $attributeModel) {
-            $attributeCode = $attributeModel->getAttributeCode();
-            $backendModel = $attributeModel->getBackend();
-
-            if (isset($data[$attributeCode])) {
-                continue;
-            }
-
-            if (!$backendModel instanceof \Magento\Catalog\Model\Category\Attribute\Backend\Image) {
-                continue;
-            }
-
-            $data[$attributeCode] = false;
+        if (empty($data['image'])) {
+            unset($data['image']);
+            $data['image']['delete'] = true;
         }
-
         return $data;
     }
 

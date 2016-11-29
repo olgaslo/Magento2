@@ -94,7 +94,7 @@ class Link extends \Magento\Framework\Model\AbstractModel
      */
     protected function _construct()
     {
-        $this->_init(\Magento\Catalog\Model\ResourceModel\Product\Link::class);
+        $this->_init('Magento\Catalog\Model\ResourceModel\Product\Link');
     }
 
     /**
@@ -192,7 +192,7 @@ class Link extends \Magento\Framework\Model\AbstractModel
     {
         if (null === $this->saveProductLinks) {
             $this->saveProductLinks = \Magento\Framework\App\ObjectManager::getInstance()
-                ->get(\Magento\Catalog\Model\Product\Link\SaveHandler::class);
+                ->get('Magento\Catalog\Model\Product\Link\SaveHandler');
         }
         return $this->saveProductLinks;
     }

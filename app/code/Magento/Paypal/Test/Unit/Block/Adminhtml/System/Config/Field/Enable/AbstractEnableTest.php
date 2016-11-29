@@ -33,7 +33,7 @@ class AbstractEnableTest extends \PHPUnit_Framework_TestCase
     {
         $objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
 
-        $this->elementMock = $this->getMockBuilder(\Magento\Framework\Data\Form\Element\AbstractElement::class)
+        $this->elementMock = $this->getMockBuilder('Magento\Framework\Data\Form\Element\AbstractElement')
             ->setMethods(
                 [
                     'getHtmlId',
@@ -44,7 +44,7 @@ class AbstractEnableTest extends \PHPUnit_Framework_TestCase
             ->getMockForAbstractClass();
 
         $this->abstractEnable = $objectManager->getObject(
-            \Magento\Paypal\Test\Unit\Block\Adminhtml\System\Config\Field\Enable\AbstractEnable\Stub::class
+            'Magento\Paypal\Test\Unit\Block\Adminhtml\System\Config\Field\Enable\AbstractEnable\Stub'
         );
     }
 
@@ -65,7 +65,7 @@ class AbstractEnableTest extends \PHPUnit_Framework_TestCase
      */
     public function testRender()
     {
-        $formMock = $this->getMockBuilder(\Magento\Framework\Data\Form::class)
+        $formMock = $this->getMockBuilder('Magento\Framework\Data\Form')
             ->setMethods(['getFieldNameSuffix'])
             ->disableOriginalConstructor()
             ->getMock();

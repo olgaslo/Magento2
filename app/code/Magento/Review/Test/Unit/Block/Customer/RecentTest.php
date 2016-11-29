@@ -32,8 +32,8 @@ class RecentTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->storeManager = $this->getMock(\Magento\Store\Model\StoreManagerInterface::class);
-        $this->context = $this->getMock(\Magento\Framework\View\Element\Template\Context::class, [], [], '', false);
+        $this->storeManager = $this->getMock('\Magento\Store\Model\StoreManagerInterface');
+        $this->context = $this->getMock('Magento\Framework\View\Element\Template\Context', [], [], '', false);
         $this->context->expects(
             $this->any()
         )->method(
@@ -42,14 +42,14 @@ class RecentTest extends \PHPUnit_Framework_TestCase
             $this->returnValue($this->storeManager)
         );
         $this->collection = $this->getMock(
-            \Magento\Review\Model\ResourceModel\Review\Product\Collection::class,
+            'Magento\Review\Model\ResourceModel\Review\Product\Collection',
             [],
             [],
             '',
             false
         );
         $this->collectionFactory = $this->getMock(
-            \Magento\Review\Model\ResourceModel\Review\Product\CollectionFactory::class,
+            'Magento\Review\Model\ResourceModel\Review\Product\CollectionFactory',
             ['create'],
             [],
             '',
@@ -63,7 +63,7 @@ class RecentTest extends \PHPUnit_Framework_TestCase
             $this->returnValue($this->collection)
         );
         $this->currentCustomer = $this->getMock(
-            \Magento\Customer\Helper\Session\CurrentCustomer::class,
+            'Magento\Customer\Helper\Session\CurrentCustomer',
             [],
             [],
             '',
@@ -72,7 +72,7 @@ class RecentTest extends \PHPUnit_Framework_TestCase
 
         $this->objectManagerHelper = new ObjectManagerHelper($this);
         $this->object = $this->objectManagerHelper->getObject(
-            \Magento\Review\Block\Customer\Recent::class,
+            'Magento\Review\Block\Customer\Recent',
             [
                 'context' => $this->context,
                 'collectionFactory' => $this->collectionFactory,

@@ -70,7 +70,7 @@ class Checkout
      *
      * @var string
      */
-    protected $_apiType = \Magento\Paypal\Model\Api\Nvp::class;
+    protected $_apiType = 'Magento\Paypal\Model\Api\Nvp';
 
     /**
      * Payment method type

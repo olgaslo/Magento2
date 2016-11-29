@@ -13,7 +13,7 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
     public function testGetResultingIds()
     {
         $collection = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create(
-            \Magento\Review\Model\ResourceModel\Review\Product\Collection::class
+            'Magento\Review\Model\ResourceModel\Review\Product\Collection'
         );
         $collection->addStatusFilter(\Magento\Review\Model\Review::STATUS_APPROVED);
         $actual = $collection->getResultingIds();

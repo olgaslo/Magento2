@@ -28,11 +28,11 @@ class WriterTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
-        $this->resource = $this->getMockBuilder(\Magento\Framework\App\Config\ConfigResource\ConfigInterface::class)
+        $this->resource = $this->getMockBuilder('Magento\Framework\App\Config\ConfigResource\ConfigInterface')
             ->disableOriginalConstructor()
             ->getMock();
         $this->model = $this->objectManager->getObject(
-            \Magento\Framework\App\Config\Storage\Writer::class,
+            'Magento\Framework\App\Config\Storage\Writer',
             ['resource' => $this->resource]
         );
     }

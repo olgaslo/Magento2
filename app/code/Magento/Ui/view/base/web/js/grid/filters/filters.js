@@ -31,11 +31,7 @@ define([
      * @returns {Object}
      */
     function removeEmpty(data) {
-        var result = utils.mapRecursive(data, utils.removeEmptyValues.bind(utils));
-
-        return utils.mapRecursive(result, function (value) {
-            return _.isString(value) ? value.trim() : value;
-        });
+        return utils.mapRecursive(data, utils.removeEmptyValues.bind(utils));
     }
 
     return Collection.extend({

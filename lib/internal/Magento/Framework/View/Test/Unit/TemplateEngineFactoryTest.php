@@ -20,22 +20,22 @@ class TemplateEngineFactoryTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->_objectManagerMock = $this->getMock(\Magento\Framework\ObjectManagerInterface::class);
+        $this->_objectManagerMock = $this->getMock('Magento\Framework\ObjectManagerInterface');
         $this->_factory = new TemplateEngineFactory(
             $this->_objectManagerMock,
-            ['test' => \Fixture\Module\Model\TemplateEngine::class]
+            ['test' => 'Fixture\Module\Model\TemplateEngine']
         );
     }
 
     public function testCreateKnownEngine()
     {
-        $engine = $this->getMock(\Magento\Framework\View\TemplateEngineInterface::class);
+        $engine = $this->getMock('Magento\Framework\View\TemplateEngineInterface');
         $this->_objectManagerMock->expects(
             $this->once()
         )->method(
             'create'
         )->with(
-            \Fixture\Module\Model\TemplateEngine::class
+            'Fixture\Module\Model\TemplateEngine'
         )->will(
             $this->returnValue($engine)
         );
@@ -63,7 +63,7 @@ class TemplateEngineFactoryTest extends \PHPUnit_Framework_TestCase
         )->method(
             'create'
         )->with(
-            \Fixture\Module\Model\TemplateEngine::class
+            'Fixture\Module\Model\TemplateEngine'
         )->will(
             $this->returnValue(new \stdClass())
         );

@@ -76,11 +76,6 @@ class PluginList extends Scoped implements InterceptionPluginList
     protected $_pluginInstances = [];
 
     /**
-     * @var \Psr\Log\LoggerInterface
-     */
-    private $logger;
-
-    /**
      * @param ReaderInterface $reader
      * @param ScopeInterface $configScope
      * @param CacheInterface $cache
@@ -154,7 +149,6 @@ class PluginList extends Scoped implements InterceptionPluginList
             }
             $this->_inherited[$type] = null;
             if (is_array($plugins) && count($plugins)) {
-                $this->filterPlugins($plugins);
                 uasort($plugins, [$this, '_sort']);
                 $this->trimInstanceStartingBackslash($plugins);
                 $this->_inherited[$type] = $plugins;
@@ -276,8 +270,8 @@ class PluginList extends Scoped implements InterceptionPluginList
             $data = $this->_cache->load($cacheId);
             if ($data) {
                 list($this->_data, $this->_inherited, $this->_processed) = unserialize($data);
-                foreach ($this->_scopePriorityScheme as $scopeCode) {
-                    $this->_loadedScopes[$scopeCode] = true;
+                foreach ($this->_scopePriorityScheme as $scope) {
+                    $this->_loadedScopes[$scope] = true;
                 }
             } else {
                 $virtualTypes = [];
@@ -285,17 +279,18 @@ class PluginList extends Scoped implements InterceptionPluginList
                     if (false == isset($this->_loadedScopes[$scopeCode])) {
                         $data = $this->_reader->read($scopeCode);
                         unset($data['preferences']);
-                        if (count($data) > 0) {
-                            $this->_inherited = [];
-                            $this->_processed = [];
-                            $this->merge($data);
-                            foreach ($data as $class => $config) {
-                                if (isset($config['type'])) {
-                                    $virtualTypes[] = $class;
-                                }
+                        if (!count($data)) {
+                            continue;
+                        }
+                        $this->_inherited = [];
+                        $this->_processed = [];
+                        $this->merge($data);
+                        $this->_loadedScopes[$scopeCode] = true;
+                        foreach ($data as $class => $config) {
+                            if (isset($config['type'])) {
+                                $virtualTypes[] = $class;
                             }
                         }
-                        $this->_loadedScopes[$scopeCode] = true;
                     }
                     if ($this->isCurrentScope($scopeCode)) {
                         break;
@@ -352,35 +347,5 @@ class PluginList extends Scoped implements InterceptionPluginList
                 }
             }
         }
-    }
-
-    /**
-     * Remove from list not existing plugins
-     *
-     * @param array $plugins
-     * @return void
-     */
-    private function filterPlugins(array &$plugins)
-    {
-        foreach ($plugins as $name => $plugin) {
-            if (empty($plugin['instance'])) {
-                unset($plugins[$name]);
-                $this->getLogger()->info("Reference to undeclared plugin with name '{$name}'.");
-            }
-        }
-    }
-
-    /**
-     * Returns logger instance
-     *
-     * @deprecated
-     * @return \Psr\Log\LoggerInterface
-     */
-    private function getLogger()
-    {
-        if ($this->logger === null) {
-            $this->logger = $this->_objectManager->get(\Psr\Log\LoggerInterface::class);
-        }
-        return $this->logger;
     }
 }

@@ -51,12 +51,12 @@ class FieldTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->uiComponentFactoryMock = $this->getMockBuilder(\Magento\Framework\View\Element\UiComponentFactory::class)
+        $this->uiComponentFactoryMock = $this->getMockBuilder('Magento\Framework\View\Element\UiComponentFactory')
             ->disableOriginalConstructor()
             ->getMock();
-        $this->contextMock = $this->getMockBuilder(\Magento\Framework\View\Element\UiComponent\ContextInterface::class)
+        $this->contextMock = $this->getMockBuilder('Magento\Framework\View\Element\UiComponent\ContextInterface')
             ->getMockForAbstractClass();
-        $processor = $this->getMockBuilder(\Magento\Framework\View\Element\UiComponent\Processor::class)
+        $processor = $this->getMockBuilder('Magento\Framework\View\Element\UiComponent\Processor')
             ->disableOriginalConstructor()
             ->getMock();
         $this->contextMock->expects($this->any())->method('getProcessor')->willReturn($processor);
@@ -128,7 +128,7 @@ class FieldTest extends \PHPUnit_Framework_TestCase
      */
     protected function getWrappedComponentMock()
     {
-        $wrappedComponentMock = $this->getMockBuilder(\Magento\Framework\View\Element\UiComponentInterface::class)
+        $wrappedComponentMock = $this->getMockBuilder('Magento\Framework\View\Element\UiComponentInterface')
             ->getMockForAbstractClass();
 
         $wrappedComponentMock->expects($this->any())
@@ -157,7 +157,7 @@ class FieldTest extends \PHPUnit_Framework_TestCase
      */
     protected function getComponentsMock()
     {
-        $componentMock = $this->getMockBuilder(\Magento\Framework\View\Element\UiComponentInterface::class)
+        $componentMock = $this->getMockBuilder('Magento\Framework\View\Element\UiComponentInterface')
             ->getMockForAbstractClass();
 
         return [$componentMock];

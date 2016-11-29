@@ -66,53 +66,44 @@ abstract class AbstractContainerTest extends \PHPUnit_Framework_TestCase
     {
         $this->objectManagerHelper = new ObjectManagerHelper($this);
 
-        $this->eventManagerMock = $this->getMockBuilder(\Magento\Framework\Event\Manager::class)
+        $this->eventManagerMock = $this->getMockBuilder('Magento\Framework\Event\Manager')
             ->setMethods(['dispatch'])
             ->disableOriginalConstructor()
             ->getMock();
-        $this->scopeConfigMock = $this->getMockBuilder(\Magento\Framework\App\Config::class)
+        $this->scopeConfigMock = $this->getMockBuilder('Magento\Framework\App\Config')
             ->setMethods(['getValue'])
             ->disableOriginalConstructor()
             ->getMock();
 
         $this->themeCollectionFactoryMock = $this->getMock(
-            \Magento\Theme\Model\ResourceModel\Theme\CollectionFactory::class,
+            'Magento\Theme\Model\ResourceModel\Theme\CollectionFactory',
             ['create'],
             [],
             '',
             false
         );
-        $this->themeCollectionMock = $this->getMockBuilder(\Magento\Theme\Model\ResourceModel\Theme\Collection::class)
+        $this->themeCollectionMock = $this->getMockBuilder('Magento\Theme\Model\ResourceModel\Theme\Collection')
             ->disableOriginalConstructor()
             ->setMethods(['getItemById'])
             ->getMock();
-        $this->themeMock = $this->getMockBuilder(
-            \Magento\Theme\Model\Theme::class
-        )->disableOriginalConstructor()->getMock();
+        $this->themeMock = $this->getMockBuilder('Magento\Theme\Model\Theme')->disableOriginalConstructor()->getMock();
 
         $this->layoutProcessorFactoryMock = $this->getMock(
-            \Magento\Framework\View\Layout\ProcessorFactory::class,
+            'Magento\Framework\View\Layout\ProcessorFactory',
             ['create'],
             [],
             '',
             false
         );
 
-        $this->layoutMergeMock = $this->getMockBuilder(\Magento\Framework\View\Model\Layout\Merge::class)
+        $this->layoutMergeMock = $this->getMockBuilder('Magento\Framework\View\Model\Layout\Merge')
             ->setMethods(['addPageHandles', 'load', 'getContainers'])
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->escaperMock = $this->getMock(
-            \Magento\Framework\Escaper::class,
-            ['escapeHtml', 'escapeHtmlAttr'],
-            [],
-            '',
-            false
-        );
-        $this->escaperMock->expects($this->any())->method('escapeHtmlAttr')->willReturnArgument(0);
+        $this->escaperMock = $this->getMock('Magento\Framework\Escaper', ['escapeHtml'], [], '', false);
 
-        $this->contextMock = $this->getMockBuilder(\Magento\Backend\Block\Context::class)
+        $this->contextMock = $this->getMockBuilder('Magento\Backend\Block\Context')
             ->setMethods(['getEventManager', 'getScopeConfig', 'getEscaper'])
             ->disableOriginalConstructor()
             ->getMock();

@@ -168,7 +168,7 @@ class AlternativeSourceTest extends \PHPUnit_Framework_TestCase
     {
         $alternatives = [
             'processor' => [
-                AlternativeSource::PROCESSOR_CLASS => \Magento\Framework\View\Asset\ContentProcessorInterface::class
+                AlternativeSource::PROCESSOR_CLASS => 'Magento\Framework\View\Asset\ContentProcessorInterface'
             ]
         ];
 
@@ -216,7 +216,7 @@ class AlternativeSourceTest extends \PHPUnit_Framework_TestCase
 
         $this->objectManagerMock->expects(self::once())
             ->method('get')
-            ->with(\Magento\Framework\View\Asset\ContentProcessorInterface::class)
+            ->with('Magento\Framework\View\Asset\ContentProcessorInterface')
             ->willReturn($this->getProcessorMock($assetMock));
 
         $alternativeSource = new AlternativeSource(

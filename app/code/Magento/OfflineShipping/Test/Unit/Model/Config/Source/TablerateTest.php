@@ -19,16 +19,15 @@ class TablerateTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->carrierTablerateMock = $this->getMockBuilder(\Magento\OfflineShipping\Model\Carrier\Tablerate::class)
+        $this->carrierTablerateMock = $this->getMockBuilder('\Magento\OfflineShipping\Model\Carrier\Tablerate')
             ->disableOriginalConstructor()
             ->setMethods(['getCode'])
             ->getMock();
 
         $helper = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
-        $this->model = $helper->getObject(
-            \Magento\OfflineShipping\Model\Config\Source\Tablerate::class,
-            ['carrierTablerate' => $this->carrierTablerateMock]
-        );
+        $this->model = $helper->getObject('Magento\OfflineShipping\Model\Config\Source\Tablerate', [
+            'carrierTablerate' => $this->carrierTablerateMock
+        ]);
     }
 
     public function testToOptionArray()

@@ -19,6 +19,6 @@ abstract class Giftmessage extends \Magento\Backend\App\Action
      */
     protected function _getGiftmessageSaveModel()
     {
-        return $this->_objectManager->get(\Magento\GiftMessage\Model\Save::class);
+        return $this->_objectManager->get('Magento\GiftMessage\Model\Save');
     }
 }

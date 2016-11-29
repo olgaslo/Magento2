@@ -33,10 +33,8 @@ class DictionaryTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->objectManager = Bootstrap::getObjectManager();
-        $this->directoryFactory = $this->objectManager->create(
-            \Magento\Framework\Filesystem\Directory\ReadFactory::class
-        );
-        $this->configFactory = $this->objectManager->create(\Magento\Framework\App\Language\ConfigFactory::class);
+        $this->directoryFactory = $this->objectManager->create('Magento\Framework\Filesystem\Directory\ReadFactory');
+        $this->configFactory = $this->objectManager->create('Magento\Framework\App\Language\ConfigFactory');
     }
 
     /**
@@ -48,7 +46,7 @@ class DictionaryTest extends \PHPUnit_Framework_TestCase
     public function testDictionaryGetter($languageCode, $expectation)
     {
         $this->model = $this->objectManager->create(
-            \Magento\Framework\App\Language\Dictionary::class,
+            'Magento\Framework\App\Language\Dictionary',
             ['directoryReadFactory' => $this->directoryFactory, 'configFactory' => $this->configFactory]
         );
         $result = $this->model->getDictionary($languageCode);

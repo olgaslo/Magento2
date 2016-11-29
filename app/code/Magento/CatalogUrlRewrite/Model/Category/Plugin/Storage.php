@@ -33,13 +33,14 @@ class Storage
 
     /**
      * @param \Magento\UrlRewrite\Model\StorageInterface $object
-     * @param null $result
-     * @param \Magento\UrlRewrite\Service\V1\Data\UrlRewrite[] $urls
+     * @param callable $proceed
+     * @param array $urls
      * @return void
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function afterReplace(StorageInterface $object, $result, array $urls)
+    public function aroundReplace(StorageInterface $object, \Closure $proceed, array $urls)
     {
+        $proceed($urls);
         $toSave = [];
         foreach ($this->filterUrls($urls) as $record) {
             $metadata = $record->getMetadata();

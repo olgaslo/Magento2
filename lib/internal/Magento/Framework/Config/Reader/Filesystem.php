@@ -96,7 +96,7 @@ class Filesystem implements \Magento\Framework\Config\ReaderInterface
         \Magento\Framework\Config\ValidationStateInterface $validationState,
         $fileName,
         $idAttributes = [],
-        $domDocumentClass = \Magento\Framework\Config\Dom::class,
+        $domDocumentClass = 'Magento\Framework\Config\Dom',
         $defaultScope = 'global'
     ) {
         $this->_fileResolver = $fileResolver;

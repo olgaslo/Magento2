@@ -61,8 +61,10 @@ class ConfigurablePrice extends AbstractModifier
                                 'arguments' => [
                                     'data' => [
                                         'config' => [
-                                            'component' => 'Magento_ConfigurableProduct/js/' .
-                                                'components/price-configurable'
+                                            'imports' => [
+                                                'disabled' => '!ns = ${ $.ns }, index = '
+                                                    . ConfigurablePanel::CONFIGURABLE_MATRIX . ':isEmpty',
+                                            ],
                                         ],
                                     ],
                                 ],
@@ -77,6 +79,8 @@ class ConfigurablePrice extends AbstractModifier
                     ? ['visible' => 0, 'disabled' => 1]
                     : [
                         'imports' => [
+                            'disabled' => '!ns = ${ $.ns }, index = '
+                                . ConfigurablePanel::CONFIGURABLE_MATRIX . ':isEmpty',
                             'visible' => 'ns = ${ $.ns }, index = '
                                 . ConfigurablePanel::CONFIGURABLE_MATRIX . ':isEmpty',
                         ]

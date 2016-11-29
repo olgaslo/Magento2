@@ -8,8 +8,6 @@ namespace Magento\Webapi\Model;
 
 use Magento\Webapi\Model\Cache\Type\Webapi as WebapiCache;
 use Magento\Webapi\Model\Config\Reader;
-use Magento\Framework\App\ObjectManager;
-use Magento\Framework\Serialize\SerializerInterface;
 
 /**
  * Web API Config Model.
@@ -43,25 +41,15 @@ class Config
     protected $services;
 
     /**
-     * @var SerializerInterface
-     */
-    private $serializer;
-
-    /**
      * Initialize dependencies.
      *
      * @param WebapiCache $cache
      * @param Reader $configReader
-     * @param SerializerInterface|null $serializer
      */
-    public function __construct(
-        WebapiCache $cache,
-        Reader $configReader,
-        SerializerInterface $serializer = null
-    ) {
+    public function __construct(WebapiCache $cache, Reader $configReader)
+    {
         $this->cache = $cache;
         $this->configReader = $configReader;
-        $this->serializer = $serializer ?: ObjectManager::getInstance()->get(SerializerInterface::class);
     }
 
     /**
@@ -74,10 +62,10 @@ class Config
         if (null === $this->services) {
             $services = $this->cache->load(self::CACHE_ID);
             if ($services && is_string($services)) {
-                $this->services = $this->serializer->unserialize($services);
+                $this->services = unserialize($services);
             } else {
                 $this->services = $this->configReader->read();
-                $this->cache->save($this->serializer->serialize($this->services), self::CACHE_ID);
+                $this->cache->save(serialize($this->services), self::CACHE_ID);
             }
         }
         return $this->services;

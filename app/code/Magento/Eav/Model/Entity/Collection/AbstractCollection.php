@@ -1175,11 +1175,7 @@ abstract class AbstractCollection extends AbstractDb implements SourceProviderIn
         foreach ($selectGroups as $selects) {
             if (!empty($selects)) {
                 try {
-                    if (is_array($selects)) {
-                        $select = implode(' UNION ALL ', $selects);
-                    } else {
-                        $select = $selects;
-                    }
+                    $select = implode(' UNION ALL ', $selects);
                     $values = $this->getConnection()->fetchAll($select);
                 } catch (\Exception $e) {
                     $this->printLogQuery(true, true, $select);

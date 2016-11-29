@@ -602,9 +602,7 @@ abstract class AbstractProduct extends \Magento\Rule\Model\Condition\AbstractCon
      */
     public function getMappedSqlField()
     {
-        if ($this->getAttribute() == 'sku') {
-            $mappedSqlField = 'e.sku';
-        } elseif (!$this->isAttributeSetOrCategory()) {
+        if (!$this->isAttributeSetOrCategory()) {
             $mappedSqlField = $this->getEavAttributeTableAlias() . '.value';
         } elseif ($this->getAttribute() == 'category_ids') {
             $mappedSqlField = 'e.entity_id';

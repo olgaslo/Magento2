@@ -19,6 +19,26 @@ class ConfigurableOptionsProvider implements ConfigurableOptionsProviderInterfac
     private $configurable;
 
     /**
+     * @var RequestSafetyInterface
+     */
+    private $requestSafety;
+
+    /**
+     * @var ResourceConnection
+     */
+    private $resource;
+
+    /**
+     * @var LinkedProductSelectBuilderInterface
+     */
+    private $linkedProductSelectBuilder;
+
+    /**
+     * @var CollectionFactory
+     */
+    private $collectionFactory;
+
+    /**
      * @var ProductInterface[]
      */
     private $products;
@@ -29,7 +49,6 @@ class ConfigurableOptionsProvider implements ConfigurableOptionsProviderInterfac
      * @param LinkedProductSelectBuilderInterface $linkedProductSelectBuilder
      * @param CollectionFactory $collectionFactory
      * @param RequestSafetyInterface $requestSafety
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function __construct(
         Configurable $configurable,
@@ -39,6 +58,10 @@ class ConfigurableOptionsProvider implements ConfigurableOptionsProviderInterfac
         RequestSafetyInterface $requestSafety
     ) {
         $this->configurable = $configurable;
+        $this->resource = $resourceConnection;
+        $this->linkedProductSelectBuilder = $linkedProductSelectBuilder;
+        $this->collectionFactory = $collectionFactory;
+        $this->requestSafety = $requestSafety;
     }
 
     /**
@@ -47,7 +70,17 @@ class ConfigurableOptionsProvider implements ConfigurableOptionsProviderInterfac
     public function getProducts(ProductInterface $product)
     {
         if (!isset($this->products[$product->getId()])) {
-            $this->products[$product->getId()] = $this->configurable->getUsedProducts($product);
+            if ($this->requestSafety->isSafeMethod()) {
+                $productIds = $this->resource->getConnection()->fetchCol(
+                    '(' . implode(') UNION (', $this->linkedProductSelectBuilder->build($product->getId())) . ')'
+                );
+
+                $this->products[$product->getId()] = $this->collectionFactory->create()
+                    ->addAttributeToSelect(['price', 'special_price'])
+                    ->addIdFilter($productIds);
+            } else {
+                $this->products[$product->getId()] = $this->configurable->getUsedProducts($product);
+            }
         }
         return $this->products[$product->getId()];
     }

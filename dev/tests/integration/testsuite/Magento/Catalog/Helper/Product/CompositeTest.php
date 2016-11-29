@@ -27,8 +27,8 @@ class CompositeTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->helper = Bootstrap::getObjectManager()->get(\Magento\Catalog\Helper\Product\Composite::class);
-        $this->registry = Bootstrap::getObjectManager()->get(\Magento\Framework\Registry::class);
+        $this->helper = Bootstrap::getObjectManager()->get('Magento\Catalog\Helper\Product\Composite');
+        $this->registry = Bootstrap::getObjectManager()->get('Magento\Framework\Registry');
     }
 
     protected function tearDown()
@@ -46,9 +46,7 @@ class CompositeTest extends \PHPUnit_Framework_TestCase
     public function testRenderConfigureResult()
     {
         /** @var \Magento\Catalog\Api\ProductRepositoryInterface $productRepository */
-        $productRepository = Bootstrap::getObjectManager()->create(
-            \Magento\Catalog\Api\ProductRepositoryInterface::class
-        );
+        $productRepository = Bootstrap::getObjectManager()->create('Magento\Catalog\Api\ProductRepositoryInterface');
         /** @var $product \Magento\Catalog\Model\Product */
         $product = $productRepository->get('simple');
 

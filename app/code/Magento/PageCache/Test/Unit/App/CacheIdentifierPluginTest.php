@@ -39,15 +39,15 @@ class CacheIdentifierPluginTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->designExceptionsMock = $this->getMock(
-            \Magento\Framework\View\DesignExceptions::class,
+            'Magento\Framework\View\DesignExceptions',
             ['getThemeByRequest'],
             [],
             '',
             false
         );
-        $this->requestMock = $this->getMock(\Magento\Framework\App\Request\Http::class, [], [], '', false);
+        $this->requestMock = $this->getMock('Magento\Framework\App\Request\Http', [], [], '', false);
         $this->pageCacheConfigMock = $this->getMock(
-            \Magento\PageCache\Model\Config::class,
+            'Magento\PageCache\Model\Config',
             ['getType', 'isEnabled'],
             [],
             '',
@@ -73,7 +73,7 @@ class CacheIdentifierPluginTest extends \PHPUnit_Framework_TestCase
      */
     public function testAfterGetValue($cacheType, $isPageCacheEnabled, $result, $uaException, $expected)
     {
-        $identifierMock = $this->getMock(\Magento\Framework\App\PageCache\Identifier::class, [], [], '', false);
+        $identifierMock = $this->getMock('Magento\Framework\App\PageCache\Identifier', [], [], '', false);
 
         $this->pageCacheConfigMock->expects($this->once())
             ->method('getType')

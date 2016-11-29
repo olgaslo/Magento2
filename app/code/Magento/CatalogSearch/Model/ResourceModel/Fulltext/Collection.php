@@ -153,7 +153,7 @@ class Collection extends \Magento\Catalog\Model\ResourceModel\Product\Collection
         $this->queryFactory = $catalogSearchData;
         if ($searchResultFactory === null) {
             $this->searchResultFactory = \Magento\Framework\App\ObjectManager::getInstance()
-                ->get(\Magento\Framework\Api\Search\SearchResultFactory::class);
+                ->get('Magento\Framework\Api\Search\SearchResultFactory');
         }
         parent::__construct(
             $entityFactory,
@@ -190,7 +190,7 @@ class Collection extends \Magento\Catalog\Model\ResourceModel\Product\Collection
     private function getSearch()
     {
         if ($this->search === null) {
-            $this->search = ObjectManager::getInstance()->get(\Magento\Search\Api\SearchInterface::class);
+            $this->search = ObjectManager::getInstance()->get('\Magento\Search\Api\SearchInterface');
         }
         return $this->search;
     }
@@ -213,7 +213,7 @@ class Collection extends \Magento\Catalog\Model\ResourceModel\Product\Collection
     {
         if ($this->searchCriteriaBuilder === null) {
             $this->searchCriteriaBuilder = ObjectManager::getInstance()
-                ->get(\Magento\Framework\Api\Search\SearchCriteriaBuilder::class);
+                ->get('\Magento\Framework\Api\Search\SearchCriteriaBuilder');
         }
         return $this->searchCriteriaBuilder;
     }
@@ -235,7 +235,7 @@ class Collection extends \Magento\Catalog\Model\ResourceModel\Product\Collection
     private function getFilterBuilder()
     {
         if ($this->filterBuilder === null) {
-            $this->filterBuilder = ObjectManager::getInstance()->get(\Magento\Framework\Api\FilterBuilder::class);
+            $this->filterBuilder = ObjectManager::getInstance()->get('\Magento\Framework\Api\FilterBuilder');
         }
         return $this->filterBuilder;
     }
@@ -265,7 +265,7 @@ class Collection extends \Magento\Catalog\Model\ResourceModel\Product\Collection
 
         $this->getSearchCriteriaBuilder();
         $this->getFilterBuilder();
-        if (!is_array($condition) || !in_array(key($condition), ['from', 'to'], true)) {
+        if (!is_array($condition) || !in_array(key($condition), ['from', 'to'])) {
             $this->filterBuilder->setField($field);
             $this->filterBuilder->setValue($condition);
             $this->searchCriteriaBuilder->addFilter($this->filterBuilder->create());
@@ -371,7 +371,7 @@ class Collection extends \Magento\Catalog\Model\ResourceModel\Product\Collection
     public function setOrder($attribute, $dir = Select::SQL_DESC)
     {
         $this->order = ['field' => $attribute, 'dir' => $dir];
-        if ($attribute !== 'relevance') {
+        if ($attribute != 'relevance') {
             parent::setOrder($attribute, $dir);
         }
         return $this;

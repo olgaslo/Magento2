@@ -22,13 +22,13 @@ class ConverterTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->resourceProviderMock = $this->getMockBuilder(\Magento\Framework\Acl\AclResource\ProviderInterface::class)
+        $this->resourceProviderMock = $this->getMockBuilder('Magento\Framework\Acl\AclResource\ProviderInterface')
             ->disableOriginalConstructor()
             ->setMethods([])
             ->getMock();
         $objectManagerHelper = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
         $this->model = $objectManagerHelper->getObject(
-            \Magento\Integration\Model\Config\Consolidated\Converter::class,
+            'Magento\Integration\Model\Config\Consolidated\Converter',
             [
                 'resourceProvider' => $this->resourceProviderMock
             ]

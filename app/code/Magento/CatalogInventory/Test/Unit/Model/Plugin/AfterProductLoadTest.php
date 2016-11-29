@@ -33,9 +33,8 @@ class AfterProductLoadTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $stockRegistryMock = $this->getMock(\Magento\CatalogInventory\Api\StockRegistryInterface::class);
-        $this->productExtensionFactoryMock = $this->getMockBuilder(
-            \Magento\Catalog\Api\Data\ProductExtensionFactory::class)
+        $stockRegistryMock = $this->getMock('\Magento\CatalogInventory\Api\StockRegistryInterface');
+        $this->productExtensionFactoryMock = $this->getMockBuilder('\Magento\Catalog\Api\Data\ProductExtensionFactory')
             ->setMethods(['create'])
             ->disableOriginalConstructor()
             ->getMock();
@@ -46,14 +45,14 @@ class AfterProductLoadTest extends \PHPUnit_Framework_TestCase
         );
 
         $productId = 5494;
-        $stockItemMock = $this->getMock(\Magento\CatalogInventory\Api\Data\StockItemInterface::class);
+        $stockItemMock = $this->getMock('\Magento\CatalogInventory\Api\Data\StockItemInterface');
 
         $stockRegistryMock->expects($this->once())
             ->method('getStockItem')
             ->with($productId)
             ->willReturn($stockItemMock);
 
-        $this->productExtensionMock = $this->getMockBuilder(\Magento\Catalog\Api\Data\ProductExtension::class)
+        $this->productExtensionMock = $this->getMockBuilder('\Magento\Catalog\Api\Data\ProductExtension')
             ->setMethods(['setStockItem'])
             ->getMock();
         $this->productExtensionMock->expects($this->once())
@@ -61,7 +60,7 @@ class AfterProductLoadTest extends \PHPUnit_Framework_TestCase
             ->with($stockItemMock)
             ->willReturnSelf();
 
-        $this->productMock = $this->getMockBuilder(\Magento\Catalog\Model\Product::class)
+        $this->productMock = $this->getMockBuilder('\Magento\Catalog\Model\Product')
             ->disableOriginalConstructor()
             ->getMock();
         $this->productMock->expects($this->once())

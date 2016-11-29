@@ -34,12 +34,12 @@ class ShipmentIdentityTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->scopeConfigInterfaceMock = $this->getMockForAbstractClass(
-            \Magento\Framework\App\Config\ScopeConfigInterface::class
+            '\Magento\Framework\App\Config\ScopeConfigInterface'
         );
-        $this->storeManagerMock = $this->getMock(\Magento\Store\Model\StoreManagerInterface::class);
+        $this->storeManagerMock = $this->getMock('Magento\Store\Model\StoreManagerInterface');
 
         $this->storeMock = $this->getMock(
-            \Magento\Store\Model\Store::class,
+            '\Magento\Store\Model\Store',
             ['getStoreId', '__wakeup'],
             [],
             '',

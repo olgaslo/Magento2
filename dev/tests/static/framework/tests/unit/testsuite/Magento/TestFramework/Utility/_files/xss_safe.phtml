@@ -10,17 +10,16 @@
 <?php /* @escapeNotVerified */ echo $block->getSomeData();?>
 <?php /* @noEscape */ echo $block->getSomeData();?>
 <input name="form_key" type="hidden" value="<?php echo $block->escapeUrl($var) ?>" />
-<input name="form_key" type="hidden" value="<?php echo $block->escapeHtmlAttr('value') ?>" />
-<input name="form_key" type="hidden" value="<?php echo $block->escapeJs('value') ?>" />
-<?php echo $block->escapeCss('value') ?>
+<input name="form_key" type="hidden" value="<?php echo $block->escapeQuote('bla') ?>" />
+<input name="form_key" type="hidden" value="<?php echo $block->escapeXssInUrl("bla bla") ?>" />
 echo $var;
-<?php echo $block->getHtmlId("some value") ?>
-<?php echo $block->getIdHtml("some value") ?>
-<?= $block->getIdHtml("some value"); ?>
+<?php echo $block->getHtmlId("bla bla") ?>
+<?php echo $block->getIdHtml("bla bla") ?>
+<?= $block->getIdHtml("bla bla"); ?>
 <?php echo "\$var1"; ?>
 <?php echo '$var'; ?>
-<?php echo "value"; ?>
-<?php echo 'value'; ?>
+<?php echo "bla"; ?>
+<?php echo 'bla'; ?>
 <?php echo (int)$var; ?>
 <?php echo (bool)$var; ?>
 <?php echo count($var); ?>
@@ -28,9 +27,9 @@ echo $var;
 <?php pecho($var);?>
 <?php echo $object->methodHtml() .
     (bool)$var .
-    $block->escapeUrl("some value");
+    $block->escapeXssInUrl("bla bla");
 ?>
-<?php /* @noEscape */ echo '\'' . $code . '\',\'' . $block->escapeHtml($data['parentSymbol']) . '\''; ?>
+<?php /* @noEscape */ echo '\'' . $code . '\',\'' . $block->escapeQuote($data['parentSymbol']) . '\''; ?>
 <?= $block->getExtendedElement($switchAttributeCode)->toHtml(); ?>
 <?= $block->escapeHtml($_filter->getFilter()->getClearLinkText()) ?>
 <?php
@@ -44,5 +43,3 @@ echo $var;
 /* foreach ($block->getColumns() as $_column): ?>
     <col <?php echo $_column->getProperty() ?> />
 <?php endforeach; */ ?>
-
-<?php echo $block->escapeHtmlAttr($block->getParamValue('title_' . $store['value'])); ?>

@@ -27,23 +27,23 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->_fileResolverMock = $this->getMock(
-            \Magento\Framework\App\Config\FileResolver::class,
+            'Magento\Framework\App\Config\FileResolver',
             ['get'],
             [],
             '',
             false
         );
 
-        $this->_converter = $this->getMock(\Magento\Framework\Mview\Config\Converter::class, ['convert']);
+        $this->_converter = $this->getMock('Magento\Framework\Mview\Config\Converter', ['convert']);
 
-        $urnResolverMock = $this->getMock(\Magento\Framework\Config\Dom\UrnResolver::class, [], [], '', false);
+        $urnResolverMock = $this->getMock('Magento\Framework\Config\Dom\UrnResolver', [], [], '', false);
         $urnResolverMock->expects($this->once())
             ->method('getRealPath')
             ->with('urn:magento:framework:Mview/etc/mview.xsd')
             ->willReturn('test_folder');
         $schemaLocator = new \Magento\Framework\Mview\Config\SchemaLocator($urnResolverMock);
 
-        $validationState = $this->getMock(\Magento\Framework\Config\ValidationStateInterface::class);
+        $validationState = $this->getMock('Magento\Framework\Config\ValidationStateInterface');
         $validationState->expects($this->any())
             ->method('isValidationRequired')
             ->willReturn(false);

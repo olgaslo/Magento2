@@ -29,11 +29,11 @@ class SearchResultProcessorTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->searchCriteriaMock = $this->getMockBuilder(\Magento\Framework\Api\CriteriaInterface::class)
+        $this->searchCriteriaMock = $this->getMockBuilder('Magento\Framework\Api\CriteriaInterface')
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->searchResultCollectionMock = $this->getMockBuilder(\Magento\Framework\Data\AbstractSearchResult::class)
+        $this->searchResultCollectionMock = $this->getMockBuilder('Magento\Framework\Data\AbstractSearchResult')
             ->disableOriginalConstructor()
             ->setMethods(['getSearchCriteria', 'getItems', 'getItemId'])
             ->getMockForAbstractClass();

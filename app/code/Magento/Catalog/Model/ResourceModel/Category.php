@@ -34,11 +34,6 @@ class Category extends AbstractResource
     protected $_categoryProductTable;
 
     /**
-     * @var array[]
-     */
-    private $entitiesWhereAttributesIs;
-
-    /**
      * Id of 'is_active' category attribute
      *
      * @var int
@@ -238,9 +233,7 @@ class Category extends AbstractResource
         if (!$object->getChildrenCount()) {
             $object->setChildrenCount(0);
         }
-        $object->setAttributeSetId(
-            $object->getAttributeSetId() ?: $this->getEntityType()->getDefaultAttributeSetId()
-        );
+
         if ($object->isObjectNew()) {
             if ($object->getPosition() === null) {
                 $object->setPosition($this->_getMaxPosition($object->getPath()) + 1);
@@ -580,29 +573,22 @@ class Category extends AbstractResource
      */
     public function findWhereAttributeIs($entityIdsFilter, $attribute, $expectedValue)
     {
-        $entityIdsFilterHash = md5(serialize($entityIdsFilter));
-
-        if (!isset($this->entitiesWhereAttributesIs[$entityIdsFilterHash][$attribute->getId()][$expectedValue])) {
-            $linkField = $this->getLinkField();
-            $bind = ['attribute_id' => $attribute->getId(), 'value' => $expectedValue];
-            $selectEntities = $this->getConnection()->select()->from(
-                ['ce' => $this->getTable('catalog_category_entity')],
-                ['entity_id']
-            )->joinLeft(
-                ['ci' => $attribute->getBackend()->getTable()],
-                "ci.{$linkField} = ce.{$linkField} AND attribute_id = :attribute_id",
-                ['value']
-            )->where(
-                'ci.value = :value'
-            )->where(
-                'ce.entity_id IN (?)',
-                $entityIdsFilter
-            );
-            $this->entitiesWhereAttributesIs[$entityIdsFilterHash][$attribute->getId()][$expectedValue] =
-                $this->getConnection()->fetchCol($selectEntities, $bind);
-        }
-
-        return $this->entitiesWhereAttributesIs[$entityIdsFilterHash][$attribute->getId()][$expectedValue];
+        $linkField = $this->getLinkField();
+        $bind = ['attribute_id' => $attribute->getId(), 'value' => $expectedValue];
+        $selectEntities = $this->getConnection()->select()->from(
+            ['ce' => $this->getTable('catalog_category_entity')],
+            ['entity_id']
+        )->joinLeft(
+            ['ci' => $attribute->getBackend()->getTable()],
+            "ci.{$linkField} = ce.{$linkField} AND attribute_id = :attribute_id",
+            ['value']
+        )->where(
+            'ci.value = :value'
+        )->where(
+            'ce.entity_id IN (?)',
+            $entityIdsFilter
+        );
+        return $this->getConnection()->fetchCol($selectEntities, $bind);
     }
 
     /**
@@ -1047,7 +1033,7 @@ class Category extends AbstractResource
     {
         if (null === $this->entityManager) {
             $this->entityManager = \Magento\Framework\App\ObjectManager::getInstance()
-                ->get(\Magento\Framework\EntityManager\EntityManager::class);
+                ->get('Magento\Framework\EntityManager\EntityManager');
         }
         return $this->entityManager;
     }
@@ -1059,7 +1045,7 @@ class Category extends AbstractResource
     {
         if (null === $this->aggregateCount) {
             $this->aggregateCount = \Magento\Framework\App\ObjectManager::getInstance()
-                ->get(\Magento\Catalog\Model\ResourceModel\Category\AggregateCount::class);
+                ->get('Magento\Catalog\Model\ResourceModel\Category\AggregateCount');
         }
         return $this->aggregateCount;
     }

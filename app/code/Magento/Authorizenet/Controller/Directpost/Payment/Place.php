@@ -15,7 +15,6 @@ use Magento\Framework\DataObject;
 use Magento\Framework\Registry;
 use Magento\Payment\Model\IframeConfigProvider;
 use Magento\Quote\Api\CartManagementInterface;
-use Magento\Framework\Exception\LocalizedException;
 
 /**
  * Class Place
@@ -126,9 +125,6 @@ class Place extends Payment
                     'action' => $this
                 ]
             );
-        } catch (LocalizedException $exception) {
-            $result->setData('error', true);
-            $result->setData('error_messages', $exception->getMessage());
         } catch (\Exception $exception) {
             $result->setData('error', true);
             $result->setData(

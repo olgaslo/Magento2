@@ -13,9 +13,7 @@ class SourceTest extends \PHPUnit_Framework_TestCase
     public function testToOptionArray()
     {
         /** @var \Magento\Tax\Model\ResourceModel\Calculation\Rate\Collection $collection */
-        $collection = Bootstrap::getObjectManager()->get(
-            \Magento\Tax\Model\ResourceModel\Calculation\Rate\Collection::class
-        );
+        $collection = Bootstrap::getObjectManager()->get('Magento\Tax\Model\ResourceModel\Calculation\Rate\Collection');
         $expectedResult = [];
         /** @var $taxRate \Magento\Tax\Model\Calculation\Rate */
         foreach ($collection as $taxRate) {
@@ -25,7 +23,7 @@ class SourceTest extends \PHPUnit_Framework_TestCase
         if (empty($expectedResult)) {
             $this->fail('Preconditions failed: At least one tax rate should be available.');
         }
-        $source = Bootstrap::getObjectManager()->get(\Magento\Tax\Model\Rate\Source::class);
+        $source = Bootstrap::getObjectManager()->get('Magento\Tax\Model\Rate\Source');
         $this->assertEquals(
             $expectedResult,
             $source->toOptionArray(),

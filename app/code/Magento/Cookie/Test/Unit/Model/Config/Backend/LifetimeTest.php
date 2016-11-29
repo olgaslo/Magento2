@@ -27,16 +27,15 @@ class LifetimeTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->validatorMock = $this->getMockBuilder(
-            \Magento\Framework\Session\Config\Validator\CookieLifetimeValidator::class
+            'Magento\Framework\Session\Config\Validator\CookieLifetimeValidator'
         )->disableOriginalConstructor()
             ->getMock();
-        $this->resourceMock = $this->getMockBuilder(\Magento\Framework\Module\ModuleResource::class)
+        $this->resourceMock = $this->getMockBuilder('Magento\Framework\Module\ModuleResource')
             ->disableOriginalConstructor('delete')
             ->getMock();
 
         $objectManager = new ObjectManager($this);
-        $this->model = $objectManager->getObject(
-            \Magento\Cookie\Model\Config\Backend\Lifetime::class,
+        $this->model = $objectManager->getObject('Magento\Cookie\Model\Config\Backend\Lifetime',
             [
                 'configValidator' => $this->validatorMock,
                 'resource' => $this->resourceMock

@@ -446,13 +446,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
      */
     protected function _getCartUrlParameters($item)
     {
-        $params = [
-            'item' => is_string($item) ? $item : $item->getWishlistItemId(),
-        ];
-        if ($item instanceof \Magento\Wishlist\Model\Item) {
-            $params['qty'] = $item->getQty();
-        }
-        return $params;
+        return ['item' => is_string($item) ? $item : $item->getWishlistItemId()];
     }
 
     /**

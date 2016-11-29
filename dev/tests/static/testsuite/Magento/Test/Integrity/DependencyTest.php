@@ -10,11 +10,6 @@ namespace Magento\Test\Integrity;
 
 use Magento\Framework\Component\ComponentRegistrar;
 use Magento\Framework\App\Utility\Files;
-use Magento\TestFramework\Dependency\DbRule;
-use Magento\TestFramework\Dependency\DiRule;
-use Magento\TestFramework\Dependency\LayoutRule;
-use Magento\TestFramework\Dependency\PhpRule;
-use Magento\TestFramework\Dependency\VirtualType\VirtualTypeMapper;
 
 /**
  * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
@@ -216,14 +211,13 @@ class DependencyTest extends \PHPUnit_Framework_TestCase
             $dbRuleTables = array_merge($dbRuleTables, @include $fileName);
         }
         self::$_rulesInstances = [
-            new PhpRule(self::$_mapRouters, self::$_mapLayoutBlocks),
-            new DbRule($dbRuleTables),
-            new LayoutRule(
+            new \Magento\TestFramework\Dependency\PhpRule(self::$_mapRouters, self::$_mapLayoutBlocks),
+            new \Magento\TestFramework\Dependency\DbRule($dbRuleTables),
+            new \Magento\TestFramework\Dependency\LayoutRule(
                 self::$_mapRouters,
                 self::$_mapLayoutBlocks,
                 self::$_mapLayoutHandles
             ),
-            new DiRule(new VirtualTypeMapper())
         ];
     }
 

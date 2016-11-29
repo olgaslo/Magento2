@@ -34,10 +34,8 @@ class Factory
      * @param string $defaultDriverPrefix
      * @param string $defaultDriverType
      */
-    public function __construct(
-        $defaultDriverPrefix = 'Magento\Framework\Profiler\Driver\\',
-        $defaultDriverType = 'standard'
-    ) {
+    public function __construct($defaultDriverPrefix = 'Magento\Framework\Profiler\Driver\\', $defaultDriverType = 'standard')
+    {
         $this->_defaultDriverPrefix = $defaultDriverPrefix;
         $this->_defaultDriverType = $defaultDriverType;
     }

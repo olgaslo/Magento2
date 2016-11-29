@@ -20,16 +20,16 @@ class HeaderTest extends \PHPUnit_Framework_TestCase
     {
         parent::setUp();
         $this->_block = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->get(
-            \Magento\Framework\View\LayoutInterface::class
+            'Magento\Framework\View\LayoutInterface'
         )->createBlock(
-            \Magento\Backend\Block\Page\Header::class
+            'Magento\Backend\Block\Page\Header'
         );
     }
 
     public function testGetHomeLink()
     {
         $expected = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->get(
-            \Magento\Backend\Helper\Data::class
+            'Magento\Backend\Helper\Data'
         )->getHomePageUrl();
         $this->assertEquals($expected, $this->_block->getHomeLink());
     }

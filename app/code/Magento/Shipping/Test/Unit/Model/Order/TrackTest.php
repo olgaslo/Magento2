@@ -12,7 +12,7 @@ class TrackTest extends \PHPUnit_Framework_TestCase
         $helper = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
 
         $carrier = $this->getMock(
-            \Magento\OfflineShipping\Model\Carrier\Freeshipping::class,
+            'Magento\OfflineShipping\Model\Carrier\Freeshipping',
             ['setStore', 'getTrackingInfo'],
             [],
             '',
@@ -22,7 +22,7 @@ class TrackTest extends \PHPUnit_Framework_TestCase
         $carrier->expects($this->once())->method('getTrackingInfo')->will($this->returnValue('trackingInfo'));
 
         $carrierFactory = $this->getMock(
-            \Magento\Shipping\Model\CarrierFactory::class,
+            '\Magento\Shipping\Model\CarrierFactory',
             ['create'],
             [],
             '',
@@ -31,7 +31,7 @@ class TrackTest extends \PHPUnit_Framework_TestCase
         $carrierFactory->expects($this->once())->method('create')->will($this->returnValue($carrier));
 
         $shipment = $this->getMock(
-            \Magento\OfflineShipping\Model\Carrier\Freeshipping::class,
+            'Magento\OfflineShipping\Model\Carrier\Freeshipping',
             [],
             [],
             '',
@@ -39,7 +39,7 @@ class TrackTest extends \PHPUnit_Framework_TestCase
         );
 
         $shipmentRepository = $this->getMock(
-            \Magento\Sales\Model\Order\ShipmentRepository::class,
+            'Magento\Sales\Model\Order\ShipmentRepository',
             ['get'],
             [],
             '',
@@ -49,7 +49,7 @@ class TrackTest extends \PHPUnit_Framework_TestCase
 
         /** @var \Magento\Shipping\Model\Order\Track $model */
         $model = $helper->getObject(
-            \Magento\Shipping\Model\Order\Track::class,
+            'Magento\Shipping\Model\Order\Track',
             ['carrierFactory' => $carrierFactory, 'shipmentRepository' => $shipmentRepository]
         );
         $model->setParentId(1);

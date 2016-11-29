@@ -14,13 +14,13 @@ class AddTest extends \PHPUnit_Framework_TestCase
     {
         /** @var $layout \Magento\Framework\View\Layout */
         $layout = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->get(
-            \Magento\Framework\View\LayoutInterface::class
+            'Magento\Framework\View\LayoutInterface'
         );
 
-        $block = $layout->addBlock(\Magento\Catalog\Block\Adminhtml\Product\Attribute\Set\Toolbar\Add::class, 'block');
+        $block = $layout->addBlock('Magento\Catalog\Block\Adminhtml\Product\Attribute\Set\Toolbar\Add', 'block');
         $block->setArea('adminhtml')->unsetChild('setForm');
 
-        $childBlock = $layout->addBlock(\Magento\Framework\View\Element\Template::class, 'setForm', 'block');
+        $childBlock = $layout->addBlock('Magento\Framework\View\Element\Template', 'setForm', 'block');
         $form = new \Magento\Framework\DataObject();
         $childBlock->setForm($form);
 

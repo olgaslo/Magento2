@@ -408,6 +408,8 @@ class Http extends Request implements RequestInterface, RequestSafetyInterface
         return [];
     }
 
+
+
     /**
      * {@inheritdoc}
      */
@@ -422,4 +424,6 @@ class Http extends Request implements RequestInterface, RequestSafetyInterface
         }
         return $this->isSafeMethod;
     }
+
+    
 }

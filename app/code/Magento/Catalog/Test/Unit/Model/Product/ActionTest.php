@@ -49,16 +49,16 @@ class ActionTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $eventManagerMock = $this->getMock(\Magento\Framework\Event\ManagerInterface::class);
+        $eventManagerMock = $this->getMock('Magento\Framework\Event\ManagerInterface');
         $this->productWebsiteFactory = $this->getMock(
-            \Magento\Catalog\Model\Product\WebsiteFactory::class,
+            '\Magento\Catalog\Model\Product\WebsiteFactory',
             ['create'],
             [],
             '',
             false
         );
         $this->resource = $this->getMock(
-            \Magento\Framework\Model\ResourceModel\AbstractResource::class,
+            '\Magento\Framework\Model\ResourceModel\AbstractResource',
             [
                 'updateAttributes',
                 'getConnection',
@@ -70,7 +70,7 @@ class ActionTest extends \PHPUnit_Framework_TestCase
             false
         );
         $this->productWebsite = $this->getMock(
-            \Magento\Catalog\Model\Product\Website::class,
+            '\Magento\Catalog\Model\Product\Website',
             ['addProducts', 'removeProducts', '__wakeup'],
             [],
             '',
@@ -81,28 +81,28 @@ class ActionTest extends \PHPUnit_Framework_TestCase
             ->method('create')
             ->will($this->returnValue($this->productWebsite));
         $this->categoryIndexer = $this->getMock(
-            \Magento\Indexer\Model\Indexer::class,
+            '\Magento\Indexer\Model\Indexer',
             ['getId', 'load', 'isScheduled', 'reindexList'],
             [],
             '',
             false
         );
         $this->eavConfig = $this->getMock(
-            \Magento\Eav\Model\Config::class,
+            '\Magento\Eav\Model\Config',
             ['__wakeup', 'getAttribute'],
             [],
             '',
             false
         );
         $this->eavAttribute = $this->getMock(
-            \Magento\Catalog\Model\ResourceModel\Eav\Attribute::class,
+            '\Magento\Catalog\Model\ResourceModel\Eav\Attribute',
             ['__wakeup', 'isIndexable'],
             [],
             '',
             false
         );
         $this->indexerRegistryMock = $this->getMock(
-            \Magento\Framework\Indexer\IndexerRegistry::class,
+            'Magento\Framework\Indexer\IndexerRegistry',
             ['get'],
             [],
             '',
@@ -111,7 +111,7 @@ class ActionTest extends \PHPUnit_Framework_TestCase
 
         $objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
         $this->model = $objectManager->getObject(
-            \Magento\Catalog\Model\Product\Action::class,
+            'Magento\Catalog\Model\Product\Action',
             [
                 'eventDispatcher' => $eventManagerMock,
                 'resource' => $this->resource,

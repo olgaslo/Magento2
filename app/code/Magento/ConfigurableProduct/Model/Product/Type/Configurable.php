@@ -5,7 +5,6 @@
  */
 namespace Magento\ConfigurableProduct\Model\Product\Type;
 
-use Magento\Catalog\Api\Data\ProductAttributeInterface;
 use Magento\Catalog\Api\Data\ProductInterface;
 use Magento\Catalog\Api\ProductRepositoryInterface;
 use Magento\Catalog\Model\Config;
@@ -898,15 +897,9 @@ class Configurable extends \Magento\Catalog\Model\Product\Type\AbstractType
                         $value = $value->getSource()->getOptionText($attributeValue);
                     } else {
                         $value = '';
-                        $attributeValue = '';
                     }
 
-                    $attributes[] = [
-                        'label' => $label,
-                        'value' => $value,
-                        'option_id' => $attributeId,
-                        'option_value' => $attributeValue
-                        ];
+                    $attributes[] = ['label' => $label, 'value' => $value];
                 }
             }
         }
@@ -1237,11 +1230,11 @@ class Configurable extends \Magento\Catalog\Model\Product\Type\AbstractType
      * @param  int $attributeId
      * @param  \Magento\Catalog\Model\Product $product
      * @return \Magento\Catalog\Model\ResourceModel\Eav\Attribute
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function getAttributeById($attributeId, $product)
     {
-        return $this->_eavConfig->getAttribute(ProductAttributeInterface::ENTITY_TYPE_CODE, $attributeId);
+        $attribute = parent::getAttributeById($attributeId, $product);
+        return $attribute ?: $this->_eavAttributeFactory->create()->load($attributeId);
     }
 
     /**
@@ -1286,20 +1279,5 @@ class Configurable extends \Magento\Catalog\Model\Product\Type\AbstractType
             $this->catalogConfig = ObjectManager::getInstance()->get(Config::class);
         }
         return $this->catalogConfig;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function isPossibleBuyFromList($product)
-    {
-        $isAllCustomOptionsDisplayed = true;
-        foreach ($this->getConfigurableAttributes($product) as $attribute) {
-            $eavAttribute = $attribute->getProductAttribute();
-
-            $isAllCustomOptionsDisplayed = ($isAllCustomOptionsDisplayed && $eavAttribute->getUsedInProductListing());
-        }
-
-        return $isAllCustomOptionsDisplayed;
     }
 }

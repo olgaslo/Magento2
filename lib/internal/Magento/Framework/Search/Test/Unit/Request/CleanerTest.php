@@ -21,13 +21,13 @@ class CleanerTest extends \PHPUnit_Framework_TestCase
     {
         $helper = new ObjectManager($this);
 
-        $this->status = $this->getMockBuilder(\Magento\Framework\Search\Request\Aggregation\StatusInterface::class)
+        $this->status = $this->getMockBuilder('\Magento\Framework\Search\Request\Aggregation\StatusInterface')
             ->disableOriginalConstructor()
             ->setMethods(['isEnabled'])
             ->getMockForAbstractClass();
 
         $this->cleaner = $helper->getObject(
-            \Magento\Framework\Search\Request\Cleaner::class,
+            'Magento\Framework\Search\Request\Cleaner',
             ['aggregationStatus' => $this->status]
         );
     }

@@ -37,7 +37,7 @@ class MetadataTest extends \PHPUnit_Framework_TestCase
         $objectManager = new ObjectManager($this);
 
         $this->model = $this->getMock(
-            \Magento\Framework\Model\AbstractModel::class,
+            'Magento\Framework\Model\AbstractModel',
             ['getResource', 'getAttributes'],
             [],
             '',
@@ -45,7 +45,7 @@ class MetadataTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->resource = $this->getMockForAbstractClass(
-            \Magento\Framework\DB\Adapter\AdapterInterface::class,
+            'Magento\Framework\DB\Adapter\AdapterInterface',
             [],
             '',
             false,
@@ -55,7 +55,7 @@ class MetadataTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->connection = $this->getMockForAbstractClass(
-            \Magento\Framework\DB\Adapter\AdapterInterface::class,
+            'Magento\Framework\DB\Adapter\AdapterInterface',
             [],
             '',
             false,
@@ -67,7 +67,7 @@ class MetadataTest extends \PHPUnit_Framework_TestCase
         $this->resource->expects($this->any())->method('getConnection')->willReturn($this->connection);
 
         $this->metadata = $objectManager->getObject(
-            \Magento\Eav\Model\Entity\VersionControl\Metadata::class
+            'Magento\Eav\Model\Entity\VersionControl\Metadata'
         );
     }
 

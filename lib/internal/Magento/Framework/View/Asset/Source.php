@@ -159,19 +159,9 @@ class Source
         if (empty($path)) {
             $result = false;
         } else {
-            $result = [$dir, $path, $chain->getContentType()];
+            $result = [$dir, $path];
         }
         return $result;
-    }
-
-    /**
-     * @param LocalInterface $asset
-     * @return string
-     */
-    public function getSourceContentType(LocalInterface $asset)
-    {
-        list(,,$type) = $this->preProcess($asset);
-        return $type;
     }
 
     /**
@@ -241,6 +231,7 @@ class Source
 
     /**
      * @return ThemeProviderInterface
+     * @deprecated
      */
     private function getThemeProvider()
     {

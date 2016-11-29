@@ -15,7 +15,7 @@ class AbstractCommandTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->_model = $this->getMockForAbstractClass(
-            \Magento\Backend\Model\Menu\Builder\AbstractCommand::class,
+            'Magento\Backend\Model\Menu\Builder\AbstractCommand',
             [['id' => 'item']]
         );
     }
@@ -25,18 +25,18 @@ class AbstractCommandTest extends \PHPUnit_Framework_TestCase
      */
     public function testConstructorRequiresObligatoryParams()
     {
-        $this->getMockForAbstractClass(\Magento\Backend\Model\Menu\Builder\AbstractCommand::class);
+        $this->getMockForAbstractClass('Magento\Backend\Model\Menu\Builder\AbstractCommand');
     }
 
     public function testChainAddsNewCommandAsNextInChain()
     {
         $command1 = $this->getMock(
-            \Magento\Backend\Model\Menu\Builder\Command\Update::class,
+            'Magento\Backend\Model\Menu\Builder\Command\Update',
             [],
             [['id' => 1]]
         );
         $command2 = $this->getMock(
-            \Magento\Backend\Model\Menu\Builder\Command\Remove::class,
+            'Magento\Backend\Model\Menu\Builder\Command\Remove',
             [],
             [['id' => 1]]
         );
@@ -60,7 +60,7 @@ class AbstractCommandTest extends \PHPUnit_Framework_TestCase
         );
 
         $command1 = $this->getMock(
-            \Magento\Backend\Model\Menu\Builder\Command\Update::class,
+            'Magento\Backend\Model\Menu\Builder\Command\Update',
             [],
             [['id' => 1]]
         );

@@ -36,13 +36,11 @@ class CustomerTokenServiceTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->tokenService = Bootstrap::getObjectManager()->get(
-            \Magento\Integration\Model\CustomerTokenService::class
-        );
+        $this->tokenService = Bootstrap::getObjectManager()->get('Magento\Integration\Model\CustomerTokenService');
         $this->accountManagement = Bootstrap::getObjectManager()->get(
-            \Magento\Customer\Api\AccountManagementInterface::class
+            'Magento\Customer\Api\AccountManagementInterface'
         );
-        $this->tokenModel = Bootstrap::getObjectManager()->get(\Magento\Integration\Model\Oauth\Token::class);
+        $this->tokenModel = Bootstrap::getObjectManager()->get('Magento\Integration\Model\Oauth\Token');
     }
 
     /**

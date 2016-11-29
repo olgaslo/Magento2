@@ -40,10 +40,10 @@ class GroupedTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->groupedConfigPlugin = new \Magento\GroupedProduct\Helper\Product\Configuration\Plugin\Grouped();
-        $this->itemMock = $this->getMock(\Magento\Catalog\Model\Product\Configuration\Item\ItemInterface::class);
-        $this->productMock = $this->getMock(\Magento\Catalog\Model\Product::class, [], [], '', false);
+        $this->itemMock = $this->getMock('Magento\Catalog\Model\Product\Configuration\Item\ItemInterface');
+        $this->productMock = $this->getMock('Magento\Catalog\Model\Product', [], [], '', false);
         $this->typeInstanceMock = $this->getMock(
-            \Magento\GroupedProduct\Model\Product\Type\Grouped::class,
+            'Magento\GroupedProduct\Model\Product\Type\Grouped',
             [],
             [],
             '',
@@ -61,7 +61,7 @@ class GroupedTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->subjectMock = $this->getMock(
-            \Magento\Catalog\Helper\Product\Configuration::class,
+            'Magento\Catalog\Helper\Product\Configuration',
             [],
             [],
             '',
@@ -77,7 +77,7 @@ class GroupedTest extends \PHPUnit_Framework_TestCase
         $associatedProductId = 'associatedId';
         $associatedProdName = 'associatedProductName';
 
-        $associatedProdMock = $this->getMock(\Magento\Catalog\Model\Product::class, [], [], '', false);
+        $associatedProdMock = $this->getMock('Magento\Catalog\Model\Product', [], [], '', false);
 
         $associatedProdMock->expects($this->once())->method('getId')->will($this->returnValue($associatedProductId));
 
@@ -102,7 +102,7 @@ class GroupedTest extends \PHPUnit_Framework_TestCase
         );
 
         $quantityItemMock = $this->getMock(
-            \Magento\Catalog\Model\Product\Configuration\Item\ItemInterface::class,
+            'Magento\Catalog\Model\Product\Configuration\Item\ItemInterface',
             ['getValue', 'getProduct', 'getOptionByCode', 'getFileDownloadParams']
         );
 

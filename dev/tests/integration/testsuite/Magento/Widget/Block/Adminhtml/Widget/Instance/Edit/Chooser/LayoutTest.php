@@ -21,7 +21,7 @@ class LayoutTest extends \PHPUnit_Framework_TestCase
 
         $objectManager = \Magento\TestFramework\Helper\Bootstrap::getObjectManager();
         $config = $this->getMockBuilder(
-            \Magento\Framework\View\Layout\PageType\Config::class
+            'Magento\Framework\View\Layout\PageType\Config'
         )->setMethods(
             ['getPageTypes']
         )->disableOriginalConstructor()->getMock();
@@ -36,7 +36,7 @@ class LayoutTest extends \PHPUnit_Framework_TestCase
         $config->expects($this->any())->method('getPageTypes')->will($this->returnValue($pageTypeValues));
 
         $this->_block = new \Magento\Widget\Block\Adminhtml\Widget\Instance\Edit\Chooser\Layout(
-            $objectManager->get(\Magento\Framework\View\Element\Template\Context::class),
+            $objectManager->get('Magento\Framework\View\Element\Template\Context'),
             $config,
             [
                 'name' => 'page_type',

@@ -13,9 +13,6 @@ use Magento\Framework\TestFramework\Unit\Helper\ObjectManager;
 use Magento\Framework\View\Design\ThemeInterface;
 use Magento\Theme\Model\Theme;
 
-/**
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
- */
 class ThemeTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -60,48 +57,48 @@ class ThemeTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $customizationConfig = $this->getMock(\Magento\Theme\Model\Config\Customization::class, [], [], '', false);
+        $customizationConfig = $this->getMock('Magento\Theme\Model\Config\Customization', [], [], '', false);
         $this->customizationFactory = $this->getMock(
-            \Magento\Framework\View\Design\Theme\CustomizationFactory::class,
+            'Magento\Framework\View\Design\Theme\CustomizationFactory',
             ['create'],
             [],
             '',
             false
         );
         $this->resourceCollection = $this->getMock(
-            \Magento\Theme\Model\ResourceModel\Theme\Collection::class,
+            'Magento\Theme\Model\ResourceModel\Theme\Collection',
             [],
             [],
             '',
             false
         );
         $this->_imageFactory = $this->getMock(
-            \Magento\Framework\View\Design\Theme\ImageFactory::class,
+            'Magento\Framework\View\Design\Theme\ImageFactory',
             ['create'],
             [],
             '',
             false
         );
         $this->themeFactory = $this->getMock(
-            \Magento\Framework\View\Design\Theme\FlyweightFactory::class,
+            'Magento\Framework\View\Design\Theme\FlyweightFactory',
             ['create'],
             [],
             '',
             false
         );
         $this->domainFactory = $this->getMock(
-            \Magento\Framework\View\Design\Theme\Domain\Factory::class,
+            'Magento\Framework\View\Design\Theme\Domain\Factory',
             ['create'],
             [],
             '',
             false
         );
-        $this->validator = $this->getMock(\Magento\Framework\View\Design\Theme\Validator::class, [], [], '', false);
-        $this->appState = $this->getMock(\Magento\Framework\App\State::class, [], [], '', false);
+        $this->validator = $this->getMock('Magento\Framework\View\Design\Theme\Validator', [], [], '', false);
+        $this->appState = $this->getMock('Magento\Framework\App\State', [], [], '', false);
 
         $objectManagerHelper = new ObjectManager($this);
         $arguments = $objectManagerHelper->getConstructArguments(
-            \Magento\Theme\Model\Theme::class,
+            'Magento\Theme\Model\Theme',
             [
                 'customizationFactory' => $this->customizationFactory,
                 'customizationConfig' => $customizationConfig,
@@ -114,7 +111,7 @@ class ThemeTest extends \PHPUnit_Framework_TestCase
             ]
         );
 
-        $this->_model = $objectManagerHelper->getObject(\Magento\Theme\Model\Theme::class, $arguments);
+        $this->_model = $objectManagerHelper->getObject('Magento\Theme\Model\Theme', $arguments);
     }
 
     protected function tearDown()
@@ -140,7 +137,7 @@ class ThemeTest extends \PHPUnit_Framework_TestCase
     public function testIsVirtual($type, $isVirtual)
     {
         /** @var $themeModel \Magento\Theme\Model\Theme */
-        $themeModel = $this->getMock(\Magento\Theme\Model\Theme::class, ['__wakeup'], [], '', false);
+        $themeModel = $this->getMock('Magento\Theme\Model\Theme', ['__wakeup'], [], '', false);
         $themeModel->setType($type);
         $this->assertEquals($isVirtual, $themeModel->isVirtual());
     }
@@ -166,7 +163,7 @@ class ThemeTest extends \PHPUnit_Framework_TestCase
     public function testIsPhysical($type, $isPhysical)
     {
         /** @var $themeModel \Magento\Theme\Model\Theme */
-        $themeModel = $this->getMock(\Magento\Theme\Model\Theme::class, ['__wakeup'], [], '', false);
+        $themeModel = $this->getMock('Magento\Theme\Model\Theme', ['__wakeup'], [], '', false);
         $themeModel->setType($type);
         $this->assertEquals($isPhysical, $themeModel->isPhysical());
     }
@@ -192,7 +189,7 @@ class ThemeTest extends \PHPUnit_Framework_TestCase
     public function testIsVisible($type, $isVisible)
     {
         /** @var $themeModel \Magento\Theme\Model\Theme */
-        $themeModel = $this->getMock(\Magento\Theme\Model\Theme::class, ['__wakeup'], [], '', false);
+        $themeModel = $this->getMock('Magento\Theme\Model\Theme', ['__wakeup'], [], '', false);
         $themeModel->setType($type);
         $this->assertEquals($isVisible, $themeModel->isVisible());
     }
@@ -219,7 +216,7 @@ class ThemeTest extends \PHPUnit_Framework_TestCase
      */
     public function testIsDeletable($themeType, $isDeletable)
     {
-        $themeModel = $this->getMock(\Magento\Theme\Model\Theme::class, ['getType', '__wakeup'], [], '', false);
+        $themeModel = $this->getMock('Magento\Theme\Model\Theme', ['getType', '__wakeup'], [], '', false);
         $themeModel->expects($this->once())->method('getType')->will($this->returnValue($themeType));
         /** @var $themeModel \Magento\Theme\Model\Theme */
         $this->assertEquals($isDeletable, $themeModel->isDeletable());
@@ -266,7 +263,7 @@ class ThemeTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetInheritedThemes()
     {
-        $inheritedTheme = $this->getMockBuilder(\Magento\Framework\View\Design\ThemeInterface::class)->getMock();
+        $inheritedTheme = $this->getMockBuilder('Magento\Framework\View\Design\ThemeInterface')->getMock();
 
         $this->_model->setParentId(10);
         $this->themeFactory->expects($this->once())
@@ -275,7 +272,7 @@ class ThemeTest extends \PHPUnit_Framework_TestCase
             ->willReturn($inheritedTheme);
 
         $this->assertContainsOnlyInstancesOf(
-            \Magento\Framework\View\Design\ThemeInterface::class,
+            'Magento\Framework\View\Design\ThemeInterface',
             $this->_model->getInheritedThemes()
         );
         $this->assertCount(2, $this->_model->getInheritedThemes());
@@ -288,7 +285,7 @@ class ThemeTest extends \PHPUnit_Framework_TestCase
     public function testAfterDelete()
     {
         $expectId = 101;
-        $theme = $this->getMockBuilder(\Magento\Framework\View\Design\ThemeInterface::class)
+        $theme = $this->getMockBuilder('Magento\Framework\View\Design\ThemeInterface')
             ->setMethods(['delete', 'getId'])
             ->getMockForAbstractClass();
         $theme->expects($this->once())
@@ -323,7 +320,7 @@ class ThemeTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetStagingVersion()
     {
-        $theme = $this->getMockBuilder(\Magento\Framework\View\Design\ThemeInterface::class)
+        $theme = $this->getMockBuilder('Magento\Framework\View\Design\ThemeInterface')
             ->setMethods(['getId'])
             ->getMockForAbstractClass();
         $theme->expects($this->once())
@@ -440,10 +437,10 @@ class ThemeTest extends \PHPUnit_Framework_TestCase
         $this->customizationFactory->expects($this->once())
             ->method('create')
             ->willReturn(
-                $this->getMockBuilder(\Magento\Framework\View\Design\Theme\CustomizationInterface::class)->getMock()
+                $this->getMockBuilder('Magento\Framework\View\Design\Theme\CustomizationInterface')->getMock()
             );
         $this->assertInstanceOf(
-            \Magento\Framework\View\Design\Theme\CustomizationInterface::class,
+            'Magento\Framework\View\Design\Theme\CustomizationInterface',
             $this->_model->getCustomization()
         );
     }

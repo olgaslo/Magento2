@@ -33,16 +33,16 @@ class HeadTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->pageConfigMock = $this->getMockBuilder(\Magento\Framework\View\Page\Config::class)
+        $this->pageConfigMock = $this->getMockBuilder('Magento\Framework\View\Page\Config')
             ->disableOriginalConstructor()
             ->getMock();
-        $this->title = $this->getMockBuilder(\Magento\Framework\View\Page\Title::class)
+        $this->title = $this->getMockBuilder('Magento\Framework\View\Page\Title')
             ->disableOriginalConstructor()
             ->getMock();
 
         $objectManagerHelper = new ObjectManagerHelper($this);
         $this->headGenerator = $objectManagerHelper->getObject(
-            \Magento\Framework\View\Page\Config\Generator\Head::class,
+            'Magento\Framework\View\Page\Config\Generator\Head',
             [
                 'pageConfig' => $this->pageConfigMock,
             ]
@@ -51,15 +51,15 @@ class HeadTest extends \PHPUnit_Framework_TestCase
 
     public function testProcess()
     {
-        $generatorContextMock = $this->getMockBuilder(\Magento\Framework\View\Layout\Generator\Context::class)
+        $generatorContextMock = $this->getMockBuilder('Magento\Framework\View\Layout\Generator\Context')
             ->disableOriginalConstructor()
             ->getMock();
         $this->title->expects($this->any())->method('set')->with()->will($this->returnSelf());
-        $structureMock = $this->getMockBuilder(\Magento\Framework\View\Page\Config\Structure::class)
+        $structureMock = $this->getMockBuilder('Magento\Framework\View\Page\Config\Structure')
             ->disableOriginalConstructor()
             ->getMock();
 
-        $readerContextMock = $this->getMockBuilder(\Magento\Framework\View\Layout\Reader\Context::class)
+        $readerContextMock = $this->getMockBuilder('Magento\Framework\View\Layout\Reader\Context')
             ->disableOriginalConstructor()
             ->getMock();
         $readerContextMock->expects($this->any())

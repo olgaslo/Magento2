@@ -25,11 +25,9 @@ class CreditmemoCommentsListTest extends WebapiAbstract
         $comment = 'Test comment';
         $objectManager = \Magento\TestFramework\Helper\Bootstrap::getObjectManager();
         /** @var \Magento\Sales\Model\ResourceModel\Order\Creditmemo\Collection $creditmemoCollection */
-        $creditmemoCollection = $objectManager->get(
-            \Magento\Sales\Model\ResourceModel\Order\Creditmemo\Collection::class
-        );
+        $creditmemoCollection = $objectManager->get('Magento\Sales\Model\ResourceModel\Order\Creditmemo\Collection');
         $creditmemo = $creditmemoCollection->getFirstItem();
-        $creditmemoComment = $objectManager->get(\Magento\Sales\Model\Order\Creditmemo\Comment::class);
+        $creditmemoComment = $objectManager->get('Magento\Sales\Model\Order\Creditmemo\Comment');
 
         $commentData = [
             CreditmemoCommentInterface::COMMENT => 'Hello world!',
@@ -57,8 +55,7 @@ class CreditmemoCommentsListTest extends WebapiAbstract
         // TODO Test fails, due to the inability of the framework API to handle data collection
         $this->assertNotEmpty($result);
         foreach ($result['items'] as $item) {
-            $comment = $objectManager->get(\Magento\Sales\Model\Order\Creditmemo\Comment::class)
-                ->load($item['entity_id']);
+            $comment = $objectManager->get('Magento\Sales\Model\Order\Creditmemo\Comment')->load($item['entity_id']);
             $this->assertEquals($comment->getComment(), $item['comment']);
         }
     }

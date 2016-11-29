@@ -25,9 +25,9 @@ class FileTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $objectManager = \Magento\TestFramework\Helper\Bootstrap::getObjectManager();
-        $this->_model = $objectManager->create(\Magento\Theme\Model\Theme\File::class);
+        $this->_model = $objectManager->create('Magento\Theme\Model\Theme\File');
         /** @var $themeModel \Magento\Framework\View\Design\ThemeInterface */
-        $themeModel = $objectManager->create(\Magento\Framework\View\Design\ThemeInterface::class);
+        $themeModel = $objectManager->create('Magento\Framework\View\Design\ThemeInterface');
         $this->_theme = $themeModel->getCollection()->getFirstItem();
         $this->_data = [
             'file_path' => 'main.css',

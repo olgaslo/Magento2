@@ -29,15 +29,9 @@ class InlineTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->translator = $this->getMock(\Magento\Framework\TranslateInterface::class, [], [], '', false);
-        $this->provider = $this->getMock(
-            \Magento\Framework\Translate\Inline\ProviderInterface::class,
-            [],
-            [],
-            '',
-            false
-        );
-        $this->loggerMock = $this->getMockBuilder(\Psr\Log\LoggerInterface::class)
+        $this->translator = $this->getMock('Magento\Framework\TranslateInterface', [], [], '', false);
+        $this->provider = $this->getMock('Magento\Framework\Translate\Inline\ProviderInterface', [], [], '', false);
+        $this->loggerMock = $this->getMockBuilder('Psr\Log\LoggerInterface')
             ->getMock();
 
         $this->renderer = new \Magento\Framework\Phrase\Renderer\Inline(
@@ -57,7 +51,7 @@ class InlineTest extends \PHPUnit_Framework_TestCase
             ->method('getTheme')
             ->will($this->returnValue($theme));
 
-        $inlineTranslate = $this->getMock(\Magento\Framework\Translate\InlineInterface::class, [], [], '', []);
+        $inlineTranslate = $this->getMock('Magento\Framework\Translate\InlineInterface', [], [], '', []);
         $inlineTranslate->expects($this->once())
             ->method('isAllowed')
             ->will($this->returnValue(true));
@@ -73,7 +67,7 @@ class InlineTest extends \PHPUnit_Framework_TestCase
     {
         $text = 'test';
 
-        $inlineTranslate = $this->getMock(\Magento\Framework\Translate\InlineInterface::class, [], [], '', []);
+        $inlineTranslate = $this->getMock('Magento\Framework\Translate\InlineInterface', [], [], '', []);
         $inlineTranslate->expects($this->once())
             ->method('isAllowed')
             ->will($this->returnValue(false));

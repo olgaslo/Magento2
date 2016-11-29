@@ -27,18 +27,18 @@ class MinsaleqtyTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->scopeConfigMock = $this->getMock(\Magento\Framework\App\Config\ScopeConfigInterface::class);
-        $this->randomMock = $this->getMock(\Magento\Framework\Math\Random::class);
+        $this->scopeConfigMock = $this->getMock('Magento\Framework\App\Config\ScopeConfigInterface');
+        $this->randomMock = $this->getMock('Magento\Framework\Math\Random');
         $this->randomMock->expects($this->any())
             ->method('getUniqueHash')
             ->with($this->equalTo('_'))
             ->will($this->returnValue('unique_hash'));
 
-        $groupManagement = $this->getMockBuilder(\Magento\Customer\Api\GroupManagementInterface::class)
+        $groupManagement = $this->getMockBuilder('Magento\Customer\Api\GroupManagementInterface')
             ->setMethods(['getAllCustomersGroup'])
             ->getMockForAbstractClass();
 
-        $allGroup = $this->getMockBuilder(\Magento\Customer\Api\Data\GroupInterface::class)
+        $allGroup = $this->getMockBuilder('Magento\Customer\Api\Data\GroupInterface')
             ->setMethods(['getId'])
             ->getMockForAbstractClass();
 
@@ -52,7 +52,7 @@ class MinsaleqtyTest extends \PHPUnit_Framework_TestCase
 
         $this->objectManagerHelper = new ObjectManagerHelper($this);
         $this->minsaleqty = $this->objectManagerHelper->getObject(
-            \Magento\CatalogInventory\Helper\Minsaleqty::class,
+            'Magento\CatalogInventory\Helper\Minsaleqty',
             [
                 'scopeConfig' => $this->scopeConfigMock,
                 'mathRandom' => $this->randomMock,

@@ -26,9 +26,9 @@ class ProductTypeListTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->typeConfigMock = $this->getMock(\Magento\Catalog\Model\ProductTypes\ConfigInterface::class);
+        $this->typeConfigMock = $this->getMock('Magento\Catalog\Model\ProductTypes\ConfigInterface');
         $this->factoryMock = $this->getMock(
-            \Magento\Catalog\Api\Data\ProductTypeInterfaceFactory::class,
+            'Magento\Catalog\Api\Data\ProductTypeInterfaceFactory',
             ['create'],
             [],
             '',
@@ -49,7 +49,7 @@ class ProductTypeListTest extends \PHPUnit_Framework_TestCase
         $productTypeData = [
             'simple' => $simpleProductType,
         ];
-        $productTypeMock = $this->getMock(\Magento\Catalog\Api\Data\ProductTypeInterface::class);
+        $productTypeMock = $this->getMock('Magento\Catalog\Api\Data\ProductTypeInterface');
         $this->typeConfigMock->expects($this->any())->method('getAll')->will($this->returnValue($productTypeData));
 
         $this->factoryMock->expects($this->once())->method('create')->willReturn($productTypeMock);

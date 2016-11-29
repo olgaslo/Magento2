@@ -12,10 +12,7 @@ class Reader extends \Magento\Framework\Config\Reader\Filesystem
      *
      * @var array
      */
-    protected $_idAttributes = [
-        '/config/zip' => 'countryCode',
-        '/config/zip/codes/code' => 'id',
-    ];
+    protected $_idAttributes = ['/config/zip' => 'countryCode'];
 
     /**
      * Construct the FileSystem Reader Class
@@ -36,7 +33,7 @@ class Reader extends \Magento\Framework\Config\Reader\Filesystem
         \Magento\Framework\Config\ValidationStateInterface $validationState,
         $fileName = 'zip_codes.xml',
         $idAttributes = [],
-        $domDocumentClass = \Magento\Framework\Config\Dom::class,
+        $domDocumentClass = 'Magento\Framework\Config\Dom',
         $defaultScope = 'global'
     ) {
         parent::__construct(

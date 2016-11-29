@@ -20,12 +20,13 @@ use Magento\Mtf\TestCase\Injectable;
  * 2. Create product with created category.
  * 3. Perform all assertions.
  *
- * @group Layered_Navigation
- * @ZephyrId MAGETWO-12419, MAGETWO-30617, MAGETWO-30700, MAGETWO-30702, MAGETWO-30703
+ * @group Layered_Navigation_(MX)
+ * @ZephyrId MAGETWO-12419
  */
 class FilterProductListTest extends Injectable
 {
     /* tags */
+    const DOMAIN = 'MX';
     const TEST_TYPE = 'acceptance_test, extended_acceptance_test';
     /* end tags */
 
@@ -49,7 +50,7 @@ class FilterProductListTest extends Injectable
 
         // Preconditions
         $this->objectManager->create(
-            \Magento\Config\Test\TestStep\SetupConfigurationStep::class,
+            'Magento\Config\Test\TestStep\SetupConfigurationStep',
             ['configData' => $this->configData]
         )->run();
 
@@ -65,7 +66,7 @@ class FilterProductListTest extends Injectable
     public function tearDown()
     {
         $this->objectManager->create(
-            \Magento\Config\Test\TestStep\SetupConfigurationStep::class,
+            'Magento\Config\Test\TestStep\SetupConfigurationStep',
             ['configData' => $this->configData, 'rollback' => true]
         )->run();
     }

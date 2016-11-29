@@ -42,7 +42,6 @@ define([
      */
     $.widget('mage.modal', {
         options: {
-            id: null,
             type: 'popup',
             title: '',
             subTitle: '',
@@ -122,7 +121,6 @@ define([
                 'closeModal'
             );
 
-            this.options.id = this.uuid;
             this.options.transitionEvent = transitionEvent;
             this._createWrapper();
             this._renderModal();

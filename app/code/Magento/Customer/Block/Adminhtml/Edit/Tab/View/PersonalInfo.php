@@ -172,9 +172,7 @@ class PersonalInfo extends \Magento\Backend\Block\Template
     {
 
         if (!($this->customerRegistry instanceof \Magento\Customer\Model\CustomerRegistry)) {
-            return \Magento\Framework\App\ObjectManager::getInstance()->get(
-                \Magento\Customer\Model\CustomerRegistry::class
-            );
+            return \Magento\Framework\App\ObjectManager::getInstance()->get('Magento\Customer\Model\CustomerRegistry');
         } else {
             return $this->customerRegistry;
         }
@@ -192,7 +190,7 @@ class PersonalInfo extends \Magento\Backend\Block\Template
             $this->dataObjectHelper->populateWithArray(
                 $this->customer,
                 $this->_backendSession->getCustomerData()['account'],
-                \Magento\Customer\Api\Data\CustomerInterface::class
+                '\Magento\Customer\Api\Data\CustomerInterface'
             );
         }
         return $this->customer;

@@ -74,7 +74,7 @@ if (empty($mediaDirectory)) {
 $bootstrap = \Magento\Framework\App\Bootstrap::create(BP, $params);
 /** @var \Magento\MediaStorage\App\Media $app */
 $app = $bootstrap->createApplication(
-    \Magento\MediaStorage\App\Media::class,
+    'Magento\MediaStorage\App\Media',
     [
         'mediaDirectory' => $mediaDirectory,
         'configCacheFile' => $configCacheFile,

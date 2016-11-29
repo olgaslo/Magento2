@@ -9,9 +9,6 @@ namespace Magento\Eav\Test\Unit\Model\ResourceModel\Entity\Attribute;
 
 use Magento\Eav\Model\ResourceModel\Entity\Attribute\Set;
  
-/**
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
- */
 class SetTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -54,21 +51,21 @@ class SetTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->resourceMock = $this->getMockBuilder(\Magento\Framework\App\ResourceConnection::class)
+        $this->resourceMock = $this->getMockBuilder('Magento\Framework\App\ResourceConnection')
             ->disableOriginalConstructor()
             ->setMethods(['getConnection', 'getTableName'])
             ->getMock();
         $this->transactionManagerMock = $this->getMock(
-            \Magento\Framework\Model\ResourceModel\Db\TransactionManagerInterface::class
+            '\Magento\Framework\Model\ResourceModel\Db\TransactionManagerInterface'
         );
         $this->relationProcessor = $this->getMock(
-            \Magento\Framework\Model\ResourceModel\Db\ObjectRelationProcessor::class,
+            '\Magento\Framework\Model\ResourceModel\Db\ObjectRelationProcessor',
             [],
             [],
             '',
             false
         );
-        $contextMock = $this->getMock(\Magento\Framework\Model\ResourceModel\Db\Context::class, [], [], '', false);
+        $contextMock = $this->getMock('Magento\Framework\Model\ResourceModel\Db\Context', [], [], '', false);
         $contextMock->expects($this->once())
             ->method('getTransactionManager')
             ->willReturn($this->transactionManagerMock);
@@ -77,12 +74,12 @@ class SetTest extends \PHPUnit_Framework_TestCase
             ->willReturn($this->relationProcessor);
         $contextMock->expects($this->once())->method('getResources')->willReturn($this->resourceMock);
 
-        $this->eavConfigMock = $this->getMockBuilder(\Magento\Eav\Model\Config::class)
+        $this->eavConfigMock = $this->getMockBuilder('Magento\Eav\Model\Config')
             ->setMethods(['isCacheEnabled', 'getEntityType', 'getCache'])
             ->disableOriginalConstructor()
             ->getMock();
         $this->model = $this->getMock(
-            \Magento\Eav\Model\ResourceModel\Entity\Attribute\Set::class,
+            'Magento\Eav\Model\ResourceModel\Entity\Attribute\Set',
             [
                 'beginTransaction',
                 'getMainTable',
@@ -94,21 +91,15 @@ class SetTest extends \PHPUnit_Framework_TestCase
             ],
             [
                 $contextMock,
-                $this->getMock(
-                    \Magento\Eav\Model\ResourceModel\Entity\Attribute\GroupFactory::class,
-                    [],
-                    [],
-                    '',
-                    false
-                ),
+                $this->getMock('Magento\Eav\Model\ResourceModel\Entity\Attribute\GroupFactory', [], [], '', false),
                 $this->eavConfigMock
             ],
             '',
             true
         );
-        $this->typeMock = $this->getMock(\Magento\Eav\Model\Entity\Type::class, [], [], '', false);
+        $this->typeMock = $this->getMock('\Magento\Eav\Model\Entity\Type', [], [], '', false);
         $this->objectMock = $this->getMock(
-            \Magento\Framework\Model\AbstractModel::class,
+            'Magento\Framework\Model\AbstractModel',
             [
                 'getEntityTypeId',
                 'getAttributeSetId',
@@ -135,12 +126,12 @@ class SetTest extends \PHPUnit_Framework_TestCase
     {
         $this->resourceMock->expects($this->any())
             ->method('getConnection')
-            ->willReturn($this->getMock(\Magento\Framework\DB\Adapter\AdapterInterface::class));
+            ->willReturn($this->getMock('\Magento\Framework\DB\Adapter\AdapterInterface'));
 
         $this->transactionManagerMock->expects($this->once())
             ->method('start')
-            ->with($this->getMock(\Magento\Framework\DB\Adapter\AdapterInterface::class))
-            ->willReturn($this->getMock(\Magento\Framework\DB\Adapter\AdapterInterface::class));
+            ->with($this->getMock('\Magento\Framework\DB\Adapter\AdapterInterface'))
+            ->willReturn($this->getMock('\Magento\Framework\DB\Adapter\AdapterInterface'));
 
         $this->objectMock->expects($this->once())->method('getEntityTypeId')->willReturn(665);
         $this->eavConfigMock->expects($this->once())->method('getEntityType')->with(665)->willReturn($this->typeMock);
@@ -159,12 +150,12 @@ class SetTest extends \PHPUnit_Framework_TestCase
     {
         $this->resourceMock->expects($this->any())
             ->method('getConnection')
-            ->willReturn($this->getMock(\Magento\Framework\DB\Adapter\AdapterInterface::class));
+            ->willReturn($this->getMock('\Magento\Framework\DB\Adapter\AdapterInterface'));
 
         $this->transactionManagerMock->expects($this->once())
             ->method('start')
-            ->with($this->getMock(\Magento\Framework\DB\Adapter\AdapterInterface::class))
-            ->willReturn($this->getMock(\Magento\Framework\DB\Adapter\AdapterInterface::class));
+            ->with($this->getMock('\Magento\Framework\DB\Adapter\AdapterInterface'))
+            ->willReturn($this->getMock('\Magento\Framework\DB\Adapter\AdapterInterface'));
 
         $this->objectMock->expects($this->once())->method('getEntityTypeId')->willReturn(665);
         $this->eavConfigMock->expects($this->once())->method('getEntityType')->with(665)->willReturn($this->typeMock);
@@ -182,7 +173,7 @@ class SetTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetSetInfoCacheMiss()
     {
-        $cacheMock = $this->getMockBuilder(\Magento\Framework\App\CacheInterface::class)
+        $cacheMock = $this->getMockBuilder('Magento\Framework\App\CacheInterface')
             ->disableOriginalConstructor()
             ->setMethods(['load', 'save', 'getFrontend', 'remove', 'clean'])
             ->getMock();
@@ -224,7 +215,7 @@ class SetTest extends \PHPUnit_Framework_TestCase
             ]
         ];
 
-        $selectMock = $this->getMockBuilder(\Magento\Framework\DB\Select::class)
+        $selectMock = $this->getMockBuilder('Magento\Framework\DB\Select')
             ->disableOriginalConstructor()
             ->setMethods(['from', 'joinLeft', 'where'])
             ->getMock();
@@ -232,7 +223,7 @@ class SetTest extends \PHPUnit_Framework_TestCase
         $selectMock->expects($this->once())->method('joinLeft')->will($this->returnSelf());
         $selectMock->expects($this->atLeastOnce())->method('where')->will($this->returnSelf());
 
-        $connectionMock = $this->getMockBuilder(\Magento\Framework\DB\Adapter\Pdo\Mysql::class)
+        $connectionMock = $this->getMockBuilder('Magento\Framework\DB\Adapter\Pdo\Mysql')
             ->disableOriginalConstructor()
             ->setMethods(['select', 'fetchAll'])
             ->getMock();
@@ -274,7 +265,7 @@ class SetTest extends \PHPUnit_Framework_TestCase
 
         $this->resourceMock->expects($this->never())->method('getConnection');
         $this->eavConfigMock->expects($this->any())->method('isCacheEnabled')->willReturn(true);
-        $cacheMock = $this->getMockBuilder(\Magento\Framework\App\CacheInterface::class)
+        $cacheMock = $this->getMockBuilder('Magento\Framework\App\CacheInterface')
             ->disableOriginalConstructor()
             ->setMethods(['load', 'save', 'getFrontend', 'remove', 'clean'])
             ->getMock();

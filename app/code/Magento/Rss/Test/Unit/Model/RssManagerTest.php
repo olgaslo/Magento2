@@ -24,15 +24,15 @@ class RssManagerTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->objectManager = $this->getMock(\Magento\Framework\ObjectManagerInterface::class);
+        $this->objectManager = $this->getMock('Magento\Framework\ObjectManagerInterface');
 
         $objectManagerHelper = new ObjectManagerHelper($this);
         $this->rssManager = $objectManagerHelper->getObject(
-            \Magento\Rss\Model\RssManager::class,
+            'Magento\Rss\Model\RssManager',
             [
                 'objectManager' => $this->objectManager,
                 'dataProviders' => [
-                    'rss_feed' => \Magento\Framework\App\Rss\DataProviderInterface::class,
+                    'rss_feed' => 'Magento\Framework\App\Rss\DataProviderInterface',
                     'bad_rss_feed' => 'Some\Class\Not\Existent',
                 ]
             ]
@@ -41,11 +41,11 @@ class RssManagerTest extends \PHPUnit_Framework_TestCase
 
     public function testGetProvider()
     {
-        $dataProvider = $this->getMock(\Magento\Framework\App\Rss\DataProviderInterface::class);
+        $dataProvider = $this->getMock('Magento\Framework\App\Rss\DataProviderInterface');
         $this->objectManager->expects($this->once())->method('get')->will($this->returnValue($dataProvider));
 
         $this->assertInstanceOf(
-             \Magento\Framework\App\Rss\DataProviderInterface::class,
+             '\Magento\Framework\App\Rss\DataProviderInterface',
              $this->rssManager->getProvider('rss_feed')
         );
     }

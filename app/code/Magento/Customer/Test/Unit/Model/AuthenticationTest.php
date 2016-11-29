@@ -273,7 +273,7 @@ class AuthenticationTest extends \PHPUnit_Framework_TestCase
         $hash = '1b2af329dd0';
 
         $customerMock = $this->getMock(
-            \Magento\Customer\Api\Data\CustomerInterface::class,
+            'Magento\Customer\Api\Data\CustomerInterface',
             [],
             [],
             '',
@@ -325,7 +325,7 @@ class AuthenticationTest extends \PHPUnit_Framework_TestCase
                 ->with($customerId)
                 ->willReturnSelf();
 
-            $this->setExpectedException(\Magento\Framework\Exception\InvalidEmailOrPasswordException::class);
+            $this->setExpectedException('\Magento\Framework\Exception\InvalidEmailOrPasswordException');
             $this->authentication->authenticate($customerId, $password);
         }
     }

@@ -26,13 +26,13 @@ class CustomerQuoteTest extends \PHPUnit_Framework_TestCase
     {
         /** @var CustomerInterface $customer */
         /** @var CustomerRepositoryInterface $repository */
-        $repository = Bootstrap::getObjectManager()->create(\Magento\Customer\Api\CustomerRepositoryInterface::class);
+        $repository = Bootstrap::getObjectManager()->create('Magento\Customer\Api\CustomerRepositoryInterface');
         /** @var CustomerRegistry $registry */
-        $registry = Bootstrap::getObjectManager()->create(\Magento\Customer\Model\CustomerRegistry::class);
+        $registry = Bootstrap::getObjectManager()->create('Magento\Customer\Model\CustomerRegistry');
         $customer = $repository->getById($registry->retrieveByEmail('customer@example.com')->getId());
 
         /** @var Quote $quote */
-        $quote = Bootstrap::getObjectManager()->create(\Magento\Quote\Model\Quote::class);
+        $quote = Bootstrap::getObjectManager()->create('Magento\Quote\Model\Quote');
         $quote->load('test01', 'reserved_order_id');
         $quote->setCustomerIsGuest(false)->setCustomerId($customer->getId())
             ->setCustomerGroupId($customer->getGroupId())

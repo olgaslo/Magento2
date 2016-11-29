@@ -22,11 +22,11 @@ class GenderTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $objectManager = Bootstrap::getObjectManager();
-        $objectManager->get(\Magento\Framework\App\State::class)->setAreaCode('frontend');
+        $objectManager->get('Magento\Framework\App\State')->setAreaCode('frontend');
         $this->_block = $objectManager->get(
-            \Magento\Framework\View\LayoutInterface::class
+            'Magento\Framework\View\LayoutInterface'
         )->createBlock(
-            \Magento\Customer\Block\Widget\Gender::class
+            'Magento\Customer\Block\Widget\Gender'
         );
     }
 
@@ -39,7 +39,7 @@ class GenderTest extends \PHPUnit_Framework_TestCase
         $options = $this->_block->getGenderOptions();
         $this->assertInternalType('array', $options);
         $this->assertNotEmpty($options);
-        $this->assertContainsOnlyInstancesOf(\Magento\Customer\Model\Data\Option::class, $options);
+        $this->assertContainsOnlyInstancesOf('Magento\Customer\Model\Data\Option', $options);
     }
 
     /**

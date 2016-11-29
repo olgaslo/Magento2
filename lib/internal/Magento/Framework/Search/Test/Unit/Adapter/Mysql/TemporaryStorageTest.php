@@ -30,11 +30,11 @@ class TemporaryStorageTest extends \PHPUnit_Framework_TestCase
     {
         $this->tableName = 'some_table_name';
 
-        $this->adapter = $this->getMockBuilder(\Magento\Framework\DB\Adapter\AdapterInterface::class)
+        $this->adapter = $this->getMockBuilder('Magento\Framework\DB\Adapter\AdapterInterface')
             ->disableOriginalConstructor()
             ->getMockForAbstractClass();
 
-        $resource = $this->getMockBuilder(\Magento\Framework\App\ResourceConnection::class)
+        $resource = $this->getMockBuilder('Magento\Framework\App\ResourceConnection')
             ->disableOriginalConstructor()
             ->getMock();
         $resource->expects($this->any())
@@ -45,7 +45,7 @@ class TemporaryStorageTest extends \PHPUnit_Framework_TestCase
             ->willReturn($this->tableName);
 
         $this->model = (new ObjectManager($this))->getObject(
-            \Magento\Framework\Search\Adapter\Mysql\TemporaryStorage::class,
+            'Magento\Framework\Search\Adapter\Mysql\TemporaryStorage',
             ['resource' => $resource]
         );
     }
@@ -55,7 +55,7 @@ class TemporaryStorageTest extends \PHPUnit_Framework_TestCase
         $sql = 'some SQL query';
 
         /** @var \Magento\Framework\DB\Select|\PHPUnit_Framework_MockObject_MockObject $select */
-        $select = $this->getMockBuilder(\Magento\Framework\DB\Select::class)
+        $select = $this->getMockBuilder('Magento\Framework\DB\Select')
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -83,14 +83,14 @@ class TemporaryStorageTest extends \PHPUnit_Framework_TestCase
         $documentId = 312432;
         $documentValue = 1.235123;
 
-        $attributeValue = $this->getMockBuilder(\Magento\Framework\Api\AttributeValue::class)
+        $attributeValue = $this->getMockBuilder('Magento\Framework\Api\AttributeValue')
             ->disableOriginalConstructor()
             ->getMock();
         $attributeValue->expects($this->once())
             ->method('getValue')
             ->willReturn($documentValue);
 
-        $document = $this->getMockBuilder(\Magento\Framework\Api\Search\Document::class)
+        $document = $this->getMockBuilder('Magento\Framework\Api\Search\Document')
             ->disableOriginalConstructor()
             ->getMock();
         $document->expects($this->once())
@@ -113,14 +113,14 @@ class TemporaryStorageTest extends \PHPUnit_Framework_TestCase
         $documentId = 312432;
         $documentValue = 1.235123;
 
-        $attributeValue = $this->getMockBuilder(\Magento\Framework\Api\AttributeValue::class)
+        $attributeValue = $this->getMockBuilder('Magento\Framework\Api\AttributeValue')
             ->disableOriginalConstructor()
             ->getMock();
         $attributeValue->expects($this->once())
             ->method('getValue')
             ->willReturn($documentValue);
 
-        $document = $this->getMockBuilder(\Magento\Framework\Api\Search\Document::class)
+        $document = $this->getMockBuilder('Magento\Framework\Api\Search\Document')
             ->disableOriginalConstructor()
             ->getMock();
         $document->expects($this->once())
@@ -143,7 +143,7 @@ class TemporaryStorageTest extends \PHPUnit_Framework_TestCase
      */
     private function createTemporaryTable()
     {
-        $table = $this->getMockBuilder(\Magento\Framework\DB\Ddl\Table::class)
+        $table = $this->getMockBuilder('Magento\Framework\DB\Ddl\Table')
             ->disableOriginalConstructor()
             ->getMock();
         $table->expects($this->at(1))

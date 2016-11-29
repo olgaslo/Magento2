@@ -21,9 +21,9 @@ class DataTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->config = $this->getMock(\Magento\Catalog\Model\ProductTypes\ConfigInterface::class);
+        $this->config = $this->getMock('Magento\Catalog\Model\ProductTypes\ConfigInterface');
         $this->helper = (new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this))->getObject(
-            \Magento\Bundle\Helper\Data::class,
+            'Magento\Bundle\Helper\Data',
             ['config' => $this->config]
         );
     }

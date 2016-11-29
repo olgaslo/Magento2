@@ -20,11 +20,9 @@ class ScopeResolverTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
-        $this->scopeResolverMock = $this->getMockBuilder(
-            \Magento\Framework\App\ScopeResolverInterface::class
-        )->getMock();
+        $this->scopeResolverMock = $this->getMockBuilder('Magento\Framework\App\ScopeResolverInterface')->getMock();
         $this->_object = $objectManager->getObject(
-            \Magento\Framework\Url\ScopeResolver::class,
+            'Magento\Framework\Url\ScopeResolver',
             ['scopeResolver' => $this->scopeResolverMock]
         );
     }
@@ -35,7 +33,7 @@ class ScopeResolverTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetScope($scopeId)
     {
-        $scopeMock = $this->getMockBuilder(\Magento\Framework\Url\ScopeInterface::class)->getMock();
+        $scopeMock = $this->getMockBuilder('Magento\Framework\Url\ScopeInterface')->getMock();
         $this->scopeResolverMock->expects(
             $this->at(0)
         )->method(

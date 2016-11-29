@@ -34,17 +34,16 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->entityFactoryMock = $this->getMockBuilder(
-            \Magento\Framework\Data\Collection\EntityFactoryInterface::class
-        )->getMockForAbstractClass();
-        $this->scopeTreeMock = $this->getMockBuilder(\Magento\Framework\App\ScopeTreeProviderInterface::class)
+        $this->entityFactoryMock = $this->getMockBuilder('Magento\Framework\Data\Collection\EntityFactoryInterface')
+            ->getMockForAbstractClass();
+        $this->scopeTreeMock = $this->getMockBuilder('Magento\Framework\App\ScopeTreeProviderInterface')
             ->getMockForAbstractClass();
         $this->metadataProviderMock =
-            $this->getMockBuilder(\Magento\Theme\Model\Design\Config\MetadataProviderInterface::class)
+            $this->getMockBuilder('Magento\Theme\Model\Design\Config\MetadataProviderInterface')
                 ->getMockForAbstractClass();
-        $this->appConfigMock = $this->getMockBuilder(\Magento\Framework\App\Config\ScopeConfigInterface::class)
+        $this->appConfigMock = $this->getMockBuilder('Magento\Framework\App\Config\ScopeConfigInterface')
             ->getMockForAbstractClass();
-        $this->valueProcessor = $this->getMockBuilder(\Magento\Theme\Model\Design\Config\ValueProcessor::class)
+        $this->valueProcessor = $this->getMockBuilder('Magento\Theme\Model\Design\Config\ValueProcessor')
             ->disableOriginalConstructor()
             ->getMock();
 

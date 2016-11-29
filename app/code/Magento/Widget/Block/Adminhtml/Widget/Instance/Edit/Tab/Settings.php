@@ -146,7 +146,7 @@ class Settings extends \Magento\Backend\Block\Widget\Form\Generic implements
             ]
         );
         $continueButton = $this->getLayout()->createBlock(
-            \Magento\Backend\Block\Widget\Button::class
+            'Magento\Backend\Block\Widget\Button'
         )->setData(
             [
                 'label' => __('Continue'),
@@ -170,12 +170,7 @@ class Settings extends \Magento\Backend\Block\Widget\Form\Generic implements
     {
         return $this->getUrl(
             'adminhtml/*/*',
-            [
-                '_current' => true,
-                'code' => '<%- data.code %>',
-                'theme_id' => '<%- data.theme_id %>',
-                '_escape_params' => false
-            ]
+            ['_current' => true, 'code' => '<%- data.code %>', 'theme_id' => '<%- data.theme_id %>']
         );
     }
 

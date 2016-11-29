@@ -36,12 +36,12 @@ class MatchTest extends \PHPUnit_Framework_TestCase
             "AGAINST ('{$expectedSuffix}someValue*' IN BOOLEAN MODE))";
 
         /** @var \Magento\Framework\Search\Adapter\Mysql\ScoreBuilder $scoreBuilder */
-        $scoreBuilder = $this->objectManager->create(\Magento\Framework\Search\Adapter\Mysql\ScoreBuilder::class);
+        $scoreBuilder = $this->objectManager->create('Magento\Framework\Search\Adapter\Mysql\ScoreBuilder');
         /** @var \Magento\Framework\Search\Adapter\Mysql\Query\Builder\Match $match */
-        $match = $this->objectManager->create(\Magento\Framework\Search\Adapter\Mysql\Query\Builder\Match::class);
+        $match = $this->objectManager->create('Magento\Framework\Search\Adapter\Mysql\Query\Builder\Match');
         /** @var \Magento\Framework\Search\Request\Query\Match $query */
         $query = $this->objectManager->create(
-            \Magento\Framework\Search\Request\Query\Match::class,
+            'Magento\Framework\Search\Request\Query\Match',
             [
                 'name' => 'Match query',
                 'boost' => 3.14,
@@ -53,7 +53,7 @@ class MatchTest extends \PHPUnit_Framework_TestCase
             ]
         );
         /** @var \Magento\Framework\App\ResourceConnection $resource */
-        $resource = $this->objectManager->create(\Magento\Framework\App\ResourceConnection::class);
+        $resource = $this->objectManager->create('Magento\Framework\App\ResourceConnection');
         /** @var \Magento\Framework\DB\Select $select */
         $select = $resource->getConnection()->select();
         $select->from('someTable');

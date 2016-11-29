@@ -33,13 +33,13 @@ class ReaderPoolTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->_defaultReaderMock = $this->getMock(
-            \Magento\Store\Model\Config\Reader\DefaultReader::class, [], [], '', false
+            'Magento\Store\Model\Config\Reader\DefaultReader', [], [], '', false
         );
         $this->_websiteReaderMock = $this->getMock(
-            \Magento\Store\Model\Config\Reader\Website::class, [], [], '', false
+            'Magento\Store\Model\Config\Reader\Website', [], [], '', false
         );
         $this->_storeReaderMock = $this->getMock(
-            \Magento\Store\Model\Config\Reader\Store::class, [], [], '', false
+            'Magento\Store\Model\Config\Reader\Store', [], [], '', false
         );
 
         $this->_model = new \Magento\Store\Model\Config\Reader\ReaderPool([
@@ -68,15 +68,15 @@ class ReaderPoolTest extends \PHPUnit_Framework_TestCase
         return [
             [
                 'scope' => 'default',
-                'expectedResult' => \Magento\Store\Model\Config\Reader\DefaultReader::class,
+                'expectedResult' => 'Magento\Store\Model\Config\Reader\DefaultReader',
             ],
             [
                 'scope' => 'website',
-                'expectedResult' => \Magento\Store\Model\Config\Reader\Website::class
+                'expectedResult' => 'Magento\Store\Model\Config\Reader\Website'
             ],
             [
                 'scope' => 'store',
-                'expectedResult' => \Magento\Store\Model\Config\Reader\Store::class
+                'expectedResult' => 'Magento\Store\Model\Config\Reader\Store'
             ],
         ];
     }

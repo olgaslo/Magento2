@@ -25,28 +25,28 @@ class ConnectionFactoryTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
-        $this->objectManagerMock = $this->getMockBuilder(\Magento\Framework\ObjectManagerInterface::class)
+        $this->objectManagerMock = $this->getMockBuilder('Magento\Framework\ObjectManagerInterface')
             ->disableOriginalConstructor()
             ->getMock();
         $this->model = $this->objectManager->getObject(
-            \Magento\Framework\App\ResourceConnection\ConnectionFactory::class,
+            'Magento\Framework\App\ResourceConnection\ConnectionFactory',
             ['objectManager' => $this->objectManagerMock]
         );
     }
 
     public function testCreate()
     {
-        $cacheAdapterMock = $this->getMockBuilder(\Magento\Framework\DB\Adapter\DdlCache::class)
+        $cacheAdapterMock = $this->getMockBuilder('Magento\Framework\DB\Adapter\DdlCache')
             ->disableOriginalConstructor()
             ->getMock();
-        $loggerMock = $this->getMockBuilder(\Magento\Framework\DB\LoggerInterface::class)
+        $loggerMock = $this->getMockBuilder('Magento\Framework\DB\LoggerInterface')
             ->disableOriginalConstructor()
             ->getMock();
-        $adapterClass = \Magento\Framework\App\ResourceConnection\ConnectionAdapterInterface::class;
+        $adapterClass = 'Magento\Framework\App\ResourceConnection\ConnectionAdapterInterface';
         $connectionAdapterMock = $this->getMockBuilder($adapterClass)
             ->disableOriginalConstructor()
             ->getMock();
-        $connectionMock = $this->getMockBuilder(\Magento\Framework\DB\Adapter\AdapterInterface::class)
+        $connectionMock = $this->getMockBuilder('Magento\Framework\DB\Adapter\AdapterInterface')
             ->disableOriginalConstructor()
             ->getMock();
         $connectionMock->expects($this->once())
@@ -59,14 +59,14 @@ class ConnectionFactoryTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue($connectionMock));
         $this->objectManagerMock->expects($this->once())
             ->method('create')
-            ->with(\Magento\Framework\App\ResourceConnection\ConnectionAdapterInterface::class)
+            ->with('Magento\Framework\App\ResourceConnection\ConnectionAdapterInterface')
             ->will($this->returnValue($connectionAdapterMock));
         $this->objectManagerMock->expects($this->any())
             ->method('get')
             ->will($this->returnValueMap(
                 [
-                    [\Magento\Framework\DB\LoggerInterface::class, $loggerMock],
-                    [\Magento\Framework\DB\Adapter\DdlCache::class, $cacheAdapterMock],
+                    ['Magento\Framework\DB\LoggerInterface', $loggerMock],
+                    ['Magento\Framework\DB\Adapter\DdlCache', $cacheAdapterMock],
                 ]
             ));
         $this->assertSame($connectionMock, $this->model->create(['active' => true]));

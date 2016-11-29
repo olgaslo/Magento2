@@ -7,6 +7,7 @@ namespace Magento\Checkout\Test\Unit\Block\Item\Price;
 
 use \Magento\Checkout\Block\Item\Price\Renderer;
 
+
 class RendererTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -19,13 +20,13 @@ class RendererTest extends \PHPUnit_Framework_TestCase
         $objectManagerHelper = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
 
         $this->renderer = $objectManagerHelper->getObject(
-            \Magento\Checkout\Block\Item\Price\Renderer::class
+            'Magento\Checkout\Block\Item\Price\Renderer'
         );
     }
 
     public function testSetItem()
     {
-        $item = $this->getMockBuilder(\Magento\Quote\Model\Quote\Item\AbstractItem::class)
+        $item = $this->getMockBuilder('Magento\Quote\Model\Quote\Item\AbstractItem')
             ->disableOriginalConstructor()
             ->getMock();
 

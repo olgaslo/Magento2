@@ -23,34 +23,31 @@ class QueryTest extends \PHPUnit_Framework_TestCase
     {
         $objectManager = new ObjectManager($this);
 
-        $this->adapter = $this->getMockBuilder(\Magento\Framework\DB\Adapter\AdapterInterface::class)
+        $this->adapter = $this->getMockBuilder('Magento\Framework\DB\Adapter\AdapterInterface')
             ->disableOriginalConstructor()
             ->getMockForAbstractClass();
 
-        $resource = $this->getMockBuilder(\Magento\Framework\App\ResourceConnection::class)
+        $resource = $this->getMockBuilder('Magento\Framework\App\ResourceConnection')
             ->disableOriginalConstructor()
             ->getMock();
         $resource->expects($this->any())
             ->method('getConnection')
             ->willReturn($this->adapter);
 
-        $context = $this->getMockBuilder(\Magento\Framework\Model\ResourceModel\Db\Context::class)
+        $context = $this->getMockBuilder('Magento\Framework\Model\ResourceModel\Db\Context')
             ->disableOriginalConstructor()
             ->getMock();
         $context->expects($this->any())
             ->method('getResources')
             ->willReturn($resource);
 
-        $this->model = $objectManager->getObject(
-            \Magento\Search\Model\ResourceModel\Query::class,
-            ['context' => $context]
-        );
+        $this->model = $objectManager->getObject('Magento\Search\Model\ResourceModel\Query', ['context' => $context]);
     }
 
     public function testSaveIncrementalPopularity()
     {
         /** @var \Magento\Search\Model\Query|\PHPUnit_Framework_MockObject_MockObject $model */
-        $model = $this->getMockBuilder(\Magento\Search\Model\Query::class)
+        $model = $this->getMockBuilder('Magento\Search\Model\Query')
             ->disableOriginalConstructor()
             ->getMock();
         $model->expects($this->any())
@@ -69,7 +66,7 @@ class QueryTest extends \PHPUnit_Framework_TestCase
     public function testSaveNumResults()
     {
         /** @var \Magento\Search\Model\Query|\PHPUnit_Framework_MockObject_MockObject $model */
-        $model = $this->getMockBuilder(\Magento\Search\Model\Query::class)
+        $model = $this->getMockBuilder('Magento\Search\Model\Query')
             ->disableOriginalConstructor()
             ->getMock();
         $model->expects($this->any())

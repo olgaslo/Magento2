@@ -13,10 +13,10 @@ class FileSystemReaderTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $fileResolver = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create(
-            \Magento\Framework\Search\Request\Config\FileResolverStub::class
+            '\Magento\Framework\Search\Request\Config\FileResolverStub'
         );
         $this->object = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create(
-            \Magento\Framework\Search\Request\Config\FilesystemReader::class,
+            '\Magento\Framework\Search\Request\Config\FilesystemReader',
             ['fileResolver' => $fileResolver]
         );
     }

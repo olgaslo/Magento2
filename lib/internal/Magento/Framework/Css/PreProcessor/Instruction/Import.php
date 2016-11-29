@@ -4,6 +4,8 @@
  * See COPYING.txt for license details.
  */
 
+// @codingStandardsIgnoreFile
+
 namespace Magento\Framework\Css\PreProcessor\Instruction;
 
 use Magento\Framework\View\Asset\LocalInterface;
@@ -20,10 +22,7 @@ class Import implements PreProcessorInterface
      * Pattern of @import instruction
      */
     const REPLACE_PATTERN =
-        '#@import(?!.*?\surl\(.*?)'
-        . '(?P<start>[\(\),\w\s]*?[\'\"])'
-        . '(?P<path>(?![/\\\]|\w*?:[/\\\])[^\"\']+)'
-        . '(?P<end>[\'\"][\s\w\(\)]*?);#';
+        '#@import\s+(\((?P<type>\w+)\)\s+)?[\'\"](?P<path>(?![/\\\]|\w:[/\\\])[^\"\']+)[\'\"]\s*?(?P<media>.*?);#';
 
     /**
      * @var \Magento\Framework\View\Asset\NotationResolver\Module
@@ -134,9 +133,9 @@ class Import implements PreProcessorInterface
         $matchedFileId = $this->fixFileExtension($matchedContent['path'], $contentType);
         $this->recordRelatedFile($matchedFileId, $asset);
         $resolvedPath = $this->notationResolver->convertModuleNotationToPath($asset, $matchedFileId);
-        $start = $matchedContent['start'];
-        $end = $matchedContent['end'];
-        return "@import{$start}{$resolvedPath}{$end};";
+        $typeString = empty($matchedContent['type']) ? '' : '(' . $matchedContent['type'] . ') ';
+        $mediaString = empty($matchedContent['media']) ? '' : ' ' . trim($matchedContent['media']);
+        return "@import {$typeString}'{$resolvedPath}'{$mediaString};";
     }
 
     /**

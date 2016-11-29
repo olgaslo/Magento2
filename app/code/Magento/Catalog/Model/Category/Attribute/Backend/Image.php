@@ -21,6 +21,8 @@ class Image extends \Magento\Eav\Model\Entity\Attribute\Backend\AbstractBackend
     protected $_uploaderFactory;
 
     /**
+     * Filesystem facade
+     *
      * @var \Magento\Framework\Filesystem
      *
      * @deprecated
@@ -28,6 +30,8 @@ class Image extends \Magento\Eav\Model\Entity\Attribute\Backend\AbstractBackend
     protected $_filesystem;
 
     /**
+     * File Uploader factory
+     *
      * @var \Magento\MediaStorage\Model\File\UploaderFactory
      *
      * @deprecated
@@ -42,16 +46,15 @@ class Image extends \Magento\Eav\Model\Entity\Attribute\Backend\AbstractBackend
     protected $_logger;
 
     /**
+     * Image uploader
+     *
      * @var \Magento\Catalog\Model\ImageUploader
      */
     private $imageUploader;
 
     /**
-     * @var string
-     */
-    private $additionalData = '_additional_data_';
-
-    /**
+     * Image constructor.
+     *
      * @param \Psr\Log\LoggerInterface $logger
      * @param \Magento\Framework\Filesystem $filesystem
      * @param \Magento\MediaStorage\Model\File\UploaderFactory $fileUploaderFactory
@@ -67,44 +70,8 @@ class Image extends \Magento\Eav\Model\Entity\Attribute\Backend\AbstractBackend
     }
 
     /**
-     * Gets image name from $value array.
-     * Will return empty string in a case when $value is not an array
+     * Get image uploader
      *
-     * @param array $value Attribute value
-     * @return string
-     */
-    private function getUploadedImageName($value)
-    {
-        if (is_array($value) && isset($value[0]['name'])) {
-            return $value[0]['name'];
-        }
-
-        return '';
-    }
-
-    /**
-     * Avoiding saving potential upload data to DB
-     * Will set empty image attribute value if image was not uploaded
-     *
-     * @param \Magento\Framework\DataObject $object
-     * @return $this
-     */
-    public function beforeSave($object)
-    {
-        $attributeName = $this->getAttribute()->getName();
-        $value = $object->getData($attributeName);
-
-        if ($imageName = $this->getUploadedImageName($value)) {
-            $object->setData($this->additionalData . $attributeName, $value);
-            $object->setData($attributeName, $imageName);
-        } else if (!is_string($value)) {
-            $object->setData($attributeName, '');
-        }
-
-        return parent::beforeSave($object);
-    }
-
-    /**
      * @return \Magento\Catalog\Model\ImageUploader
      *
      * @deprecated
@@ -112,10 +79,10 @@ class Image extends \Magento\Eav\Model\Entity\Attribute\Backend\AbstractBackend
     private function getImageUploader()
     {
         if ($this->imageUploader === null) {
-            $this->imageUploader = \Magento\Framework\App\ObjectManager::getInstance()
-                ->get(\Magento\Catalog\CategoryImageUpload::class);
+            $this->imageUploader = \Magento\Framework\App\ObjectManager::getInstance()->get(
+                'Magento\Catalog\CategoryImageUpload'
+            );
         }
-
         return $this->imageUploader;
     }
 
@@ -127,16 +94,15 @@ class Image extends \Magento\Eav\Model\Entity\Attribute\Backend\AbstractBackend
      */
     public function afterSave($object)
     {
-        $value = $object->getData($this->additionalData . $this->getAttribute()->getName());
+        $image = $object->getData($this->getAttribute()->getName(), null);
 
-        if ($imageName = $this->getUploadedImageName($value)) {
+        if ($image !== null) {
             try {
-                $this->getImageUploader()->moveFileFromTmp($imageName);
+                $this->getImageUploader()->moveFileFromTmp($image);
             } catch (\Exception $e) {
                 $this->_logger->critical($e);
             }
         }
-
         return $this;
     }
 }

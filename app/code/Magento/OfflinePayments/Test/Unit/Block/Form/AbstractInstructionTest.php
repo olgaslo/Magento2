@@ -14,16 +14,16 @@ class AbstractInstructionTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $context = $this->getMock(\Magento\Framework\View\Element\Template\Context::class, [], [], '', false);
+        $context = $this->getMock('Magento\Framework\View\Element\Template\Context', [], [], '', false);
         $this->_model = $this->getMockForAbstractClass(
-            \Magento\OfflinePayments\Block\Form\AbstractInstruction::class,
+            'Magento\OfflinePayments\Block\Form\AbstractInstruction',
             ['context' => $context]
         );
     }
 
     public function testGetInstructions()
     {
-        $method = $this->getMockBuilder(\Magento\Payment\Model\MethodInterface::class)
+        $method = $this->getMockBuilder('Magento\Payment\Model\MethodInterface')
             ->getMockForAbstractClass();
 
         $method->expects($this->once())

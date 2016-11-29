@@ -15,7 +15,7 @@ class EntityTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->_model = $this->getMock(
-            \Magento\Framework\Model\AbstractModel::class,
+            'Magento\Framework\Model\AbstractModel',
             ['load', 'save', 'delete', 'getIdFieldName', '__wakeup'],
             [],
             '',
@@ -66,10 +66,7 @@ class EntityTest extends \PHPUnit_Framework_TestCase
     {
         return [
             'successful CRUD' => ['saveModelSuccessfully'],
-            'cleanup on update error' => [
-                'saveModelAndFailOnUpdate',
-                \Magento\Framework\Exception\LocalizedException::class
-            ]
+            'cleanup on update error' => ['saveModelAndFailOnUpdate', 'Magento\Framework\Exception\LocalizedException']
         ];
     }
 
@@ -97,7 +94,7 @@ class EntityTest extends \PHPUnit_Framework_TestCase
         $this->_model->expects($this->any())->method('getIdFieldName')->will($this->returnValue('id'));
 
         $test = $this->getMock(
-            \Magento\TestFramework\Entity::class,
+            'Magento\TestFramework\Entity',
             ['_getEmptyModel'],
             [$this->_model, ['test' => 'test']]
         );

@@ -79,10 +79,6 @@ define([
         getData: function (params, options) {
             var cachedRequest = this.getRequest(params);
 
-            if (params && params.filters && params.filters['store_id']) {
-                cachedRequest = false;
-            }
-
             options = options || {};
 
             return !options.refresh && cachedRequest ?

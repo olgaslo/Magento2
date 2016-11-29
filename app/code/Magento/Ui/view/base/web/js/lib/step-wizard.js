@@ -9,8 +9,7 @@ define([
     'jquery',
     'underscore',
     'ko',
-    'mage/backend/notification',
-    'mage/translate'
+    'mage/backend/notification'
 ], function (uiRegistry, Component, $, _, ko) {
     'use strict';
 
@@ -29,13 +28,24 @@ define([
         this.steps = steps;
         this.index = 0;
         this.data = {};
-        this.nextLabelText = $.mage.__('Next');
-        this.prevLabelText = $.mage.__('Back');
-        this.elementSelector = '[data-role=steps-wizard-main]';
-        this.element = modalClass ? $('.' + modalClass + this.elementSelector) : $(this.elementSelector);
-        this.nextLabel = '[data-role="step-wizard-next"]';
-        this.prevLabel = '[data-role="step-wizard-prev"]';
-        this.element.notification();
+        this.nextLabelText = 'Next';
+        this.prevLabelText = 'Back';
+        this.initSelectors = function (modalClass) {
+            var elementSelector = '[data-role=steps-wizard-main]';
+
+            this.nextLabel = '[data-role="step-wizard-next"]';
+            this.prevLabel = '[data-role="step-wizard-prev"]';
+
+            if (modalClass) {
+                this.nextLabel = '.' + modalClass + ' ' + this.nextLabel;
+                this.prevLabel = '.' + modalClass + ' ' + this.prevLabel;
+                elementSelector = '.' + modalClass + elementSelector;
+            }
+
+            this.element = $(elementSelector);
+            $(this.element).notification();
+        };
+        this.initSelectors(modalClass);
         this.move = function (newIndex) {
             if (!this.preventSwitch(newIndex)) {
                 if (newIndex > this.index) {
@@ -203,7 +213,7 @@ define([
                 modal.closeModal();
             }
         },
-        showSpecificStep: function (data, event) {
+        showSpecificStep: function () {
             var index = _.indexOf(this.stepsNames, event.target.hash.substr(1)),
                 stepName = this.wizard.move(index);
 

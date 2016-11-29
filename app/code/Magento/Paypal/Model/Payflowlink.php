@@ -41,12 +41,12 @@ class Payflowlink extends \Magento\Paypal\Model\Payflowpro
     /**
      * @var string
      */
-    protected $_formBlockType = \Magento\Paypal\Block\Payflow\Link\Form::class;
+    protected $_formBlockType = 'Magento\Paypal\Block\Payflow\Link\Form';
 
     /**
      * @var string
      */
-    protected $_infoBlockType = \Magento\Paypal\Block\Payflow\Link\Info::class;
+    protected $_infoBlockType = 'Magento\Paypal\Block\Payflow\Link\Info';
 
     /**
      * Availability option

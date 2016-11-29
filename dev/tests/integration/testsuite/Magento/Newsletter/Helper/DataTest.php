@@ -20,7 +20,7 @@ class DataTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->_objectManager = \Magento\TestFramework\Helper\Bootstrap::getObjectManager();
-        $this->_subscriber = $this->_objectManager->get(\Magento\Newsletter\Model\Subscriber::class);
+        $this->_subscriber = $this->_objectManager->get('Magento\Newsletter\Model\Subscriber');
     }
 
     /**
@@ -28,9 +28,7 @@ class DataTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetConfirmationUrl()
     {
-        $url = $this->_objectManager->get(
-            \Magento\Newsletter\Helper\Data::class
-        )->getConfirmationUrl($this->_subscriber);
+        $url = $this->_objectManager->get('Magento\Newsletter\Helper\Data')->getConfirmationUrl($this->_subscriber);
         $this->assertTrue(strpos($url, 'newsletter/subscriber/confirm') > 0);
         $this->assertFalse(strpos($url, 'admin'));
     }
@@ -40,10 +38,9 @@ class DataTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetUnsubscribeUrl()
     {
-        $url = $this->_objectManager->get(
-            \Magento\Newsletter\Helper\Data::class
-        )->getUnsubscribeUrl($this->_subscriber);
+        $url = $this->_objectManager->get('Magento\Newsletter\Helper\Data')->getUnsubscribeUrl($this->_subscriber);
         $this->assertTrue(strpos($url, 'newsletter/subscriber/unsubscribe') > 0);
         $this->assertFalse(strpos($url, 'admin'));
     }
+
 }

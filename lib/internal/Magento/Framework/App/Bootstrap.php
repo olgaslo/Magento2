@@ -283,7 +283,7 @@ class Bootstrap
         }
         $this->initObjectManager();
         /** @var \Magento\Framework\App\MaintenanceMode $maintenance */
-        $this->maintenance = $this->objectManager->get(\Magento\Framework\App\MaintenanceMode::class);
+        $this->maintenance = $this->objectManager->get('Magento\Framework\App\MaintenanceMode');
         $isOn = $this->maintenance->isOn(isset($this->server['REMOTE_ADDR']) ? $this->server['REMOTE_ADDR'] : '');
         if ($isOn && !$isExpected) {
             $this->errorCode = self::ERR_MAINTENANCE;
@@ -348,7 +348,7 @@ class Bootstrap
     {
         $this->initObjectManager();
         /** @var \Magento\Framework\App\DeploymentConfig $deploymentConfig */
-        $deploymentConfig = $this->objectManager->get(\Magento\Framework\App\DeploymentConfig::class);
+        $deploymentConfig = $this->objectManager->get('Magento\Framework\App\DeploymentConfig');
         return $deploymentConfig->isAvailable();
     }
 
@@ -383,7 +383,7 @@ class Bootstrap
     {
         if (!$this->objectManager) {
             $this->objectManager = $this->factory->create($this->server);
-            $this->maintenance = $this->objectManager->get(\Magento\Framework\App\MaintenanceMode::class);
+            $this->maintenance = $this->objectManager->get('Magento\Framework\App\MaintenanceMode');
         }
     }
 
@@ -435,7 +435,7 @@ class Bootstrap
                 if (!$this->objectManager) {
                     throw new \DomainException();
                 }
-                $this->objectManager->get(\Psr\Log\LoggerInterface::class)->critical($e);
+                $this->objectManager->get('Psr\Log\LoggerInterface')->critical($e);
             } catch (\Exception $e) {
                 $message .= "Could not write error message to log. Please use developer mode to see the message.\n";
             }

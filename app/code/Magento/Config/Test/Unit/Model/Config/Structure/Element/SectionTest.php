@@ -27,11 +27,11 @@ class SectionTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $objectManager = new ObjectManager($this);
-        $this->_storeManagerMock = $this->getMock(\Magento\Store\Model\StoreManager::class, [], [], '', false);
-        $this->_authorizationMock = $this->getMock(\Magento\Framework\AuthorizationInterface::class);
+        $this->_storeManagerMock = $this->getMock('Magento\Store\Model\StoreManager', [], [], '', false);
+        $this->_authorizationMock = $this->getMock('Magento\Framework\AuthorizationInterface');
 
         $this->_model = $objectManager->getObject(
-            \Magento\Config\Model\Config\Structure\Element\Section::class,
+            'Magento\Config\Model\Config\Structure\Element\Section',
             [
                 'storeManager' => $this->_storeManagerMock,
                 'authorization' => $this->_authorizationMock,

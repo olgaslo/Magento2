@@ -30,14 +30,14 @@ class AttributeTest extends \PHPUnit_Framework_TestCase
         $objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
 
         $this->storeManagerMock = $this->getMockForAbstractClass(
-            \Magento\Store\Model\StoreManagerInterface::class,
+            'Magento\Store\Model\StoreManagerInterface',
             [],
             '',
             false
         );
 
         $this->attribute = $objectManager->getObject(
-            \Magento\Catalog\Helper\Product\Edit\Action\Attribute::class,
+            'Magento\Catalog\Helper\Product\Edit\Action\Attribute',
             [
                 'storeManager' => $this->storeManagerMock
             ]
@@ -54,7 +54,7 @@ class AttributeTest extends \PHPUnit_Framework_TestCase
         $storeId = 20;
 
         $storeMock = $this->getMock(
-            \Magento\Store\Model\Store::class,
+            'Magento\Store\Model\Store',
             ['getWebsiteId'],
             [],
             '',

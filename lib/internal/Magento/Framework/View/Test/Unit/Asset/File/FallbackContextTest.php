@@ -44,7 +44,7 @@ class FallbackContextTest extends \PHPUnit_Framework_TestCase
         $expectedResult
     ) {
         $this->fallbackContext = $this->objectManager->getObject(
-            \Magento\Framework\View\Asset\File\FallbackContext::class,
+            'Magento\Framework\View\Asset\File\FallbackContext',
             [
                 'baseUrl' => $baseUrl,
                 'areaType' => $areaType,

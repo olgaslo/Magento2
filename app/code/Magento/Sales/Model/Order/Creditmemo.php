@@ -175,7 +175,7 @@ class Creditmemo extends AbstractModel implements EntityInterface, CreditmemoInt
      */
     protected function _construct()
     {
-        $this->_init(\Magento\Sales\Model\ResourceModel\Order\Creditmemo::class);
+        $this->_init('Magento\Sales\Model\ResourceModel\Order\Creditmemo');
     }
 
     /**
@@ -532,24 +532,11 @@ class Creditmemo extends AbstractModel implements EntityInterface, CreditmemoInt
      */
     public function isLast()
     {
-        $items = $this->getAllItems();
-        foreach ($items as $item) {
+        foreach ($this->getAllItems() as $item) {
             if (!$item->isLast()) {
                 return false;
             }
         }
-
-        if (empty($items)) {
-            $order = $this->getOrder();
-            if ($order) {
-                foreach ($order->getItems() as $orderItem) {
-                    if ($orderItem->canRefund()) {
-                        return false;
-                    }
-                }
-            }
-        }
-
         return true;
     }
 

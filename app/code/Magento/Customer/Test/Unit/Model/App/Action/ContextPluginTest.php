@@ -29,6 +29,11 @@ class ContextPluginTest extends \PHPUnit_Framework_TestCase
     protected $httpContextMock;
 
     /**
+     * @var \Closure
+     */
+    protected $closureMock;
+
+    /**
      * @var \PHPUnit_Framework_MockObject_MockObject
      */
     protected $subjectMock;
@@ -44,21 +49,24 @@ class ContextPluginTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->customerSessionMock = $this->getMock(
-            \Magento\Customer\Model\Session::class,
+            'Magento\Customer\Model\Session',
             [],
             [],
             '',
             false
         );
         $this->httpContextMock = $this->getMock(
-            \Magento\Framework\App\Http\Context::class,
+            'Magento\Framework\App\Http\Context',
             [],
             [],
             '',
             false
         );
-        $this->subjectMock = $this->getMock(\Magento\Framework\App\Action\Action::class, [], [], '', false);
-        $this->requestMock = $this->getMock(\Magento\Framework\App\RequestInterface::class);
+        $this->closureMock = function () {
+            return 'ExpectedValue';
+        };
+        $this->subjectMock = $this->getMock('Magento\Framework\App\Action\Action', [], [], '', false);
+        $this->requestMock = $this->getMock('Magento\Framework\App\RequestInterface');
         $this->plugin = new \Magento\Customer\Model\App\Action\ContextPlugin(
             $this->customerSessionMock,
             $this->httpContextMock
@@ -68,7 +76,7 @@ class ContextPluginTest extends \PHPUnit_Framework_TestCase
     /**
      * Test aroundDispatch
      */
-    public function testBeforeDispatch()
+    public function testAroundDispatch()
     {
         $this->customerSessionMock->expects($this->once())
             ->method('getCustomerGroupId')
@@ -86,6 +94,9 @@ class ContextPluginTest extends \PHPUnit_Framework_TestCase
                     ]
                 )
             );
-        $this->plugin->beforeDispatch($this->subjectMock, $this->requestMock);
+        $this->assertEquals(
+            'ExpectedValue',
+            $this->plugin->aroundDispatch($this->subjectMock, $this->closureMock, $this->requestMock)
+        );
     }
 }

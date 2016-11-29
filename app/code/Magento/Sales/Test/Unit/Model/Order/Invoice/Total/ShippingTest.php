@@ -8,9 +8,6 @@
 
 namespace Magento\Sales\Test\Unit\Model\Order\Invoice\Total;
 
-/**
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
- */
 class ShippingTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -21,43 +18,43 @@ class ShippingTest extends \PHPUnit_Framework_TestCase
      */
     protected function _getInvoiceCollection(array $invoicesData)
     {
-        $className = \Magento\Sales\Model\Order\Invoice::class;
+        $className = 'Magento\Sales\Model\Order\Invoice';
         $result = new \Magento\Framework\Data\Collection(
-            $this->getMock(\Magento\Framework\Data\Collection\EntityFactory::class, [], [], '', false)
+            $this->getMock('Magento\Framework\Data\Collection\EntityFactory', [], [], '', false)
         );
         $objectManagerHelper = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
         $arguments = [
-            'orderFactory' => $this->getMock(\Magento\Sales\Model\OrderFactory::class, [], [], '', false),
+            'orderFactory' => $this->getMock('Magento\Sales\Model\OrderFactory', [], [], '', false),
             'orderResourceFactory' => $this->getMock(
-                \Magento\Sales\Model\ResourceModel\OrderFactory::class,
+                'Magento\Sales\Model\ResourceModel\OrderFactory',
                 [],
                 [],
                 '',
                 false
             ),
             'calculatorFactory' => $this->getMock(
-                \Magento\Framework\Math\CalculatorFactory::class,
+                    'Magento\Framework\Math\CalculatorFactory',
                     [],
                     [],
                     '',
                     false
                 ),
             'invoiceItemCollectionFactory' => $this->getMock(
-                \Magento\Sales\Model\ResourceModel\Order\Invoice\Item\CollectionFactory::class,
+                'Magento\Sales\Model\ResourceModel\Order\Invoice\Item\CollectionFactory',
                 [],
                 [],
                 '',
                 false
             ),
             'invoiceCommentFactory' => $this->getMock(
-                \Magento\Sales\Model\Order\Invoice\CommentFactory::class,
+                'Magento\Sales\Model\Order\Invoice\CommentFactory',
                 [],
                 [],
                 '',
                 false
             ),
             'commentCollectionFactory' => $this->getMock(
-                \Magento\Sales\Model\ResourceModel\Order\Invoice\Comment\CollectionFactory::class,
+                'Magento\Sales\Model\ResourceModel\Order\Invoice\Comment\CollectionFactory',
                 [],
                 [],
                 '',
@@ -85,47 +82,47 @@ class ShippingTest extends \PHPUnit_Framework_TestCase
     {
         $objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
         $arguments = [
-            'productFactory' => $this->getMock(\Magento\Catalog\Model\ProductFactory::class, [], [], '', false),
+            'productFactory' => $this->getMock('Magento\Catalog\Model\ProductFactory', [], [], '', false),
             'orderItemCollectionFactory' => $this->getMock(
-                \Magento\Sales\Model\ResourceModel\Order\Item\CollectionFactory::class,
+                'Magento\Sales\Model\ResourceModel\Order\Item\CollectionFactory',
                 [],
                 [],
                 '',
                 false
             ),
             'serviceOrderFactory' => $this->getMock(
-                \Magento\Sales\Model\Service\OrderFactory::class,
+                'Magento\Sales\Model\Service\OrderFactory',
                 [],
                 [],
                 '',
                 false
             ),
             'currencyFactory' => $this->getMock(
-                \Magento\Directory\Model\CurrencyFactory::class,
+                'Magento\Directory\Model\CurrencyFactory',
                 [],
                 [],
                 '',
                 false
             ),
             'orderHistoryFactory' => $this->getMock(
-                \Magento\Sales\Model\Order\Status\HistoryFactory::class,
+                'Magento\Sales\Model\Order\Status\HistoryFactory',
                 [],
                 [],
                 '',
                 false
             ),
             'orderTaxCollectionFactory' => $this->getMock(
-                \Magento\Tax\Model\ResourceModel\Sales\Order\Tax\CollectionFactory::class,
+                'Magento\Tax\Model\ResourceModel\Sales\Order\Tax\CollectionFactory',
                 [],
                 [],
                 '',
                 false
             ),
         ];
-        $orderConstructorArgs = $objectManager->getConstructArguments(\Magento\Sales\Model\Order::class, $arguments);
+        $orderConstructorArgs = $objectManager->getConstructArguments('Magento\Sales\Model\Order', $arguments);
         /** @var $order \Magento\Sales\Model\Order|PHPUnit_Framework_MockObject_MockObject */
         $order = $this->getMock(
-            \Magento\Sales\Model\Order::class,
+            'Magento\Sales\Model\Order',
             ['_init', 'getInvoiceCollection', '__wakeup'],
             $orderConstructorArgs,
             '',
@@ -140,7 +137,7 @@ class ShippingTest extends \PHPUnit_Framework_TestCase
             $this->returnValue($this->_getInvoiceCollection($prevInvoicesData))
         );
         /** @var $invoice \Magento\Sales\Model\Order\Invoice|PHPUnit_Framework_MockObject_MockObject */
-        $invoice = $this->getMock(\Magento\Sales\Model\Order\Invoice::class, ['_init', '__wakeup'], [], '', false);
+        $invoice = $this->getMock('Magento\Sales\Model\Order\Invoice', ['_init', '__wakeup'], [], '', false);
         $invoice->setData('shipping_amount', $invoiceShipping);
         $invoice->setOrder($order);
 

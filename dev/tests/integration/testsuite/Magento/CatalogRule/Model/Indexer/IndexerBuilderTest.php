@@ -36,11 +36,9 @@ class IndexerBuilderTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->indexerBuilder = Bootstrap::getObjectManager()->get(
-            \Magento\CatalogRule\Model\Indexer\IndexBuilder::class
-        );
-        $this->resourceRule = Bootstrap::getObjectManager()->get(\Magento\CatalogRule\Model\ResourceModel\Rule::class);
-        $this->product = Bootstrap::getObjectManager()->get(\Magento\Catalog\Model\Product::class);
+        $this->indexerBuilder = Bootstrap::getObjectManager()->get('Magento\CatalogRule\Model\Indexer\IndexBuilder');
+        $this->resourceRule = Bootstrap::getObjectManager()->get('Magento\CatalogRule\Model\ResourceModel\Rule');
+        $this->product = Bootstrap::getObjectManager()->get('Magento\Catalog\Model\Product');
     }
 
     /**

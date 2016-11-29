@@ -27,7 +27,7 @@ class ConditionManagerTest extends \PHPUnit_Framework_TestCase
     {
         $objectManager = new ObjectManager($this);
 
-        $this->connectionMock = $this->getMockBuilder(\Magento\Framework\DB\Adapter\AdapterInterface::class)
+        $this->connectionMock = $this->getMockBuilder('\Magento\Framework\DB\Adapter\AdapterInterface')
             ->disableOriginalConstructor()
             ->setMethods(['quote', 'quoteIdentifier'])
             ->getMockForAbstractClass();
@@ -50,7 +50,7 @@ class ConditionManagerTest extends \PHPUnit_Framework_TestCase
                 )
             );
 
-        $this->resource = $this->getMockBuilder(\Magento\Framework\App\ResourceConnection::class)
+        $this->resource = $this->getMockBuilder('Magento\Framework\App\ResourceConnection')
             ->disableOriginalConstructor()
             ->getMock();
         $this->resource->expects($this->once())
@@ -58,7 +58,7 @@ class ConditionManagerTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue($this->connectionMock));
 
         $this->conditionManager = $objectManager->getObject(
-            \Magento\Framework\Search\Adapter\Mysql\ConditionManager::class,
+            'Magento\Framework\Search\Adapter\Mysql\ConditionManager',
             [
                 'resource' => $this->resource
             ]

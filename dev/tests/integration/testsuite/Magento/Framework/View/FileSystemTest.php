@@ -24,15 +24,16 @@ class FileSystemTest extends \PHPUnit_Framework_TestCase
         $objectManager = Bootstrap::getObjectManager();
         /** @var \Magento\Theme\Model\Theme\Registration $registration */
         $registration = $objectManager->get(
-            \Magento\Theme\Model\Theme\Registration::class
+            'Magento\Theme\Model\Theme\Registration'
         );
         $registration->register();
-        $objectManager->get(\Magento\Framework\App\State::class)->setAreaCode('frontend');
+        $objectManager->get('Magento\Framework\App\State')
+            ->setAreaCode('frontend');
         $this->_model = $objectManager->create(
-            \Magento\Framework\View\FileSystem::class
+            'Magento\Framework\View\FileSystem'
         );
         $objectManager->get(
-            \Magento\Framework\View\DesignInterface::class
+            'Magento\Framework\View\DesignInterface'
         )->setDesignTheme(
             'Test_FrameworkThemeTest/default'
         );

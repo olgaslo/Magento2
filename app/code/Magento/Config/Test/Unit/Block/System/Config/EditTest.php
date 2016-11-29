@@ -40,7 +40,7 @@ class EditTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->_systemConfigMock = $this->getMock(
-            \Magento\Config\Model\Config\Structure::class,
+            'Magento\Config\Model\Config\Structure',
             [],
             [],
             '',
@@ -49,7 +49,7 @@ class EditTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->_requestMock = $this->getMock(
-            \Magento\Framework\App\RequestInterface::class,
+            'Magento\Framework\App\RequestInterface',
             [],
             [],
             '',
@@ -66,12 +66,12 @@ class EditTest extends \PHPUnit_Framework_TestCase
             $this->returnValue('test_section')
         );
 
-        $this->_layoutMock = $this->getMock(\Magento\Framework\View\Layout::class, [], [], '', false, false);
+        $this->_layoutMock = $this->getMock('Magento\Framework\View\Layout', [], [], '', false, false);
 
-        $this->_urlModelMock = $this->getMock(\Magento\Backend\Model\Url::class, [], [], '', false, false);
+        $this->_urlModelMock = $this->getMock('Magento\Backend\Model\Url', [], [], '', false, false);
 
         $this->_sectionMock = $this->getMock(
-            \Magento\Config\Model\Config\Structure\Element\Section::class,
+            'Magento\Config\Model\Config\Structure\Element\Section',
             [],
             [],
             '',
@@ -96,7 +96,7 @@ class EditTest extends \PHPUnit_Framework_TestCase
         ];
 
         $helper = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
-        $this->_object = $helper->getObject(\Magento\Config\Block\System\Config\Edit::class, $data);
+        $this->_object = $helper->getObject('Magento\Config\Block\System\Config\Edit', $data);
     }
 
     public function testGetSaveButtonHtml()
@@ -152,7 +152,7 @@ class EditTest extends \PHPUnit_Framework_TestCase
         $expectedLabel  = 'Test  Label';
         $expectedBlock  = 'Test  Block';
 
-        $blockMock = $this->getMockBuilder(\Magento\Framework\View\Element\Template::class)
+        $blockMock = $this->getMockBuilder('Magento\Framework\View\Element\Template')
             ->disableOriginalConstructor()
             ->getMock();
 

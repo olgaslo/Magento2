@@ -27,28 +27,28 @@ class AttributeColumnTest extends \PHPUnit_Framework_TestCase
 
     public function setup()
     {
-        $this->context = $this->getMockBuilder(\Magento\Framework\View\Element\UiComponent\ContextInterface::class)
+        $this->context = $this->getMockBuilder('Magento\Framework\View\Element\UiComponent\ContextInterface')
             ->getMockForAbstractClass();
-        $processor = $this->getMockBuilder(\Magento\Framework\View\Element\UiComponent\Processor::class)
+        $processor = $this->getMockBuilder('Magento\Framework\View\Element\UiComponent\Processor')
             ->disableOriginalConstructor()
             ->getMock();
         $this->context->expects($this->any())->method('getProcessor')->willReturn($processor);
         $this->uiComponentFactory = $this->getMock(
-            \Magento\Framework\View\Element\UiComponentFactory::class,
+            'Magento\Framework\View\Element\UiComponentFactory',
             [],
             [],
             '',
             false
         );
         $this->attributeRepository = $this->getMock(
-            \Magento\Customer\Ui\Component\Listing\AttributeRepository::class,
+            'Magento\Customer\Ui\Component\Listing\AttributeRepository',
             [],
             [],
             '',
             false
         );
         $this->attributeMetadata = $this->getMockForAbstractClass(
-            \Magento\Customer\Api\Data\AttributeMetadataInterface::class,
+            '\Magento\Customer\Api\Data\AttributeMetadataInterface',
             [],
             '',
             false

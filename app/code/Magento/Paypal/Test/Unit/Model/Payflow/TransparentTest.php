@@ -8,7 +8,7 @@ namespace Magento\Paypal\Test\Unit\Model\Payflow;
 use Magento\Paypal\Model\Payflowpro;
 use Magento\Paypal\Model\Payflow\Transparent;
 use Magento\Vault\Api\Data\PaymentTokenInterface;
-use Magento\Vault\Model\CreditCardTokenFactory;
+use Magento\Vault\Api\Data\PaymentTokenInterfaceFactory;
 
 /**
  * Class TransparentTest
@@ -49,7 +49,7 @@ class TransparentTest extends \PHPUnit_Framework_TestCase
     protected $addressShippingMock;
 
     /**
-     * @var CreditCardTokenFactory|\PHPUnit_Framework_MockObject_MockObject
+     * @var PaymentTokenInterfaceFactory|\PHPUnit_Framework_MockObject_MockObject
      */
     protected $paymentTokenFactory;
 
@@ -66,26 +66,26 @@ class TransparentTest extends \PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->paymentTokenFactory = $this->getMockBuilder(CreditCardTokenFactory::class)
+        $this->paymentTokenFactory = $this->getMockBuilder('\Magento\Vault\Api\Data\PaymentTokenInterfaceFactory')
             ->disableOriginalConstructor()
             ->setMethods(['create'])
             ->getMock();
 
-        $this->gatewayMock = $this->getMockBuilder(\Magento\Paypal\Model\Payflow\Service\Gateway::class)
+        $this->gatewayMock = $this->getMockBuilder('\Magento\Paypal\Model\Payflow\Service\Gateway')
             ->setMethods(['postRequest'])
             ->disableOriginalConstructor()
             ->getMock();
-        $this->storeManagerMock = $this->getMockBuilder(\Magento\Store\Model\StoreManagerInterface::class)
+        $this->storeManagerMock = $this->getMockBuilder('\Magento\Store\Model\StoreManagerInterface')
             ->setMethods(['getStore', 'getId'])
             ->disableOriginalConstructor()
             ->getMockForAbstractClass();
         $this->storeManagerMock->expects($this->once())
             ->method('getStore')
             ->willReturnSelf();
-        $this->configMock = $this->getMockBuilder(\Magento\Paypal\Model\PayflowConfig::class)
+        $this->configMock = $this->getMockBuilder('Magento\Paypal\Model\PayflowConfig')
             ->disableOriginalConstructor()
             ->getMock();
-        $this->configFactoryMock = $this->getMockBuilder(\Magento\Payment\Model\Method\ConfigInterfaceFactory::class)
+        $this->configFactoryMock = $this->getMockBuilder('\Magento\Payment\Model\Method\ConfigInterfaceFactory')
             ->setMethods(['create'])
             ->disableOriginalConstructor()
             ->getMock();
@@ -94,14 +94,14 @@ class TransparentTest extends \PHPUnit_Framework_TestCase
             ->willReturn($this->configMock);
         $this->responseMock = new \Magento\Framework\DataObject();
         $this->responseValidator = $this->getMockBuilder(
-            \Magento\Paypal\Model\Payflow\Service\Response\Validator\ResponseValidator::class
+            'Magento\Paypal\Model\Payflow\Service\Response\Validator\ResponseValidator'
         )->disableOriginalConstructor()
             ->setMethods(['validate'])
             ->getMock();
 
         $objectHelper = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
         $this->object = $objectHelper->getObject(
-            \Magento\Paypal\Model\Payflow\Transparent::class,
+            'Magento\Paypal\Model\Payflow\Transparent',
             [
                 'gateway' => $this->gatewayMock,
                 'storeManager' => $this->storeManagerMock,
@@ -119,14 +119,14 @@ class TransparentTest extends \PHPUnit_Framework_TestCase
      */
     protected function initializationAuthorizeMock()
     {
-        $this->orderMock = $this->getMockBuilder(\Magento\Sales\Model\Order::class)
+        $this->orderMock = $this->getMockBuilder('Magento\Sales\Model\Order')
             ->setMethods([
                 'getCustomerId', 'getBillingAddress', 'getShippingAddress', 'getCustomerEmail',
-                'getId', 'getIncrementId', 'getBaseCurrencyCode'
+                'getId', 'getIncrementId'
             ])
             ->disableOriginalConstructor()
             ->getMock();
-        $this->addressBillingMock = $this->getMockBuilder(\Magento\Framework\DataObject::class)
+        $this->addressBillingMock = $this->getMockBuilder('Magento\Framework\DataObject')
             ->setMethods(
                 [
                     'getFirstname',
@@ -139,7 +139,7 @@ class TransparentTest extends \PHPUnit_Framework_TestCase
                 ]
             )->disableOriginalConstructor()
             ->getMock();
-        $this->addressShippingMock = $this->getMockBuilder(\Magento\Framework\DataObject::class)
+        $this->addressShippingMock = $this->getMockBuilder('Magento\Framework\DataObject')
             ->setMethods(
                 [
                     'getFirstname',
@@ -164,9 +164,6 @@ class TransparentTest extends \PHPUnit_Framework_TestCase
         $this->paymentMock->expects($this->once())
             ->method('getOrder')
             ->willReturn($this->orderMock);
-        $this->orderMock->expects($this->once())
-            ->method('getBaseCurrencyCode')
-            ->willReturn('USD');
         $this->orderMock->expects($this->once())
             ->method('getBillingAddress')
             ->willReturn($this->addressBillingMock);
@@ -367,7 +364,7 @@ class TransparentTest extends \PHPUnit_Framework_TestCase
         $this->buildRequestData();
 
         $paymentTokenMock = $this->getMock(PaymentTokenInterface::class);
-        $extensionAttributes = $this->getMockBuilder(\Magento\Sales\Api\Data\OrderPaymentExtensionInterface::class)
+        $extensionAttributes = $this->getMockBuilder('Magento\Sales\Api\Data\OrderPaymentExtensionInterface')
             ->disableOriginalConstructor()
             ->setMethods(['setVaultPaymentToken'])
             ->getMock();
@@ -427,13 +424,6 @@ class TransparentTest extends \PHPUnit_Framework_TestCase
         $extensionAttributes->expects(static::once())
             ->method('setVaultPaymentToken')
             ->with($paymentTokenMock);
-
-        $this->paymentMock->expects($this->at(8))
-            ->method('unsAdditionalInformation')
-            ->with(Transparent::CC_DETAILS);
-        $this->paymentMock->expects($this->at(9))
-            ->method('unsAdditionalInformation')
-            ->with(Transparent::PNREF);
 
         $this->assertSame($this->object, $this->object->authorize($this->paymentMock, 33));
     }

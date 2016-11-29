@@ -41,18 +41,18 @@ class LinkTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $objectManagerHelper = new ObjectManagerHelper($this);
-        $this->linkFactory = $this->getMockBuilder(\Magento\Downloadable\Model\LinkFactory::class)
+        $this->linkFactory = $this->getMockBuilder('\Magento\Downloadable\Model\LinkFactory')
             ->disableOriginalConstructor()
             ->setMethods(['create'])
             ->getMock();
-        $this->linkResource = $this->getMockBuilder(\Magento\Downloadable\Model\ResourceModel\Link::class)
+        $this->linkResource = $this->getMockBuilder('\Magento\Downloadable\Model\ResourceModel\Link')
             ->disableOriginalConstructor()
             ->setMethods(['deleteItems'])
             ->getMock();
-        $this->metadataPoolMock = $this->getMockBuilder(\Magento\Framework\EntityManager\MetadataPool::class)
+        $this->metadataPoolMock = $this->getMockBuilder('Magento\Framework\EntityManager\MetadataPool')
             ->disableOriginalConstructor()
             ->getMock();
-        $this->metadataMock = $this->getMock(\Magento\Framework\EntityManager\EntityMetadata::class, [], [], '', false);
+        $this->metadataMock = $this->getMock('Magento\Framework\EntityManager\EntityMetadata', [], [], '', false);
         $this->metadataMock->expects($this->any())->method('getLinkField')->willReturn('id');
         $this->metadataPoolMock->expects($this->any())->method('getMetadata')->willReturn($this->metadataMock);
         $this->target = $objectManagerHelper->getObject(
@@ -217,7 +217,7 @@ class LinkTest extends \PHPUnit_Framework_TestCase
      */
     private function createLinkkModel($product, array $modelData, $isUnlimited)
     {
-        $link = $this->getMockBuilder(\Magento\Downloadable\Model\Link::class)
+        $link = $this->getMockBuilder('\Magento\Downloadable\Model\Link')
             ->disableOriginalConstructor()
             ->setMethods(
                 [
@@ -280,7 +280,7 @@ class LinkTest extends \PHPUnit_Framework_TestCase
      */
     private function createProductMock($id, $storeId, $storeWebsiteId, array $websiteIds)
     {
-        $product = $this->getMockBuilder(\Magento\Catalog\Model\Product::class)
+        $product = $this->getMockBuilder('\Magento\Catalog\Model\Product')
             ->disableOriginalConstructor()
             ->setMethods(
                 [
@@ -302,7 +302,7 @@ class LinkTest extends \PHPUnit_Framework_TestCase
         $product->expects($this->any())
             ->method('getWebsiteIds')
             ->will($this->returnValue($websiteIds));
-        $store = $this->getMockBuilder(\Magento\Store\Model\Store::class)
+        $store = $this->getMockBuilder('\Magento\Store\Model\Store')
             ->disableOriginalConstructor()
             ->setMethods(['getWebsiteId'])
             ->getMock();

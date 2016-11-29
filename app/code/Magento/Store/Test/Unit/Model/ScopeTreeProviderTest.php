@@ -26,7 +26,7 @@ class ScopeTreeProviderTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->storeManagerMock = $this->getMockBuilder(\Magento\Store\Model\StoreManagerInterface::class)
+        $this->storeManagerMock = $this->getMockBuilder('Magento\Store\Model\StoreManagerInterface')
             ->getMockForAbstractClass();
 
         $this->model = new ScopeTreeProvider($this->storeManagerMock);
@@ -59,7 +59,7 @@ class ScopeTreeProviderTest extends \PHPUnit_Framework_TestCase
         ];
 
         /** @var Website|\PHPUnit_Framework_MockObject_MockObject $websiteMock */
-        $websiteMock = $this->getMockBuilder(\Magento\Store\Model\Website::class)
+        $websiteMock = $this->getMockBuilder('Magento\Store\Model\Website')
             ->disableOriginalConstructor()
             ->getMock();
         $websiteMock->expects($this->any())
@@ -67,7 +67,7 @@ class ScopeTreeProviderTest extends \PHPUnit_Framework_TestCase
             ->willReturn($websiteId);
 
         /** @var Group|\PHPUnit_Framework_MockObject_MockObject $groupMock */
-        $groupMock = $this->getMockBuilder(\Magento\Store\Model\Group::class)
+        $groupMock = $this->getMockBuilder('Magento\Store\Model\Group')
             ->disableOriginalConstructor()
             ->getMock();
         $groupMock->expects($this->any())
@@ -75,7 +75,7 @@ class ScopeTreeProviderTest extends \PHPUnit_Framework_TestCase
             ->willReturn($groupId);
 
         /** @var Store|\PHPUnit_Framework_MockObject_MockObject $storeMock */
-        $storeMock = $this->getMockBuilder(\Magento\Store\Model\Store::class)
+        $storeMock = $this->getMockBuilder('\Magento\Store\Model\Store')
             ->disableOriginalConstructor()
             ->getMock();
         $storeMock->expects($this->any())

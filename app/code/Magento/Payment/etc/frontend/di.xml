@@ -19,7 +19,4 @@
             </argument>
         </arguments>
     </type>
-    <type name="Magento\Checkout\Block\Checkout\LayoutProcessor">
-        <plugin name="ProcessPaymentConfiguration" type="Magento\Payment\Plugin\PaymentConfigurationProcess"/>
-    </type>
 </config>

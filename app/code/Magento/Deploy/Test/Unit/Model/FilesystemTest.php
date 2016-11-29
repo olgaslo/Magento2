@@ -148,7 +148,7 @@ class FilesystemTest extends \PHPUnit_Framework_TestCase
         $usedLocales = array_unique(
             array_merge($storeLocales, $adminUserInterfaceLocales)
         );
-        $staticContentDeployCmd = $this->cmdPrefix . 'setup:static-content:deploy -f '
+        $staticContentDeployCmd = $this->cmdPrefix . 'setup:static-content:deploy '
             . implode(' ', $usedLocales);
         $setupDiCompileCmd = $this->cmdPrefix . 'setup:di:compile';
         $this->shellMock->expects($this->at(0))

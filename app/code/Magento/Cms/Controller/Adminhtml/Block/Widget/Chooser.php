@@ -46,7 +46,7 @@ class Chooser extends \Magento\Backend\App\Action
 
         $uniqId = $this->getRequest()->getParam('uniq_id');
         $pagesGrid = $layout->createBlock(
-            \Magento\Cms\Block\Adminhtml\Block\Widget\Chooser::class,
+            'Magento\Cms\Block\Adminhtml\Block\Widget\Chooser',
             '',
             ['data' => ['id' => $uniqId]]
         );

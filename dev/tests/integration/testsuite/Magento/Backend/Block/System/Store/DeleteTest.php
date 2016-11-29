@@ -14,10 +14,10 @@ class DeleteTest extends \PHPUnit_Framework_TestCase
     {
         /** @var $layout \Magento\Framework\View\Layout */
         $layout = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->get(
-            \Magento\Framework\View\LayoutInterface::class
+            'Magento\Framework\View\LayoutInterface'
         );
         /** @var $block \Magento\Backend\Block\System\Store\Delete */
-        $block = $layout->createBlock(\Magento\Backend\Block\System\Store\Delete::class, 'block');
+        $block = $layout->createBlock('Magento\Backend\Block\System\Store\Delete', 'block');
 
         $dataObject = new \Magento\Framework\DataObject();
         $form = $block->getChildBlock('form');

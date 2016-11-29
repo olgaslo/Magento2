@@ -46,14 +46,8 @@ class GuestCartRepositoryTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
-        $this->quoteRepositoryMock = $this->getMock(
-            \Magento\Quote\Api\CartRepositoryInterface::class,
-            [],
-            [],
-            '',
-            false
-        );
-        $this->quoteMock = $this->getMock(\Magento\Quote\Model\Quote::class, [], [], '', false);
+        $this->quoteRepositoryMock = $this->getMock('Magento\Quote\Api\CartRepositoryInterface', [], [], '', false);
+        $this->quoteMock = $this->getMock('Magento\Quote\Model\Quote', [], [], '', false);
 
         $this->maskedCartId = 'f216207248d65c789b17be8545e0aa73';
         $this->cartId = 123;
@@ -65,7 +59,7 @@ class GuestCartRepositoryTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->model = $objectManager->getObject(
-            \Magento\Quote\Model\GuestCart\GuestCartRepository::class,
+            'Magento\Quote\Model\GuestCart\GuestCartRepository',
             [
                 'quoteRepository' => $this->quoteRepositoryMock,
                 'quoteIdMaskFactory' => $this->quoteIdMaskFactoryMock

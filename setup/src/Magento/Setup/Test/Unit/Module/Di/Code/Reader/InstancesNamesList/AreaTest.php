@@ -31,13 +31,13 @@ class AreaTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->classesScannerMock = $this->getMockBuilder(\Magento\Setup\Module\Di\Code\Reader\ClassesScanner::class)
+        $this->classesScannerMock = $this->getMockBuilder('\Magento\Setup\Module\Di\Code\Reader\ClassesScanner')
             ->disableOriginalConstructor()
             ->setMethods(['getList'])
             ->getMock();
 
         $this->classReaderDecoratorMock = $this->getMockBuilder(
-            \Magento\Setup\Module\Di\Code\Reader\ClassReaderDecorator::class
+            '\Magento\Setup\Module\Di\Code\Reader\ClassReaderDecorator'
         )
             ->disableOriginalConstructor()
             ->setMethods(['getConstructor'])

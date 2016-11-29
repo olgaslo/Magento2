@@ -25,14 +25,14 @@ class FieldTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->_fieldMock = $this->getMock(
-            \Magento\Config\Model\Config\Structure\Element\Field::class,
+            'Magento\Config\Model\Config\Structure\Element\Field',
             [],
             [],
             '',
             false
         );
         $this->_groupMock = $this->getMock(
-            \Magento\Config\Model\Config\Structure\Element\Group::class,
+            'Magento\Config\Model\Config\Structure\Element\Group',
             [],
             [],
             '',

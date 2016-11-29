@@ -25,13 +25,14 @@ use Magento\Mtf\TestCase\Injectable;
  * 2. Go to Reports > Products > Downloads.
  * 3. Perform all assertions.
  *
- * @group Reports
+ * @group Reports_(MX)
  * @ZephyrId MAGETWO-28823
  */
 class DownloadProductsReportEntityTest extends Injectable
 {
     /* tags */
     const MVP = 'no';
+    const DOMAIN = 'MX';
     /* end tags */
 
     /**
@@ -84,10 +85,7 @@ class DownloadProductsReportEntityTest extends Injectable
     {
         // Preconditions
         $order->persist();
-        $invoice = $this->objectManager->create(
-            \Magento\Sales\Test\TestStep\CreateInvoiceStep::class,
-            ['order' => $order]
-        );
+        $invoice = $this->objectManager->create('Magento\Sales\Test\TestStep\CreateInvoiceStep', ['order' => $order]);
         $invoice->run();
         $this->openDownloadableLink($order, (int)$downloads);
     }
@@ -102,7 +100,7 @@ class DownloadProductsReportEntityTest extends Injectable
     protected function openDownloadableLink(OrderInjectable $order, $downloads)
     {
         $customerLogin = $this->objectManager->create(
-            \Magento\Customer\Test\TestStep\LoginCustomerOnFrontendStep::class,
+            'Magento\Customer\Test\TestStep\LoginCustomerOnFrontendStep',
             ['customer' => $order->getDataFieldConfig('customer_id')['source']->getCustomer()]
         );
         $customerLogin->run();

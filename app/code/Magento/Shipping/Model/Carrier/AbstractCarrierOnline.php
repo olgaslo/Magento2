@@ -596,12 +596,11 @@ abstract class AbstractCarrierOnline extends AbstractCarrier
      * Check whether girth is allowed for the carrier
      *
      * @param null|string $countyDest
-     * @param null|string $carrierMethodCode
      * @return bool
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      * @api
      */
-    public function isGirthAllowed($countyDest = null, $carrierMethodCode = null)
+    public function isGirthAllowed($countyDest = null)
     {
         return false;
     }

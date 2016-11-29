@@ -31,14 +31,14 @@ class ItemTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->connectionMock = $this->getMock(
-            \Magento\Framework\DB\Adapter\Pdo\Mysql::class,
+            'Magento\Framework\DB\Adapter\Pdo\Mysql',
             [],
             [],
             '',
             false
         );
         $this->appResourceMock = $this->getMock(
-            \Magento\Framework\App\ResourceConnection::class,
+            'Magento\Framework\App\ResourceConnection',
             [],
             [],
             '',
@@ -50,7 +50,7 @@ class ItemTest extends \PHPUnit_Framework_TestCase
         $this->appResourceMock->expects($this->any())->method('getTableName')->willReturnArgument(0);
         $objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
         $this->taxItem = $objectManager->getObject(
-            \Magento\Sales\Model\ResourceModel\Order\Tax\Item::class,
+            'Magento\Sales\Model\ResourceModel\Order\Tax\Item',
             [
                 'resource' => $this->appResourceMock
             ]
@@ -72,7 +72,7 @@ class ItemTest extends \PHPUnit_Framework_TestCase
             ]
         ];
         $select = $this->getMock(
-            \Magento\Framework\DB\Select::class,
+            'Magento\Framework\DB\Select',
             [],
             [],
             '',

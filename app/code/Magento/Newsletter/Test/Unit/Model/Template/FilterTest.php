@@ -5,9 +5,6 @@
  */
 namespace Magento\Newsletter\Test\Unit\Model\Template;
 
-/**
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
- */
 class FilterTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -28,36 +25,30 @@ class FilterTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $scopeConfig = $this->getMockForAbstractClass(
-            \Magento\Framework\App\Config\ScopeConfigInterface::class,
+            '\Magento\Framework\App\Config\ScopeConfigInterface',
             [],
             '',
             false
         );
         $this->storeManager = $this->getMockForAbstractClass(
-            \Magento\Store\Model\StoreManagerInterface::class,
+            '\Magento\Store\Model\StoreManagerInterface',
             [],
             '',
             false
         );
-        $logger = $this->getMockForAbstractClass(\Psr\Log\LoggerInterface::class, [], '', false);
-        $layout = $this->getMockForAbstractClass(\Magento\Framework\View\LayoutInterface::class, [], '', false);
-        $urlModel = $this->getMockForAbstractClass(\Magento\Framework\UrlInterface::class, [], '', false);
-        $string = $this->getMock(\Magento\Framework\Stdlib\StringUtils::class, [], [], '', false);
-        $escaper = $this->getMock(\Magento\Framework\Escaper::class, [], [], '', false);
-        $assetRepo = $this->getMock(\Magento\Framework\View\Asset\Repository::class, [], [], '', false);
-        $coreVariableFactory = $this->getMock(
-            \Magento\Variable\Model\VariableFactory::class,
-            ['create'],
-            [],
-            '',
-            false
-        );
-        $layoutFactory = $this->getMock(\Magento\Framework\View\LayoutFactory::class, ['create'], [], '', false);
-        $this->appState = $this->getMock(\Magento\Framework\App\State::class, [], [], '', false);
-        $emogrifier = $this->getMock(\Pelago\Emogrifier::class, [], [], '', false);
-        $configVariables = $this->getMock(\Magento\Email\Model\Source\Variables::class, [], [], '', false);
-        $widgetResource = $this->getMock(\Magento\Widget\Model\ResourceModel\Widget::class, [], [], '', false);
-        $widget = $this->getMock(\Magento\Widget\Model\Widget::class, [], [], '', false);
+        $logger = $this->getMockForAbstractClass('\Psr\Log\LoggerInterface', [], '', false);
+        $layout = $this->getMockForAbstractClass('\Magento\Framework\View\LayoutInterface', [], '', false);
+        $urlModel = $this->getMockForAbstractClass('\Magento\Framework\UrlInterface', [], '', false);
+        $string = $this->getMock('\Magento\Framework\Stdlib\StringUtils', [], [], '', false);
+        $escaper = $this->getMock('\Magento\Framework\Escaper', [], [], '', false);
+        $assetRepo = $this->getMock('\Magento\Framework\View\Asset\Repository', [], [], '', false);
+        $coreVariableFactory = $this->getMock('\Magento\Variable\Model\VariableFactory', ['create'], [], '', false);
+        $layoutFactory = $this->getMock('\Magento\Framework\View\LayoutFactory', ['create'], [], '', false);
+        $this->appState = $this->getMock('\Magento\Framework\App\State', [], [], '', false);
+        $emogrifier = $this->getMock('\Pelago\Emogrifier', [], [], '', false);
+        $configVariables = $this->getMock('\Magento\Email\Model\Source\Variables', [], [], '', false);
+        $widgetResource = $this->getMock('\Magento\Widget\Model\ResourceModel\Widget', [], [], '', false);
+        $widget = $this->getMock('\Magento\Widget\Model\Widget', [], [], '', false);
 
         $this->filter = new \Magento\Newsletter\Model\Template\Filter(
             $string,
@@ -81,12 +72,12 @@ class FilterTest extends \PHPUnit_Framework_TestCase
 
     public function testWidgetDirective()
     {
-        $subscriber = $this->getMock(\Magento\Newsletter\Model\Subscriber::class, [], [], '', false);
+        $subscriber = $this->getMock('\Magento\Newsletter\Model\Subscriber', [], [], '', false);
         $this->filter->setVariables(['subscriber' => $subscriber]);
 
         $construction = '{{widget type="\Magento\Cms\Block\Widget\Page\Link" page_id="1"}}';
 
-        $store = $this->getMockForAbstractClass(\Magento\Store\Api\Data\StoreInterface::class, [], '', false);
+        $store = $this->getMockForAbstractClass('Magento\Store\Api\Data\StoreInterface', [], '', false);
         $store->expects($this->once())
             ->method('getId')
             ->willReturn(1);

@@ -756,6 +756,10 @@
         display: none;
     }
 
+    label {
+        display: inline-block;
+    }
+
     label > input[type="radio"],
     label > input[type="checkbox"] {
         margin: -3px 3px 0 0;
@@ -858,18 +862,20 @@
 
     input[type="radio"],
     input[type="checkbox"] {
-        .lib-css(appearance, none, 1);
         background: #fff;
-        border-radius: 2px;
         border: 1px solid #adadad;
+        border-radius: 2px;
         cursor: pointer;
         display: inline-block;
-        height: 16px;
-        margin: 0 5px 0 0;
-        position: relative;
-        transition: all 0.1s ease-in;
         vertical-align: middle;
+        margin: 0 5px 0 0;
+        height: 16px;
         width: 16px;
+        position: relative;
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        transition: all 0.1s ease-in;
 
         &:focus {
             border-color: #007bdb;
@@ -1412,7 +1418,7 @@
 
         span {
             &:after {
-                color: #e22626;
+                color: #eb5202;
                 content: '*';
                 display: inline-block;
                 font-size: 1.6rem;
@@ -1700,6 +1706,10 @@
         }
     }
 
+    .field-price .addon input[type="text"] ~ .addafter strong {
+        font-size: 18px;
+    }
+
     .field-weight,
     .field-base_price {
         .addon {
@@ -1712,7 +1722,6 @@
     .field.type-price .addon,
     .field-price .addon,
     .field-special_price .addon,
-    .field-gift_wrapping_price .addon,
     .field-msrp .addon {
         direction: rtl;
     }
@@ -1720,7 +1729,6 @@
     .field.type-price .addon > *,
     .field-price .addon > *,
     .field-special_price .addon > *,
-    .field-gift_wrapping_price .addon > *,
     .field-msrp .addon > * {
         direction: ltr;
     }
@@ -1728,7 +1736,6 @@
     .field.type-price .addon .addafter,
     .field-price .addon .addafter,
     .field-special_price .addon .addafter,
-    .field-gift_wrapping_price .addon .addafter,
     .field-msrp .addon .addafter {
         border-width: 1px 0 1px 1px;
         border-radius: 1px 0 0 1px;
@@ -1737,7 +1744,6 @@
     .field.type-price .addon input[type=text]:first-child,
     .field-price .addon input[type=text]:first-child,
     .field-special_price .addon input[type=text]:first-child,
-    .field-gift_wrapping_price .addon input[type=text]:first-child,
     .field-msrp .addon input[type=text]:first-child {
         border-radius: 0 1px 1px 0;
     }
@@ -1745,7 +1751,6 @@
     .field.type-price input:focus,
     .field-price input:focus,
     .field-special_price input:focus,
-    .field-gift_wrapping_price input:focus,
     .field-msrp input:focus {
         border-color: #007bdb;
     }
@@ -1753,7 +1758,6 @@
     .field.type-price input:focus ~ label.addafter,
     .field-price input:focus ~ label.addafter,
     .field-special_price input:focus ~ label.addafter,
-    .field-gift_wrapping_price input:focus ~ label.addafter,
     .field-msrp input:focus ~ label.addafter {
         border-color: #007bdb;
     }
@@ -3789,14 +3793,6 @@
         border-left: none !important;
     }
 
-    .rule-tree {
-        ._has-datepicker {
-            + .ui-datepicker-trigger {
-                position: static;
-            }
-        }
-    }
-
     .rule-param .label {
         color: #000;
         float: none;
@@ -3871,6 +3867,10 @@
         padding-top: 13px;
     }
 
+    // jstree
+    .jstree-default .disabled > a {
+        color: #a29c94;
+    }
     //
     //  debug.less (end)
     //  --------------------------------------
@@ -4712,20 +4712,6 @@
         .col-request_path {
             &:extend(.ellipsis all);
             &:extend(.col-150-max all);
-        }
-    }
-}
-
-.content-category-tree {
-    clear: both;
-
-    .jstree-default {
-        margin-bottom: 3rem;
-
-        .disabled {
-            > a {
-                color: #a29c94;
-            }
         }
     }
 }

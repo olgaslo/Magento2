@@ -27,13 +27,12 @@ class AbstractRendererTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->dataObjectMock = $this->getMock(\Magento\Framework\DataObject::class, ['getData'], [], '', false);
-        $this->columnMock = $this->getMockBuilder(\Magento\Backend\Block\Widget\Grid\Column::class)
+        $this->dataObjectMock = $this->getMock('Magento\Framework\DataObject', ['getData'], [], '', false);
+        $this->columnMock = $this->getMockBuilder('Magento\Backend\Block\Widget\Grid\Column')
             ->disableOriginalConstructor()
             ->setMethods(['getEditable', 'getIndex', 'getEditOnly', 'getId'])
             ->getMock();
-        $this->renderer =
-            $this->getMockBuilder(\Magento\Backend\Block\Widget\Grid\Column\Renderer\AbstractRenderer::class)
+        $this->renderer = $this->getMockBuilder('Magento\Backend\Block\Widget\Grid\Column\Renderer\AbstractRenderer')
             ->disableOriginalConstructor()
             ->setMethods(null)
             ->getMock();

@@ -21,18 +21,16 @@ class RepositoryTest extends \PHPUnit_Framework_TestCase
         ];
 
         /** @var \Magento\Quote\Api\CartItemRepositoryInterface $quoteItemRepository */
-        $quoteItemRepository = Bootstrap::getObjectManager()->create(
-            \Magento\Quote\Api\CartItemRepositoryInterface::class
-        );
+        $quoteItemRepository = Bootstrap::getObjectManager()->create('\Magento\Quote\Api\CartItemRepositoryInterface');
         /** @var \Magento\Quote\Model\Quote $quote */
-        $quote = Bootstrap::getObjectManager()->create(\Magento\Quote\Model\Quote::class);
+        $quote = Bootstrap::getObjectManager()->create('Magento\Quote\Model\Quote');
         $quoteId = $quote->load('test01', 'reserved_order_id')->getId();
 
         /** @var \Magento\Quote\Api\Data\CartItemInterface[] $quoteItems */
         $quoteItems = $quoteItemRepository->getList($quoteId);
         /** @var \Magento\Quote\Api\Data\CartItemInterface $actualQuoteItem */
         $actualQuoteItem = array_pop($quoteItems);
-        $this->assertInstanceOf(\Magento\Quote\Api\Data\CartItemInterface::class, $actualQuoteItem);
+        $this->assertInstanceOf('Magento\Quote\Api\Data\CartItemInterface', $actualQuoteItem);
         /** @var \Magento\User\Api\Data\UserInterface $testAttribute */
         $testAttribute = $actualQuoteItem->getExtensionAttributes()->getQuoteItemTestAttribute();
         $this->assertEquals($expectedExtensionAttributes['firstname'], $testAttribute->getFirstName());

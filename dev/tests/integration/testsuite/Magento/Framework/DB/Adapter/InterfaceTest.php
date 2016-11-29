@@ -35,7 +35,7 @@ class InterfaceTest extends \PHPUnit_Framework_TestCase
     {
         /** @var \Magento\Framework\Setup\ModuleDataSetupInterface $installer */
         $installer = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create(
-            \Magento\Framework\Setup\ModuleDataSetupInterface::class
+            '\Magento\Framework\Setup\ModuleDataSetupInterface'
         );
         $this->_connection = $installer->getConnection();
         $this->_tableName = $this->_connection->getTableName('table_two_column_idx');

@@ -35,7 +35,7 @@ class SuccessTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->sessionMock = $this->getMock(
-            \Magento\Framework\Session\SessionManagerInterface::class,
+            'Magento\Framework\Session\SessionManagerInterface',
             [
                 'getOrderIds', 'start', 'writeClose', 'isSessionExists', 'getSessionId', 'getName', 'setName',
                 'destroy', 'clearStorage', 'getCookieDomain', 'getCookiePath', 'getCookieLifetime', 'setSessionId',
@@ -46,15 +46,14 @@ class SuccessTest extends \PHPUnit_Framework_TestCase
             '',
             false
         );
-        $this->contextMock = $this->getMock(\Magento\Framework\View\Element\Template\Context::class, [], [], '', false);
-        $this->storeManagerMock = $this->getMock(\Magento\Store\Model\StoreManagerInterface::class, [], [], '', false);
+        $this->contextMock = $this->getMock('Magento\Framework\View\Element\Template\Context', [], [], '', false);
+        $this->storeManagerMock = $this->getMock('Magento\Store\Model\StoreManagerInterface', [], [], '', false);
 
         $objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
         $this->contextMock->expects($this->once())->method('getSession')->will($this->returnValue($this->sessionMock));
         $this->contextMock->expects($this->once())
             ->method('getStoreManager')->will($this->returnValue($this->storeManagerMock));
-        $this->model = $objectManager->getObject(
-            \Magento\Multishipping\Block\Checkout\Success::class,
+        $this->model = $objectManager->getObject('Magento\Multishipping\Block\Checkout\Success',
             [
                 'context' => $this->contextMock
             ]);
@@ -84,7 +83,7 @@ class SuccessTest extends \PHPUnit_Framework_TestCase
 
     public function testGetContinueUrl()
     {
-        $storeMock = $this->getMock(\Magento\Store\Model\Store::class, [], [], '', false);
+        $storeMock = $this->getMock('Magento\Store\Model\Store', [], [], '', false);
         $this->storeManagerMock->expects($this->once())->method('getStore')->will($this->returnValue($storeMock));
         $storeMock->expects($this->once())->method('getBaseUrl')->will($this->returnValue('Expected Result'));
 

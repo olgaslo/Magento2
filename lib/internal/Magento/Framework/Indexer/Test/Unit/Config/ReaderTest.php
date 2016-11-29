@@ -25,15 +25,15 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->_fileResolverMock = $this->getMock(
-            \Magento\Framework\App\Config\FileResolver::class,
+            'Magento\Framework\App\Config\FileResolver',
             ['get'],
             [],
             '',
             false
         );
 
-        $this->_converter = $this->getMock(\Magento\Framework\Indexer\Config\Converter::class, ['convert']);
-        $validationState = $this->getMock(\Magento\Framework\Config\ValidationStateInterface::class);
+        $this->_converter = $this->getMock('Magento\Framework\Indexer\Config\Converter', ['convert']);
+        $validationState = $this->getMock('Magento\Framework\Config\ValidationStateInterface');
         $validationState->expects($this->any())
             ->method('isValidationRequired')
             ->willReturn(false);

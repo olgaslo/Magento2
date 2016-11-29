@@ -31,9 +31,9 @@ class ItemPoolTest extends \PHPUnit_Framework_TestCase
     {
         $objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
 
-        $this->objectManagerMock = $this->getMock(\Magento\Framework\ObjectManagerInterface::class);
+        $this->objectManagerMock = $this->getMock('\Magento\Framework\ObjectManagerInterface');
         $this->model = $objectManager->getObject(
-            \Magento\Checkout\CustomerData\ItemPool::class,
+            'Magento\Checkout\CustomerData\ItemPool',
             [
                 'objectManager' => $this->objectManagerMock,
                 'defaultItemId' => $this->defaultItemId,
@@ -46,10 +46,10 @@ class ItemPoolTest extends \PHPUnit_Framework_TestCase
     {
         $itemData = ['key' => 'value'];
         $productType = 'product_type';
-        $quoteItemMock = $this->getMock(\Magento\Quote\Model\Quote\Item::class, [], [], '', false);
+        $quoteItemMock = $this->getMock('\Magento\Quote\Model\Quote\Item', [], [], '', false);
         $quoteItemMock->expects($this->once())->method('getProductType')->willReturn($productType);
 
-        $itemMock = $this->getMock(\Magento\Checkout\CustomerData\ItemInterface::class);
+        $itemMock = $this->getMock('\Magento\Checkout\CustomerData\ItemInterface');
         $itemMock->expects($this->once())->method('getItemData')->with($quoteItemMock)->willReturn($itemData);
 
         $this->objectManagerMock->expects($this->once())
@@ -66,10 +66,10 @@ class ItemPoolTest extends \PHPUnit_Framework_TestCase
         $productType = 'product_type';
         $this->itemMap[$productType] = 'product_id';
 
-        $quoteItemMock = $this->getMock(\Magento\Quote\Model\Quote\Item::class, [], [], '', false);
+        $quoteItemMock = $this->getMock('\Magento\Quote\Model\Quote\Item', [], [], '', false);
         $quoteItemMock->expects($this->once())->method('getProductType')->willReturn($productType);
 
-        $itemMock = $this->getMock(\Magento\Checkout\CustomerData\ItemInterface::class);
+        $itemMock = $this->getMock('\Magento\Checkout\CustomerData\ItemInterface');
         $itemMock->expects($this->once())->method('getItemData')->with($quoteItemMock)->willReturn($itemData);
 
         $this->objectManagerMock->expects($this->once())
@@ -79,7 +79,7 @@ class ItemPoolTest extends \PHPUnit_Framework_TestCase
 
         $objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
         $this->model = $objectManager->getObject(
-            \Magento\Checkout\CustomerData\ItemPool::class,
+            'Magento\Checkout\CustomerData\ItemPool',
             [
                 'objectManager' => $this->objectManagerMock,
                 'defaultItemId' => $this->defaultItemId,
@@ -98,12 +98,12 @@ class ItemPoolTest extends \PHPUnit_Framework_TestCase
     {
         $itemData = ['key' => 'value'];
         $productType = 'product_type';
-        $quoteItemMock = $this->getMock(\Magento\Quote\Model\Quote\Item::class, [], [], '', false);
+        $quoteItemMock = $this->getMock('\Magento\Quote\Model\Quote\Item', [], [], '', false);
         $quoteItemMock->expects($this->once())->method('getProductType')->willReturn($productType);
         $this->objectManagerMock->expects($this->once())
             ->method('get')
             ->with($this->defaultItemId)
-            ->willReturn($this->getMock(\Magento\Quote\Model\Quote\Item::class, [], [], '', false));
+            ->willReturn($this->getMock('\Magento\Quote\Model\Quote\Item', [], [], '', false));
         $this->assertEquals($itemData, $this->model->getItemData($quoteItemMock));
     }
 }

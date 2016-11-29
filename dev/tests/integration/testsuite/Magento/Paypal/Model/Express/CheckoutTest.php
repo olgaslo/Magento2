@@ -11,8 +11,6 @@ use Magento\TestFramework\Helper\Bootstrap;
 
 /**
  * Class CheckoutTest
- *
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
 class CheckoutTest extends \PHPUnit_Framework_TestCase
 {
@@ -45,19 +43,19 @@ class CheckoutTest extends \PHPUnit_Framework_TestCase
         $quote->setCheckoutMethod(Onepage::METHOD_CUSTOMER); // to dive into _prepareCustomerQuote() on switch
         $quote->getShippingAddress()->setSameAsBilling(0);
         $quote->setReservedOrderId(null);
-        $customer = $this->_objectManager->create(\Magento\Customer\Model\Customer::class)->load(1);
+        $customer = $this->_objectManager->create('Magento\Customer\Model\Customer')->load(1);
         $customer->setDefaultBilling(false)
             ->setDefaultShipping(false)
             ->save();
 
         /** @var \Magento\Customer\Model\Session $customerSession */
-        $customerSession = $this->_objectManager->get(\Magento\Customer\Model\Session::class);
+        $customerSession = $this->_objectManager->get('Magento\Customer\Model\Session');
         $customerSession->loginById(1);
         $checkout = $this->_getCheckout($quote);
         $checkout->place('token');
 
         /** @var \Magento\Customer\Api\CustomerRepositoryInterface $customerService */
-        $customerService = $this->_objectManager->get(\Magento\Customer\Api\CustomerRepositoryInterface::class);
+        $customerService = $this->_objectManager->get('Magento\Customer\Api\CustomerRepositoryInterface');
         $customer = $customerService->getById($quote->getCustomerId());
 
         $this->assertEquals(1, $quote->getCustomerId());
@@ -111,10 +109,10 @@ class CheckoutTest extends \PHPUnit_Framework_TestCase
     protected function _getCheckout(Quote $quote)
     {
         return $this->_objectManager->create(
-            \Magento\Paypal\Model\Express\Checkout::class,
+            'Magento\Paypal\Model\Express\Checkout',
             [
                 'params' => [
-                    'config' => $this->getMock(\Magento\Paypal\Model\Config::class, [], [], '', false),
+                    'config' => $this->getMock('Magento\Paypal\Model\Config', [], [], '', false),
                     'quote' => $quote,
                 ]
             ]
@@ -131,11 +129,11 @@ class CheckoutTest extends \PHPUnit_Framework_TestCase
     public function testReturnFromPaypal()
     {
         $quote = $this->_getFixtureQuote();
-        $paypalConfigMock = $this->getMock(\Magento\Paypal\Model\Config::class, [], [], '', false);
-        $apiTypeFactory = $this->getMock(\Magento\Paypal\Model\Api\Type\Factory::class, [], [], '', false);
-        $paypalInfo = $this->getMock(\Magento\Paypal\Model\Info::class, [], [], '', false);
+        $paypalConfigMock = $this->getMock('Magento\Paypal\Model\Config', [], [], '', false);
+        $apiTypeFactory = $this->getMock('Magento\Paypal\Model\Api\Type\Factory', [], [], '', false);
+        $paypalInfo = $this->getMock('Magento\Paypal\Model\Info', [], [], '', false);
         $checkoutModel = $this->_objectManager->create(
-            \Magento\Paypal\Model\Express\Checkout::class,
+            'Magento\Paypal\Model\Express\Checkout',
             [
                 'params' => ['quote' => $quote, 'config' => $paypalConfigMock],
                 'apiTypeFactory' => $apiTypeFactory,
@@ -144,7 +142,7 @@ class CheckoutTest extends \PHPUnit_Framework_TestCase
         );
 
         $api = $this->getMock(
-            \Magento\Paypal\Model\Api\Nvp::class,
+            'Magento\Paypal\Model\Api\Nvp',
             ['call', 'getExportedShippingAddress', 'getExportedBillingAddress'],
             [],
             '',
@@ -218,7 +216,7 @@ class CheckoutTest extends \PHPUnit_Framework_TestCase
     protected function _getFixtureQuote()
     {
         /** @var \Magento\Quote\Model\ResourceModel\Quote\Collection $quoteCollection */
-        $quoteCollection = $this->_objectManager->create(\Magento\Quote\Model\ResourceModel\Quote\Collection::class);
+        $quoteCollection = $this->_objectManager->create('Magento\Quote\Model\ResourceModel\Quote\Collection');
 
         return $quoteCollection->getLastItem();
     }

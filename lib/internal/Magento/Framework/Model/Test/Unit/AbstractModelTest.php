@@ -47,22 +47,22 @@ class AbstractModelTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->actionValidatorMock = $this->getMock(
-            \Magento\Framework\Model\ActionValidator\RemoveAction::class,
+            '\Magento\Framework\Model\ActionValidator\RemoveAction',
             [],
             [],
             '',
             false
         );
         $this->contextMock = new \Magento\Framework\Model\Context(
-            $this->getMock(\Psr\Log\LoggerInterface::class),
-            $this->getMock(\Magento\Framework\Event\ManagerInterface::class, [], [], '', false),
-            $this->getMock(\Magento\Framework\App\CacheInterface::class, [], [], '', false),
-            $this->getMock(\Magento\Framework\App\State::class, [], [], '', false),
+            $this->getMock('Psr\Log\LoggerInterface'),
+            $this->getMock('Magento\Framework\Event\ManagerInterface', [], [], '', false),
+            $this->getMock('Magento\Framework\App\CacheInterface', [], [], '', false),
+            $this->getMock('Magento\Framework\App\State', [], [], '', false),
             $this->actionValidatorMock
         );
-        $this->registryMock = $this->getMock(\Magento\Framework\Registry::class, [], [], '', false);
+        $this->registryMock = $this->getMock('Magento\Framework\Registry', [], [], '', false);
         $this->resourceMock = $this->getMock(
-            \Magento\Framework\Model\ResourceModel\Db\AbstractDb::class,
+            'Magento\Framework\Model\ResourceModel\Db\AbstractDb',
             [
                 '_construct',
                 'getConnection',
@@ -76,15 +76,15 @@ class AbstractModelTest extends \PHPUnit_Framework_TestCase
             '',
             false
         );
-        $this->resourceCollectionMock = $this->getMockBuilder(\Magento\Framework\Data\Collection\AbstractDb::class)
+        $this->resourceCollectionMock = $this->getMockBuilder('Magento\Framework\Data\Collection\AbstractDb')
             ->disableOriginalConstructor()
             ->getMockForAbstractClass();
         $this->model = $this->getMockForAbstractClass(
-            \Magento\Framework\Model\AbstractModel::class,
+            'Magento\Framework\Model\AbstractModel',
             [$this->contextMock, $this->registryMock, $this->resourceMock, $this->resourceCollectionMock]
         );
         $this->connectionMock = $this->getMock(
-            \Magento\Framework\DB\Adapter\AdapterInterface::class,
+            'Magento\Framework\DB\Adapter\AdapterInterface',
             [],
             [],
             '',

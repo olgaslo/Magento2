@@ -9,8 +9,6 @@ use Magento\Weee\Model\Tax;
 
 /**
  * Class TaxTest
- *
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
 class TaxTest extends \PHPUnit_Framework_TestCase
 {
@@ -96,22 +94,22 @@ class TaxTest extends \PHPUnit_Framework_TestCase
     {
         $this->objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
 
-        $className = \Magento\Framework\Model\Context::class;
+        $className = '\Magento\Framework\Model\Context';
         $this->context = $this->getMock($className, [], [], '', false);
 
-        $className = \Magento\Framework\Registry::class;
+        $className = '\Magento\Framework\Registry';
         $this->registry = $this->getMock($className, [], [], '', false);
 
-        $className = \Magento\Eav\Model\Entity\AttributeFactory::class;
+        $className = '\Magento\Eav\Model\Entity\AttributeFactory';
         $this->attributeFactory = $this->getMock($className, ['create'], [], '', false);
 
-        $className = \Magento\Store\Model\StoreManagerInterface::class;
+        $className = '\Magento\Store\Model\StoreManagerInterface';
         $this->storeManager = $this->getMock($className, [], [], '', false);
 
-        $className = \Magento\Tax\Model\CalculationFactory::class;
+        $className = '\Magento\Tax\Model\CalculationFactory';
         $this->calculationFactory = $this->getMock($className, ['create'], [], '', false);
 
-        $className = \Magento\Customer\Model\Session::class;
+        $className = '\Magento\Customer\Model\Session';
         $this->customerSession = $this->getMock(
             $className,
             ['getCustomerId', 'getDefaultTaxShippingAddress', 'getDefaultTaxBillingAddress', 'getCustomerTaxClassId'],
@@ -124,26 +122,26 @@ class TaxTest extends \PHPUnit_Framework_TestCase
         $this->customerSession->expects($this->any())->method('getDefaultTaxBillingAddress')->willReturn(null);
         $this->customerSession->expects($this->any())->method('getCustomerTaxClassId')->willReturn(null);
 
-        $className = \Magento\Customer\Api\AccountManagementInterface::class;
+        $className = '\Magento\Customer\Api\AccountManagementInterface';
         $this->accountManagement = $this->getMock($className, [], [], '', false);
 
-        $className = \Magento\Tax\Helper\Data::class;
+        $className = '\Magento\Tax\Helper\Data';
         $this->taxData = $this->getMock($className, [], [], '', false);
 
-        $className = \Magento\Weee\Model\ResourceModel\Tax::class;
+        $className = '\Magento\Weee\Model\ResourceModel\Tax';
         $this->resource = $this->getMock($className, [], [], '', false);
 
-        $className = \Magento\Weee\Model\Config::class;
+        $className = '\Magento\Weee\Model\Config';
         $this->weeeConfig = $this->getMock($className, [], [], '', false);
 
-        $className = \Magento\Framework\Pricing\PriceCurrencyInterface::class;
+        $className = '\Magento\Framework\Pricing\PriceCurrencyInterface';
         $this->priceCurrency = $this->getMock($className, [], [], '', false);
 
-        $className = \Magento\Framework\Data\Collection\AbstractDb::class;
+        $className = '\Magento\Framework\Data\Collection\AbstractDb';
         $this->resourceCollection = $this->getMock($className, [], [], '', false);
 
         $this->model = $this->objectManager->getObject(
-            \Magento\Weee\Model\Tax::class,
+            '\Magento\Weee\Model\Tax',
             [
                 'context' => $this->context,
                 'registry' => $this->registry,
@@ -169,13 +167,13 @@ class TaxTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetProductWeeeAttributes($weeeTaxCalculationsByEntity, $expectedFptLabel)
     {
-        $product = $this->getMock(\Magento\Catalog\Model\Product::class, [], [], '', false);
-        $website = $this->getMock(\Magento\Store\Model\Website::class, [], [], '', false);
-        $store = $this->getMock(\Magento\Store\Model\Store::class, [], [], '', false);
-        $group = $this->getMock(\Magento\Store\Model\Group::class, [], [], '', false);
+        $product = $this->getMock('\Magento\Catalog\Model\Product', [], [], '', false);
+        $website = $this->getMock('\Magento\Store\Model\Website', [], [], '', false);
+        $store = $this->getMock('\Magento\Store\Model\Store', [], [], '', false);
+        $group = $this->getMock('\Magento\Store\Model\Group', [], [], '', false);
 
-        $attribute = $this->getMock(\Magento\Eav\Model\Entity\Attribute::class, [], [], '', false);
-        $calculation = $this->getMock(\Magento\Tax\Model\Calculation::class, [], [], '', false);
+        $attribute = $this->getMock('\Magento\Eav\Model\Entity\Attribute', [], [], '', false);
+        $calculation = $this->getMock('Magento\Tax\Model\Calculation', [], [], '', false);
 
         $obj = new \Magento\Framework\DataObject(['country' => 'US', 'region' => 'TX']);
         $calculation->expects($this->once())

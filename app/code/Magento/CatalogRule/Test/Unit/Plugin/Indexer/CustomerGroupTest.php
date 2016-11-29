@@ -34,14 +34,14 @@ class CustomerGroupTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->ruleProductProcessor = $this->getMock(
-            \Magento\CatalogRule\Model\Indexer\Rule\RuleProductProcessor::class,
+            'Magento\CatalogRule\Model\Indexer\Rule\RuleProductProcessor',
             [],
             [],
             '',
             false
         );
         $this->subject = $this->getMock(
-            \Magento\Customer\Model\Group::class,
+            'Magento\Customer\Model\Group',
             [],
             [],
             '',
@@ -49,7 +49,7 @@ class CustomerGroupTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->plugin = (new ObjectManager($this))->getObject(
-            \Magento\CatalogRule\Plugin\Indexer\CustomerGroup::class,
+            'Magento\CatalogRule\Plugin\Indexer\CustomerGroup',
             [
                 'ruleProductProcessor' => $this->ruleProductProcessor,
             ]

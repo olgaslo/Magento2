@@ -16,16 +16,13 @@ class StringTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->_model = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create(
-            \Magento\Translation\Model\StringUtils::class
+            'Magento\Translation\Model\StringUtils'
         );
     }
 
     public function testConstructor()
     {
-        $this->assertInstanceOf(
-            \Magento\Translation\Model\ResourceModel\StringUtils::class,
-            $this->_model->getResource()
-        );
+        $this->assertInstanceOf('Magento\Translation\Model\ResourceModel\StringUtils', $this->_model->getResource());
     }
 
     public function testSetGetString()

@@ -14,9 +14,6 @@ use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\OutputInterface;
 use Magento\Framework\Xml\Parser;
 
-/**
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
- */
 class FixtureModel
 {
     /**
@@ -158,7 +155,7 @@ class FixtureModel
                 $this->initArguments
             );
             $this->objectManager = $objectManagerFactory->create($this->initArguments);
-            $this->objectManager->get(\Magento\Framework\App\State::class)->setAreaCode(self::AREA_CODE);
+            $this->objectManager->get('Magento\Framework\App\State')->setAreaCode(self::AREA_CODE);
         }
         return $this->objectManager;
     }
@@ -173,11 +170,10 @@ class FixtureModel
         $this->getObjectManager()
             ->configure(
                 $this->getObjectManager()
-                    ->get(\Magento\Framework\ObjectManager\ConfigLoaderInterface::class)
+                    ->get('Magento\Framework\ObjectManager\ConfigLoaderInterface')
                     ->load(self::AREA_CODE)
             );
-        $this->getObjectManager()->get(\Magento\Framework\Config\ScopeInterface::class)
-            ->setCurrentScope(self::AREA_CODE);
+        $this->getObjectManager()->get('Magento\Framework\Config\ScopeInterface')->setCurrentScope(self::AREA_CODE);
         return $this;
     }
 
@@ -206,9 +202,7 @@ class FixtureModel
         if (!is_readable($filename)) {
             throw new \Exception("Profile configuration file `{$filename}` is not readable or does not exists.");
         }
-        $this->fileParser->getDom()->load($filename);
-        $this->fileParser->getDom()->xinclude();
-        $this->config = $this->fileParser->xmlToArray();
+        $this->config = $this->fileParser->load($filename)->xmlToArray();
     }
 
     /**
@@ -221,12 +215,6 @@ class FixtureModel
      */
     public function getValue($key, $default = null)
     {
-        return isset($this->config['config']['profile'][$key]) ?
-            (
-                // Work around for how attributes are handled in the XML parser when injected via xinclude due to the
-                // files existing outside of the current working directory.
-                isset($this->config['config']['profile'][$key]['_value']) ?
-                    $this->config['config']['profile'][$key]['_value'] : $this->config['config']['profile'][$key]
-            ) : $default;
+        return isset($this->config['config']['profile'][$key]) ? $this->config['config']['profile'][$key] : $default;
     }
 }

@@ -33,14 +33,12 @@ class GridStructureTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->connection = $this->getMockBuilder(\Magento\Framework\DB\Adapter\AdapterInterface::class)
+        $this->connection = $this->getMockBuilder('Magento\Framework\DB\Adapter\AdapterInterface')
             ->getMock();
-        $this->resource = $this->getMockBuilder(\Magento\Framework\App\ResourceConnection::class)
+        $this->resource = $this->getMockBuilder('Magento\Framework\App\ResourceConnection')
             ->disableOriginalConstructor()
             ->getMock();
-        $this->flatScopeResolver = $this->getMockBuilder(
-            \Magento\Framework\Indexer\ScopeResolver\FlatScopeResolver::class
-        )
+        $this->flatScopeResolver = $this->getMockBuilder('Magento\Framework\Indexer\ScopeResolver\FlatScopeResolver')
             ->disableOriginalConstructor()
             ->getMock();
         $this->resource->expects($this->any())
@@ -86,7 +84,7 @@ class GridStructureTest extends \PHPUnit_Framework_TestCase
         $tableName = 'index_table';
         $idxName = 'idxName';
 
-        $table = $this->getMockBuilder(\Magento\Framework\DB\Ddl\Table::class)
+        $table = $this->getMockBuilder('Magento\Framework\DB\Ddl\Table')
             ->disableOriginalConstructor()
             ->getMock();
         $this->flatScopeResolver->expects($this->once())

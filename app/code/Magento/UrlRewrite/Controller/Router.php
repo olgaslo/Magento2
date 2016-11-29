@@ -12,8 +12,6 @@ use Magento\UrlRewrite\Service\V1\Data\UrlRewrite;
 
 /**
  * UrlRewrite Controller Router
- *
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
 class Router implements \Magento\Framework\App\RouterInterface
 {
@@ -89,7 +87,7 @@ class Router implements \Magento\Framework\App\RouterInterface
 
         $request->setAlias(\Magento\Framework\UrlInterface::REWRITE_REQUEST_PATH_ALIAS, $rewrite->getRequestPath());
         $request->setPathInfo('/' . $rewrite->getTargetPath());
-        return $this->actionFactory->create(\Magento\Framework\App\Action\Forward::class);
+        return $this->actionFactory->create('Magento\Framework\App\Action\Forward');
     }
 
     /**
@@ -118,7 +116,7 @@ class Router implements \Magento\Framework\App\RouterInterface
     {
         $this->response->setRedirect($url, $code);
         $request->setDispatched(true);
-        return $this->actionFactory->create(\Magento\Framework\App\Action\Redirect::class);
+        return $this->actionFactory->create('Magento\Framework\App\Action\Redirect');
     }
 
     /**

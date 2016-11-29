@@ -15,14 +15,13 @@ use Magento\CatalogInventory\Model\Indexer\Stock\Processor;
 use Magento\CatalogInventory\Model\ResourceModel\Stock\Item as StockItemResource;
 use Magento\CatalogInventory\Model\Spi\StockStateProviderInterface;
 use Magento\CatalogInventory\Model\StockRegistryStorage;
-use Magento\Framework\App\ObjectManager;
 use Magento\Framework\DB\MapperFactory;
 use Magento\Framework\DB\QueryBuilderFactory;
 use Magento\Framework\Exception\CouldNotDeleteException;
 use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Framework\Exception\NoSuchEntityException;
-use Magento\Framework\Stdlib\DateTime\DateTime;
 use Magento\Framework\Stdlib\DateTime\TimezoneInterface;
+use Magento\Framework\Stdlib\DateTime\DateTime;
 
 /**
  * Class StockItemRepository
@@ -90,9 +89,6 @@ class StockItemRepository implements StockItemRepositoryInterface
      */
     protected $stockRegistryStorage;
 
-    /** @var  \Magento\Catalog\Model\ResourceModel\Product\CollectionFactory */
-    protected $productCollectionFactory;
-
     /**
      * @param StockConfigurationInterface $stockConfiguration
      * @param StockStateProviderInterface $stockStateProvider
@@ -134,33 +130,14 @@ class StockItemRepository implements StockItemRepositoryInterface
     }
 
     /**
-     * @deprecated
-     * @return  \Magento\Catalog\Model\ResourceModel\Product\CollectionFactory
-     */
-    private function getProductCollectionFactory()
-    {
-        if ($this->productCollectionFactory === null) {
-            $this->productCollectionFactory = ObjectManager::getInstance()->get(
-                \Magento\Catalog\Model\ResourceModel\Product\CollectionFactory::class
-            );
-        }
-
-        return $this->productCollectionFactory;
-    }
-
-    /**
      * @inheritdoc
      */
     public function save(\Magento\CatalogInventory\Api\Data\StockItemInterface $stockItem)
     {
         try {
             /** @var \Magento\Catalog\Model\Product $product */
-            $product = $this->getProductCollectionFactory()->create()
-                ->setFlag('has_stock_status_filter')
-                ->addIdFilter($stockItem->getProductId())
-                ->addFieldToSelect('type_id')
-                ->getFirstItem();
-
+            $product = $this->productFactory->create();
+            $product->load($stockItem->getProductId());
             if (!$product->getId()) {
                 return $stockItem;
             }
@@ -264,7 +241,7 @@ class StockItemRepository implements StockItemRepositoryInterface
     {
         if (null === $this->stockRegistryStorage) {
             $this->stockRegistryStorage = \Magento\Framework\App\ObjectManager::getInstance()
-                ->get(\Magento\CatalogInventory\Model\StockRegistryStorage::class);
+                ->get('Magento\CatalogInventory\Model\StockRegistryStorage');
         }
         return $this->stockRegistryStorage;
     }

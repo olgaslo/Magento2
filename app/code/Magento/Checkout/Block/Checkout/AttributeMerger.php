@@ -45,7 +45,6 @@ class AttributeMerger
         'alphanumeric' => 'validate-alphanum',
         'url' => 'validate-url',
         'email' => 'email2',
-        'length' => 'validate-length',
     ];
 
     /**
@@ -192,15 +191,6 @@ class AttributeMerger
             'visible' => isset($additionalConfig['visible']) ? $additionalConfig['visible'] : true,
         ];
 
-        if ($attributeCode === 'region_id' || $attributeCode === 'country_id') {
-            unset($element['options']);
-            $element['deps'] = [$providerName];
-            $element['imports'] = [
-                'initialOptions' => 'index = ' . $providerName . ':dictionaries.' . $attributeCode,
-                'setOptions' => 'index = ' . $providerName . ':dictionaries.' . $attributeCode
-            ];
-        }
-
         if (isset($attributeConfig['value']) && $attributeConfig['value'] != null) {
             $element['value'] = $attributeConfig['value'];
         } elseif (isset($attributeConfig['default']) && $attributeConfig['default'] != null) {
@@ -282,7 +272,7 @@ class AttributeMerger
                         $attributeConfig['validation']
                     )
                     : $attributeConfig['validation'],
-                'additionalClasses' => $isFirstLine ? 'field' : 'additional'
+                'additionalClasses' => $isFirstLine ? : 'additional'
 
             ];
             if ($isFirstLine && isset($attributeConfig['default']) && $attributeConfig['default'] != null) {
@@ -350,11 +340,11 @@ class AttributeMerger
      * @param string $attributeCode
      * @param array $attributeConfig
      * @return array
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     protected function getFieldOptions($attributeCode, array $attributeConfig)
     {
-        return isset($attributeConfig['options']) ? $attributeConfig['options'] : [];
+        $options = isset($attributeConfig['options']) ? $attributeConfig['options'] : [];
+        return ($attributeCode == 'country_id') ? $this->orderCountryOptions($options) : $options;
     }
 
     /**
@@ -362,7 +352,6 @@ class AttributeMerger
      *
      * @param array $countryOptions
      * @return array
-     * @deprecated
      */
     protected function orderCountryOptions(array $countryOptions)
     {

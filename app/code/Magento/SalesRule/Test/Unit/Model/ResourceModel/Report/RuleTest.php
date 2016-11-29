@@ -25,7 +25,7 @@ class RuleTest extends \PHPUnit_Framework_TestCase
 
     public function testGetUniqRulesNamesList()
     {
-        $dbAdapterMock = $this->getMockBuilder(\Magento\Framework\DB\Adapter\Pdo\Mysql::class)
+        $dbAdapterMock = $this->getMockBuilder('Magento\Framework\DB\Adapter\Pdo\Mysql')
             ->setMethods(['_connect', 'quote'])
             ->disableOriginalConstructor()
             ->getMock();
@@ -38,10 +38,10 @@ class RuleTest extends \PHPUnit_Framework_TestCase
                 }
             );
 
-        $selectRenderer = $this->getMockBuilder(\Magento\Framework\DB\Select\SelectRenderer::class)
+        $selectRenderer = $this->getMockBuilder('Magento\Framework\DB\Select\SelectRenderer')
             ->disableOriginalConstructor()
             ->getMock();
-        $select = $this->getMock(\Magento\Framework\DB\Select::class, ['from'], [$dbAdapterMock, $selectRenderer]);
+        $select = $this->getMock('Magento\Framework\DB\Select', ['from'], [$dbAdapterMock, $selectRenderer]);
         $select->expects(
             $this->once()
         )->method(
@@ -54,7 +54,7 @@ class RuleTest extends \PHPUnit_Framework_TestCase
         );
 
         $connectionMock = $this->getMock(
-            \Magento\Framework\DB\Adapter\Pdo\Mysql::class,
+            'Magento\Framework\DB\Adapter\Pdo\Mysql',
             ['select', 'fetchAll'],
             [],
             '',
@@ -72,7 +72,7 @@ class RuleTest extends \PHPUnit_Framework_TestCase
         );
 
         $resourceMock = $this->getMock(
-            \Magento\Framework\App\ResourceConnection::class,
+            'Magento\Framework\App\ResourceConnection',
             [],
             [],
             '',
@@ -81,16 +81,16 @@ class RuleTest extends \PHPUnit_Framework_TestCase
         $resourceMock->expects($this->any())->method('getConnection')->will($this->returnValue($connectionMock));
         $resourceMock->expects($this->once())->method('getTableName')->will($this->returnValue(self::TABLE_NAME));
 
-        $flagFactory = $this->getMock(\Magento\Reports\Model\FlagFactory::class, [], [], '', false);
+        $flagFactory = $this->getMock('Magento\Reports\Model\FlagFactory', [], [], '', false);
         $createdatFactoryMock = $this->getMock(
-            \Magento\SalesRule\Model\ResourceModel\Report\Rule\CreatedatFactory::class,
+            'Magento\SalesRule\Model\ResourceModel\Report\Rule\CreatedatFactory',
             ['create'],
             [],
             '',
             false
         );
         $updatedatFactoryMock = $this->getMock(
-            \Magento\SalesRule\Model\ResourceModel\Report\Rule\UpdatedatFactory::class,
+            'Magento\SalesRule\Model\ResourceModel\Report\Rule\UpdatedatFactory',
             ['create'],
             [],
             '',
@@ -99,7 +99,7 @@ class RuleTest extends \PHPUnit_Framework_TestCase
 
         $objectHelper = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
         $model = $objectHelper->getObject(
-            \Magento\SalesRule\Model\ResourceModel\Report\Rule::class,
+            'Magento\SalesRule\Model\ResourceModel\Report\Rule',
             [
                 'resource' => $resourceMock,
                 'reportsFlagFactory' => $flagFactory,

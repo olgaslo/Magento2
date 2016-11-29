@@ -26,7 +26,7 @@ class CategoriesTest extends \PHPUnit_Framework_TestCase
     /**
      * @var string
      */
-    protected $blockClass = \Magento\Widget\Block\Adminhtml\Widget\Catalog\Category\Chooser::class;
+    protected $blockClass = 'Magento\Widget\Block\Adminhtml\Widget\Catalog\Category\Chooser';
 
     /**
      * @var \Magento\Framework\View\Layout|\PHPUnit_Framework_MockObject_MockObject
@@ -55,8 +55,8 @@ class CategoriesTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->request = $this->getMock(\Magento\Framework\App\RequestInterface::class, [], [], '', false);
-        $this->mathRandom = $this->getMock(\Magento\Framework\Math\Random::class, [], [], '', false);
+        $this->request = $this->getMock('Magento\Framework\App\RequestInterface', [], [], '', false);
+        $this->mathRandom = $this->getMock('Magento\Framework\Math\Random', [], [], '', false);
         $this->chooser = $this->getMock(
             $this->blockClass,
             ['setUseMassaction', 'setId', 'setIsAnchorOnly', 'setSelectedCategories', 'toHtml'],
@@ -64,10 +64,10 @@ class CategoriesTest extends \PHPUnit_Framework_TestCase
             '',
             false
         );
-        $this->layout = $this->getMock(\Magento\Framework\View\Layout::class, [], [], '', false);
-        $this->resultRaw = $this->getMock(\Magento\Framework\Controller\Result\Raw::class, [], [], '', false);
-        $this->resultFactory = $this->getMock(\Magento\Framework\Controller\ResultFactory::class, [], [], '', false);
-        $this->context = $this->getMock(\Magento\Backend\App\Action\Context::class, [], [], '', false);
+        $this->layout = $this->getMock('Magento\Framework\View\Layout', [], [], '', false);
+        $this->resultRaw = $this->getMock('Magento\Framework\Controller\Result\Raw', [], [], '', false);
+        $this->resultFactory = $this->getMock('Magento\Framework\Controller\ResultFactory', [], [], '', false);
+        $this->context = $this->getMock('Magento\Backend\App\Action\Context', [], [], '', false);
     }
 
     public function testExecute()
@@ -113,7 +113,7 @@ class CategoriesTest extends \PHPUnit_Framework_TestCase
         /** @var \Magento\Widget\Controller\Adminhtml\Widget\Instance\Categories $controller */
         $this->controller = (new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this))
             ->getObject(
-                \Magento\Widget\Controller\Adminhtml\Widget\Instance\Categories::class,
+                'Magento\Widget\Controller\Adminhtml\Widget\Instance\Categories',
                 [
                     'context' => $this->context,
                     'mathRandom' => $this->mathRandom,

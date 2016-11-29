@@ -23,7 +23,7 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->configMock = $this->getMock(
-            \Magento\Indexer\Model\Config\Data::class,
+            '\Magento\Indexer\Model\Config\Data',
             [],
             [],
             '',

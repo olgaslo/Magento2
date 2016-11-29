@@ -14,23 +14,20 @@ class ObjectManager extends \Magento\Framework\App\ObjectManager
      *
      * @var array
      */
-    protected $_classesToDestruct = [
-        \Magento\Framework\View\Layout::class,
-        \Magento\Framework\Registry::class
-    ];
+    protected $_classesToDestruct = ['Magento\Framework\View\Layout', 'Magento\Framework\Registry'];
 
     /**
      * @var array
      */
     protected $persistedInstances = [
-        \Magento\Framework\App\ResourceConnection::class,
-        \Magento\Framework\Config\Scope::class,
-        \Magento\Framework\ObjectManager\RelationsInterface::class,
-        \Magento\Framework\ObjectManager\ConfigInterface::class,
-        \Magento\Framework\Interception\DefinitionInterface::class,
-        \Magento\Framework\ObjectManager\DefinitionInterface::class,
-        \Magento\Framework\Session\Config::class,
-        \Magento\Framework\ObjectManager\Config\Mapper\Dom::class,
+        'Magento\Framework\App\ResourceConnection',
+        'Magento\Framework\Config\Scope',
+        'Magento\Framework\ObjectManager\RelationsInterface',
+        'Magento\Framework\ObjectManager\ConfigInterface',
+        'Magento\Framework\Interception\DefinitionInterface',
+        'Magento\Framework\ObjectManager\DefinitionInterface',
+        'Magento\Framework\Session\Config',
+        'Magento\Framework\ObjectManager\Config\Mapper\Dom',
     ];
 
     /**
@@ -48,8 +45,8 @@ class ObjectManager extends \Magento\Framework\App\ObjectManager
 
         \Magento\Framework\App\Config\Base::destroy();
         $sharedInstances = [
-            \Magento\Framework\ObjectManagerInterface::class => $this,
-            \Magento\Framework\App\ObjectManager::class => $this,
+            'Magento\Framework\ObjectManagerInterface' => $this,
+            'Magento\Framework\App\ObjectManager' => $this,
         ];
         foreach ($this->persistedInstances as $persistedClass) {
             if (isset($this->_sharedInstances[$persistedClass])) {

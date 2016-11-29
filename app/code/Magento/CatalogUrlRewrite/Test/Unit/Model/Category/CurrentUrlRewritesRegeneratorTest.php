@@ -36,24 +36,24 @@ class CurrentUrlRewritesRegeneratorTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->urlRewriteFactory = $this->getMockBuilder(\Magento\UrlRewrite\Service\V1\Data\UrlRewriteFactory::class)
+        $this->urlRewriteFactory = $this->getMockBuilder('Magento\UrlRewrite\Service\V1\Data\UrlRewriteFactory')
             ->setMethods(['create'])
             ->disableOriginalConstructor()->getMock();
-        $this->urlRewrite = $this->getMockBuilder(\Magento\UrlRewrite\Service\V1\Data\UrlRewrite::class)
+        $this->urlRewrite = $this->getMockBuilder('Magento\UrlRewrite\Service\V1\Data\UrlRewrite')
             ->disableOriginalConstructor()->getMock();
-        $this->category = $this->getMockBuilder(\Magento\Catalog\Model\Category::class)
+        $this->category = $this->getMockBuilder('Magento\Catalog\Model\Category')
             ->disableOriginalConstructor()->getMock();
-        $this->filter = $this->getMockBuilder(\Magento\UrlRewrite\Service\V1\Data\Filter::class)
+        $this->filter = $this->getMockBuilder('Magento\UrlRewrite\Service\V1\Data\Filter')
             ->disableOriginalConstructor()->getMock();
         $this->filter->expects($this->any())->method('setStoreId')->will($this->returnSelf());
         $this->filter->expects($this->any())->method('setEntityId')->will($this->returnSelf());
-        $this->urlFinder = $this->getMockBuilder(\Magento\UrlRewrite\Model\UrlFinderInterface::class)
+        $this->urlFinder = $this->getMockBuilder('Magento\UrlRewrite\Model\UrlFinderInterface')
             ->disableOriginalConstructor()->getMock();
         $this->categoryUrlPathGenerator = $this->getMockBuilder(
-            \Magento\CatalogUrlRewrite\Model\CategoryUrlPathGenerator::class
+            'Magento\CatalogUrlRewrite\Model\CategoryUrlPathGenerator'
         )->disableOriginalConstructor()->getMock();
         $this->currentUrlRewritesRegenerator = (new ObjectManager($this))->getObject(
-            \Magento\CatalogUrlRewrite\Model\Category\CurrentUrlRewritesRegenerator::class,
+            'Magento\CatalogUrlRewrite\Model\Category\CurrentUrlRewritesRegenerator',
             [
                 'urlFinder' => $this->urlFinder,
                 'categoryUrlPathGenerator' => $this->categoryUrlPathGenerator,
@@ -245,7 +245,7 @@ class CurrentUrlRewritesRegeneratorTest extends \PHPUnit_Framework_TestCase
         $rewrites = [];
         foreach ($currentRewrites as $urlRewrite) {
             /** @var \PHPUnit_Framework_MockObject_MockObject */
-            $url = $this->getMockBuilder(\Magento\UrlRewrite\Service\V1\Data\UrlRewrite::class)
+            $url = $this->getMockBuilder('Magento\UrlRewrite\Service\V1\Data\UrlRewrite')
                 ->disableOriginalConstructor()->getMock();
             foreach ($urlRewrite as $key => $value) {
                 $url->expects($this->any())

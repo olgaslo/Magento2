@@ -37,7 +37,7 @@ class ColumnTest extends \PHPUnit_Framework_TestCase
         $this->objectManager = new ObjectManager($this);
 
         $this->contextMock = $this->getMockForAbstractClass(
-            \Magento\Framework\View\Element\UiComponent\ContextInterface::class,
+            'Magento\Framework\View\Element\UiComponent\ContextInterface',
             [],
             '',
             false,
@@ -45,13 +45,13 @@ class ColumnTest extends \PHPUnit_Framework_TestCase
             true,
             []
         );
-        $processor = $this->getMockBuilder(\Magento\Framework\View\Element\UiComponent\Processor::class)
+        $processor = $this->getMockBuilder('Magento\Framework\View\Element\UiComponent\Processor')
             ->disableOriginalConstructor()
             ->getMock();
         $this->contextMock->expects($this->any())->method('getProcessor')->willReturn($processor);
 
         $this->column = $this->objectManager->getObject(
-            \Magento\Ui\Component\MassAction\Columns\Column::class,
+            'Magento\Ui\Component\MassAction\Columns\Column',
             [
                 'context' => $this->contextMock,
                 'data' => [
@@ -93,7 +93,7 @@ class ColumnTest extends \PHPUnit_Framework_TestCase
     public function testPrepare()
     {
         $this->column = $this->objectManager->getObject(
-            \Magento\Ui\Component\MassAction\Columns\Column::class,
+            'Magento\Ui\Component\MassAction\Columns\Column',
             [
                 'context' => $this->contextMock,
                 'data' => [

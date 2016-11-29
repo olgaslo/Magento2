@@ -17,7 +17,7 @@ class WsdlFactoryTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->_objectManagerMock = $this->getMock(\Magento\Framework\ObjectManagerInterface::class);
+        $this->_objectManagerMock = $this->getMock('Magento\Framework\ObjectManagerInterface');
         $this->_soapWsdlFactory = new \Magento\Webapi\Model\Soap\WsdlFactory($this->_objectManagerMock);
         parent::setUp();
     }
@@ -38,7 +38,7 @@ class WsdlFactoryTest extends \PHPUnit_Framework_TestCase
         )->method(
             'create'
         )->with(
-            \Magento\Webapi\Model\Soap\Wsdl::class,
+            'Magento\Webapi\Model\Soap\Wsdl',
             ['name' => $wsdlName, 'uri' => $endpointUrl]
         );
         $this->_soapWsdlFactory->create($wsdlName, $endpointUrl);

@@ -72,7 +72,6 @@ define([
 
             this.value(value);
             this.on('value', this.onUpdate.bind(this));
-            this.isUseDefault(this.disabled());
 
             return this;
         },
@@ -295,20 +294,15 @@ define([
         /**
          * Handler which is invoked prior to the start of a file upload.
          *
-         * @param {Event} e - Event object.
+         * @param {Event} e - Event obejct.
          * @param {Object} data - File data that will be uploaded.
          */
         onBeforeFileUpload: function (e, data) {
             var file     = data.files[0],
-                allowed  = this.isFileAllowed(file),
-                target   = $(e.target);
+                allowed  = this.isFileAllowed(file);
 
             if (allowed.passed) {
-                target.on('fileuploadsend', function (event, postData) {
-                    postData.data.set('param_name', this.paramName);
-                }.bind(data));
-
-                target.fileupload('process', data).done(function () {
+                $(e.target).fileupload('process', data).done(function () {
                     data.submit();
                 });
             } else {

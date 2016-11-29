@@ -83,18 +83,18 @@ class MapperTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->connectionAdapter = $this->getMockBuilder(\Magento\Framework\DB\Adapter\AdapterInterface::class)
+        $this->connectionAdapter = $this->getMockBuilder('Magento\Framework\DB\Adapter\AdapterInterface')
             ->setMethods(['select', 'dropTable'])
             ->disableOriginalConstructor()
             ->getMockForAbstractClass();
 
-        $this->resource = $this->getMockBuilder(\Magento\Framework\App\ResourceConnection::class)
+        $this->resource = $this->getMockBuilder('Magento\Framework\App\ResourceConnection')
             ->disableOriginalConstructor()
             ->getMock();
         $this->resource->expects($this->any())->method('getConnection')
             ->will($this->returnValue($this->connectionAdapter));
 
-        $this->request = $this->getMockBuilder(\Magento\Framework\Search\RequestInterface::class)
+        $this->request = $this->getMockBuilder('Magento\Framework\Search\RequestInterface')
             ->setMethods(['getQuery', 'getIndex', 'getSize'])
             ->disableOriginalConstructor()
             ->getMockForAbstractClass();
@@ -102,9 +102,7 @@ class MapperTest extends \PHPUnit_Framework_TestCase
             ->method('getIndex')
             ->will($this->returnValue(self::INDEX_NAME));
 
-        $this->queryContainer = $this->getMockBuilder(
-            \Magento\Framework\Search\Adapter\Mysql\Query\QueryContainer::class
-        )
+        $this->queryContainer = $this->getMockBuilder('Magento\Framework\Search\Adapter\Mysql\Query\QueryContainer')
             ->setMethods(['addMatchQuery', 'getMatchQueries'])
             ->disableOriginalConstructor()
             ->getMock();
@@ -112,7 +110,7 @@ class MapperTest extends \PHPUnit_Framework_TestCase
             ->method('addMatchQuery')
             ->willReturnArgument(0);
 
-        $this->temporaryStorage = $this->getMockBuilder(\Magento\Framework\Search\Adapter\Mysql\TemporaryStorage::class)
+        $this->temporaryStorage = $this->getMockBuilder('\Magento\Framework\Search\Adapter\Mysql\TemporaryStorage')
             ->setMethods(['storeDocumentsFromSelect'])
             ->disableOriginalConstructor()
             ->getMock();
@@ -145,7 +143,7 @@ class MapperTest extends \PHPUnit_Framework_TestCase
 
         $this->request->expects($this->once())->method('getQuery')->will($this->returnValue($query));
 
-        $select->expects($this->any())->method('columns')->willReturnSelf();
+        $select->expects($this->any())->method('columns')->will($this->returnValue($select));
 
         $response = $this->mapper->buildQuery($this->request);
 
@@ -165,7 +163,7 @@ class MapperTest extends \PHPUnit_Framework_TestCase
             ->method('getSize')
             ->willReturn(self::REQUEST_LIMIT);
 
-        $select->expects($this->any())->method('columns')->willReturnSelf();
+        $select->expects($this->any())->method('columns')->will($this->returnValue($select));
 
         $this->request->expects($this->once())->method('getQuery')->will($this->returnValue($query));
 
@@ -206,7 +204,7 @@ class MapperTest extends \PHPUnit_Framework_TestCase
 
         $this->filterBuilder->expects($this->any())->method('build')->will($this->returnValue('(1)'));
 
-        $table = $this->getMockBuilder(\Magento\Framework\DB\Ddl\Table::class)
+        $table = $this->getMockBuilder('\Magento\Framework\DB\Ddl\Table')
             ->disableOriginalConstructor()
             ->getMock();
         $this->temporaryStorage->expects($this->any())
@@ -296,7 +294,7 @@ class MapperTest extends \PHPUnit_Framework_TestCase
     {
         $select = $this->createSelectMock(null, false, false);
         $this->mockBuilders($select);
-        $query = $this->getMockBuilder(\Magento\Framework\Search\Request\QueryInterface::class)
+        $query = $this->getMockBuilder('Magento\Framework\Search\Request\QueryInterface')
             ->setMethods(['getType'])
             ->disableOriginalConstructor()
             ->getMockForAbstractClass();
@@ -334,7 +332,7 @@ class MapperTest extends \PHPUnit_Framework_TestCase
      */
     private function createMatchQuery()
     {
-        $query = $this->getMockBuilder(\Magento\Framework\Search\Request\Query\Match::class)
+        $query = $this->getMockBuilder('Magento\Framework\Search\Request\Query\Match')
             ->setMethods(['getType'])
             ->disableOriginalConstructor()
             ->getMockForAbstractClass();
@@ -350,7 +348,7 @@ class MapperTest extends \PHPUnit_Framework_TestCase
      */
     private function createFilterQuery($referenceType, $reference)
     {
-        $query = $this->getMockBuilder(\Magento\Framework\Search\Request\Query\Filter::class)
+        $query = $this->getMockBuilder('Magento\Framework\Search\Request\Query\Filter')
             ->setMethods(['getType', 'getReferenceType', 'getReference'])
             ->disableOriginalConstructor()
             ->getMockForAbstractClass();
@@ -372,7 +370,7 @@ class MapperTest extends \PHPUnit_Framework_TestCase
      */
     private function createBoolQuery(array $must, array $should, array $mustNot)
     {
-        $query = $this->getMockBuilder(\Magento\Framework\Search\Request\Query\BoolExpression::class)
+        $query = $this->getMockBuilder('Magento\Framework\Search\Request\Query\BoolExpression')
             ->setMethods(['getMust', 'getShould', 'getMustNot', 'getType'])
             ->disableOriginalConstructor()
             ->getMockForAbstractClass();
@@ -396,7 +394,7 @@ class MapperTest extends \PHPUnit_Framework_TestCase
      */
     private function createFilter()
     {
-        return $this->getMockBuilder(\Magento\Framework\Search\Request\FilterInterface::class)
+        return $this->getMockBuilder('Magento\Framework\Search\Request\FilterInterface')
             ->disableOriginalConstructor()
             ->getMockForAbstractClass();
     }
@@ -408,7 +406,7 @@ class MapperTest extends \PHPUnit_Framework_TestCase
      */
     private function createMatchContainer($request, $conditionType)
     {
-        $matchContainer = $this->getMockBuilder(\Magento\Framework\Search\Adapter\Mysql\Query\MatchContainer::class)
+        $matchContainer = $this->getMockBuilder('\Magento\Framework\Search\Adapter\Mysql\Query\MatchContainer')
             ->setMethods(['getRequest', 'getConditionType'])
             ->disableOriginalConstructor()
             ->getMock();
@@ -428,32 +426,28 @@ class MapperTest extends \PHPUnit_Framework_TestCase
     {
         $helper = new ObjectManager($this);
 
-        $this->scoreBuilder = $this->getMockBuilder(\Magento\Framework\Search\Adapter\Mysql\ScoreBuilder::class)
+        $this->scoreBuilder = $this->getMockBuilder('Magento\Framework\Search\Adapter\Mysql\ScoreBuilder')
             ->setMethods(['clear'])
             ->disableOriginalConstructor()
             ->getMock();
-        $this->scoreBuilderFactory = $this->getMockBuilder(
-            \Magento\Framework\Search\Adapter\Mysql\ScoreBuilderFactory::class
-        )
+        $this->scoreBuilderFactory = $this->getMockBuilder('Magento\Framework\Search\Adapter\Mysql\ScoreBuilderFactory')
             ->setMethods(['create'])
             ->disableOriginalConstructor()
             ->getMock();
         $this->scoreBuilderFactory->expects($this->any())->method('create')
             ->will($this->returnValue($this->scoreBuilder));
-        $this->filterBuilder = $this->getMockBuilder(\Magento\Framework\Search\Adapter\Mysql\Filter\Builder::class)
+        $this->filterBuilder = $this->getMockBuilder('Magento\Framework\Search\Adapter\Mysql\Filter\Builder')
             ->setMethods(['build'])
             ->disableOriginalConstructor()
             ->getMock();
-        $this->matchBuilder = $this->getMockBuilder(\Magento\Framework\Search\Adapter\Mysql\Query\Builder\Match::class)
+        $this->matchBuilder = $this->getMockBuilder('\Magento\Framework\Search\Adapter\Mysql\Query\Builder\Match')
             ->setMethods(['build'])
             ->disableOriginalConstructor()
             ->getMock();
         $this->matchBuilder->expects($this->any())
             ->method('build')
             ->willReturnArgument(1);
-        $this->indexBuilder = $this->getMockBuilder(
-            \Magento\Framework\Search\Adapter\Mysql\IndexBuilderInterface::class
-        )
+        $this->indexBuilder = $this->getMockBuilder('\Magento\Framework\Search\Adapter\Mysql\IndexBuilderInterface')
             ->disableOriginalConstructor()
             ->setMethods(['build'])
             ->getMockForAbstractClass();
@@ -461,7 +455,7 @@ class MapperTest extends \PHPUnit_Framework_TestCase
             ->method('build')
             ->will($this->returnValue($select));
         $temporaryStorageFactory = $this->getMockBuilder(
-            \Magento\Framework\Search\Adapter\Mysql\TemporaryStorageFactory::class
+            '\Magento\Framework\Search\Adapter\Mysql\TemporaryStorageFactory'
         )
             ->setMethods(['create'])
             ->disableOriginalConstructor()
@@ -470,7 +464,7 @@ class MapperTest extends \PHPUnit_Framework_TestCase
             ->method('create')
             ->willReturn($this->temporaryStorage);
         $queryContainerFactory = $this->getMockBuilder(
-            \Magento\Framework\Search\Adapter\Mysql\Query\QueryContainerFactory::class
+            'Magento\Framework\Search\Adapter\Mysql\Query\QueryContainerFactory'
         )
             ->setMethods(['create'])
             ->disableOriginalConstructor()
@@ -478,7 +472,7 @@ class MapperTest extends \PHPUnit_Framework_TestCase
         $queryContainerFactory->expects($this->any())
             ->method('create')
             ->willReturn($this->queryContainer);
-        $entityMetadata = $this->getMockBuilder(\Magento\Framework\Search\EntityMetadata::class)
+        $entityMetadata = $this->getMockBuilder('\Magento\Framework\Search\EntityMetadata')
             ->setMethods(['getEntityId'])
             ->disableOriginalConstructor()
             ->getMock();
@@ -486,7 +480,7 @@ class MapperTest extends \PHPUnit_Framework_TestCase
             ->method('getEntityId')
             ->willReturn(self::METADATA_ENTITY_ID);
         $this->mapper = $helper->getObject(
-            \Magento\Framework\Search\Adapter\Mysql\Mapper::class,
+            'Magento\Framework\Search\Adapter\Mysql\Mapper',
             [
                 'resource' => $this->resource,
                 'scoreBuilderFactory' => $this->scoreBuilderFactory,
@@ -510,7 +504,7 @@ class MapperTest extends \PHPUnit_Framework_TestCase
      */
     private function createSelectMock(Select $from = null, $isInternal = true, $isGrouped = true)
     {
-        $select = $this->getMockBuilder(\Magento\Framework\DB\Select::class)
+        $select = $this->getMockBuilder('Magento\Framework\DB\Select')
             ->setMethods(['group', 'limit', 'where', 'columns', 'from', 'join', 'joinInner', 'order'])
             ->disableOriginalConstructor()
             ->getMock();
@@ -522,9 +516,9 @@ class MapperTest extends \PHPUnit_Framework_TestCase
                 ->willReturnSelf();
         }
 
-        $select->expects($this->any())
+        $select->expects($isInternal ? $this->once() : $this->never())
             ->method('limit')
-            ->with($isInternal ? self::REQUEST_LIMIT : 10000000000)
+            ->with(self::REQUEST_LIMIT)
             ->willReturnSelf();
         $select->expects($isInternal ? $this->once() : $this->never())
             ->method('order')

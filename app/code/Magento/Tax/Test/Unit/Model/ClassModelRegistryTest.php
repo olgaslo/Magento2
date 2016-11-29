@@ -33,15 +33,15 @@ class ClassModelRegistryTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $objectManager = new ObjectManager($this);
-        $this->classModelFactoryMock = $this->getMockBuilder(\Magento\Tax\Model\ClassModelFactory::class)
+        $this->classModelFactoryMock = $this->getMockBuilder('Magento\Tax\Model\ClassModelFactory')
             ->setMethods(['create'])
             ->disableOriginalConstructor()
             ->getMock();
         $this->taxRuleRegistry = $objectManager->getObject(
-            \Magento\Tax\Model\ClassModelRegistry::class,
+            'Magento\Tax\Model\ClassModelRegistry',
             ['taxClassModelFactory' => $this->classModelFactoryMock]
         );
-        $this->classModelMock = $this->getMockBuilder(\Magento\Tax\Model\ClassModel::class)
+        $this->classModelMock = $this->getMockBuilder('Magento\Tax\Model\ClassModel')
             ->disableOriginalConstructor()
             ->getMock();
         $this->classModelFactoryMock->expects($this->any())

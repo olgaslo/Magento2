@@ -18,7 +18,7 @@ class PriceTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->_model = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create(
-            \Magento\Bundle\Model\Product\Price::class
+            'Magento\Bundle\Model\Product\Price'
         );
     }
 
@@ -26,7 +26,7 @@ class PriceTest extends \PHPUnit_Framework_TestCase
     {
         /** @var \Magento\Catalog\Api\ProductRepositoryInterface $productRepository */
         $productRepository = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()
-            ->create(\Magento\Catalog\Api\ProductRepositoryInterface::class);
+            ->create('Magento\Catalog\Api\ProductRepositoryInterface');
         $product = $productRepository->get('bundle-product');
         // fixture
 

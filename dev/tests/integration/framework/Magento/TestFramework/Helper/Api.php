@@ -26,7 +26,7 @@ class Api
      */
     public static function call(\PHPUnit_Framework_TestCase $testCase, $path, $params = [])
     {
-        $soapAdapterMock = $testCase->getMock(\stdClass::class, ['fault']);
+        $soapAdapterMock = $testCase->getMock('Magento\Api\Model\Server\Adapter\Soap', ['fault']);
         $soapAdapterMock->expects(
             $testCase->any()
         )->method(
@@ -35,11 +35,11 @@ class Api
             $testCase->returnCallback([__CLASS__, 'soapAdapterFaultCallback'])
         );
 
-        $serverMock = $testCase->getMock(\stdClass::class, ['getAdapter']);
+        $serverMock = $testCase->getMock('Magento\Api\Model\Server', ['getAdapter']);
         $serverMock->expects($testCase->any())->method('getAdapter')->will($testCase->returnValue($soapAdapterMock));
 
         $apiSessionMock = $testCase->getMock(
-            \stdClass::class,
+            'Magento\Api\Model\Session',
             ['isAllowed', 'isLoggedIn'],
             [],
             '',
@@ -49,7 +49,7 @@ class Api
         $apiSessionMock->expects($testCase->any())->method('isLoggedIn')->will($testCase->returnValue(true));
 
         $handlerMock = $testCase->getMock(
-            \stdClass::class,
+            'Magento\Api\Model\Server\Handler\Soap',
             ['_getServer', '_getSession'],
             [],
             '',
@@ -64,11 +64,11 @@ class Api
         /** @var $objectManager \Magento\TestFramework\ObjectManager */
         $objectManager = \Magento\TestFramework\Helper\Bootstrap::getObjectManager();
 
-        $objectManager->get(\Magento\Framework\Registry::class)->unregister('isSecureArea');
-        $objectManager->get(\Magento\Framework\Registry::class)->register('isSecureArea', true);
+        $objectManager->get('Magento\Framework\Registry')->unregister('isSecureArea');
+        $objectManager->get('Magento\Framework\Registry')->register('isSecureArea', true);
         $result = call_user_func_array([$handlerMock, $path], $params);
-        $objectManager->get(\Magento\Framework\Registry::class)->unregister('isSecureArea');
-        $objectManager->get(\Magento\Framework\Registry::class)->register('isSecureArea', false);
+        $objectManager->get('Magento\Framework\Registry')->unregister('isSecureArea');
+        $objectManager->get('Magento\Framework\Registry')->register('isSecureArea', false);
 
         self::restoreErrorHandler();
         return $result;

@@ -33,13 +33,13 @@ class NewsletterTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $objectManager = Bootstrap::getObjectManager();
-        $objectManager->get(\Magento\Framework\App\State::class)->setAreaCode('adminhtml');
+        $objectManager->get('Magento\Framework\App\State')->setAreaCode('adminhtml');
 
-        $this->coreRegistry = $objectManager->get(\Magento\Framework\Registry::class);
+        $this->coreRegistry = $objectManager->get('Magento\Framework\Registry');
         $this->block = $objectManager->get(
-            \Magento\Framework\View\LayoutInterface::class
+            'Magento\Framework\View\LayoutInterface'
         )->createBlock(
-            \Magento\Customer\Block\Adminhtml\Edit\Tab\Newsletter::class,
+            'Magento\Customer\Block\Adminhtml\Edit\Tab\Newsletter',
             '',
             ['registry' => $this->coreRegistry]
         )->setTemplate(

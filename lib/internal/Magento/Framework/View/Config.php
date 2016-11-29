@@ -62,7 +62,7 @@ class Config implements \Magento\Framework\View\ConfigInterface
         if (isset($params['themeModel'])) {
             /** @var \Magento\Framework\View\Design\ThemeInterface $currentTheme */
             $currentTheme = $params['themeModel'];
-            $key = $currentTheme->getFullPath();
+            $key = $currentTheme->getCode();
             if (isset($this->viewConfigs[$key])) {
                 return $this->viewConfigs[$key];
             }

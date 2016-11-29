@@ -25,7 +25,7 @@ class GetToken extends AbstractExpress
      *
      * @var string
      */
-    protected $_configType = \Magento\Paypal\Model\Config::class;
+    protected $_configType = 'Magento\Paypal\Model\Config';
 
     /**
      * Config method type
@@ -39,7 +39,7 @@ class GetToken extends AbstractExpress
      *
      * @var string
      */
-    protected $_checkoutType = \Magento\Paypal\Model\Express\Checkout::class;
+    protected $_checkoutType = 'Magento\Paypal\Model\Express\Checkout';
 
     /**
      * @inheritdoc

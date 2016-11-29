@@ -26,9 +26,9 @@ class AbstractElementTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->storeManagerMock = $this->getMock(\Magento\Store\Model\StoreManager::class, [], [], '', false);
+        $this->storeManagerMock = $this->getMock('Magento\Store\Model\StoreManager', [], [], '', false);
         $this->moduleManagerMock = $this->getMock(
-            \Magento\Framework\Module\Manager::class,
+            'Magento\Framework\Module\Manager',
             ['isOutputEnabled'],
             [],
             '',
@@ -36,7 +36,7 @@ class AbstractElementTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->_model = $this->getMockForAbstractClass(
-            \Magento\Config\Model\Config\Structure\AbstractElement::class,
+            'Magento\Config\Model\Config\Structure\AbstractElement',
             [
                 'storeManager' => $this->storeManagerMock,
                 'moduleManager' => $this->moduleManagerMock,

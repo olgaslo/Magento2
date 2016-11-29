@@ -23,7 +23,7 @@ class InvoiceCommentSenderTest extends AbstractSenderTest
     {
         $this->stepMockSetup();
         $this->paymentHelper = $this->getMock(
-            \Magento\Payment\Helper\Data::class,
+            '\Magento\Payment\Helper\Data',
             ['getInfoBlockHtml'],
             [],
             '',
@@ -31,19 +31,19 @@ class InvoiceCommentSenderTest extends AbstractSenderTest
         );
 
         $this->invoiceResource = $this->getMock(
-            \Magento\Sales\Model\ResourceModel\Order\Invoice::class,
+            '\Magento\Sales\Model\ResourceModel\Order\Invoice',
             [],
             [],
             '',
             false
         );
 
-        $this->stepIdentityContainerInit(\Magento\Sales\Model\Order\Email\Container\InvoiceCommentIdentity::class);
+        $this->stepIdentityContainerInit('\Magento\Sales\Model\Order\Email\Container\InvoiceCommentIdentity');
 
         $this->addressRenderer->expects($this->any())->method('format')->willReturn(1);
 
         $this->invoiceMock = $this->getMock(
-            \Magento\Sales\Model\Order\Invoice::class,
+            '\Magento\Sales\Model\Order\Invoice',
             ['getStore', '__wakeup', 'getOrder'],
             [],
             '',

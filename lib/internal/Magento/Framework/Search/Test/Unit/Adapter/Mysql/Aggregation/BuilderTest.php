@@ -91,61 +91,61 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
     {
         $helper = new ObjectManager($this);
 
-        $this->entityMetadata = $this->getMockBuilder(\Magento\Framework\Search\EntityMetadata::class)
+        $this->entityMetadata = $this->getMockBuilder('Magento\Framework\Search\EntityMetadata')
             ->setMethods(['getEntityId'])
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->request = $this->getMockBuilder(\Magento\Framework\Search\RequestInterface::class)
+        $this->request = $this->getMockBuilder('Magento\Framework\Search\RequestInterface')
             ->setMethods(['getAggregation'])
             ->disableOriginalConstructor()
             ->getMockForAbstractClass();
 
-        $this->bucket = $this->getMockBuilder(\Magento\Framework\Search\Request\BucketInterface::class)
+        $this->bucket = $this->getMockBuilder('Magento\Framework\Search\Request\BucketInterface')
             ->setMethods(['getName'])
             ->disableOriginalConstructor()
             ->getMockForAbstractClass();
 
-        $this->select = $this->getMockBuilder(\Magento\Framework\DB\Select::class)
+        $this->select = $this->getMockBuilder('Magento\Framework\DB\Select')
             ->disableOriginalConstructor()
             ->getMock();
 
         $this->bucketBuilder = $this->getMockBuilder(
-            \Magento\Framework\Search\Adapter\Mysql\Aggregation\Builder\BucketInterface::class
+            'Magento\Framework\Search\Adapter\Mysql\Aggregation\Builder\BucketInterface'
         )
             ->setMethods(['build'])
             ->disableOriginalConstructor()
             ->getMockForAbstractClass();
 
         $this->aggregationContainer = $this->getMockBuilder(
-            \Magento\Framework\Search\Adapter\Mysql\Aggregation\Builder\Container::class
+            'Magento\Framework\Search\Adapter\Mysql\Aggregation\Builder\Container'
         )
             ->setMethods(['get'])
             ->disableOriginalConstructor()
             ->getMock();
         $this->aggregationContainer->expects($this->any())->method('get')->willReturn($this->bucketBuilder);
 
-        $this->connectionMock = $this->getMockBuilder(\Magento\Framework\DB\Adapter\AdapterInterface::class)
+        $this->connectionMock = $this->getMockBuilder('Magento\Framework\DB\Adapter\AdapterInterface')
             ->setMethods(['fetchAssoc'])
             ->disableOriginalConstructor()
             ->getMockForAbstractClass();
 
         $this->dataProvider = $this->getMockBuilder(
-            \Magento\Framework\Search\Adapter\Mysql\Aggregation\DataProviderInterface::class
+            'Magento\Framework\Search\Adapter\Mysql\Aggregation\DataProviderInterface'
         )
             ->setMethods(['getDataSet'])
             ->disableOriginalConstructor()
             ->getMockForAbstractClass();
 
         $this->dataProviderContainer = $this->getMockBuilder(
-            \Magento\Framework\Search\Adapter\Mysql\Aggregation\DataProviderContainer::class
+            'Magento\Framework\Search\Adapter\Mysql\Aggregation\DataProviderContainer'
         )
             ->setMethods(['get'])
             ->disableOriginalConstructor()
             ->getMock();
         $this->dataProviderContainer->expects($this->any())->method('get')->willReturn($this->dataProvider);
 
-        $this->resource = $this->getMockBuilder(\Magento\Framework\App\ResourceConnection::class)
+        $this->resource = $this->getMockBuilder('Magento\Framework\App\ResourceConnection')
             ->disableOriginalConstructor()
             ->getMock();
         $this->resource->expects($this->any())->method('getConnection')->willReturn($this->connectionMock);
@@ -156,7 +156,7 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
             ->getMock();
 
         $this->builder = $helper->getObject(
-            \Magento\Framework\Search\Adapter\Mysql\Aggregation\Builder::class,
+            'Magento\Framework\Search\Adapter\Mysql\Aggregation\Builder',
             [
                 'entityMetadata' => $this->entityMetadata,
                 'dataProviderContainer' => $this->dataProviderContainer,

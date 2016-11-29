@@ -36,7 +36,7 @@ class RendererTest extends \PHPUnit_Framework_TestCase
     {
         $objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
 
-        $this->weeeHelper = $this->getMockBuilder(\Magento\Weee\Helper\Data::class)
+        $this->weeeHelper = $this->getMockBuilder('\Magento\Weee\Helper\Data')
             ->disableOriginalConstructor()
             ->setMethods([
                 'isEnabled',
@@ -48,12 +48,12 @@ class RendererTest extends \PHPUnit_Framework_TestCase
             ])
             ->getMock();
 
-        $this->priceCurrency = $this->getMockBuilder(\Magento\Directory\Model\PriceCurrency::class)
+        $this->priceCurrency = $this->getMockBuilder('\Magento\Directory\Model\PriceCurrency')
             ->disableOriginalConstructor()
             ->setMethods(['format'])
             ->getMock();
 
-        $this->item = $this->getMockBuilder(\Magento\Quote\Model\Quote\Item::class)
+        $this->item = $this->getMockBuilder('\Magento\Quote\Model\Quote\Item')
             ->disableOriginalConstructor()
             ->setMethods([
                 '__wakeup',
@@ -80,7 +80,7 @@ class RendererTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue(self::STORE_ID));
 
         $this->renderer = $objectManager->getObject(
-            \Magento\Weee\Block\Item\Price\Renderer::class,
+            'Magento\Weee\Block\Item\Price\Renderer',
             [
                 'weeeHelper' => $this->weeeHelper,
                 'priceCurrency' => $this->priceCurrency,
@@ -768,7 +768,7 @@ class RendererTest extends \PHPUnit_Framework_TestCase
 
         $expectedValue = 97;
 
-        $itemMock = $this->getMockBuilder(\Magento\Sales\Model\Order\Item::class)
+        $itemMock = $this->getMockBuilder('\Magento\Sales\Model\Order\Item')
             ->disableOriginalConstructor()
             ->setMethods(
                 [
@@ -816,7 +816,7 @@ class RendererTest extends \PHPUnit_Framework_TestCase
         $expectedValue = $baseRowTotal + $baseTaxAmount + $baseDiscountTaxCompensationAmount -
             $baseDiscountAmount + $baseWeeeAmount;
 
-        $itemMock = $this->getMockBuilder(\Magento\Sales\Model\Order\Item::class)
+        $itemMock = $this->getMockBuilder('\Magento\Sales\Model\Order\Item')
             ->disableOriginalConstructor()
             ->setMethods(
                 [

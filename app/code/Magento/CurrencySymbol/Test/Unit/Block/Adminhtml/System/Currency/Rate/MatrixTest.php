@@ -33,24 +33,12 @@ class MatrixTest extends \PHPUnit_Framework_TestCase
         $newRates = ['USD' => ['EUR' => 0.7767, 'UAH' => 20, 'GBP' => 12, 'USD' => 1]];
         $expectedNewRates = ['USD' => ['EUR' => '0.7767', 'UAH' => '20.0000', 'GBP' => '12.0000', 'USD' => '1.0000']];
 
-        $backendSessionMock = $this->getMock(
-            \Magento\Backend\Model\Session::class,
-            ['getRates', 'unsetData'],
-            [],
-            '',
-            false
-        );
+        $backendSessionMock = $this->getMock('Magento\Backend\Model\Session', ['getRates', 'unsetData'], [], '', false);
         $backendSessionMock->expects($this->once())->method('getRates')->willReturn($newRates);
 
-        $currencyFactoryMock = $this->getMock(
-            \Magento\Directory\Model\CurrencyFactory::class,
-            ['create'],
-            [],
-            '',
-            false
-        );
+        $currencyFactoryMock = $this->getMock('Magento\Directory\Model\CurrencyFactory', ['create'], [], '', false);
         $currencyMock = $this->getMock(
-            \Magento\Directory\Model\Currency::class,
+            'Magento\Directory\Model\Currency',
             ['getConfigAllowCurrencies', 'getConfigBaseCurrencies', 'getCurrencyRates'],
             [],
             '',
@@ -66,7 +54,7 @@ class MatrixTest extends \PHPUnit_Framework_TestCase
 
         /** @var $layoutMock \Magento\Framework\View\LayoutInterface|\PHPUnit_Framework_MockObject_MockObject */
         $layoutMock = $this->getMockForAbstractClass(
-            \Magento\Framework\View\LayoutInterface::class,
+            'Magento\Framework\View\LayoutInterface',
             [],
             '',
             false,
@@ -77,7 +65,7 @@ class MatrixTest extends \PHPUnit_Framework_TestCase
 
         /** @var $block \Magento\CurrencySymbol\Block\Adminhtml\System\Currency\Rate\Services */
         $block = $this->objectManagerHelper->getObject(
-            \Magento\CurrencySymbol\Block\Adminhtml\System\Currency\Rate\Matrix::class,
+            'Magento\CurrencySymbol\Block\Adminhtml\System\Currency\Rate\Matrix',
             [
                 'dirCurrencyFactory' => $currencyFactoryMock,
                 'backendSession' => $backendSessionMock

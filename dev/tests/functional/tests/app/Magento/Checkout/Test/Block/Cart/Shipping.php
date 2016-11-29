@@ -86,17 +86,16 @@ class Shipping extends Form
      */
     public function selectShippingMethod(array $shipping)
     {
-        if (isset($shipping['shipping_service']) && isset($shipping['shipping_method'])) {
-            $selector = sprintf($this->shippingMethod, $shipping['shipping_service'], $shipping['shipping_method']);
-            if (!$this->_rootElement->find($selector, Locator::SELECTOR_XPATH)->isVisible()) {
-                $this->openEstimateShippingAndTax();
-            }
-            $element = $this->_rootElement->find($selector, Locator::SELECTOR_XPATH);
-            if (!$element->isDisabled()) {
-                $element->click();
-            } else {
-                throw new \Exception("Unable to set value to field '$selector' as it's disabled.");
-            }
+        $selector = sprintf($this->shippingMethod, $shipping['shipping_service'], $shipping['shipping_method']);
+        if (!$this->_rootElement->find($selector, Locator::SELECTOR_XPATH)->isVisible()) {
+            $this->openEstimateShippingAndTax();
+        }
+
+        $element = $this->_rootElement->find($selector, Locator::SELECTOR_XPATH);
+        if (!$element->isDisabled()) {
+            $element->click();
+        } else {
+            throw new \Exception("Unable to set value to field '$selector' as it's disabled.");
         }
     }
 

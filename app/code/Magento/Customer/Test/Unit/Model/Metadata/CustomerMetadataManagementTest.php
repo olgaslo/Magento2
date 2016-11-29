@@ -19,7 +19,7 @@ class CustomerMetadataManagementTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->attributeResolverMock = $this->getMockBuilder(\Magento\Customer\Model\Metadata\AttributeResolver::class)
+        $this->attributeResolverMock = $this->getMockBuilder('Magento\Customer\Model\Metadata\AttributeResolver')
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -31,11 +31,11 @@ class CustomerMetadataManagementTest extends \PHPUnit_Framework_TestCase
     public function testCanBeSearchableInGrid()
     {
         /** @var AttributeMetadataInterface|\PHPUnit_Framework_MockObject_MockObject $attributeMock */
-        $attributeMock = $this->getMockBuilder(\Magento\Customer\Api\Data\AttributeMetadataInterface::class)
+        $attributeMock = $this->getMockBuilder('Magento\Customer\Api\Data\AttributeMetadataInterface')
             ->getMockForAbstractClass();
 
         /** @var Attribute|\PHPUnit_Framework_MockObject_MockObject $modelMock */
-        $modelMock = $this->getMockBuilder(\Magento\Customer\Model\Attribute::class)
+        $modelMock = $this->getMockBuilder('Magento\Customer\Model\Attribute')
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -54,11 +54,11 @@ class CustomerMetadataManagementTest extends \PHPUnit_Framework_TestCase
     public function testCanBeFilterableInGrid()
     {
         /** @var AttributeMetadataInterface|\PHPUnit_Framework_MockObject_MockObject $attributeMock */
-        $attributeMock = $this->getMockBuilder(\Magento\Customer\Api\Data\AttributeMetadataInterface::class)
+        $attributeMock = $this->getMockBuilder('Magento\Customer\Api\Data\AttributeMetadataInterface')
             ->getMockForAbstractClass();
 
         /** @var Attribute|\PHPUnit_Framework_MockObject_MockObject $modelMock */
-        $modelMock = $this->getMockBuilder(\Magento\Customer\Model\Attribute::class)
+        $modelMock = $this->getMockBuilder('Magento\Customer\Model\Attribute')
             ->disableOriginalConstructor()
             ->getMock();
 

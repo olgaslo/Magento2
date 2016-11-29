@@ -353,7 +353,7 @@ Packaging.prototype = {
                     var response = transport.responseText;
                     if (response) {
                         packagePrapareGrid.update(response);
-                        this.processPackagePrepare(packagePrapareGrid);
+                        this._processPackagePrapare(packagePrapareGrid);
                         if (packagePrapareGrid.select('.grid tbody tr').length) {
                             packageBlock.select('[data-action=package-add-items]')[0].hide();
                             packageBlock.select('[data-action=package-save-items]')[0].show();
@@ -692,27 +692,22 @@ Packaging.prototype = {
         }
     },
 
-    processPackagePrepare: function(packagePrepare) {
-        var itemsAll = [],
-            qty,
-            itemId,
-            qtyValue = 0,
-            value = 1;
-
-        packagePrepare.select('.grid tbody tr').each(function(item) {
-            qty = item.select('[name="qty"]')[0],
-                itemId = item.select('[type="checkbox"]')[0].value,
-                qtyValue = parseFloat(qty.value);
-
+    _processPackagePrapare: function(packagePrapare) {
+        var itemsAll = [];
+        packagePrapare.select('.grid tbody tr').each(function(item) {
+            var qty  = item.select('[name="qty"]')[0];
+            var itemId = item.select('[type="checkbox"]')[0].value;
+            var qtyValue = 0;
             if (Object.isFunction(this.itemQtyCallback)) {
-                value = this.itemQtyCallback(itemId);
-                if (typeof value !== 'undefined') {
-                    qtyValue = parseFloat(value);
-                    qtyValue = this.validateItemQty(itemId, qtyValue);
-                    qty.value = qtyValue;
+                var value = this.itemQtyCallback(itemId);
+                qtyValue = ((typeof value == 'string') && (value.length == 0)) ? 0 : parseFloat(value);
+                if (isNaN(qtyValue) || qtyValue < 0) {
+                    qtyValue = 1;
                 }
+                qtyValue = this.validateItemQty(itemId, qtyValue);
+                qty.value = qtyValue;
             } else {
-                value = item.select('[name="qty"]')[0].value;
+                var value = item.select('[name="qty"]')[0].value;
                 qtyValue = ((typeof value == 'string') && (value.length == 0)) ? 0 : parseFloat(value);
                 if (isNaN(qtyValue) || qtyValue < 0) {
                     qtyValue = 1;
@@ -742,10 +737,10 @@ Packaging.prototype = {
             this.itemsAll = itemsAll;
         }
 
-        packagePrepare.select('tbody input[type="checkbox"]').each(function(item){
+        packagePrapare.select('tbody input[type="checkbox"]').each(function(item){
             $(item).observe('change', this._observeQty);
             this._observeQty.call(item);
-        }.bind(this));
+        }.bind(this))
     },
 
     _observeQty: function() {

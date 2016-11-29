@@ -8,8 +8,6 @@
 
 namespace Magento\Framework;
 
-use Magento\Framework\Url\HostChecker;
-
 /**
  * URL
  *
@@ -176,16 +174,6 @@ class Url extends \Magento\Framework\DataObject implements \Magento\Framework\Ur
     private $urlModifier;
 
     /**
-     * @var \Magento\Framework\Escaper
-     */
-    private $escaper;
-
-    /**
-     * @var HostChecker
-     */
-    private $hostChecker;
-
-    /**
      * @param \Magento\Framework\App\Route\ConfigInterface $routeConfig
      * @param \Magento\Framework\App\RequestInterface $request
      * @param \Magento\Framework\Url\SecurityInfoInterface $urlSecurityInfo
@@ -198,7 +186,6 @@ class Url extends \Magento\Framework\DataObject implements \Magento\Framework\Ur
      * @param \Magento\Framework\Url\RouteParamsPreprocessorInterface $routeParamsPreprocessor
      * @param string $scopeType
      * @param array $data
-     * @param HostChecker|null $hostChecker
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
@@ -213,8 +200,7 @@ class Url extends \Magento\Framework\DataObject implements \Magento\Framework\Ur
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
         \Magento\Framework\Url\RouteParamsPreprocessorInterface $routeParamsPreprocessor,
         $scopeType,
-        array $data = [],
-        HostChecker $hostChecker = null
+        array $data = []
     ) {
         $this->_request = $request;
         $this->_routeConfig = $routeConfig;
@@ -227,8 +213,6 @@ class Url extends \Magento\Framework\DataObject implements \Magento\Framework\Ur
         $this->_scopeConfig = $scopeConfig;
         $this->routeParamsPreprocessor = $routeParamsPreprocessor;
         $this->_scopeType = $scopeType;
-        $this->hostChecker = $hostChecker ?: \Magento\Framework\App\ObjectManager::getInstance()
-            ->get(HostChecker::class);
         parent::__construct($data);
     }
 
@@ -878,7 +862,6 @@ class Url extends \Magento\Framework\DataObject implements \Magento\Framework\Ur
     private function createUrl($routePath = null, array $routeParams = null)
     {
         $escapeQuery = false;
-        $escapeParams = true;
 
         /**
          * All system params should be unset before we call getRouteUrl
@@ -897,12 +880,6 @@ class Url extends \Magento\Framework\DataObject implements \Magento\Framework\Ur
             unset($routeParams['_escape']);
         }
 
-        if (isset($routeParams['_escape_params'])) {
-            $escapeParams = $routeParams['_escape_params'];
-            unset($routeParams['_escape_params']);
-        }
-        $this->getRouteParamsResolver()->setData('escape_params', $escapeParams);
-
         $query = null;
         if (isset($routeParams['_query'])) {
             $this->_queryParamsResolver->setQueryParams([]);
@@ -916,7 +893,6 @@ class Url extends \Magento\Framework\DataObject implements \Magento\Framework\Ur
             unset($routeParams['_nosid']);
         }
         $url = $this->getRouteUrl($routePath, $routeParams);
-
         /**
          * Apply query params, need call after getRouteUrl for rewrite _current values
          */
@@ -944,12 +920,11 @@ class Url extends \Magento\Framework\DataObject implements \Magento\Framework\Ur
         }
 
         if (!is_null($fragment)) {
-            $url .= '#' . $this->getEscaper()->encodeUrlParam($fragment);
+            $url .= '#' . $fragment;
         }
         $this->getRouteParamsResolver()->unsetData('secure');
-        $this->getRouteParamsResolver()->unsetData('escape_params');
 
-        return $url;
+        return $this->escape($url);
     }
 
     /**
@@ -999,10 +974,10 @@ class Url extends \Magento\Framework\DataObject implements \Magento\Framework\Ur
 
         $fragment = $this->_getFragment();
         if ($fragment) {
-            $url .= '#' . $this->getEscaper()->encodeUrlParam($fragment);
+            $url .= '#' . $fragment;
         }
 
-        return $url;
+        return $this->escape($url);
     }
 
     /**
@@ -1010,7 +985,6 @@ class Url extends \Magento\Framework\DataObject implements \Magento\Framework\Ur
      *
      * @param string $value
      * @return string
-     * @deprecated
      */
     public function escape($value)
     {
@@ -1097,7 +1071,17 @@ class Url extends \Magento\Framework\DataObject implements \Magento\Framework\Ur
      */
     public function isOwnOriginUrl()
     {
-        return $this->hostChecker->isOwnOrigin($this->_request->getServer('HTTP_REFERER'));
+        $scopeDomains = [];
+        $referer = parse_url($this->_request->getServer('HTTP_REFERER'), PHP_URL_HOST);
+        foreach ($this->_scopeResolver->getScopes() as $scope) {
+            $scopeDomains[] = parse_url($scope->getBaseUrl(), PHP_URL_HOST);
+            $scopeDomains[] = parse_url($scope->getBaseUrl(UrlInterface::URL_TYPE_LINK, true), PHP_URL_HOST);
+        }
+        $scopeDomains = array_unique($scopeDomains);
+        if (empty($referer) || in_array($referer, $scopeDomains)) {
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -1165,25 +1149,10 @@ class Url extends \Magento\Framework\DataObject implements \Magento\Framework\Ur
     {
         if ($this->urlModifier === null) {
             $this->urlModifier = \Magento\Framework\App\ObjectManager::getInstance()->get(
-                \Magento\Framework\Url\ModifierInterface::class
+                'Magento\Framework\Url\ModifierInterface'
             );
         }
 
         return $this->urlModifier;
-    }
-
-    /**
-     * Get escaper
-     *
-     * @return Escaper
-     * @deprecated
-     */
-    private function getEscaper()
-    {
-        if ($this->escaper == null) {
-            $this->escaper = \Magento\Framework\App\ObjectManager::getInstance()
-                    ->get(\Magento\Framework\Escaper::class);
-        }
-        return $this->escaper;
     }
 }

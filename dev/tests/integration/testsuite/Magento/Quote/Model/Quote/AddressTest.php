@@ -31,19 +31,19 @@ class AddressTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->_quote = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create(
-            \Magento\Quote\Model\Quote::class
+            'Magento\Quote\Model\Quote'
         );
         $this->_quote->load('test01', 'reserved_order_id');
         $this->_quote->setIsMultiShipping('0');
 
         $this->customerRepository = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create(
-            \Magento\Customer\Api\CustomerRepositoryInterface::class
+            'Magento\Customer\Api\CustomerRepositoryInterface'
         );
         $this->_customer = $this->customerRepository->getById(1);
 
         /** @var \Magento\Sales\Model\Order\Address $address */
         $this->_address = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create(
-            \Magento\Quote\Model\Quote\Address::class
+            'Magento\Quote\Model\Quote\Address'
         );
         $this->_address->setId(1);
         $this->_address->load($this->_address->getId());
@@ -54,7 +54,7 @@ class AddressTest extends \PHPUnit_Framework_TestCase
     {
         /** @var \Magento\Customer\Model\CustomerRegistry $customerRegistry */
         $customerRegistry = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()
-            ->get(\Magento\Customer\Model\CustomerRegistry::class);
+            ->get('Magento\Customer\Model\CustomerRegistry');
         //Cleanup customer from registry
         $customerRegistry->remove(1);
     }
@@ -74,7 +74,7 @@ class AddressTest extends \PHPUnit_Framework_TestCase
         }
         /** @var \Magento\Customer\Api\AddressRepositoryInterface $addressRepository */
         $addressRepository = Bootstrap::getObjectManager()
-            ->create(\Magento\Customer\Api\AddressRepositoryInterface::class);
+            ->create('Magento\Customer\Api\AddressRepositoryInterface');
         $customerAddressData = $addressRepository->getById($this->_customer->getDefaultBilling());
         $address->setSameAsBilling(0)->setCustomerAddressData($customerAddressData)->save();
         $this->assertEquals(0, $this->_quote->getBillingAddress()->getSameAsBilling());
@@ -127,7 +127,7 @@ class AddressTest extends \PHPUnit_Framework_TestCase
     {
         /** @var \Magento\Customer\Api\AddressRepositoryInterface $addressRepository */
         $addressRepository = Bootstrap::getObjectManager()
-            ->create(\Magento\Customer\Api\AddressRepositoryInterface::class);
+            ->create('Magento\Customer\Api\AddressRepositoryInterface');
         $this->_customer->setDefaultShipping(-1)
             ->setAddresses(
                 [
@@ -166,7 +166,7 @@ class AddressTest extends \PHPUnit_Framework_TestCase
     {
         /** @var \Magento\Customer\Api\AddressRepositoryInterface $addressRepository */
         $addressRepository = Bootstrap::getObjectManager()
-            ->create(\Magento\Customer\Api\AddressRepositoryInterface::class);
+            ->create('Magento\Customer\Api\AddressRepositoryInterface');
         $this->_customer->setDefaultShipping(2)
             ->setAddresses([$addressRepository->getById($this->_address->getId())]);
         $this->_customer = $this->customerRepository->save($this->_customer);
@@ -190,7 +190,7 @@ class AddressTest extends \PHPUnit_Framework_TestCase
         }
         /** @var \Magento\Customer\Api\AddressRepositoryInterface $addressRepository */
         $addressRepository = Bootstrap::getObjectManager()
-            ->create(\Magento\Customer\Api\AddressRepositoryInterface::class);
+            ->create('Magento\Customer\Api\AddressRepositoryInterface');
         $shippingAddress->setSameAsBilling(0)
             ->setCustomerAddressData($addressRepository->getById($this->_customer->getDefaultBilling()))
             ->save();
@@ -212,13 +212,9 @@ class AddressTest extends \PHPUnit_Framework_TestCase
         $street = 'Street1';
 
         /** @var \Magento\Customer\Api\Data\AddressInterfaceFactory $addressFactory */
-        $addressFactory = Bootstrap::getObjectManager()->create(
-            \Magento\Customer\Api\Data\AddressInterfaceFactory::class
-        );
+        $addressFactory = Bootstrap::getObjectManager()->create('Magento\Customer\Api\Data\AddressInterfaceFactory');
         /** @var \Magento\Customer\Api\AddressRepositoryInterface $addressRepository */
-        $addressRepository = Bootstrap::getObjectManager()->create(
-            \Magento\Customer\Api\AddressRepositoryInterface::class
-        );
+        $addressRepository = Bootstrap::getObjectManager()->create('Magento\Customer\Api\AddressRepositoryInterface');
         $addressData = $addressFactory->create()
             ->setCustomerId($customerIdFromFixture)
             ->setFirstname('John')
@@ -274,9 +270,7 @@ class AddressTest extends \PHPUnit_Framework_TestCase
         );
 
         /** @var \Magento\Customer\Api\Data\AddressInterfaceFactory $addressFactory */
-        $addressFactory = Bootstrap::getObjectManager()->create(
-            \Magento\Customer\Api\Data\AddressInterfaceFactory::class
-        );
+        $addressFactory = Bootstrap::getObjectManager()->create('Magento\Customer\Api\Data\AddressInterfaceFactory');
         $customerAddressData = $addressFactory->create()->setId($customerAddressId);
         $this->_address->setCustomerAddressData($customerAddressData);
         $this->_address->save();

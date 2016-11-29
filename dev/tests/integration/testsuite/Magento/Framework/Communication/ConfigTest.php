@@ -268,28 +268,28 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
      */
     protected function getConfigInstance($configFilePath, $envConfigFilePath = null)
     {
-        $fileResolver = $this->getMockForAbstractClass(\Magento\Framework\Config\FileResolverInterface::class);
+        $fileResolver = $this->getMockForAbstractClass('Magento\Framework\Config\FileResolverInterface');
         $fileResolver->expects($this->any())
             ->method('get')
             ->willReturn([file_get_contents($configFilePath)]);
         $objectManager = \Magento\TestFramework\Helper\Bootstrap::getObjectManager();
         $xmlReader = $objectManager->create(
-            \Magento\Framework\Communication\Config\Reader\XmlReader::class,
+            'Magento\Framework\Communication\Config\Reader\XmlReader',
             ['fileResolver' => $fileResolver]
         );
-        $deploymentConfigReader = $this->getMockBuilder(\Magento\Framework\App\DeploymentConfig\Reader::class)
+        $deploymentConfigReader = $this->getMockBuilder('Magento\Framework\App\DeploymentConfig\Reader')
             ->disableOriginalConstructor()
             ->setMethods([])
             ->getMock();
         $envConfigData = include $envConfigFilePath ?: __DIR__ . '/_files/valid_communication_input.php';
         $deploymentConfigReader->expects($this->any())->method('load')->willReturn($envConfigData);
         $deploymentConfig = $objectManager->create(
-            \Magento\Framework\App\DeploymentConfig::class,
+            'Magento\Framework\App\DeploymentConfig',
             ['reader' => $deploymentConfigReader]
         );
-        $methodsMap = $objectManager->create(\Magento\Framework\Reflection\MethodsMap::class);
+        $methodsMap = $objectManager->create('Magento\Framework\Reflection\MethodsMap');
         $envReader = $objectManager->create(
-            \Magento\Framework\Communication\Config\Reader\EnvReader::class,
+            'Magento\Framework\Communication\Config\Reader\EnvReader',
             [
                 'deploymentConfig' => $deploymentConfig,
                 'methodsMap' => $methodsMap
@@ -301,18 +301,18 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
         ];
         /** @var \Magento\Framework\Communication\Config\CompositeReader $reader */
         $reader = $objectManager->create(
-            \Magento\Framework\Communication\Config\CompositeReader::class,
+            'Magento\Framework\Communication\Config\CompositeReader',
             ['readers' => $readersConfig]
         );
         /** @var \Magento\Framework\Communication\Config $config */
         $configData = $objectManager->create(
-            \Magento\Framework\Communication\Config\Data::class,
+            'Magento\Framework\Communication\Config\Data',
             [
                 'reader' => $reader
             ]
         );
         return $objectManager->create(
-            \Magento\Framework\Communication\ConfigInterface::class,
+            'Magento\Framework\Communication\ConfigInterface',
             ['configData' => $configData]
         );
     }

@@ -40,15 +40,11 @@ class TemplateFileTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->resolver = $this->getMock(
-            \Magento\Framework\View\Design\FileResolution\Fallback\ResolverInterface::class
-        );
-        $this->minifier = $this->getMock(\Magento\Framework\View\Template\Html\MinifierInterface::class);
-        $this->state = $this->getMockBuilder(
-            \Magento\Framework\App\State::class
-        )->disableOriginalConstructor()->getMock();
+        $this->resolver = $this->getMock('Magento\Framework\View\Design\FileResolution\Fallback\ResolverInterface');
+        $this->minifier = $this->getMock('Magento\Framework\View\Template\Html\MinifierInterface');
+        $this->state = $this->getMockBuilder('Magento\Framework\App\State')->disableOriginalConstructor()->getMock();
         $this->assetConfig = $this->getMockForAbstractClass(
-            \Magento\Framework\View\Asset\ConfigInterface::class,
+            'Magento\Framework\View\Asset\ConfigInterface',
             [],
             '',
             false
@@ -66,7 +62,7 @@ class TemplateFileTest extends \PHPUnit_Framework_TestCase
             ->method('isMinifyHtml')
             ->willReturn(true);
 
-        $theme = $this->getMockForAbstractClass(\Magento\Framework\View\Design\ThemeInterface::class);
+        $theme = $this->getMockForAbstractClass('\Magento\Framework\View\Design\ThemeInterface');
         $expected = 'some/file.ext';
 
         $this->state->expects($this->once())
@@ -94,7 +90,7 @@ class TemplateFileTest extends \PHPUnit_Framework_TestCase
             ->method('isMinifyHtml')
             ->willReturn(true);
 
-        $theme = $this->getMockForAbstractClass(\Magento\Framework\View\Design\ThemeInterface::class);
+        $theme = $this->getMockForAbstractClass('\Magento\Framework\View\Design\ThemeInterface');
         $expected = 'some/file.ext';
         $expectedMinified = '/path/to/minified/some/file.ext';
 
@@ -121,7 +117,7 @@ class TemplateFileTest extends \PHPUnit_Framework_TestCase
             ->method('isMinifyHtml')
             ->willReturn(false);
 
-        $theme = $this->getMockForAbstractClass(\Magento\Framework\View\Design\ThemeInterface::class);
+        $theme = $this->getMockForAbstractClass('\Magento\Framework\View\Design\ThemeInterface');
         $expected = 'some/file.ext';
 
         $this->resolver->expects($this->once())

@@ -18,15 +18,15 @@ class GridTest extends \PHPUnit_Framework_TestCase
     {
         /** @var $gridBlock \Magento\UrlRewrite\Block\Catalog\Product\Grid */
         $gridBlock = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->get(
-            \Magento\Framework\View\LayoutInterface::class
+            'Magento\Framework\View\LayoutInterface'
         )->createBlock(
-            \Magento\UrlRewrite\Block\Catalog\Product\Grid::class
+            'Magento\UrlRewrite\Block\Catalog\Product\Grid'
         );
         $gridBlock->toHtml();
 
         foreach (['entity_id', 'name', 'sku', 'status'] as $key) {
             $this->assertInstanceOf(
-                \Magento\Backend\Block\Widget\Grid\Column::class,
+                'Magento\Backend\Block\Widget\Grid\Column',
                 $gridBlock->getColumn($key),
                 'Column with key "' . $key . '" is invalid'
             );

@@ -53,7 +53,7 @@ class Nonce extends \Magento\Framework\Model\AbstractModel
      */
     protected function _construct()
     {
-        $this->_init(\Magento\Integration\Model\ResourceModel\Oauth\Nonce::class);
+        $this->_init('Magento\Integration\Model\ResourceModel\Oauth\Nonce');
     }
 
     /**

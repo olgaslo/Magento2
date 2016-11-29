@@ -33,12 +33,12 @@ class RulePoolTest extends \PHPUnit_Framework_TestCase
         $objectManager = Bootstrap::getObjectManager();
         /** @var \Magento\Theme\Model\Theme\Registration $registration */
         $registration = $objectManager->get(
-            \Magento\Theme\Model\Theme\Registration::class
+            'Magento\Theme\Model\Theme\Registration'
         );
         $registration->register();
-        $this->model = $objectManager->create(\Magento\Framework\View\Design\Fallback\RulePool::class);
+        $this->model = $objectManager->create('Magento\Framework\View\Design\Fallback\RulePool');
         /** @var \Magento\Theme\Model\ResourceModel\Theme\Collection $collection */
-        $collection = $objectManager->create(\Magento\Theme\Model\ResourceModel\Theme\Collection::class);
+        $collection = $objectManager->create('Magento\Theme\Model\ResourceModel\Theme\Collection');
         /** @var \Magento\Theme\Model\Theme $theme */
         $theme = $collection->getThemeByFullPath('frontend/Vendor_ViewTest/custom_theme');
 
@@ -143,11 +143,11 @@ class RulePoolTest extends \PHPUnit_Framework_TestCase
         $objectManager = Bootstrap::getObjectManager();
         /** @var \Magento\Framework\Component\ComponentRegistrarInterface $componentRegistrar */
         $componentRegistrar = $objectManager->get(
-            \Magento\Framework\Component\ComponentRegistrarInterface::class
+            '\Magento\Framework\Component\ComponentRegistrarInterface'
         );
         $coreModulePath = $componentRegistrar->getPath(ComponentRegistrar::MODULE, 'Magento_Theme');
         /** @var \Magento\Framework\Filesystem $filesystem */
-        $filesystem = $objectManager->get(\Magento\Framework\Filesystem::class);
+        $filesystem = $objectManager->get('\Magento\Framework\Filesystem');
         $libPath = rtrim($filesystem->getDirectoryRead(DirectoryList::LIB_WEB)->getAbsolutePath(), '/');
 
         $themeOnePath = BP . '/dev/tests/integration/testsuite/Magento/Framework/View/_files/fallback/design/frontend/'

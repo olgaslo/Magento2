@@ -9,7 +9,6 @@
 namespace Magento\Bundle\Model\Product;
 
 use Magento\Catalog\Api\ProductRepositoryInterface;
-use Magento\Framework\App\ObjectManager;
 use Magento\Framework\Pricing\PriceCurrencyInterface;
 
 /**
@@ -43,7 +42,6 @@ class Type extends \Magento\Catalog\Model\Product\Type\AbstractType
      * Cache key for Selections Collection
      *
      * @var string
-     * @deprecated
      */
     protected $_keySelectionsCollection = '_cache_instance_selections_collection';
 
@@ -451,24 +449,30 @@ class Type extends \Magento\Catalog\Model\Product\Type\AbstractType
      */
     public function getSelectionsCollection($optionIds, $product)
     {
-        $storeId = $product->getStoreId();
-        $selectionsCollection = $this->_bundleCollection->create()
-            ->addAttributeToSelect($this->_config->getProductAttributes())
-            ->addAttributeToSelect('tax_class_id') //used for calculation item taxes in Bundle with Dynamic Price
-            ->setFlag('product_children', true)
-            ->setPositionOrder()
-            ->addStoreFilter($this->getStoreFilter($product))
-            ->setStoreId($storeId)
-            ->addFilterByRequiredOptions()
-            ->setOptionIdsFilter($optionIds);
+        $keyOptionIds = is_array($optionIds) ? implode('_', $optionIds) : '';
+        $key = $this->_keySelectionsCollection . $keyOptionIds;
+        if (!$product->hasData($key)) {
+            $storeId = $product->getStoreId();
+            $selectionsCollection = $this->_bundleCollection->create()
+                ->addAttributeToSelect($this->_config->getProductAttributes())
+                ->addAttributeToSelect('tax_class_id')//used for calculation item taxes in Bundle with Dynamic Price
+                ->setFlag('product_children', true)
+                ->setPositionOrder()
+                ->addStoreFilter($this->getStoreFilter($product))
+                ->setStoreId($storeId)
+                ->addFilterByRequiredOptions()
+                ->setOptionIdsFilter($optionIds);
 
-        if (!$this->_catalogData->isPriceGlobal() && $storeId) {
-            $websiteId = $this->_storeManager->getStore($storeId)
-                ->getWebsiteId();
-            $selectionsCollection->joinPrices($websiteId);
+            if (!$this->_catalogData->isPriceGlobal() && $storeId) {
+                $websiteId = $this->_storeManager->getStore($storeId)
+                    ->getWebsiteId();
+                $selectionsCollection->joinPrices($websiteId);
+            }
+
+            $product->setData($key, $selectionsCollection);
         }
 
-        return $selectionsCollection;
+        return $product->getData($key);
     }
 
     /**
@@ -539,33 +543,42 @@ class Type extends \Magento\Catalog\Model\Product\Type\AbstractType
             return $product->getData('all_items_salable');
         }
 
-        $isSalable = false;
-        foreach ($this->getOptionsCollection($product)->getItems() as $option) {
-            $hasSalable = false;
+        $optionCollection = $this->getOptionsCollection($product);
 
-            $selectionsCollection = $this->_bundleCollection->create();
-            $selectionsCollection->addAttributeToSelect('status');
-            $selectionsCollection->addQuantityFilter();
-            $selectionsCollection->addFilterByRequiredOptions();
-            $selectionsCollection->setOptionIdsFilter([$option->getId()]);
+        if (!count($optionCollection->getItems())) {
+            return false;
+        }
 
-            foreach ($selectionsCollection as $selection) {
-                if ($selection->isSalable()) {
-                    $hasSalable = true;
-                    break;
-                }
-            }
+        $requiredOptionIds = [];
 
-            if ($hasSalable) {
-                $isSalable = true;
-            }
-
-            if (!$hasSalable && $option->getRequired()) {
-                $isSalable = false;
-                break;
+        foreach ($optionCollection->getItems() as $option) {
+            if ($option->getRequired()) {
+                $requiredOptionIds[$option->getId()] = 0;
             }
         }
 
+        $selectionCollection = $this->getSelectionsCollection($optionCollection->getAllIds(), $product);
+
+        if (!count($selectionCollection->getItems())) {
+            return false;
+        }
+        $salableSelectionCount = 0;
+
+        foreach ($selectionCollection as $selection) {
+            /* @var $selection \Magento\Catalog\Model\Product */
+            if ($selection->isSalable()) {
+                $selectionEnoughQty = $this->_stockRegistry->getStockItem($selection->getId())
+                    ->getManageStock()
+                    ? $selection->getSelectionQty() <= $this->_stockState->getStockQty($selection->getId())
+                    : $selection->isInStock();
+
+                if (!$selection->hasSelectionQty() || $selection->getSelectionCanChangeQty() || $selectionEnoughQty) {
+                    $requiredOptionIds[$selection->getOptionId()] = 1;
+                    $salableSelectionCount++;
+                }
+            }
+        }
+        $isSalable = array_sum($requiredOptionIds) == count($requiredOptionIds) && $salableSelectionCount;
         $product->setData('all_items_salable', $isSalable);
 
         return $isSalable;

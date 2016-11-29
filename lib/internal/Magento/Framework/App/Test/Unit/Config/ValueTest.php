@@ -32,15 +32,15 @@ class ValueTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->configMock = $this->getMock(\Magento\Framework\App\Config\ScopeConfigInterface::class);
-        $this->eventManagerMock = $this->getMock(\Magento\Framework\Event\ManagerInterface::class);
-        $this->cacheTypeListMock = $this->getMockBuilder(\Magento\Framework\App\Cache\TypeListInterface::class)
+        $this->configMock = $this->getMock('Magento\Framework\App\Config\ScopeConfigInterface');
+        $this->eventManagerMock = $this->getMock('Magento\Framework\Event\ManagerInterface');
+        $this->cacheTypeListMock = $this->getMockBuilder('Magento\Framework\App\Cache\TypeListInterface')
             ->disableOriginalConstructor()
             ->getMock();
 
         $objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
         $this->model = $objectManager->getObject(
-            \Magento\Framework\App\Config\Value::class,
+            'Magento\Framework\App\Config\Value',
             [
                 'config' => $this->configMock,
                 'eventDispatcher' => $this->eventManagerMock,

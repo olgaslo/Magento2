@@ -97,7 +97,7 @@ class EditTest extends \PHPUnit_Framework_TestCase
         $this->objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
 
         $this->categoryMock = $this->getMock(
-            \Magento\Catalog\Model\Category::class,
+            'Magento\Catalog\Model\Category',
             [
                 'getPath',
                 'addData',
@@ -113,7 +113,7 @@ class EditTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->contextMock = $this->getMock(
-            \Magento\Backend\App\Action\Context::class,
+            'Magento\Backend\App\Action\Context',
             [
                 'getTitle',
                 'getRequest',
@@ -129,7 +129,7 @@ class EditTest extends \PHPUnit_Framework_TestCase
             false
         );
         $this->resultRedirectFactoryMock = $this->getMock(
-            \Magento\Backend\Model\View\Result\RedirectFactory::class,
+            'Magento\Backend\Model\View\Result\RedirectFactory',
             ['create'],
             [],
             '',
@@ -137,7 +137,7 @@ class EditTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->resultPageMock = $this->getMock(
-            \Magento\Framework\View\Result\Page::class,
+            'Magento\Framework\View\Result\Page',
             ['setActiveMenu', 'getConfig', 'addBreadcrumb', 'getLayout', 'getBlock', 'getTitle', 'prepend'],
             [],
             '',
@@ -151,7 +151,7 @@ class EditTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnSelf());
 
         $this->resultPageFactoryMock = $this->getMock(
-            \Magento\Framework\View\Result\PageFactory::class,
+            'Magento\Framework\View\Result\PageFactory',
             ['create'],
             [],
             '',
@@ -162,14 +162,14 @@ class EditTest extends \PHPUnit_Framework_TestCase
             ->willReturn($this->resultPageMock);
 
         $this->resultJsonFactoryMock = $this->getMock(
-            \Magento\Framework\Controller\Result\JsonFactory::class,
+            'Magento\Framework\Controller\Result\JsonFactory',
             ['create'],
             [],
             '',
             false
         );
         $this->storeManagerInterfaceMock = $this->getMockForAbstractClass(
-            \Magento\Store\Model\StoreManagerInterface::class,
+            'Magento\Store\Model\StoreManagerInterface',
             [],
             '',
             false,
@@ -178,7 +178,7 @@ class EditTest extends \PHPUnit_Framework_TestCase
             ['getStore', 'getDefaultStoreView', 'getRootCategoryId', 'getCode']
         );
         $this->requestMock = $this->getMockForAbstractClass(
-            \Magento\Framework\App\RequestInterface::class,
+            'Magento\Framework\App\RequestInterface',
             [],
             '',
             false,
@@ -186,11 +186,11 @@ class EditTest extends \PHPUnit_Framework_TestCase
             true,
             ['getParam', 'getPost', 'getPostValue', 'getQuery', 'setParam']
         );
-        $this->objectManagerMock = $this->getMockBuilder(\Magento\Framework\ObjectManagerInterface::class)
+        $this->objectManagerMock = $this->getMockBuilder('Magento\Framework\ObjectManagerInterface')
             ->disableOriginalConstructor()
             ->getMock();
         $this->eventManagerMock = $this->getMockForAbstractClass(
-            \Magento\Framework\Event\ManagerInterface::class,
+            'Magento\Framework\Event\ManagerInterface',
             [],
             '',
             false,
@@ -199,7 +199,7 @@ class EditTest extends \PHPUnit_Framework_TestCase
             ['dispatch']
         );
         $this->sessionMock = $this->getMock(
-            \Magento\Backend\Model\Session::class,
+            'Magento\Backend\Model\Session',
             ['__call'],
             [],
             '',
@@ -217,7 +217,7 @@ class EditTest extends \PHPUnit_Framework_TestCase
             ->willReturn($this->resultRedirectFactoryMock);
 
         $this->edit = $this->objectManager->getObject(
-            \Magento\Catalog\Controller\Adminhtml\Category\Edit::class,
+            'Magento\Catalog\Controller\Adminhtml\Category\Edit',
             [
                 'context' => $this->contextMock,
                 'resultPageFactory' => $this->resultPageFactoryMock,
@@ -293,7 +293,7 @@ class EditTest extends \PHPUnit_Framework_TestCase
          * |\PHPUnit_Framework_MockObject_MockObject $blockMock
          */
         $blockMock = $this->getMock(
-            \Magento\Framework\View\Element\Template::class,
+            'Magento\Framework\View\Element\Template',
             ['setStoreId'],
             [],
             '',
@@ -343,7 +343,7 @@ class EditTest extends \PHPUnit_Framework_TestCase
          * |\PHPUnit_Framework_MockObject_MockObject $registryMock
          */
         $registryMock = $this->getMock(
-            \Magento\Framework\Registry::class,
+            'Magento\Framework\Registry',
             ['register'],
             [],
             '',
@@ -354,7 +354,7 @@ class EditTest extends \PHPUnit_Framework_TestCase
          * |\PHPUnit_Framework_MockObject_MockObject $wysiwygConfigMock
          */
         $wysiwygConfigMock = $this->getMock(
-            \Magento\Cms\Model\Wysiwyg\Config::class,
+            'Magento\Cms\Model\Wysiwyg\Config',
             ['setStoreId'],
             [],
             '',
@@ -365,7 +365,7 @@ class EditTest extends \PHPUnit_Framework_TestCase
          * |\PHPUnit_Framework_MockObject_MockObject $storeManagerMock
          */
         $storeManagerMock = $this->getMockForAbstractClass(
-            \Magento\Store\Model\StoreManagerInterface::class,
+            'Magento\Store\Model\StoreManagerInterface',
             [],
             '',
             false,
@@ -383,9 +383,9 @@ class EditTest extends \PHPUnit_Framework_TestCase
             ->will(
                 $this->returnValueMap(
                     [
-                        [\Magento\Framework\Registry::class, $registryMock],
-                        [\Magento\Cms\Model\Wysiwyg\Config::class, $wysiwygConfigMock],
-                        [\Magento\Store\Model\StoreManagerInterface::class, $storeManagerMock],
+                        ['Magento\Framework\Registry', $registryMock],
+                        ['Magento\Cms\Model\Wysiwyg\Config', $wysiwygConfigMock],
+                        ['Magento\Store\Model\StoreManagerInterface', $storeManagerMock],
                     ]
                 )
             );

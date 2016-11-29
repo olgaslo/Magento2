@@ -7,7 +7,7 @@
 namespace Magento\Framework\View\Result;
 
 use Magento\Framework;
-use Magento\Framework\App\Response\HttpInterface as HttpResponseInterface;
+use Magento\Framework\App\ResponseInterface;
 use Magento\Framework\View;
 
 /**
@@ -219,9 +219,10 @@ class Page extends Layout
     }
 
     /**
-     * {@inheritdoc}
+     * @param ResponseInterface $response
+     * @return $this
      */
-    protected function render(HttpResponseInterface $response)
+    protected function render(ResponseInterface $response)
     {
         $this->pageConfig->publicBuild();
         if ($this->getPageLayout()) {

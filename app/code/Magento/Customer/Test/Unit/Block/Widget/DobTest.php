@@ -12,9 +12,6 @@ use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Customer\Block\Widget\Dob;
 use Magento\Framework\Locale\Resolver;
 
-/**
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
- */
 class DobTest extends \PHPUnit_Framework_TestCase
 {
     /** Constants used in the unit tests */
@@ -65,31 +62,31 @@ class DobTest extends \PHPUnit_Framework_TestCase
         $zendCacheCore->setBackend(new \Zend_Cache_Backend_BlackHole());
 
         $frontendCache = $this->getMockForAbstractClass(
-            \Magento\Framework\Cache\FrontendInterface::class,
+            'Magento\Framework\Cache\FrontendInterface',
             [],
             '',
             false
         );
         $frontendCache->expects($this->any())->method('getLowLevelFrontend')->will($this->returnValue($zendCacheCore));
-        $cache = $this->getMock(\Magento\Framework\App\CacheInterface::class);
+        $cache = $this->getMock('Magento\Framework\App\CacheInterface');
         $cache->expects($this->any())->method('getFrontend')->will($this->returnValue($frontendCache));
 
         $objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
-        $localeResolver = $this->getMock(\Magento\Framework\Locale\ResolverInterface::class);
+        $localeResolver = $this->getMock('\Magento\Framework\Locale\ResolverInterface');
         $localeResolver->expects($this->any())
             ->method('getLocale')
             ->willReturn(Resolver::DEFAULT_LOCALE);
         $timezone = $objectManager->getObject(
-            \Magento\Framework\Stdlib\DateTime\Timezone::class,
+            'Magento\Framework\Stdlib\DateTime\Timezone',
             ['localeResolver' => $localeResolver]
         );
 
-        $context = $this->getMock(\Magento\Framework\View\Element\Template\Context::class, [], [], '', false);
+        $context = $this->getMock('Magento\Framework\View\Element\Template\Context', [], [], '', false);
         $context->expects($this->any())->method('getLocaleDate')->will($this->returnValue($timezone));
 
-        $this->attribute = $this->getMockBuilder(\Magento\Customer\Api\Data\AttributeMetadataInterface::class)
+        $this->attribute = $this->getMockBuilder('\Magento\Customer\Api\Data\AttributeMetadataInterface')
             ->getMockForAbstractClass();
-        $this->customerMetadata = $this->getMockBuilder(\Magento\Customer\Api\CustomerMetadataInterface::class)
+        $this->customerMetadata = $this->getMockBuilder('\Magento\Customer\Api\CustomerMetadataInterface')
             ->getMockForAbstractClass();
         $this->customerMetadata->expects($this->any())
             ->method('getAttributeMetadata')
@@ -97,15 +94,15 @@ class DobTest extends \PHPUnit_Framework_TestCase
 
         date_default_timezone_set('America/Los_Angeles');
 
-        $this->filterFactory = $this->getMockBuilder(\Magento\Framework\Data\Form\FilterFactory::class)
+        $this->filterFactory = $this->getMockBuilder('Magento\Framework\Data\Form\FilterFactory')
             ->disableOriginalConstructor()
             ->getMock();
 
         $this->_block = new \Magento\Customer\Block\Widget\Dob(
             $context,
-            $this->getMock(\Magento\Customer\Helper\Address::class, [], [], '', false),
+            $this->getMock('Magento\Customer\Helper\Address', [], [], '', false),
             $this->customerMetadata,
-            $this->getMock(\Magento\Framework\View\Element\Html\Date::class, [], [], '', false),
+            $this->getMock('Magento\Framework\View\Element\Html\Date', [], [], '', false),
             $this->filterFactory
         );
     }
@@ -211,7 +208,7 @@ class DobTest extends \PHPUnit_Framework_TestCase
             ->method('getInputFilter')
             ->willReturn($filterCode);
 
-        $filterMock = $this->getMockBuilder(\Magento\Framework\Data\Form\Filter\Date::class)
+        $filterMock = $this->getMockBuilder('Magento\Framework\Data\Form\Filter\Date')
             ->disableOriginalConstructor()
             ->getMock();
         $filterMock->expects($this->once())
@@ -349,12 +346,12 @@ class DobTest extends \PHPUnit_Framework_TestCase
      */
     public function getMinDateRangeDataProvider()
     {
-        $emptyValidationRule = $this->getMockBuilder(\Magento\Customer\Api\Data\ValidationRuleInterface::class)
+        $emptyValidationRule = $this->getMockBuilder('Magento\Customer\Api\Data\ValidationRuleInterface')
             ->disableOriginalConstructor()
             ->setMethods(['getName', 'getValue'])
             ->getMockForAbstractClass();
 
-        $validationRule = $this->getMockBuilder(\Magento\Customer\Api\Data\ValidationRuleInterface::class)
+        $validationRule = $this->getMockBuilder('Magento\Customer\Api\Data\ValidationRuleInterface')
             ->disableOriginalConstructor()
             ->setMethods(['getName', 'getValue'])
             ->getMockForAbstractClass();
@@ -419,12 +416,12 @@ class DobTest extends \PHPUnit_Framework_TestCase
      */
     public function getMaxDateRangeDataProvider()
     {
-        $emptyValidationRule = $this->getMockBuilder(\Magento\Customer\Api\Data\ValidationRuleInterface::class)
+        $emptyValidationRule = $this->getMockBuilder('Magento\Customer\Api\Data\ValidationRuleInterface')
             ->disableOriginalConstructor()
             ->setMethods(['getName', 'getValue'])
             ->getMockForAbstractClass();
 
-        $validationRule = $this->getMockBuilder(\Magento\Customer\Api\Data\ValidationRuleInterface::class)
+        $validationRule = $this->getMockBuilder('Magento\Customer\Api\Data\ValidationRuleInterface')
             ->disableOriginalConstructor()
             ->setMethods(['getName', 'getValue'])
             ->getMockForAbstractClass();

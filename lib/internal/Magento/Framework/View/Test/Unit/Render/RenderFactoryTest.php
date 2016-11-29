@@ -21,11 +21,11 @@ class RenderFactoryTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->objectManagerMock = $this->getMock(\Magento\Framework\ObjectManagerInterface::class);
+        $this->objectManagerMock = $this->getMock('Magento\Framework\ObjectManagerInterface');
 
         $this->objectManagerHelper = new ObjectManagerHelper($this);
         $this->renderFactory = $this->objectManagerHelper->getObject(
-            \Magento\Framework\View\Render\RenderFactory::class,
+            'Magento\Framework\View\Render\RenderFactory',
             [
                 'objectManager' => $this->objectManagerMock
             ]
@@ -34,12 +34,12 @@ class RenderFactoryTest extends \PHPUnit_Framework_TestCase
 
     public function testGet()
     {
-        $instance = \Magento\Framework\View\RenderInterface::class;
+        $instance = 'Magento\Framework\View\RenderInterface';
         $renderMock = $this->getMock($instance, [], [], '', false);
         $data = 'RenderInterface';
         $this->objectManagerMock->expects($this->once())
             ->method('get')
-            ->with($this->equalTo(\Magento\Framework\View\Render\RenderInterface::class))
+            ->with($this->equalTo('Magento\Framework\View\Render\RenderInterface'))
             ->will($this->returnValue($renderMock));
         $this->assertInstanceOf($instance, $this->renderFactory->get($data));
     }
@@ -52,7 +52,7 @@ class RenderFactoryTest extends \PHPUnit_Framework_TestCase
     {
         $this->objectManagerMock->expects($this->once())
             ->method('get')
-            ->with($this->equalTo(\Magento\Framework\View\Render\RenderInterface::class))
+            ->with($this->equalTo('Magento\Framework\View\Render\RenderInterface'))
             ->will($this->returnValue(new \stdClass()));
         $this->renderFactory->get('RenderInterface');
     }

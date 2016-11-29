@@ -58,7 +58,7 @@ class ProfileTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->connectionMock = $this->getMockForAbstractClass(
-            \Magento\Framework\DB\Adapter\AdapterInterface::class,
+            'Magento\Framework\DB\Adapter\AdapterInterface',
             [],
             '',
             false,
@@ -67,21 +67,21 @@ class ProfileTest extends \PHPUnit_Framework_TestCase
             ['query']
         );
         $this->dbContext = $this->getMock(
-            \Magento\Framework\Model\ResourceModel\Db\Context::class,
+            'Magento\Framework\Model\ResourceModel\Db\Context',
             [],
             [],
             '',
             false
         );
         $this->profileFactory = $this->getMock(
-            \Magento\SalesSequence\Model\ProfileFactory::class,
+            'Magento\SalesSequence\Model\ProfileFactory',
             ['create'],
             [],
             '',
             false
         );
         $this->resourceMock = $this->getMock(
-            \Magento\Framework\App\ResourceConnection::class,
+            'Magento\Framework\App\ResourceConnection',
             ['getConnection', 'getTableName'],
             [],
             '',
@@ -89,21 +89,21 @@ class ProfileTest extends \PHPUnit_Framework_TestCase
         );
         $this->dbContext->expects($this->once())->method('getResources')->willReturn($this->resourceMock);
         $this->select = $this->getMock(
-            \Magento\Framework\DB\Select::class,
+            'Magento\Framework\DB\Select',
             [],
             [],
             '',
             false
         );
         $this->meta = $this->getMock(
-            \Magento\SalesSequence\Model\Meta::class,
+            'Magento\SalesSequence\Model\Meta',
             [],
             [],
             '',
             false
         );
         $this->profile = $this->getMock(
-            \Magento\SalesSequence\Model\Profile::class,
+            'Magento\SalesSequence\Model\Profile',
             [],
             [],
             '',
@@ -156,7 +156,7 @@ class ProfileTest extends \PHPUnit_Framework_TestCase
         $this->connectionMock->expects($this->any())
             ->method('quoteIdentifier');
         $this->connectionMock->expects($this->once())->method('fetchRow')->willReturn($profileData);
-        $this->profile->expects($this->at(1))->method('setData')->with($profileData);
+        $this->profile->expects($this->at(0))->method('setData')->with($profileData);
         $this->assertEquals($this->profile, $this->resource->loadActiveProfile($metaId));
     }
 }

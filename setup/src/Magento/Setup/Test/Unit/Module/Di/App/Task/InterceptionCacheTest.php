@@ -21,12 +21,12 @@ class InterceptionCacheTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->configMock = $this->getMockBuilder(\Magento\Framework\Interception\Config\Config::class)
+        $this->configMock = $this->getMockBuilder('Magento\Framework\Interception\Config\Config')
             ->setMethods([])
             ->disableOriginalConstructor()
             ->getMock();
         $this->interceptionsListMock = $this->getMockBuilder(
-            \Magento\Setup\Module\Di\Code\Reader\Decorator\Interceptions::class
+            'Magento\Setup\Module\Di\Code\Reader\Decorator\Interceptions'
         )
             ->setMethods([])
             ->disableOriginalConstructor()

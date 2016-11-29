@@ -32,42 +32,42 @@ class ColumnsTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->context = $this->getMockBuilder(\Magento\Framework\View\Element\UiComponent\ContextInterface::class)
+        $this->context = $this->getMockBuilder('Magento\Framework\View\Element\UiComponent\ContextInterface')
             ->getMockForAbstractClass();
-        $processor = $this->getMockBuilder(\Magento\Framework\View\Element\UiComponent\Processor::class)
+        $processor = $this->getMockBuilder('Magento\Framework\View\Element\UiComponent\Processor')
             ->disableOriginalConstructor()
             ->getMock();
         $this->context->expects($this->any())->method('getProcessor')->willReturn($processor);
         $this->columnFactory = $this->getMock(
-            \Magento\Customer\Ui\Component\ColumnFactory::class,
+            'Magento\Customer\Ui\Component\ColumnFactory',
             ['create'],
             [],
             '',
             false
         );
         $this->attributeRepository = $this->getMock(
-            \Magento\Customer\Ui\Component\Listing\AttributeRepository::class,
+            'Magento\Customer\Ui\Component\Listing\AttributeRepository',
             [],
             [],
             '',
             false
         );
         $this->attribute = $this->getMock(
-            \Magento\Customer\Model\Attribute::class,
+            'Magento\Customer\Model\Attribute',
             [],
             [],
             '',
             false
         );
         $this->column = $this->getMockForAbstractClass(
-            \Magento\Ui\Component\Listing\Columns\ColumnInterface::class,
+            'Magento\Ui\Component\Listing\Columns\ColumnInterface',
             [],
             '',
             false
         );
 
         $this->inlineEditUpdater = $this->getMockBuilder(
-            \Magento\Customer\Ui\Component\Listing\Column\InlineEditUpdater::class
+            'Magento\Customer\Ui\Component\Listing\Column\InlineEditUpdater'
         )->disableOriginalConstructor()
             ->getMock();
 

@@ -27,9 +27,8 @@ class StateTest extends \PHPUnit_Framework_TestCase
     {
         $objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
         $this->mShippingStateMock =
-            $this->getMock(\Magento\Multishipping\Model\Checkout\Type\Multishipping\State::class, [], [], '', false);
-        $this->model = $objectManager->getObject(
-            \Magento\Multishipping\Block\Checkout\State::class,
+            $this->getMock('Magento\Multishipping\Model\Checkout\Type\Multishipping\State', [], [], '', false);
+        $this->model = $objectManager->getObject('Magento\Multishipping\Block\Checkout\State',
             [
                 'multishippingState' => $this->mShippingStateMock,
             ]

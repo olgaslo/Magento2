@@ -56,8 +56,7 @@ class Repository extends AbstractFactory
             $this->factoryContent .= "\n";
         }
 
-        $this->factoryContent .= "        return \$this->objectManager->create(
-            {$realClass}::class, "
+        $this->factoryContent .= "        return \$this->objectManager->create('{$realClass}', "
             . "array('defaultConfig' => \$defaultConfig, 'defaultData' => \$defaultData));\n";
         $this->factoryContent .= "    }\n";
 

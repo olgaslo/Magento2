@@ -18,21 +18,15 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $urnResolver = new \Magento\Framework\Config\Dom\UrnResolver();
-        $urnResolverMock = $this->getMock(\Magento\Framework\Config\Dom\UrnResolver::class, [], [], '', false);
+        $urnResolverMock = $this->getMock('Magento\Framework\Config\Dom\UrnResolver', [], [], '', false);
         $urnResolverMock->expects($this->once())
             ->method('getRealPath')
             ->with('urn:magento:framework:View/PageLayout/etc/layouts.xsd')
             ->willReturn($urnResolver->getRealPath('urn:magento:framework:View/PageLayout/etc/layouts.xsd'));
-        $validationStateMock = $this->getMock(
-            \Magento\Framework\Config\ValidationStateInterface::class,
-            [],
-            [],
-            '',
-            false
-        );
+        $validationStateMock = $this->getMock('\Magento\Framework\Config\ValidationStateInterface', [], [], '', false);
         $validationStateMock->method('isValidationRequired')
             ->willReturn(true);
-        $domFactoryMock = $this->getMock(\Magento\Framework\Config\DomFactory::class, [], [], '', false);
+        $domFactoryMock = $this->getMock('Magento\Framework\Config\DomFactory', [], [], '', false);
         $domFactoryMock->expects($this->once())
             ->method('createDom')
             ->willReturnCallback(
@@ -51,7 +45,7 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
             );
         $objectManagerHelper = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
         $this->config = $objectManagerHelper->getObject(
-            \Magento\Framework\View\PageLayout\Config::class,
+            'Magento\Framework\View\PageLayout\Config',
             [
                 'urnResolver' => $urnResolverMock,
                 'configFiles' => [

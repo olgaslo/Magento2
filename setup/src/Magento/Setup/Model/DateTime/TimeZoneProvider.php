@@ -46,7 +46,7 @@ class TimeZoneProvider
     {
         if (!$this->timezone) {
             $this->timezone = $this->objectManagerProvider->get()->create(
-                \Magento\Framework\Stdlib\DateTime\Timezone::class,
+                'Magento\Framework\Stdlib\DateTime\Timezone',
                 ['scopeType' => ScopeConfigInterface::SCOPE_TYPE_DEFAULT]
             );
         }

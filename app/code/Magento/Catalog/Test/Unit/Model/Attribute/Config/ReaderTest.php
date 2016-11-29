@@ -34,7 +34,7 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->_fileResolverMock = $this->getMock(\Magento\Framework\Config\FileResolverInterface::class);
+        $this->_fileResolverMock = $this->getMock('Magento\Framework\Config\FileResolverInterface');
         $this->_fileResolverMock->expects(
             $this->once()
         )->method(
@@ -51,10 +51,10 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
             )
         );
 
-        $this->_converter = $this->getMock(\Magento\Catalog\Model\Attribute\Config\Converter::class, ['convert']);
+        $this->_converter = $this->getMock('Magento\Catalog\Model\Attribute\Config\Converter', ['convert']);
 
         $moduleReader = $this->getMock(
-            \Magento\Framework\Module\Dir\Reader::class,
+            'Magento\Framework\Module\Dir\Reader',
             ['getModuleDir'],
             [],
             '',
@@ -72,7 +72,7 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
         );
         $this->_schemaLocator = new \Magento\Catalog\Model\Attribute\Config\SchemaLocator($moduleReader);
 
-        $this->_validationState = $this->getMock(\Magento\Framework\Config\ValidationStateInterface::class);
+        $this->_validationState = $this->getMock('Magento\Framework\Config\ValidationStateInterface');
         $this->_validationState->expects($this->any())
             ->method('isValidationRequired')
             ->willReturn(false);

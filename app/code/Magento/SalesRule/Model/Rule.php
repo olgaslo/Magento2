@@ -226,7 +226,7 @@ class Rule extends \Magento\Rule\Model\AbstractModel
     protected function _construct()
     {
         parent::_construct();
-        $this->_init(\Magento\SalesRule\Model\ResourceModel\Rule::class);
+        $this->_init('Magento\SalesRule\Model\ResourceModel\Rule');
         $this->setIdFieldName('rule_id');
     }
 

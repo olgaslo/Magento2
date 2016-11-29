@@ -145,7 +145,7 @@ class Shipment extends AbstractModel implements EntityInterface, ShipmentInterfa
      */
     protected function _construct()
     {
-        $this->_init(\Magento\Sales\Model\ResourceModel\Order\Shipment::class);
+        $this->_init('Magento\Sales\Model\ResourceModel\Order\Shipment');
     }
 
     /**

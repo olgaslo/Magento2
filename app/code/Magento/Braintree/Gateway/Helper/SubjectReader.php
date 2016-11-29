@@ -83,7 +83,7 @@ class SubjectReader
      */
     public function readCustomerId(array $subject)
     {
-        if (!isset($subject['customer_id'])) {
+        if (empty($subject['customer_id'])) {
             throw new \InvalidArgumentException('The "customerId" field does not exists');
         }
 

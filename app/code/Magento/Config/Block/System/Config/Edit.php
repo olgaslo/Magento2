@@ -16,7 +16,7 @@ namespace Magento\Config\Block\System\Config;
  */
 class Edit extends \Magento\Backend\Block\Widget
 {
-    const DEFAULT_SECTION_BLOCK = \Magento\Config\Block\System\Config\Form::class;
+    const DEFAULT_SECTION_BLOCK = 'Magento\Config\Block\System\Config\Form';
 
     /**
      * Form block class name
@@ -71,7 +71,7 @@ class Edit extends \Magento\Backend\Block\Widget
 
         $this->getToolbar()->addChild(
             'save_button',
-            \Magento\Backend\Block\Widget\Button::class,
+            'Magento\Backend\Block\Widget\Button',
             [
                 'id' => 'save',
                 'label' => __('Save Config'),

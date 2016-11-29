@@ -28,17 +28,14 @@ class ActionTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $context = $this->getMockBuilder(\Magento\Framework\View\Element\UiComponent\ContextInterface::class)
+        $context = $this->getMockBuilder('Magento\Framework\View\Element\UiComponent\ContextInterface')
             ->getMockForAbstractClass();
-        $processor = $this->getMockBuilder(\Magento\Framework\View\Element\UiComponent\Processor::class)
+        $processor = $this->getMockBuilder('Magento\Framework\View\Element\UiComponent\Processor')
             ->disableOriginalConstructor()
             ->getMock();
         $context->expects($this->any())->method('getProcessor')->willReturn($processor);
         $this->objectManager = new ObjectManager($this);
-        $this->action = $this->objectManager->getObject(
-            \Magento\Ui\Component\Control\Action::class,
-            ['context' => $context]
-        );
+        $this->action = $this->objectManager->getObject('Magento\Ui\Component\Control\Action', ['context' => $context]);
     }
 
     /**

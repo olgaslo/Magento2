@@ -62,13 +62,7 @@ class XsdTest extends \PHPUnit_Framework_TestCase
      */
     protected function _testSchema($schema, $fixtureXml, array $expectedErrors)
     {
-        $validationStateMock = $this->getMock(
-            \Magento\Framework\Config\ValidationStateInterface::class,
-            [],
-            [],
-            '',
-            false
-        );
+        $validationStateMock = $this->getMock('\Magento\Framework\Config\ValidationStateInterface', [], [], '', false);
         $validationStateMock->method('isValidationRequired')
             ->willReturn(true);
         $dom = new \Magento\Framework\Config\Dom($fixtureXml, $validationStateMock, [], null, null, '%message%');

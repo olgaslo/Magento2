@@ -59,17 +59,17 @@ class RowCustomizerTest extends \PHPUnit_Framework_TestCase
     {
         $this->objectManagerHelper = new ObjectManagerHelper($this);
         $this->rowCustomizerMock = $this->objectManagerHelper->getObject(
-            \Magento\BundleImportExport\Model\Export\RowCustomizer::class
+            '\Magento\BundleImportExport\Model\Export\RowCustomizer'
         );
         $this->productResourceCollection = $this->getMock(
-            \Magento\Catalog\Model\ResourceModel\Product\Collection::class,
+            '\Magento\Catalog\Model\ResourceModel\Product\Collection',
             ['addAttributeToFilter', 'getIterator'],
             [],
             '',
             false
         );
         $this->product = $this->getMock(
-            \Magento\Catalog\Model\Product::class,
+            '\Magento\Catalog\Model\Product',
             [
                 'getEntityId',
                 'getPriceType',
@@ -93,7 +93,7 @@ class RowCustomizerTest extends \PHPUnit_Framework_TestCase
         $this->product->expects($this->any())->method('getWeightType')->willReturn(1);
         $this->product->expects($this->any())->method('getTypeInstance')->willReturnSelf();
         $this->optionsCollection = $this->getMock(
-            \Magento\Bundle\Model\ResourceModel\Option\Collection::class,
+            '\Magento\Bundle\Model\ResourceModel\Option\Collection',
             ['setOrder', 'getIterator'],
             [],
             '',
@@ -102,7 +102,7 @@ class RowCustomizerTest extends \PHPUnit_Framework_TestCase
         $this->product->expects($this->any())->method('getOptionsCollection')->willReturn($this->optionsCollection);
         $this->optionsCollection->expects($this->any())->method('setOrder')->willReturnSelf();
         $this->option = $this->getMock(
-            \Magento\Bundle\Model\Option::class,
+            '\Magento\Bundle\Model\Option',
             ['getId', 'getTitle', 'getType', 'getRequired'],
             [],
             '',
@@ -116,7 +116,7 @@ class RowCustomizerTest extends \PHPUnit_Framework_TestCase
             $this->returnValue(new \ArrayIterator([$this->option]))
         );
         $this->selection = $this->getMock(
-            \Magento\Catalog\Model\Product::class,
+            '\Magento\Catalog\Model\Product',
             ['getSku', 'getSelectionPriceValue', 'getIsDefault', 'getSelectionQty', 'getSelectionPriceType'],
             [],
             '',
@@ -127,7 +127,7 @@ class RowCustomizerTest extends \PHPUnit_Framework_TestCase
         $this->selection->expects($this->any())->method('getSelectionQty')->willReturn(1);
         $this->selection->expects($this->any())->method('getSelectionPriceType')->willReturn(1);
         $this->selectionsCollection = $this->getMock(
-            \Magento\Bundle\Model\ResourceModel\Selection\Collection::class,
+            '\Magento\Bundle\Model\ResourceModel\Selection\Collection',
             ['getIterator', 'addAttributeToSort'],
             [],
             '',
@@ -178,8 +178,7 @@ class RowCustomizerTest extends \PHPUnit_Framework_TestCase
     public function testAddData()
     {
         $preparedData = $this->rowCustomizerMock->prepareData($this->productResourceCollection, [1]);
-        $attributes = 'attribute=1,sku_type=1,attribute2="Text",price_type=1,price_view=1,weight_type=1,'
-            . 'values=values,shipment_type=1,attribute3=One,Two,Three';
+        $attributes = 'attribute=1,sku_type=1,price_type=1,price_view=1,weight_type=1,values=values,shipment_type=1';
         $dataRow = [
             'sku' => 'sku1',
             'additional_attributes' => $attributes
@@ -187,7 +186,7 @@ class RowCustomizerTest extends \PHPUnit_Framework_TestCase
         $preparedRow = $preparedData->addData($dataRow, 1);
         $expected = [
             'sku' => 'sku1',
-            'additional_attributes' => 'attribute=1,attribute2="Text",attribute3=One,Two,Three',
+            'additional_attributes' => 'attribute=1',
             'bundle_price_type' => 'fixed',
             'bundle_shipment_type' => 'separately',
             'bundle_sku_type' => 'fixed',

@@ -93,7 +93,7 @@ class ImageProcessor implements ImageProcessorInterface
         //Get all Image related custom attributes
         $imageDataObjects = $this->dataObjectHelper->getCustomAttributeValueByType(
             $dataObjectWithCustomAttributes->getCustomAttributes(),
-            \Magento\Framework\Api\Data\ImageContentInterface::class
+            '\Magento\Framework\Api\Data\ImageContentInterface'
         );
 
         // Return if no images to process
@@ -123,7 +123,7 @@ class ImageProcessor implements ImageProcessorInterface
                 );
                 if ($previousImageAttribute) {
                     $previousImagePath = $previousImageAttribute->getValue();
-                    if (!empty($previousImagePath) && ($previousImagePath != $filename)) {
+                    if (!empty($previousImagePath)) {
                         @unlink($this->mediaDirectory->getAbsolutePath() . $entityType . $previousImagePath);
                     }
                 }

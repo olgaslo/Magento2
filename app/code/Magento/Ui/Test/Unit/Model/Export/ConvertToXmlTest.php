@@ -97,7 +97,7 @@ class ConvertToXmlTest extends \PHPUnit_Framework_TestCase
             ->setMethods(['create'])
             ->getMock();
 
-        $this->iteratorFactory = $this->getMockBuilder(\Magento\Ui\Model\Export\SearchResultIteratorFactory::class)
+        $this->iteratorFactory = $this->getMockBuilder('Magento\Ui\Model\Export\SearchResultIteratorFactory')
             ->disableOriginalConstructor()
             ->setMethods(['create'])
             ->getMock();
@@ -204,7 +204,7 @@ class ConvertToXmlTest extends \PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $excel = $this->getMockBuilder(\Magento\Framework\Convert\Excel::class)
+        $excel = $this->getMockBuilder('Magento\Framework\Convert\Excel')
             ->disableOriginalConstructor()
             ->getMock();
 

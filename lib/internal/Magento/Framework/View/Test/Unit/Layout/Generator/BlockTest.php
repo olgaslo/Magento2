@@ -7,7 +7,6 @@ namespace Magento\Framework\View\Test\Unit\Layout\Generator;
 
 /**
  * @covers \Magento\Framework\View\Layout\Generator\Block
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
 class BlockTest extends \PHPUnit_Framework_TestCase
 {
@@ -47,13 +46,7 @@ class BlockTest extends \PHPUnit_Framework_TestCase
         $argumentData = ['argument' => 'value'];
         $class = 'test_class';
 
-        $scheduleStructure = $this->getMock(
-            \Magento\Framework\View\Layout\ScheduledStructure::class,
-            [],
-            [],
-            '',
-            false
-        );
+        $scheduleStructure = $this->getMock('Magento\Framework\View\Layout\ScheduledStructure', [], [], '', false);
         $scheduleStructure->expects($this->once())->method('getElements')->will(
             $this->returnValue(
                 [
@@ -97,18 +90,18 @@ class BlockTest extends \PHPUnit_Framework_TestCase
         /**
          * @var \Magento\Framework\View\Layout\Reader\Context|\PHPUnit_Framework_MockObject_MockObject $readerContext
          */
-        $readerContext = $this->getMock(\Magento\Framework\View\Layout\Reader\Context::class, [], [], '', false);
+        $readerContext = $this->getMock('Magento\Framework\View\Layout\Reader\Context', [], [], '', false);
         $readerContext->expects($this->once())->method('getScheduledStructure')
             ->will($this->returnValue($scheduleStructure));
 
-        $layout = $this->getMock(\Magento\Framework\View\LayoutInterface::class, [], [], '', false);
+        $layout = $this->getMock('Magento\Framework\View\LayoutInterface', [], [], '', false);
 
         /**
          * @var \Magento\Framework\View\Element\AbstractBlock|\PHPUnit_Framework_MockObject_MockObject $blockInstance
          */
         // explicitly set mocked methods for successful expectation of magic methods
         $blockInstance = $this->getMock(
-            \Magento\Framework\View\Element\AbstractBlock::class,
+            'Magento\Framework\View\Element\AbstractBlock',
             ['setType', 'setTemplate', 'setTtl', $methodName, 'setNameInLayout', 'addData', 'setLayout'],
             [],
             '',
@@ -124,13 +117,13 @@ class BlockTest extends \PHPUnit_Framework_TestCase
 
         $layout->expects($this->once())->method('setBlock')->with($elementName, $blockInstance);
 
-        $structure = $this->getMock(\Magento\Framework\View\Layout\Data\Structure::class, [], [], '', false);
+        $structure = $this->getMock('Magento\Framework\View\Layout\Data\Structure', [], [], '', false);
         $structure->expects($addToParentGroupCount)->method('addToParentGroup')->with($elementName, $testGroup);
 
         /**
          * @var \PHPUnit_Framework_MockObject_MockObject $generatorContext
          */
-        $generatorContext = $this->getMock(\Magento\Framework\View\Layout\Generator\Context::class, [], [], '', false);
+        $generatorContext = $this->getMock('Magento\Framework\View\Layout\Generator\Context', [], [], '', false);
         $generatorContext->expects($this->once())->method('getLayout')->will($this->returnValue($layout));
         $generatorContext->expects($this->once())->method('getStructure')->will($this->returnValue($structure));
 
@@ -138,7 +131,7 @@ class BlockTest extends \PHPUnit_Framework_TestCase
          * @var \PHPUnit_Framework_MockObject_MockObject $argumentInterpreter
          */
         $argumentInterpreter = $this->getMock(
-            \Magento\Framework\Data\Argument\InterpreterInterface::class,
+            'Magento\Framework\Data\Argument\InterpreterInterface',
             [],
             [],
             '',
@@ -156,29 +149,29 @@ class BlockTest extends \PHPUnit_Framework_TestCase
         }
 
         /** @var \Magento\Framework\View\Element\BlockFactory|\PHPUnit_Framework_MockObject_MockObject $blockFactory */
-        $blockFactory = $this->getMock(\Magento\Framework\View\Element\BlockFactory::class, [], [], '', false);
+        $blockFactory = $this->getMock('Magento\Framework\View\Element\BlockFactory', [], [], '', false);
         $blockFactory->expects($this->any())
             ->method('createBlock')
             ->with($class, ['data' => $argumentData])
             ->will($this->returnValue($blockInstance));
 
         /** @var \Magento\Framework\Event\ManagerInterface|\PHPUnit_Framework_MockObject_MockObject $eventManager */
-        $eventManager = $this->getMock(\Magento\Framework\Event\ManagerInterface::class, [], [], '', false);
+        $eventManager = $this->getMock('Magento\Framework\Event\ManagerInterface', [], [], '', false);
         $eventManager->expects($this->once())->method('dispatch')
             ->with('core_layout_block_create_after', [$literal => $blockInstance]);
 
-        $scopeConfigMock = $this->getMock(\Magento\Framework\App\Config\ScopeConfigInterface::class, [], [], '', false);
+        $scopeConfigMock = $this->getMock('Magento\Framework\App\Config\ScopeConfigInterface', [], [], '', false);
         $scopeConfigMock->expects($this->once())->method('isSetFlag')
             ->with('config_path', 'scope', 'default')->willReturn($testIsFlag);
 
-        $scopeResolverMock = $this->getMock(\Magento\Framework\App\ScopeResolverInterface::class, [], [], '', false);
+        $scopeResolverMock = $this->getMock('Magento\Framework\App\ScopeResolverInterface', [], [], '', false);
         $scopeResolverMock->expects($this->once())->method('getScope')
             ->willReturn('default');
 
         /** @var \Magento\Framework\View\Layout\Generator\Block $block */
         $block = (new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this))
             ->getObject(
-                \Magento\Framework\View\Layout\Generator\Block::class,
+                'Magento\Framework\View\Layout\Generator\Block',
                 [
                     'argumentInterpreter' => $argumentInterpreter,
                     'blockFactory' => $blockFactory,

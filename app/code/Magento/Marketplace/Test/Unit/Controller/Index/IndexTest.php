@@ -60,7 +60,7 @@ class IndexTest extends \PHPUnit_Framework_TestCase
      */
     public function getControllerIndexMock($methods = null)
     {
-        return $this->getMock(\Magento\Marketplace\Controller\Adminhtml\Index\Index::class, $methods, [], '', false);
+        return $this->getMock('Magento\Marketplace\Controller\Adminhtml\Index\Index', $methods, [], '', false);
     }
 
     /**
@@ -68,7 +68,7 @@ class IndexTest extends \PHPUnit_Framework_TestCase
      */
     public function getResultPageFactoryMock($methods = null)
     {
-        return $this->getMock(\Magento\Framework\View\Result\PageFactory::class, $methods, [], '', false);
+        return $this->getMock('Magento\Framework\View\Result\PageFactory', $methods, [], '', false);
     }
 
     /**
@@ -76,7 +76,7 @@ class IndexTest extends \PHPUnit_Framework_TestCase
      */
     public function getConfigMock($methods = null)
     {
-        return $this->getMock(\Magento\Framework\View\Page\Config::class, $methods, [], '', false);
+        return $this->getMock('Magento\Framework\View\Page\Config', $methods, [], '', false);
     }
 
     /**
@@ -84,7 +84,7 @@ class IndexTest extends \PHPUnit_Framework_TestCase
      */
     public function getTitleMock($methods = null)
     {
-        return $this->getMock(\Magento\Framework\View\Page\Title::class, $methods, [], '', false);
+        return $this->getMock('Magento\Framework\View\Page\Title', $methods, [], '', false);
     }
 
     /**
@@ -92,6 +92,6 @@ class IndexTest extends \PHPUnit_Framework_TestCase
      */
     public function getPageMock($methods = null)
     {
-        return $this->getMock(\Magento\Framework\View\Result\Page::class, $methods, [], '', false);
+        return $this->getMock('Magento\Framework\View\Result\Page', $methods, [], '', false);
     }
 }

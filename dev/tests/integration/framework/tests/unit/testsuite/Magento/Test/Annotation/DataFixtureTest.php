@@ -20,7 +20,7 @@ class DataFixtureTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->_object = $this->getMock(
-            \Magento\TestFramework\Annotation\DataFixture::class,
+            'Magento\TestFramework\Annotation\DataFixture',
             ['_applyOneFixture'],
             [__DIR__ . '/_files']
         );

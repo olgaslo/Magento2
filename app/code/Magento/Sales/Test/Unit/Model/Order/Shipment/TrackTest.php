@@ -17,7 +17,7 @@ class TrackTest extends \PHPUnit_Framework_TestCase
         $objectManagerHelper = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
         $arguments = [
             'shipmentRepository' => $this->getMock(
-                \Magento\Sales\Model\Order\ShipmentRepository::class,
+                'Magento\Sales\Model\Order\ShipmentRepository',
                 [],
                 [],
                 '',
@@ -25,7 +25,7 @@ class TrackTest extends \PHPUnit_Framework_TestCase
             ),
         ];
 
-        $this->_model = $objectManagerHelper->getObject(\Magento\Sales\Model\Order\Shipment\Track::class, $arguments);
+        $this->_model = $objectManagerHelper->getObject('Magento\Sales\Model\Order\Shipment\Track', $arguments);
     }
 
     public function testAddData()
@@ -44,7 +44,7 @@ class TrackTest extends \PHPUnit_Framework_TestCase
         $storeObject = new \Magento\Framework\DataObject(['id' => $storeId]);
 
         $shipmentMock = $this->getMock(
-            \Magento\Sales\Model\Order\Shipment::class,
+            'Magento\Sales\Model\Order\Shipment',
             ['getStore', '__wakeup'],
             [],
             '',

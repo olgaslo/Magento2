@@ -221,11 +221,7 @@ class FlatTableBuilder
 
         unset($tables[$entityTableName]);
 
-        $allColumns = array_values(
-            array_unique(
-                array_merge(['entity_id', $linkField, 'type_id', 'attribute_set_id'], $columnsList)
-            )
-        );
+        $allColumns = array_merge(['entity_id', 'type_id', 'attribute_set_id'], $columnsList);
 
         /* @var $status \Magento\Eav\Model\Entity\Attribute */
         $status = $this->_productIndexerHelper->getAttribute('status');
@@ -267,7 +263,7 @@ class FlatTableBuilder
 
             $select->joinLeft(
                 $temporaryTableName,
-                sprintf('e.%1$s = %2$s.%1$s', $linkField, $temporaryTableName),
+                "e.entity_id = " . $temporaryTableName . ".entity_id",
                 $columnsNames
             );
             $allColumns = array_merge($allColumns, $columnsNames);
@@ -281,7 +277,7 @@ class FlatTableBuilder
             if (!empty($columnValueNames)) {
                 $select->joinLeft(
                     $temporaryValueTableName,
-                    sprintf('e.%1$s = %2$s.%1$s', $linkField, $temporaryValueTableName),
+                    "e.${linkField} = " . $temporaryValueTableName . ".entity_id",
                     $columnValueNames
                 );
                 $allColumns = array_merge($allColumns, $columnValueNames);
@@ -375,7 +371,7 @@ class FlatTableBuilder
     {
         if (null === $this->metadataPool) {
             $this->metadataPool = \Magento\Framework\App\ObjectManager::getInstance()
-                ->get(\Magento\Framework\EntityManager\MetadataPool::class);
+                ->get('Magento\Framework\EntityManager\MetadataPool');
         }
         return $this->metadataPool;
     }

@@ -30,10 +30,10 @@ class FilterEmulateTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->objectManagerHelper = new ObjectManagerHelper($this);
-        $this->appStateMock = $this->getMock(\Magento\Framework\App\State::class, [], [], '', false);
+        $this->appStateMock = $this->getMock('Magento\Framework\App\State', [], [], '', false);
 
         $this->filterEmulate = $this->objectManagerHelper->getObject(
-            \Magento\Widget\Model\Template\FilterEmulate::class,
+            'Magento\Widget\Model\Template\FilterEmulate',
             ['appState' => $this->appStateMock]
         );
     }

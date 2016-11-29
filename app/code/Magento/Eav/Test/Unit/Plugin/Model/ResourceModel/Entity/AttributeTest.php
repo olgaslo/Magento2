@@ -23,9 +23,9 @@ class AttributeTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->cache = $this->getMock(\Magento\Framework\App\CacheInterface::class);
-        $this->cacheState = $this->getMock(\Magento\Framework\App\Cache\StateInterface::class);
-        $this->subject = $this->getMock(\Magento\Eav\Model\ResourceModel\Entity\Attribute::class, [], [], '', false);
+        $this->cache = $this->getMock('Magento\Framework\App\CacheInterface');
+        $this->cacheState = $this->getMock('Magento\Framework\App\Cache\StateInterface');
+        $this->subject = $this->getMock('Magento\Eav\Model\ResourceModel\Entity\Attribute', [], [], '', false);
     }
 
     public function testGetStoreLabelsByAttributeIdOnCacheDisabled()
@@ -92,7 +92,7 @@ class AttributeTest extends \PHPUnit_Framework_TestCase
         $this->cacheState->expects($this->any())->method('isEnabled')
             ->with(\Magento\Eav\Model\Cache\Type::TYPE_IDENTIFIER)->willReturn($cacheEnabledFlag);
         return (new ObjectManager($this))->getObject(
-            \Magento\Eav\Plugin\Model\ResourceModel\Entity\Attribute::class,
+            'Magento\Eav\Plugin\Model\ResourceModel\Entity\Attribute',
             [
                 'cache' => $this->cache,
                 'cacheState' => $this->cacheState

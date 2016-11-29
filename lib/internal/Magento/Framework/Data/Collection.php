@@ -35,7 +35,7 @@ class Collection implements \IteratorAggregate, \Countable, ArrayInterface, Coll
      *
      * @var string
      */
-    protected $_itemObjectClass = \Magento\Framework\DataObject::class;
+    protected $_itemObjectClass = 'Magento\Framework\DataObject';
 
     /**
      * Order configuration
@@ -593,7 +593,7 @@ class Collection implements \IteratorAggregate, \Countable, ArrayInterface, Coll
      */
     public function setItemObjectClass($className)
     {
-        if (!is_a($className, \Magento\Framework\DataObject::class, true)) {
+        if (!is_a($className, 'Magento\Framework\DataObject', true)) {
             throw new \InvalidArgumentException($className . ' does not extend \Magento\Framework\DataObject');
         }
         $this->_itemObjectClass = $className;

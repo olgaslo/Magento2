@@ -22,14 +22,14 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $cacheFrontendPoolMock = $this->getMockBuilder(\Magento\Framework\App\Cache\Type\FrontendPool::class)
+        $cacheFrontendPoolMock = $this->getMockBuilder('Magento\Framework\App\Cache\Type\FrontendPool')
             ->disableOriginalConstructor()
             ->getMock();
         $this->model = (new ObjectManager($this))->getObject(
-            \Magento\Framework\App\Cache\Type\Config::class,
+            'Magento\Framework\App\Cache\Type\Config',
             ['cacheFrontendPool' => $cacheFrontendPoolMock]
         );
-        $this->frontendMock = $this->getMock(\Magento\Framework\Cache\FrontendInterface::class);
+        $this->frontendMock = $this->getMock('Magento\Framework\Cache\FrontendInterface');
         $cacheFrontendPoolMock->expects($this->once())
             ->method('get')
             ->with(\Magento\Framework\App\Cache\Type\Config::TYPE_IDENTIFIER)
@@ -58,8 +58,8 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
             ['test', ['record_id'], 111],
             ['load', ['record_id'], '111'],
             ['remove', ['record_id'], true],
-            ['getBackend', [], $this->getMock(\Zend_Cache_Backend::class)],
-            ['getLowLevelFrontend', [], $this->getMock(\Zend_Cache_Core::class)],
+            ['getBackend', [], $this->getMock('Zend_Cache_Backend')],
+            ['getLowLevelFrontend', [], $this->getMock('Zend_Cache_Core')],
         ];
     }
 

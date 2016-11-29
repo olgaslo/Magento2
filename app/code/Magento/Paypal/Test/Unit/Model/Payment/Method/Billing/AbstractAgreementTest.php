@@ -15,10 +15,6 @@ use Magento\Quote\Api\Data\PaymentInterface;
 use Magento\Quote\Model\Quote;
 use Magento\Quote\Model\Quote\Payment;
 
-/**
- * Class AbstractAgreementTest
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
- */
 class AbstractAgreementTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -44,7 +40,7 @@ class AbstractAgreementTest extends \PHPUnit_Framework_TestCase
             ->setMethods(['dispatch'])
             ->getMockForAbstractClass();
 
-        $this->agreementFactory = $this->getMockBuilder(\Magento\Paypal\Model\Billing\AgreementFactory::class)
+        $this->agreementFactory = $this->getMockBuilder('Magento\Paypal\Model\Billing\AgreementFactory')
             ->disableOriginalConstructor()
             ->setMethods(['create'])
             ->getMock();

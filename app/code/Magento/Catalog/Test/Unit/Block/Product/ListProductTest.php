@@ -5,9 +5,6 @@
  */
 namespace Magento\Catalog\Test\Unit\Block\Product;
 
-/**
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
- */
 class ListProductTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -53,10 +50,10 @@ class ListProductTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
-        $this->registryMock = $this->getMock(\Magento\Framework\Registry::class, [], [], '', false);
-        $this->layerMock = $this->getMock(\Magento\Catalog\Model\Layer::class, [], [], '', false);
+        $this->registryMock = $this->getMock('Magento\Framework\Registry', [], [], '', false);
+        $this->layerMock = $this->getMock('Magento\Catalog\Model\Layer', [], [], '', false);
         /** @var \PHPUnit_Framework_MockObject_MockObject|\Magento\Catalog\Model\Layer\Resolver $layerResolver */
-        $layerResolver = $this->getMockBuilder(\Magento\Catalog\Model\Layer\Resolver::class)
+        $layerResolver = $this->getMockBuilder('\Magento\Catalog\Model\Layer\Resolver')
             ->disableOriginalConstructor()
             ->setMethods(['get', 'create'])
             ->getMock();
@@ -64,14 +61,14 @@ class ListProductTest extends \PHPUnit_Framework_TestCase
             ->method($this->anything())
             ->will($this->returnValue($this->layerMock));
         $this->postDataHelperMock = $this->getMock(
-            \Magento\Framework\Data\Helper\PostHelper::class,
+            'Magento\Framework\Data\Helper\PostHelper',
             [],
             [],
             '',
             false
         );
         $this->typeInstanceMock = $this->getMock(
-            \Magento\Catalog\Model\Product\Type\Simple::class,
+            'Magento\Catalog\Model\Product\Type\Simple',
             [],
             [],
             '',
@@ -79,24 +76,24 @@ class ListProductTest extends \PHPUnit_Framework_TestCase
             false
         );
         $this->productMock = $this->getMock(
-            \Magento\Catalog\Model\Product::class,
+            'Magento\Catalog\Model\Product',
             [],
             [],
             '',
             false
         );
         $this->cartHelperMock = $this->getMock(
-            \Magento\Checkout\Helper\Cart::class,
+            'Magento\Checkout\Helper\Cart',
             [],
             [],
             '',
             false
         );
 
-        $this->urlHelperMock = $this->getMockBuilder(\Magento\Framework\Url\Helper\Data::class)
+        $this->urlHelperMock = $this->getMockBuilder('Magento\Framework\Url\Helper\Data')
             ->disableOriginalConstructor()->getMock();
         $this->block = $objectManager->getObject(
-            \Magento\Catalog\Block\Product\ListProduct::class,
+            'Magento\Catalog\Block\Product\ListProduct',
             [
                 'registry' => $this->registryMock,
                 'layerResolver' => $layerResolver,
@@ -114,21 +111,18 @@ class ListProductTest extends \PHPUnit_Framework_TestCase
 
     public function testGetIdentities()
     {
-        $productTag = 'cat_p_1';
-        $categoryTag = 'cat_c_p_1';
+        $productTag = 'catalog_product_1';
+        $categoryTag = 'catalog_category_product_1';
 
         $this->productMock->expects($this->once())
             ->method('getIdentities')
             ->will($this->returnValue([$productTag]));
 
-        $itemsCollection = new \ReflectionProperty(
-            \Magento\Catalog\Block\Product\ListProduct::class,
-            '_productCollection'
-        );
+        $itemsCollection = new \ReflectionProperty('Magento\Catalog\Block\Product\ListProduct', '_productCollection');
         $itemsCollection->setAccessible(true);
         $itemsCollection->setValue($this->block, [$this->productMock]);
 
-        $currentCategory = $this->getMock(\Magento\Catalog\Model\Category::class, [], [], '', false);
+        $currentCategory = $this->getMock('Magento\Catalog\Model\Category', [], [], '', false);
         $currentCategory->expects($this->once())
             ->method('getId')
             ->will($this->returnValue('1'));
@@ -154,9 +148,9 @@ class ListProductTest extends \PHPUnit_Framework_TestCase
         ];
 
         $this->typeInstanceMock->expects($this->once())
-            ->method('isPossibleBuyFromList')
+            ->method('hasRequiredOptions')
             ->with($this->equalTo($this->productMock))
-            ->will($this->returnValue(true));
+            ->will($this->returnValue(false));
         $this->cartHelperMock->expects($this->any())
             ->method('getAddUrl')
             ->with($this->equalTo($this->productMock), $this->equalTo([]))

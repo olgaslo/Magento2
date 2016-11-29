@@ -39,7 +39,7 @@ class WeeeTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->weeeData = $this->getMockBuilder(\Magento\Weee\Helper\Data::class)
+        $this->weeeData = $this->getMockBuilder('\Magento\Weee\Helper\Data')
             ->setMethods(
                 [
                     'getRowWeeeTaxInclTax',
@@ -62,14 +62,14 @@ class WeeeTest extends \PHPUnit_Framework_TestCase
         $this->objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
         /** @var \Magento\Sales\Model\Order\Invoice\Total\Tax $model */
         $this->model = $this->objectManager->getObject(
-            \Magento\Weee\Model\Total\Creditmemo\Weee::class,
+            'Magento\Weee\Model\Total\Creditmemo\Weee',
             [
                 'weeeData' => $this->weeeData,
             ]
         );
 
         $this->order = $this->getMock(
-            \Magento\Sales\Model\Order::class,
+            '\Magento\Sales\Model\Order',
             [
                 '__wakeup'
             ],
@@ -79,7 +79,7 @@ class WeeeTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->creditmemo = $this->getMock(
-            \Magento\Sales\Model\Order\Creditmemo::class,
+            '\Magento\Sales\Model\Order\Creditmemo',
             [
                 'getAllItems',
                 'getInvoice',
@@ -500,7 +500,7 @@ class WeeeTest extends \PHPUnit_Framework_TestCase
     {
         /** @var \Magento\Sales\Model\Order\Item|\PHPUnit_Framework_MockObject_MockObject $orderItem */
         $orderItem = $this->getMock(
-            \Magento\Sales\Model\Order\Item::class,
+            '\Magento\Sales\Model\Order\Item',
             [
                 'isDummy',
                 '__wakeup'
@@ -556,7 +556,7 @@ class WeeeTest extends \PHPUnit_Framework_TestCase
 
         /** @var \Magento\Sales\Model\Order\Invoice\Item|\PHPUnit_Framework_MockObject_MockObject $invoiceItem */
         $invoiceItem = $this->getMock(
-            \Magento\Sales\Model\Order\Invoice\Item::class,
+            '\Magento\Sales\Model\Order\Invoice\Item',
             [
                 'getOrderItem',
                 'isLast',

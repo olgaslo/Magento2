@@ -24,9 +24,7 @@ class ImagesTest extends AbstractModifierTest
 
     public function testModifyData()
     {
-        $this->productMock->expects($this->once())->method('getId')->willReturn(2051);
-        $actualResult = $this->getModel()->modifyData($this->getSampleData());
-        $this->assertSame("", $actualResult[2051]['product']['media_gallery']['images'][0]['label']);
+        $this->assertSame($this->getSampleData(), $this->getModel()->modifyData($this->getSampleData()));
     }
 
     public function testModifyMeta()
@@ -41,25 +39,5 @@ class ImagesTest extends AbstractModifierTest
         ];
 
         $this->assertSame([], $this->getModel()->modifyMeta($meta));
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function getSampleData()
-    {
-        return [
-            2051 => [
-                'product' => [
-                    'media_gallery' => [
-                        'images' => [
-                            [
-                                'label' => null
-                            ]
-                        ]
-                    ]
-                ]
-            ]
-        ];
     }
 }

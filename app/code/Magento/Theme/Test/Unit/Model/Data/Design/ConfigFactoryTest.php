@@ -45,7 +45,7 @@ class ConfigFactoryTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->designConfigFactory = $this->getMock(
-            \Magento\Theme\Api\Data\DesignConfigInterfaceFactory::class,
+            'Magento\Theme\Api\Data\DesignConfigInterfaceFactory',
             ['create'],
             [],
             '',
@@ -53,13 +53,13 @@ class ConfigFactoryTest extends \PHPUnit_Framework_TestCase
             false
         );
         $this->metadataProvider = $this->getMockForAbstractClass(
-            \Magento\Theme\Model\Design\Config\MetadataProviderInterface::class,
+            'Magento\Theme\Model\Design\Config\MetadataProviderInterface',
             [],
             '',
             false
         );
         $this->designConfigDataFactory = $this->getMock(
-            \Magento\Theme\Api\Data\DesignConfigDataInterfaceFactory::class,
+            'Magento\Theme\Api\Data\DesignConfigDataInterfaceFactory',
             ['create'],
             [],
             '',
@@ -67,7 +67,7 @@ class ConfigFactoryTest extends \PHPUnit_Framework_TestCase
             false
         );
         $this->configExtensionFactory = $this->getMock(
-            \Magento\Theme\Api\Data\DesignConfigExtensionFactory::class,
+            'Magento\Theme\Api\Data\DesignConfigExtensionFactory',
             ['create'],
             [],
             '',
@@ -75,19 +75,19 @@ class ConfigFactoryTest extends \PHPUnit_Framework_TestCase
             false
         );
         $this->designConfig = $this->getMockForAbstractClass(
-            \Magento\Theme\Api\Data\DesignConfigInterface::class,
+            'Magento\Theme\Api\Data\DesignConfigInterface',
             [],
             '',
             false
         );
         $this->designConfigData = $this->getMockForAbstractClass(
-            \Magento\Theme\Api\Data\DesignConfigDataInterface::class,
+            'Magento\Theme\Api\Data\DesignConfigDataInterface',
             [],
             '',
             false
         );
         $this->designConfigExtension = $this->getMockForAbstractClass(
-            \Magento\Theme\Api\Data\DesignConfigExtension::class,
+            'Magento\Theme\Api\Data\DesignConfigExtension',
             [],
             '',
             false,
@@ -95,11 +95,11 @@ class ConfigFactoryTest extends \PHPUnit_Framework_TestCase
             true,
             ['setDesignConfigData']
         );
-        $this->scopeValidator = $this->getMockBuilder(\Magento\Framework\App\ScopeValidatorInterface::class)
+        $this->scopeValidator = $this->getMockBuilder('Magento\Framework\App\ScopeValidatorInterface')
             ->getMockForAbstractClass();
-        $this->storeManager = $this->getMockBuilder(\Magento\Store\Model\StoreManagerInterface::class)
+        $this->storeManager = $this->getMockBuilder('Magento\Store\Model\StoreManagerInterface')
             ->getMockForAbstractClass();
-        $this->website = $this->getMockBuilder(\Magento\Store\Api\Data\WebsiteInterface::class)
+        $this->website = $this->getMockBuilder('Magento\Store\Api\Data\WebsiteInterface')
             ->getMockForAbstractClass();
 
         $this->factory = new ConfigFactory(

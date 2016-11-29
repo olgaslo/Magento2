@@ -22,7 +22,7 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->sectionPool = $this->getMock(
-            \Magento\Framework\App\Config\ScopePool::class,
+            'Magento\Framework\App\Config\ScopePool',
             ['getScope', 'clean'],
             [],
             '',
@@ -128,6 +128,6 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
      */
     protected function getConfigDataMock($mockedMethod)
     {
-        return $this->getMock(\Magento\Framework\App\Config\Data::class, [$mockedMethod], [], '', false);
+        return $this->getMock('Magento\Framework\App\Config\Data', [$mockedMethod], [], '', false);
     }
 }

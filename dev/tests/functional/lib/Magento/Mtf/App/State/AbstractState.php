@@ -42,13 +42,13 @@ abstract class AbstractState implements StateInterface
     public function clearInstance()
     {
         $dirList = \Magento\Mtf\ObjectManagerFactory::getObjectManager()
-            ->get(\Magento\Framework\Filesystem\DirectoryList::class);
+            ->get('Magento\Framework\Filesystem\DirectoryList');
 
         $configFilePool = \Magento\Mtf\ObjectManagerFactory::getObjectManager()
-            ->get(\Magento\Framework\Config\File\ConfigFilePool::class);
+            ->get('\Magento\Framework\Config\File\ConfigFilePool');
 
         $driverPool = \Magento\Mtf\ObjectManagerFactory::getObjectManager()
-            ->get(\Magento\Framework\Filesystem\DriverPool::class);
+            ->get('\Magento\Framework\Filesystem\DriverPool');
 
         $reader = new Reader($dirList, $driverPool, $configFilePool);
         $deploymentConfig = new DeploymentConfig($reader);

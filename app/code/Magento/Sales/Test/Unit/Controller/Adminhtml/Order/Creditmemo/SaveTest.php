@@ -74,47 +74,46 @@ class SaveTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $helper = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
-        $this->_responseMock = $this->getMock(\Magento\Framework\App\Response\Http::class, [], [], '', false);
+        $this->_responseMock = $this->getMock('Magento\Framework\App\Response\Http', [], [], '', false);
         $this->_responseMock->headersSentThrowsException = false;
-        $this->_requestMock = $this->getMock(\Magento\Framework\App\Request\Http::class, [], [], '', false);
+        $this->_requestMock = $this->getMock('Magento\Framework\App\Request\Http', [], [], '', false);
         $objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
-        $constructArguments = $objectManager->getConstructArguments(\Magento\Backend\Model\Session::class,
+        $constructArguments = $objectManager->getConstructArguments(
+            'Magento\Backend\Model\Session',
             ['storage' => new \Magento\Framework\Session\Storage()]
         );
         $this->_sessionMock = $this->getMock(
-            \Magento\Backend\Model\Session::class,
+            'Magento\Backend\Model\Session',
             ['setFormData'],
             $constructArguments
         );
-        $this->resultForwardFactoryMock = $this->getMockBuilder(
-            \Magento\Backend\Model\View\Result\ForwardFactory::class)
+        $this->resultForwardFactoryMock = $this->getMockBuilder('Magento\Backend\Model\View\Result\ForwardFactory')
             ->disableOriginalConstructor()
             ->setMethods(['create'])
             ->getMock();
-        $this->resultForwardMock = $this->getMockBuilder(\Magento\Backend\Model\View\Result\Forward::class)
+        $this->resultForwardMock = $this->getMockBuilder('Magento\Backend\Model\View\Result\Forward')
             ->disableOriginalConstructor()
             ->getMock();
-        $this->resultRedirectFactoryMock = $this->getMockBuilder(
-            \Magento\Backend\Model\View\Result\RedirectFactory::class)
+        $this->resultRedirectFactoryMock = $this->getMockBuilder('Magento\Backend\Model\View\Result\RedirectFactory')
             ->disableOriginalConstructor()
             ->setMethods(['create'])
             ->getMock();
-        $this->resultRedirectMock = $this->getMockBuilder(\Magento\Backend\Model\View\Result\Redirect::class)
+        $this->resultRedirectMock = $this->getMockBuilder('Magento\Backend\Model\View\Result\Redirect')
             ->disableOriginalConstructor()
             ->getMock();
-        $this->_objectManager = $this->getMock(\Magento\Framework\ObjectManagerInterface::class);
-        $registryMock = $this->getMock(\Magento\Framework\Registry::class, [], [], '', false, false);
+        $this->_objectManager = $this->getMock('Magento\Framework\ObjectManagerInterface');
+        $registryMock = $this->getMock('Magento\Framework\Registry', [], [], '', false, false);
         $this->_objectManager->expects(
             $this->any()
         )->method(
             'get'
         )->with(
-            $this->equalTo(\Magento\Framework\Registry::class)
+            $this->equalTo('Magento\Framework\Registry')
         )->will(
             $this->returnValue($registryMock)
         );
         $this->_messageManager = $this->getMock(
-            \Magento\Framework\Message\ManagerInterface::class,
+            '\Magento\Framework\Message\ManagerInterface',
             [],
             [],
             '',
@@ -130,13 +129,13 @@ class SaveTest extends \PHPUnit_Framework_TestCase
             'resultRedirectFactory' => $this->resultRedirectFactoryMock
         ];
 
-        $context = $helper->getObject(\Magento\Backend\App\Action\Context::class, $arguments);
+        $context = $helper->getObject('Magento\Backend\App\Action\Context', $arguments);
 
         $this->memoLoaderMock = $this->getMock(
-            \Magento\Sales\Controller\Adminhtml\Order\CreditmemoLoader::class, [], [], '', false
+            '\Magento\Sales\Controller\Adminhtml\Order\CreditmemoLoader', [], [], '', false
         );
         $this->_controller = $helper->getObject(
-            \Magento\Sales\Controller\Adminhtml\Order\Creditmemo\Save::class,
+            'Magento\Sales\Controller\Adminhtml\Order\Creditmemo\Save',
             [
                 'context' => $context,
                 'creditmemoLoader' => $this->memoLoaderMock,
@@ -162,7 +161,7 @@ class SaveTest extends \PHPUnit_Framework_TestCase
         $this->_requestMock->expects($this->any())->method('getParam')->will($this->returnValue(null));
 
         $creditmemoMock = $this->getMock(
-            \Magento\Sales\Model\Order\Creditmemo::class,
+            'Magento\Sales\Model\Order\Creditmemo',
             ['load', 'getGrandTotal', '__wakeup'],
             [],
             '',
@@ -190,7 +189,7 @@ class SaveTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->assertInstanceOf(
-             \Magento\Backend\Model\View\Result\Redirect::class,
+            'Magento\Backend\Model\View\Result\Redirect',
             $this->_controller->execute()
         );
     }
@@ -213,7 +212,7 @@ class SaveTest extends \PHPUnit_Framework_TestCase
         $this->_requestMock->expects($this->any())->method('getParam')->will($this->returnValue(null));
 
         $creditmemoMock = $this->getMock(
-            \Magento\Sales\Model\Order\Creditmemo::class,
+            'Magento\Sales\Model\Order\Creditmemo',
             ['load', 'getGrandTotal', 'getAllowZeroGrandTotal', '__wakeup'],
             [],
             '',

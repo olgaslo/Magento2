@@ -38,28 +38,28 @@ class GetShippingItemsGridTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->requestMock = $this->getMock(
-            \Magento\Framework\App\Request\Http::class,
+            'Magento\Framework\App\Request\Http',
             ['getParam', '__wakeup'],
             [],
             '',
             false
         );
         $this->shipmentLoaderMock = $this->getMock(
-            \Magento\Shipping\Controller\Adminhtml\Order\ShipmentLoader::class,
+            'Magento\Shipping\Controller\Adminhtml\Order\ShipmentLoader',
             ['setOrderId', 'setShipmentId', 'setShipment', 'setTracking', 'load', '__wakeup'],
             [],
             '',
             false
         );
         $this->viewMock = $this->getMock(
-            \Magento\Framework\App\View::class,
+            'Magento\Framework\App\View',
             ['getLayout', 'renderLayout', '__wakeup'],
             [],
             '',
             false
         );
         $this->responseMock = $this->getMock(
-            \Magento\Framework\App\Response\Http::class,
+            'Magento\Framework\App\Response\Http',
             ['setBody', '__wakeup'],
             [],
             '',
@@ -67,7 +67,7 @@ class GetShippingItemsGridTest extends \PHPUnit_Framework_TestCase
         );
 
         $contextMock = $this->getMock(
-            \Magento\Backend\App\Action\Context::class,
+            'Magento\Backend\App\Action\Context',
             ['getRequest', 'getResponse', 'getView', '__wakeup'],
             [],
             '',
@@ -96,14 +96,14 @@ class GetShippingItemsGridTest extends \PHPUnit_Framework_TestCase
         $result = 'result-html';
 
         $layoutMock = $this->getMock(
-            \Magento\Framework\View\Layout::class,
+            'Magento\Framework\View\Layout',
             ['createBlock'],
             [],
             '',
             false
         );
         $gridMock = $this->getMock(
-            \Magento\Shipping\Block\Adminhtml\Order\Packaging\Grid::class,
+            'Magento\Shipping\Block\Adminhtml\Order\Packaging\Grid',
             ['setIndex', 'toHtml'],
             [],
             '',
@@ -133,7 +133,7 @@ class GetShippingItemsGridTest extends \PHPUnit_Framework_TestCase
         $this->shipmentLoaderMock->expects($this->once())->method('load');
         $layoutMock->expects($this->once())
             ->method('createBlock')
-            ->with(\Magento\Shipping\Block\Adminhtml\Order\Packaging\Grid::class)
+            ->with('Magento\Shipping\Block\Adminhtml\Order\Packaging\Grid')
             ->will($this->returnValue($gridMock));
         $this->viewMock->expects($this->once())
             ->method('getLayout')

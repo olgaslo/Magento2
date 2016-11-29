@@ -16,27 +16,27 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
         $indexerIdSecond = 'second_indexer_id';
 
         $entityFactory = $this->getMockBuilder(
-            \Magento\Framework\Data\Collection\EntityFactoryInterface::class
+            'Magento\Framework\Data\Collection\EntityFactoryInterface'
         )->disableOriginalConstructor()->setMethods(
             ['create']
         )->getMock();
 
-        $config = $this->getMockBuilder(\Magento\Framework\Mview\ConfigInterface::class)->getMock();
+        $config = $this->getMockBuilder('Magento\Framework\Mview\ConfigInterface')->getMock();
 
         $statesFactory = $this->getMockBuilder(
-            \Magento\Framework\Mview\View\State\CollectionFactory::class
+            'Magento\Framework\Mview\View\State\CollectionFactory'
         )->disableOriginalConstructor()->setMethods(
             ['create']
         )->getMock();
 
         $states = $this->getMockBuilder(
-            \Magento\Framework\Mview\View\State\Collection::class
+            'Magento\Framework\Mview\View\State\Collection'
         )->setMethods(
             ['getItems']
         )->disableOriginalConstructor()->getMock();
 
         $state = $this->getMockForAbstractClass(
-            \Magento\Framework\Mview\View\StateInterface::class, [], '', false, false, true,
+            'Magento\Framework\Mview\View\StateInterface', [], '', false, false, true,
             ['getViewId', 'getMode', '__wakeup']
         );
 
@@ -51,7 +51,7 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
         );
 
         $view = $this->getMockForAbstractClass(
-            \Magento\Framework\Mview\ViewInterface::class, [], '', false, false, true,
+            'Magento\Framework\Mview\ViewInterface', [], '', false, false, true,
             ['load', 'setState', 'getState', '__wakeup']
         );
 
@@ -64,7 +64,7 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
         )->method(
             'create'
         )->with(
-            \Magento\Framework\Mview\ViewInterface::class
+            'Magento\Framework\Mview\ViewInterface'
         )->will(
             $this->returnValue($view)
         );
@@ -82,12 +82,12 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
         $states->expects($this->any())->method('getItems')->will($this->returnValue([$state]));
 
         $collection = new \Magento\Framework\Mview\View\Collection($entityFactory, $config, $statesFactory);
-        $this->assertInstanceOf(\Magento\Framework\Mview\View\Collection::class, $collection->loadData());
+        $this->assertInstanceOf('Magento\Framework\Mview\View\Collection', $collection->loadData());
 
         $views = $collection->getViewsByStateMode(\Magento\Framework\Mview\View\StateInterface::MODE_DISABLED);
         $this->assertCount(2, $views);
-        $this->assertInstanceOf(\Magento\Framework\Mview\ViewInterface::class, $views[0]);
-        $this->assertInstanceOf(\Magento\Framework\Mview\ViewInterface::class, $views[1]);
+        $this->assertInstanceOf('Magento\Framework\Mview\ViewInterface', $views[0]);
+        $this->assertInstanceOf('Magento\Framework\Mview\ViewInterface', $views[1]);
 
         $views = $collection->getViewsByStateMode(\Magento\Framework\Mview\View\StateInterface::MODE_ENABLED);
         $this->assertCount(0, $views);

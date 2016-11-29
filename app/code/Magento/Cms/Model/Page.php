@@ -39,12 +39,12 @@ class Page extends AbstractModel implements PageInterface, IdentityInterface
     /**
      * CMS page cache tag
      */
-    const CACHE_TAG = 'cms_p';
+    const CACHE_TAG = 'cms_page';
 
     /**
      * @var string
      */
-    protected $_cacheTag = self::CACHE_TAG;
+    protected $_cacheTag = 'cms_page';
 
     /**
      * Prefix of model events names
@@ -65,7 +65,7 @@ class Page extends AbstractModel implements PageInterface, IdentityInterface
      */
     protected function _construct()
     {
-        $this->_init(\Magento\Cms\Model\ResourceModel\Page::class);
+        $this->_init('Magento\Cms\Model\ResourceModel\Page');
     }
 
     /**

@@ -49,9 +49,9 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         /** @var $this->_themeMock \Magento\Theme\Model\Theme */
-        $this->_themeMock = $this->getMock(\Magento\Theme\Model\Theme::class, [], [], '', false);
+        $this->_themeMock = $this->getMock('Magento\Theme\Model\Theme', [], [], '', false);
         $this->_storeManagerMock = $this->getMockForAbstractClass(
-            \Magento\Store\Model\StoreManagerInterface::class,
+            'Magento\Store\Model\StoreManagerInterface',
             [],
             '',
             true,
@@ -60,17 +60,17 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
             ['getStores', 'isSingleStoreMode']
         );
         $this->_configData = $this->getMock(
-            \Magento\Framework\App\Config\Value::class,
+            'Magento\Framework\App\Config\Value',
             ['getCollection', 'addFieldToFilter', '__wakeup'],
             [],
             '',
             false
         );
-        $this->_configCacheMock = $this->getMockForAbstractClass(\Magento\Framework\Cache\FrontendInterface::class);
-        $this->_layoutCacheMock = $this->getMockForAbstractClass(\Magento\Framework\Cache\FrontendInterface::class);
+        $this->_configCacheMock = $this->getMockForAbstractClass('Magento\Framework\Cache\FrontendInterface');
+        $this->_layoutCacheMock = $this->getMockForAbstractClass('Magento\Framework\Cache\FrontendInterface');
 
         $this->_scopeConfigWriter = $this->getMock(
-            \Magento\Framework\App\Config\Storage\WriterInterface::class,
+            'Magento\Framework\App\Config\Storage\WriterInterface',
             ['save', 'delete']
         );
 
@@ -78,7 +78,7 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
             $this->_configData,
             $this->_scopeConfigWriter,
             $this->_storeManagerMock,
-            $this->getMock(\Magento\Framework\Event\ManagerInterface::class, [], [], '', false),
+            $this->getMock('Magento\Framework\Event\ManagerInterface', [], [], '', false),
             $this->_configCacheMock,
             $this->_layoutCacheMock
         );

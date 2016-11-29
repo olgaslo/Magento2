@@ -31,7 +31,7 @@ class PageTest extends \PHPUnit_Framework_TestCase
     {
         $helper = new ObjectManager($this);
         $this->model = $helper->getObject(
-            \Magento\Catalog\Model\Category\Attribute\Source\Page::class,
+            '\Magento\Catalog\Model\Category\Attribute\Source\Page',
             [
                 'blockCollectionFactory' => $this->getMockedBlockCollectionFactory()
             ]
@@ -45,7 +45,7 @@ class PageTest extends \PHPUnit_Framework_TestCase
     {
         $mockedCollection = $this->getMockedCollection();
 
-        $mockBuilder = $this->getMockBuilder(\Magento\Cms\Model\ResourceModel\Block\CollectionFactory::class);
+        $mockBuilder = $this->getMockBuilder('Magento\Cms\Model\ResourceModel\Block\CollectionFactory');
         $mock = $mockBuilder->setMethods(['create'])
             ->disableOriginalConstructor()
             ->getMock();
@@ -62,7 +62,7 @@ class PageTest extends \PHPUnit_Framework_TestCase
      */
     private function getMockedCollection()
     {
-        $mockBuilder = $this->getMockBuilder(\Magento\Framework\Data\Collection::class);
+        $mockBuilder = $this->getMockBuilder('\Magento\Framework\Data\Collection');
         $mock = $mockBuilder->disableOriginalConstructor()
             ->getMock();
 

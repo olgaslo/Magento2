@@ -24,11 +24,11 @@ class TransactionTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->contextMock = $this->getMockBuilder(\Magento\Framework\Model\Context::class)
+        $this->contextMock = $this->getMockBuilder('\Magento\Framework\Model\Context')
             ->setMethods(['getEventDispatcher'])
             ->disableOriginalConstructor()
             ->getMock();
-        $this->eventManagerMock = $this->getMockBuilder(\Magento\Framework\Event\ManagerInterface::class)
+        $this->eventManagerMock = $this->getMockBuilder('\Magento\Framework\Event\ManagerInterface')
             ->setMethods(['dispatch'])
             ->getMockForAbstractClass();
 
@@ -38,7 +38,7 @@ class TransactionTest extends \PHPUnit_Framework_TestCase
 
         $this->objectManagerHelper = new ObjectManagerHelper($this);
         $this->transaction = $this->objectManagerHelper->getObject(
-            \Magento\Sales\Model\Order\Payment\Transaction::class,
+            '\Magento\Sales\Model\Order\Payment\Transaction',
             [
                 'context' => $this->contextMock
             ]
@@ -52,6 +52,7 @@ class TransactionTest extends \PHPUnit_Framework_TestCase
 
         $this->transaction->setData('html_txn_id', 'test');
 
+
         $this->assertEquals('test', $this->transaction->getHtmlTxnId());
     }
 
@@ -61,6 +62,7 @@ class TransactionTest extends \PHPUnit_Framework_TestCase
             ->method('dispatch');
 
         $this->transaction->setData('txn_id', 'test');
+
 
         $this->assertEquals('test', $this->transaction->getHtmlTxnId());
         $this->assertEquals(null, $this->transaction->getData('html_txn_id'));

@@ -39,17 +39,17 @@ class AggregateTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->_fileList = $this->getMock(\Magento\Framework\View\File\FileList::class, [], [], '', false);
-        $this->_baseFiles = $this->getMockForAbstractClass(\Magento\Framework\View\File\CollectorInterface::class);
-        $this->_themeFiles = $this->getMockForAbstractClass(\Magento\Framework\View\File\CollectorInterface::class);
+        $this->_fileList = $this->getMock('Magento\Framework\View\File\FileList', [], [], '', false);
+        $this->_baseFiles = $this->getMockForAbstractClass('Magento\Framework\View\File\CollectorInterface');
+        $this->_themeFiles = $this->getMockForAbstractClass('Magento\Framework\View\File\CollectorInterface');
         $this->_overridingBaseFiles = $this->getMockForAbstractClass(
-            \Magento\Framework\View\File\CollectorInterface::class
+            'Magento\Framework\View\File\CollectorInterface'
         );
         $this->_overridingThemeFiles = $this->getMockForAbstractClass(
-            \Magento\Framework\View\File\CollectorInterface::class
+            'Magento\Framework\View\File\CollectorInterface'
         );
         $fileListFactory = $this->getMock(
-            \Magento\Framework\View\File\FileList\Factory::class,
+            'Magento\Framework\View\File\FileList\Factory',
             [],
             [],
             '',
@@ -71,8 +71,8 @@ class AggregateTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetFiles()
     {
-        $parentTheme = $this->getMockForAbstractClass(\Magento\Framework\View\Design\ThemeInterface::class);
-        $theme = $this->getMockForAbstractClass(\Magento\Framework\View\Design\ThemeInterface::class);
+        $parentTheme = $this->getMockForAbstractClass('Magento\Framework\View\Design\ThemeInterface');
+        $theme = $this->getMockForAbstractClass('Magento\Framework\View\Design\ThemeInterface');
         $theme->expects(
             $this->once()
         )->method(

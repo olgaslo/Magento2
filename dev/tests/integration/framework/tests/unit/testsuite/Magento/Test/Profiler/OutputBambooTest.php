@@ -18,7 +18,7 @@ class OutputBambooTest extends \PHPUnit_Framework_TestCase
 
     public static function setUpBeforeClass()
     {
-        stream_filter_register('dataCollectorFilter', \Magento\Test\Profiler\OutputBambooTestFilter::class);
+        stream_filter_register('dataCollectorFilter', 'Magento\Test\Profiler\OutputBambooTestFilter');
     }
 
     /**

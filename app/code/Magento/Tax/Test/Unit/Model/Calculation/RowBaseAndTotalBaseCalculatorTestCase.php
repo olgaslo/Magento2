@@ -12,9 +12,6 @@ use Magento\Tax\Model\Calculation\RowbaseCalculator;
 use Magento\Tax\Model\Calculation\TotalBaseCalculator;
 use Magento\Framework\TestFramework\Unit\Helper\ObjectManager;
 
-/**
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
- */
 class RowBaseAndTotalBaseCalculatorTestCase extends \PHPUnit_Framework_TestCase
 {
     const STORE_ID = 2300;
@@ -85,31 +82,31 @@ class RowBaseAndTotalBaseCalculatorTestCase extends \PHPUnit_Framework_TestCase
     {
         $this->objectManager = new ObjectManager($this);
         $this->taxItemDetailsDataObjectFactory = $this->getMock(
-            \Magento\Tax\Api\Data\TaxDetailsItemInterfaceFactory::class,
+            'Magento\Tax\Api\Data\TaxDetailsItemInterfaceFactory',
             ['create'],
             [],
             '',
             false
         );
-        $this->taxDetailsItem = $this->objectManager->getObject(\Magento\Tax\Model\TaxDetails\ItemDetails::class);
+        $this->taxDetailsItem = $this->objectManager->getObject('Magento\Tax\Model\TaxDetails\ItemDetails');
         $this->taxItemDetailsDataObjectFactory->expects($this->any())
             ->method('create')
             ->willReturn($this->taxDetailsItem);
 
-        $this->mockCalculationTool = $this->getMockBuilder(\Magento\Tax\Model\Calculation::class)
+        $this->mockCalculationTool = $this->getMockBuilder('\Magento\Tax\Model\Calculation')
             ->disableOriginalConstructor()
             ->setMethods(
                 ['__wakeup', 'round', 'getRate', 'getStoreRate', 'getRateRequest', 'getAppliedRates']
             )
             ->getMock();
-        $this->mockConfig = $this->getMockBuilder(\Magento\Tax\Model\Config::class)
+        $this->mockConfig = $this->getMockBuilder('\Magento\Tax\Model\Config')
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->mockItem = $this->getMockBuilder(\Magento\Tax\Api\Data\QuoteDetailsItemInterface::class)->getMock();
+        $this->mockItem = $this->getMockBuilder('Magento\Tax\Api\Data\QuoteDetailsItemInterface')->getMock();
 
         $this->appliedTaxDataObjectFactory = $this->getMock(
-            \Magento\Tax\Api\Data\AppliedTaxInterfaceFactory::class,
+            'Magento\Tax\Api\Data\AppliedTaxInterfaceFactory',
             ['create'],
             [],
             '',
@@ -117,17 +114,17 @@ class RowBaseAndTotalBaseCalculatorTestCase extends \PHPUnit_Framework_TestCase
         );
 
         $this->appliedTaxRateDataObjectFactory = $this->getMock(
-            \Magento\Tax\Api\Data\AppliedTaxRateInterfaceFactory::class,
+            'Magento\Tax\Api\Data\AppliedTaxRateInterfaceFactory',
             ['create'],
             [],
             '',
             false
         );
-        $this->appliedTaxRate = $this->objectManager->getObject(\Magento\Tax\Model\TaxDetails\AppliedTaxRate::class);
+        $this->appliedTaxRate = $this->objectManager->getObject('Magento\Tax\Model\TaxDetails\AppliedTaxRate');
         $this->appliedTaxRateDataObjectFactory->expects($this->any())
             ->method('create')
             ->willReturn($this->appliedTaxRate);
-        $this->mockAppliedTax = $this->getMockBuilder(\Magento\Tax\Api\Data\AppliedTaxInterface::class)->getMock();
+        $this->mockAppliedTax = $this->getMockBuilder('Magento\Tax\Api\Data\AppliedTaxInterface')->getMock();
 
         $this->mockAppliedTax->expects($this->any())->method('getTaxRateKey')->will($this->returnValue('taxKey'));
         $this->addressRateRequest = new \Magento\Framework\DataObject();

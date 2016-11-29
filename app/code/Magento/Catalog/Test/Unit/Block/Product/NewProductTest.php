@@ -15,7 +15,7 @@ class NewProductTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
-        $this->block = $objectManager->getObject(\Magento\Catalog\Block\Product\NewProduct::class);
+        $this->block = $objectManager->getObject('Magento\Catalog\Block\Product\NewProduct');
     }
 
     protected function tearDown()

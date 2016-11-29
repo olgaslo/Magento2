@@ -28,7 +28,7 @@ $quote->collectTotals()->save();
 
 /** @var \Magento\Quote\Model\QuoteIdMask $quoteIdMask */
 $quoteIdMask = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()
-    ->create(\Magento\Quote\Model\QuoteIdMaskFactory::class)
+    ->create('Magento\Quote\Model\QuoteIdMaskFactory')
     ->create();
 $quoteIdMask->setQuoteId($quote->getId());
 $quoteIdMask->setDataChanges(true);

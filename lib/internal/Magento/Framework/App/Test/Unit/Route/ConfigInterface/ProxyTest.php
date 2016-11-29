@@ -21,22 +21,22 @@ class ProxyTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->_object = $this->getMock(
-            \Magento\Framework\App\Route\ConfigInterface::class,
+            '\Magento\Framework\App\Route\ConfigInterface',
             ['getRouteFrontName', 'getRouteByFrontName', 'getModulesByFrontName'],
             [],
             '',
             false
         );
 
-        $objectManager = $this->getMock(\Magento\Framework\ObjectManager\ObjectManager::class, ['get'], [], '', false);
+        $objectManager = $this->getMock('\Magento\Framework\ObjectManager\ObjectManager', ['get'], [], '', false);
         $objectManager->expects($this->once())
             ->method('get')
-            ->with(\Magento\Framework\App\Route\ConfigInterface::class)
+            ->with('Magento\Framework\App\Route\ConfigInterface')
             ->will($this->returnValue($this->_object));
 
         $this->_proxy = new \Magento\Framework\App\Route\ConfigInterface\Proxy(
             $objectManager,
-            \Magento\Framework\App\Route\ConfigInterface::class
+            'Magento\Framework\App\Route\ConfigInterface'
         );
     }
 

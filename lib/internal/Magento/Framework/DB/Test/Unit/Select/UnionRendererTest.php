@@ -12,10 +12,10 @@ class UnionRendererTest extends \PHPUnit_Framework_TestCase
     public function testRender()
     {
         $model = new \Magento\Framework\DB\Select\UnionRenderer();
-        $select = $this->getMockBuilder(\Magento\Framework\DB\Select::class)
+        $select = $this->getMockBuilder('Magento\Framework\DB\Select')
             ->disableOriginalConstructor()
             ->getMock();
-        $selectPart = $this->getMockBuilder(\Magento\Framework\DB\Select::class)
+        $selectPart = $this->getMockBuilder('Magento\Framework\DB\Select')
             ->disableOriginalConstructor()
             ->getMock();
         $selectPart->expects($this->exactly(2))

@@ -80,7 +80,7 @@ class SaveRole extends \Magento\User\Controller\Adminhtml\User\Role
 
         $isAll = $this->getRequest()->getParam('all');
         if ($isAll) {
-            $resource = [$this->_objectManager->get(\Magento\Framework\Acl\RootResource::class)->getId()];
+            $resource = [$this->_objectManager->get('Magento\Framework\Acl\RootResource')->getId()];
         }
 
         $role = $this->_initRole('role_id');

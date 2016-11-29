@@ -45,7 +45,7 @@ class Form extends \Magento\Sales\Block\Adminhtml\Order\AbstractOrder
      */
     protected function _prepareLayout()
     {
-        $this->addChild('items', \Magento\Shipping\Block\Adminhtml\Create\Items::class);
+        $this->addChild('items', 'Magento\Shipping\Block\Adminhtml\Create\Items');
         return parent::_prepareLayout();
     }
 

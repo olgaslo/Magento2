@@ -57,38 +57,38 @@ class StoreCookieTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->storeManagerMock = $this->getMockBuilder(\Magento\Store\Model\StoreManagerInterface::class)
+        $this->storeManagerMock = $this->getMockBuilder('Magento\Store\Model\StoreManagerInterface')
             ->disableOriginalConstructor()
             ->setMethods([])
             ->getMock();
 
-        $this->storeCookieManagerMock = $this->getMockBuilder(\Magento\Store\Api\StoreCookieManagerInterface::class)
+        $this->storeCookieManagerMock = $this->getMockBuilder('Magento\Store\Api\StoreCookieManagerInterface')
             ->disableOriginalConstructor()
             ->setMethods([])
             ->getMock();
 
-        $this->storeMock = $this->getMockBuilder(\Magento\Store\Model\Store::class)
+        $this->storeMock = $this->getMockBuilder('Magento\Store\Model\Store')
             ->disableOriginalConstructor()
             ->setMethods([])
             ->getMock();
 
-        $this->subjectMock = $this->getMockBuilder(\Magento\Framework\App\FrontController::class)
+        $this->subjectMock = $this->getMockBuilder('Magento\Framework\App\FrontController')
             ->disableOriginalConstructor()
             ->setMethods([])
             ->getMock();
 
-        $this->requestMock = $this->getMockBuilder(\Magento\Framework\App\RequestInterface::class)
+        $this->requestMock = $this->getMockBuilder('Magento\Framework\App\RequestInterface')
             ->disableOriginalConstructor()
             ->setMethods([])
             ->getMock();
 
-        $this->storeRepositoryMock = $this->getMockBuilder(\Magento\Store\Api\StoreRepositoryInterface::class)
+        $this->storeRepositoryMock = $this->getMockBuilder('Magento\Store\Api\StoreRepositoryInterface')
             ->disableOriginalConstructor()
             ->setMethods([])
             ->getMock();
 
         $this->plugin = (new ObjectManager($this))->getObject(
-            \Magento\Store\Model\Plugin\StoreCookie::class,
+            'Magento\Store\Model\Plugin\StoreCookie',
             [
                 'storeManager' => $this->storeManagerMock,
                 'storeCookieManager' => $this->storeCookieManagerMock,

@@ -18,7 +18,7 @@ class ItemTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $resourceMock = $this->getMock(
-            \Magento\Framework\Model\ResourceModel\AbstractResource::class,
+            'Magento\Framework\Model\ResourceModel\AbstractResource',
             ['_construct', 'getConnection', 'getIdFieldName'],
             [],
             '',
@@ -26,11 +26,11 @@ class ItemTest extends \PHPUnit_Framework_TestCase
         );
         $objectHelper = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
 
-        $groupManagement = $this->getMockBuilder(\Magento\Customer\Api\GroupManagementInterface::class)
+        $groupManagement = $this->getMockBuilder('Magento\Customer\Api\GroupManagementInterface')
             ->setMethods(['getAllCustomersGroup'])
             ->getMockForAbstractClass();
 
-        $allGroup = $this->getMockBuilder(\Magento\Customer\Api\Data\GroupInterface::class)
+        $allGroup = $this->getMockBuilder('Magento\Customer\Api\Data\GroupInterface')
             ->setMethods(['getId'])
             ->getMockForAbstractClass();
 
@@ -43,7 +43,7 @@ class ItemTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue($allGroup));
 
         $this->_model = $objectHelper->getObject(
-            \Magento\CatalogInventory\Model\Adminhtml\Stock\Item::class,
+            '\Magento\CatalogInventory\Model\Adminhtml\Stock\Item',
             [
                 'resource' => $resourceMock,
                 'groupManagement' => $groupManagement
@@ -62,6 +62,6 @@ class ItemTest extends \PHPUnit_Framework_TestCase
     public function testGetIdentities()
     {
         $this->_model->setProductId(1);
-        $this->assertEquals(['cat_p_1'], $this->_model->getIdentities());
+        $this->assertEquals(['catalog_product_1'], $this->_model->getIdentities());
     }
 }

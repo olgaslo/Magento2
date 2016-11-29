@@ -71,7 +71,7 @@ class BackupCommand extends AbstractSetupCommand
     ) {
         $this->objectManager = $objectManagerProvider->get();
         $this->maintenanceMode = $maintenanceMode;
-        $this->backupRollbackFactory = $this->objectManager->get(\Magento\Framework\Setup\BackupRollbackFactory::class);
+        $this->backupRollbackFactory = $this->objectManager->get('Magento\Framework\Setup\BackupRollbackFactory');
         $this->deploymentConfig = $deploymentConfig;
         parent::__construct();
     }
@@ -162,10 +162,10 @@ class BackupCommand extends AbstractSetupCommand
     {
         $areaCode = 'adminhtml';
         /** @var \Magento\Framework\App\State $appState */
-        $appState = $this->objectManager->get(\Magento\Framework\App\State::class);
+        $appState = $this->objectManager->get('Magento\Framework\App\State');
         $appState->setAreaCode($areaCode);
         /** @var \Magento\Framework\ObjectManager\ConfigLoaderInterface $configLoader */
-        $configLoader = $this->objectManager->get(\Magento\Framework\ObjectManager\ConfigLoaderInterface::class);
+        $configLoader = $this->objectManager->get('Magento\Framework\ObjectManager\ConfigLoaderInterface');
         $this->objectManager->configure($configLoader->load($areaCode));
     }
 }

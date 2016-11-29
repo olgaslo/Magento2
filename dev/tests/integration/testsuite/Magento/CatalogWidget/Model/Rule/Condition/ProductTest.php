@@ -22,10 +22,8 @@ class ProductTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->objectManager = \Magento\TestFramework\Helper\Bootstrap::getObjectManager();
-        $rule = $this->objectManager->create(\Magento\CatalogWidget\Model\Rule::class);
-        $this->conditionProduct = $this->objectManager->create(
-            \Magento\CatalogWidget\Model\Rule\Condition\Product::class
-        );
+        $rule = $this->objectManager->create('Magento\CatalogWidget\Model\Rule');
+        $this->conditionProduct = $this->objectManager->create('Magento\CatalogWidget\Model\Rule\Condition\Product');
         $this->conditionProduct->setRule($rule);
     }
 
@@ -44,7 +42,7 @@ class ProductTest extends \PHPUnit_Framework_TestCase
 
     public function testAddGlobalAttributeToCollection()
     {
-        $collection = $this->objectManager->create(\Magento\Catalog\Model\ResourceModel\Product\Collection::class);
+        $collection = $this->objectManager->create('Magento\Catalog\Model\ResourceModel\Product\Collection');
         $this->conditionProduct->setAttribute('special_price');
         $this->conditionProduct->addToCollection($collection);
         $collectedAttributes = $this->conditionProduct->getRule()->getCollectedAttributes();
@@ -56,7 +54,7 @@ class ProductTest extends \PHPUnit_Framework_TestCase
 
     public function testAddNonGlobalAttributeToCollectionNoProducts()
     {
-        $collection = $this->objectManager->create(\Magento\Catalog\Model\ResourceModel\Product\Collection::class);
+        $collection = $this->objectManager->create('Magento\Catalog\Model\ResourceModel\Product\Collection');
         $this->conditionProduct->setAttribute('visibility');
         $this->conditionProduct->setOperator('()');
         $this->conditionProduct->setValue('4');
@@ -75,7 +73,7 @@ class ProductTest extends \PHPUnit_Framework_TestCase
      */
     public function testAddNonGlobalAttributeToCollection()
     {
-        $collection = $this->objectManager->create(\Magento\Catalog\Model\ResourceModel\Product\Collection::class);
+        $collection = $this->objectManager->create('Magento\Catalog\Model\ResourceModel\Product\Collection');
         $this->conditionProduct->setAttribute('visibility');
         $this->conditionProduct->setOperator('()');
         $this->conditionProduct->setValue('4');

@@ -21,26 +21,26 @@ class ConditionsTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $objectManagerHelper = new ObjectManagerHelper($this);
-        $this->conditions = $objectManagerHelper->getObject(\Magento\Widget\Helper\Conditions::class);
+        $this->conditions = $objectManagerHelper->getObject('Magento\Widget\Helper\Conditions');
     }
 
     public function testEncodeDecode()
     {
         $value = [
             '1' => [
-                "type" => \Magento\CatalogWidget\Model\Rule\Condition\Combine::class,
+                "type" => "Magento\\CatalogWidget\\Model\\Rule\\Condition\\Combine",
                 "aggregator" => "all",
                 "value" => "1",
                 "new_child" => "",
             ],
             '1--1' => [
-                "type" => \Magento\CatalogWidget\Model\Rule\Condition\Product::class,
+                "type" => "Magento\\CatalogWidget\\Model\\Rule\\Condition\\Product",
                 "attribute" => "attribute_set_id",
                 "value" => "4",
                 "operator" => "==",
             ],
             '1--2' => [
-                "type" => \Magento\CatalogWidget\Model\Rule\Condition\Product::class,
+                "type" => "Magento\\CatalogWidget\\Model\\Rule\\Condition\\Product",
                 "attribute" => "category_ids",
                 "value" => "2",
                 "operator" => "==",

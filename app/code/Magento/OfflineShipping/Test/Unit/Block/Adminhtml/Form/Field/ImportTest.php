@@ -26,7 +26,7 @@ class ImportTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->_formMock = $this->getMock(
-            \Magento\Framework\Data\Form::class,
+            'Magento\Framework\Data\Form',
             ['getFieldNameSuffix', 'addSuffixToName'],
             [],
             '',
@@ -36,7 +36,7 @@ class ImportTest extends \PHPUnit_Framework_TestCase
         $testData = ['name' => 'test_name', 'html_id' => 'test_html_id'];
         $testHelper = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
         $this->_object = $testHelper->getObject(
-            \Magento\OfflineShipping\Block\Adminhtml\Form\Field\Import::class,
+            'Magento\OfflineShipping\Block\Adminhtml\Form\Field\Import',
             ['data' => $testData]
         );
         $this->_object->setForm($this->_formMock);

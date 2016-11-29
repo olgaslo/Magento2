@@ -12,9 +12,6 @@ use Magento\Framework\TestFramework\Unit\Helper\ObjectManager;
 use Magento\PageCache\Model\Config;
 use Magento\Tax\Helper\Data;
 
-/**
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
- */
 class AfterAddressSaveObserverTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -57,34 +54,34 @@ class AfterAddressSaveObserverTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->objectManager = new ObjectManager($this);
-        $this->observerMock = $this->getMockBuilder(\Magento\Framework\Event\Observer::class)
+        $this->observerMock = $this->getMockBuilder('Magento\Framework\Event\Observer')
             ->disableOriginalConstructor()
             ->setMethods([
                 'getCustomerAddress', 'getData'
             ])
             ->getMock();
 
-        $this->customerSessionMock = $this->getMockBuilder(\Magento\Customer\Model\Session::class)
+        $this->customerSessionMock = $this->getMockBuilder('Magento\Customer\Model\Session')
             ->disableOriginalConstructor()
             ->setMethods([
                 'setDefaultTaxBillingAddress', 'setDefaultTaxShippingAddress', 'setWebsiteId'
             ])
             ->getMock();
 
-        $this->moduleManagerMock = $this->getMockBuilder(\Magento\Framework\Module\Manager::class)
+        $this->moduleManagerMock = $this->getMockBuilder('Magento\Framework\Module\Manager')
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->cacheConfigMock = $this->getMockBuilder(\Magento\PageCache\Model\Config::class)
+        $this->cacheConfigMock = $this->getMockBuilder('Magento\PageCache\Model\Config')
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->taxHelperMock = $this->getMockBuilder(\Magento\Tax\Helper\Data::class)
+        $this->taxHelperMock = $this->getMockBuilder('Magento\Tax\Helper\Data')
             ->disableOriginalConstructor()
             ->getMock();
 
         $this->session = $this->objectManager->getObject(
-            \Magento\Tax\Observer\AfterAddressSaveObserver::class,
+            'Magento\Tax\Observer\AfterAddressSaveObserver',
             [
                 'customerSession' => $this->customerSessionMock,
                 'taxHelper' => $this->taxHelperMock,
@@ -109,7 +106,7 @@ class AfterAddressSaveObserverTest extends \PHPUnit_Framework_TestCase
             ->method('isCatalogPriceDisplayAffectedByTax')
             ->willReturn(true);
 
-        $address = $this->objectManager->getObject(\Magento\Customer\Model\Address::class);
+        $address = $this->objectManager->getObject('Magento\Customer\Model\Address');
         $address->setIsDefaultShipping(true);
         $address->setIsDefaultBilling(true);
         $address->setIsPrimaryBilling(true);

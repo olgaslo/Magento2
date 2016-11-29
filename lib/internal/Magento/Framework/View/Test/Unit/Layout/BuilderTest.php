@@ -18,7 +18,7 @@ use Magento\Framework\View\Layout\ProcessorInterface;
  */
 class BuilderTest extends \PHPUnit_Framework_TestCase
 {
-    const CLASS_NAME = \Magento\Framework\View\Layout\Builder::class;
+    const CLASS_NAME = 'Magento\Framework\View\Layout\Builder';
 
     /**
      * @covers \Magento\Framework\View\Layout\Builder::build()
@@ -28,16 +28,16 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
         $fullActionName = 'route_controller_action';
 
         /** @var Http|\PHPUnit_Framework_MockObject_MockObject */
-        $request = $this->getMock(\Magento\Framework\App\Request\Http::class, [], [], '', false);
+        $request = $this->getMock('Magento\Framework\App\Request\Http', [], [], '', false);
         $request->expects($this->exactly(3))->method('getFullActionName')->will($this->returnValue($fullActionName));
 
         /** @var ProcessorInterface|\PHPUnit_Framework_MockObject_MockObject $processor */
-        $processor = $this->getMock(\Magento\Framework\View\Layout\ProcessorInterface::class, [], [], '', false);
+        $processor = $this->getMock('Magento\Framework\View\Layout\ProcessorInterface', [], [], '', false);
         $processor->expects($this->once())->method('load');
 
         /** @var Layout|\PHPUnit_Framework_MockObject_MockObject */
         $layout = $this->getMock(
-            \Magento\Framework\View\Layout::class,
+            'Magento\Framework\View\Layout',
             $this->getLayoutMockMethods(),
             [],
             '',
@@ -49,7 +49,7 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
 
         $data = ['full_action_name' => $fullActionName, 'layout' => $layout];
         /** @var ManagerInterface|\PHPUnit_Framework_MockObject_MockObject $eventManager */
-        $eventManager = $this->getMock(\Magento\Framework\Event\ManagerInterface::class, [], [], '', false);
+        $eventManager = $this->getMock('Magento\Framework\Event\ManagerInterface', [], [], '', false);
         $eventManager->expects($this->at(0))->method('dispatch')->with('layout_load_before', $data);
         $eventManager->expects($this->at(1))->method('dispatch')->with('layout_generate_blocks_before', $data);
         $eventManager->expects($this->at(2))->method('dispatch')->with('layout_generate_blocks_after', $data);

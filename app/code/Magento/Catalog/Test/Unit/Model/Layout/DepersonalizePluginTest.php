@@ -34,24 +34,24 @@ class DepersonalizePluginTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->layoutMock = $this->getMock(\Magento\Framework\View\Layout::class, [], [], '', false);
-        $this->catalogSessionMock = $this->getMock(
-            \Magento\Catalog\Model\Session::class,
+        $this->layoutMock = $this->getMock('Magento\Framework\View\Layout', [], [], '', false);
+        $this->catalogSessionMock = $this->getMock('Magento\Catalog\Model\Session',
             ['clearStorage'],
             [],
             '',
             false
         );
-        $this->resultLayout = $this->getMock(\Magento\Framework\View\Layout::class, [], [], '', false);
+        $this->resultLayout = $this->getMock('Magento\Framework\View\Layout', [], [], '', false);
         $this->depersonalizeCheckerMock = $this->getMock(
-            \Magento\PageCache\Model\DepersonalizeChecker::class,
+            'Magento\PageCache\Model\DepersonalizeChecker',
             [],
             [],
             '',
             false
         );
 
-        $this->plugin = (new ObjectManager($this))->getObject(\Magento\Catalog\Model\Layout\DepersonalizePlugin::class,
+        $this->plugin = (new ObjectManager($this))->getObject(
+            'Magento\Catalog\Model\Layout\DepersonalizePlugin',
             ['catalogSession' => $this->catalogSessionMock, 'depersonalizeChecker' => $this->depersonalizeCheckerMock]
         );
     }

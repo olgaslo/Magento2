@@ -55,10 +55,9 @@ class QuoteManagerTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->persistentSessionMock = $this->getMock(\Magento\Persistent\Helper\Session::class, [], [], '', false);
+        $this->persistentSessionMock = $this->getMock('Magento\Persistent\Helper\Session', [], [], '', false);
         $this->sessionMock =
-            $this->getMock(
-                \Magento\Persistent\Model\Session::class,
+            $this->getMock('Magento\Persistent\Model\Session',
                 [
                     'setLoadInactive',
                     'setCustomerData',
@@ -71,15 +70,14 @@ class QuoteManagerTest extends \PHPUnit_Framework_TestCase
                 [],
                 '',
                 false);
-        $this->persistentDataMock = $this->getMock(\Magento\Persistent\Helper\Data::class, [], [], '', false);
-        $this->checkoutSessionMock = $this->getMock(\Magento\Checkout\Model\Session::class, [], [], '', false);
+        $this->persistentDataMock = $this->getMock('Magento\Persistent\Helper\Data', [], [], '', false);
+        $this->checkoutSessionMock = $this->getMock('Magento\Checkout\Model\Session', [], [], '', false);
 
         $this->abstractCollectionMock =
-            $this->getMock(\Magento\Eav\Model\Entity\Collection\AbstractCollection::class, [], [], '', false);
+            $this->getMock('Magento\Eav\Model\Entity\Collection\AbstractCollection', [], [], '', false);
 
-        $this->quoteRepositoryMock = $this->getMock(\Magento\Quote\Api\CartRepositoryInterface::class);
-        $this->quoteMock = $this->getMock(
-            \Magento\Quote\Model\Quote::class,
+        $this->quoteRepositoryMock = $this->getMock('\Magento\Quote\Api\CartRepositoryInterface');
+        $this->quoteMock = $this->getMock('Magento\Quote\Model\Quote',
             [
                 'getId',
                 'getIsPersistent',
@@ -185,7 +183,7 @@ class QuoteManagerTest extends \PHPUnit_Framework_TestCase
             ->method('setIsPersistent')->with(false)->will($this->returnValue($this->quoteMock));
         $this->quoteMock->expects($this->once())
             ->method('removeAllAddresses')->will($this->returnValue($this->quoteMock));
-        $quoteAddressMock = $this->getMock(\Magento\Quote\Model\Quote\Address::class, [], [], '', false);
+        $quoteAddressMock = $this->getMock('Magento\Quote\Model\Quote\Address', [], [], '', false);
         $this->quoteMock->expects($this->once())
             ->method('getShippingAddress')->will($this->returnValue($quoteAddressMock));
         $this->quoteMock->expects($this->once())

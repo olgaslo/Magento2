@@ -31,14 +31,14 @@ class WebsiteTest extends \PHPUnit_Framework_TestCase
     {
         $this->objectManagerHelper = new ObjectManager($this);
 
-        $this->websiteFactory = $this->getMockBuilder(\Magento\Store\Model\WebsiteFactory::class)
+        $this->websiteFactory = $this->getMockBuilder('Magento\Store\Model\WebsiteFactory')
             ->disableOriginalConstructor()
             ->setMethods(['create', 'getCollection', '__wakeup'])
             ->getMock();
 
         /** @var Website $websiteModel */
         $this->model = $this->objectManagerHelper->getObject(
-            \Magento\Store\Model\Website::class,
+            'Magento\Store\Model\Website',
             ['websiteFactory' => $this->websiteFactory]
         );
     }
@@ -46,7 +46,7 @@ class WebsiteTest extends \PHPUnit_Framework_TestCase
     public function testIsCanDelete()
     {
         $websiteCollection = $this->getMock(
-            \Magento\Store\Model\ResourceModel\Website\Collection::class,
+            'Magento\Store\Model\ResourceModel\Website\Collection',
             ['getSize'],
             [],
             '',

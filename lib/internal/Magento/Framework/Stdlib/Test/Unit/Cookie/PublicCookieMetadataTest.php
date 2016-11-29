@@ -23,7 +23,7 @@ class PublicCookieMetadataTest extends \PHPUnit_Framework_TestCase
     {
         $objectManager = new ObjectManager($this);
         $this->publicCookieMetadata = $objectManager->getObject(
-            \Magento\Framework\Stdlib\Cookie\PublicCookieMetadata::class
+            'Magento\Framework\Stdlib\Cookie\PublicCookieMetadata'
         );
     }
 

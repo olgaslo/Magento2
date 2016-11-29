@@ -38,7 +38,7 @@ class Module implements
         // to process templates by Vendor/Module
         $injectTemplateListener = new InjectTemplateListener();
         $sharedEvents->attach(
-            \Zend\Stdlib\DispatchableInterface::class,
+            'Zend\Stdlib\DispatchableInterface',
             MvcEvent::EVENT_DISPATCH,
             [$injectTemplateListener, 'injectTemplate'],
             -89

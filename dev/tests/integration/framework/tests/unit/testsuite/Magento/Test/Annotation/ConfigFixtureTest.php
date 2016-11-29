@@ -19,7 +19,7 @@ class ConfigFixtureTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->_object = $this->getMock(
-            \Magento\TestFramework\Annotation\ConfigFixture::class,
+            'Magento\TestFramework\Annotation\ConfigFixture',
             ['_getConfigValue', '_setConfigValue']
         );
     }

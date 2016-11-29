@@ -119,62 +119,60 @@ class LinkManagementTest extends \PHPUnit_Framework_TestCase
     {
         $helper = new ObjectManager($this);
 
-        $this->productRepository = $this->getMockBuilder(\Magento\Catalog\Model\ProductRepository::class)
+        $this->productRepository = $this->getMockBuilder('Magento\Catalog\Model\ProductRepository')
             ->setMethods(['get'])
             ->disableOriginalConstructor()
             ->getMock();
-        $this->productType = $this->getMockBuilder(\Magento\Bundle\Model\Product\Type\Interceptor::class)
+        $this->productType = $this->getMockBuilder('Magento\Bundle\Model\Product\Type\Interceptor')
             ->setMethods(['getOptionsCollection', 'setStoreFilter', 'getSelectionsCollection', 'getOptionsIds'])
             ->disableOriginalConstructor()
             ->getMock();
-        $this->option = $this->getMockBuilder(\Magento\Bundle\Model\Option::class)
+        $this->option = $this->getMockBuilder('Magento\Bundle\Model\Option')
             ->setMethods(['getSelections', 'getOptionId', '__wakeup'])
             ->disableOriginalConstructor()
             ->getMock();
-        $this->optionCollection = $this->getMockBuilder(\Magento\Bundle\Model\ResourceModel\Option\Collection::class)
+        $this->optionCollection = $this->getMockBuilder('Magento\Bundle\Model\ResourceModel\Option\Collection')
             ->setMethods(['appendSelections'])
             ->disableOriginalConstructor()
             ->getMock();
-        $this->selectionCollection = $this->getMockBuilder(
-            \Magento\Bundle\Model\ResourceModel\Selection\Collection::class)
+        $this->selectionCollection = $this->getMockBuilder('Magento\Bundle\Model\ResourceModel\Selection\Collection')
             ->disableOriginalConstructor()
             ->getMock();
-        $this->product = $this->getMockBuilder(\Magento\Catalog\Model\Product::class)
+        $this->product = $this->getMockBuilder('Magento\Catalog\Model\Product')
             ->setMethods(['getTypeInstance', 'getStoreId', 'getTypeId', '__wakeup', 'getId', 'getData'])
             ->disableOriginalConstructor()
             ->getMock();
-        $this->link = $this->getMockBuilder(\Magento\Bundle\Api\Data\LinkInterface::class)
+        $this->link = $this->getMockBuilder('\Magento\Bundle\Api\Data\LinkInterface')
             ->disableOriginalConstructor()
             ->getMock();
-        $this->linkFactory = $this->getMockBuilder(\Magento\Bundle\Api\Data\LinkInterfaceFactory::class)
+        $this->linkFactory = $this->getMockBuilder('\Magento\Bundle\Api\Data\LinkInterfaceFactory')
             ->setMethods(['create'])
             ->disableOriginalConstructor()
             ->getMock();
         $this->bundleSelectionMock = $this->getMock(
-            \Magento\Bundle\Model\SelectionFactory::class, ['create'], [], '', false
+            '\Magento\Bundle\Model\SelectionFactory', ['create'], [], '', false
         );
         $this->bundleFactoryMock = $this->getMock(
-            \Magento\Bundle\Model\ResourceModel\BundleFactory::class, ['create'], [], '', false
+            '\Magento\Bundle\Model\ResourceModel\BundleFactory', ['create'], [], '', false
         );
         $this->optionCollectionFactoryMock = $this->getMock(
-            \Magento\Bundle\Model\ResourceModel\Option\CollectionFactory::class, ['create'], [], '', false
+            '\Magento\Bundle\Model\ResourceModel\Option\CollectionFactory', ['create'], [], '', false
         );
-        $this->storeManagerMock = $this->getMock(\Magento\Store\Model\StoreManagerInterface::class, [], [], '', false);
-        $this->metadataPoolMock = $this->getMockBuilder(\Magento\Framework\EntityManager\MetadataPool::class)
+        $this->storeManagerMock = $this->getMock('\Magento\Store\Model\StoreManagerInterface', [], [], '', false);
+        $this->metadataPoolMock = $this->getMockBuilder('\Magento\Framework\EntityManager\MetadataPool')
             ->disableOriginalConstructor()
             ->getMock();
-        $this->metadataMock = $this->getMockBuilder(\Magento\Framework\EntityManager\EntityMetadata::class)
+        $this->metadataMock = $this->getMockBuilder('\Magento\Framework\EntityManager\EntityMetadata')
             ->disableOriginalConstructor()
             ->getMock();
         $this->metadataPoolMock->expects($this->any())->method('getMetadata')
             ->with(\Magento\Catalog\Api\Data\ProductInterface::class)
             ->willReturn($this->metadataMock);
 
-        $this->dataObjectHelperMock = $this->getMockBuilder(\Magento\Framework\Api\DataObjectHelper::class)
+        $this->dataObjectHelperMock = $this->getMockBuilder('\Magento\Framework\Api\DataObjectHelper')
             ->disableOriginalConstructor()
             ->getMock();
         $this->model = $helper->getObject(
-            
             LinkManagement::class,
             [
                 'productRepository' => $this->productRepository,
@@ -222,7 +220,7 @@ class LinkManagementTest extends \PHPUnit_Framework_TestCase
 
         $this->dataObjectHelperMock->expects($this->once())
             ->method('populateWithArray')
-            ->with($this->link, $this->anything(), \Magento\Bundle\Api\Data\LinkInterface::class)
+            ->with($this->link, $this->anything(), '\Magento\Bundle\Api\Data\LinkInterface')
             ->willReturnSelf();
         $this->link->expects($this->once())->method('setIsDefault')->willReturnSelf();
         $this->link->expects($this->once())->method('setQty')->willReturnSelf();
@@ -288,10 +286,10 @@ class LinkManagementTest extends \PHPUnit_Framework_TestCase
      */
     public function testAddChildToNotBundleProduct()
     {
-        $productLink = $this->getMock(\Magento\Bundle\Api\Data\LinkInterface::class);
+        $productLink = $this->getMock('\Magento\Bundle\Api\Data\LinkInterface');
         $productLink->expects($this->any())->method('getOptionId')->will($this->returnValue(1));
 
-        $productMock = $this->getMock(\Magento\Catalog\Model\Product::class, [], [], '', false);
+        $productMock = $this->getMock('\Magento\Catalog\Model\Product', [], [], '', false);
         $productMock->expects($this->once())->method('getTypeId')->will($this->returnValue(
             \Magento\Catalog\Model\Product\Type::TYPE_SIMPLE
         ));
@@ -303,19 +301,19 @@ class LinkManagementTest extends \PHPUnit_Framework_TestCase
      */
     public function testAddChildNonExistingOption()
     {
-        $productLink = $this->getMock(\Magento\Bundle\Api\Data\LinkInterface::class);
+        $productLink = $this->getMock('\Magento\Bundle\Api\Data\LinkInterface');
         $productLink->expects($this->any())->method('getOptionId')->will($this->returnValue(1));
 
-        $productMock = $this->getMock(\Magento\Catalog\Model\Product::class, [], [], '', false);
+        $productMock = $this->getMock('\Magento\Catalog\Model\Product', [], [], '', false);
         $productMock->expects($this->once())->method('getTypeId')->will($this->returnValue(
             \Magento\Catalog\Model\Product\Type::TYPE_BUNDLE
         ));
 
-        $store = $this->getMock(\Magento\Store\Model\Store::class, [], [], '', false);
+        $store = $this->getMock('\Magento\Store\Model\Store', [], [], '', false);
         $this->storeManagerMock->expects($this->any())->method('getStore')->will($this->returnValue($store));
         $store->expects($this->any())->method('getId')->will($this->returnValue(0));
 
-        $emptyOption = $this->getMockBuilder(\Magento\Bundle\Model\Option::class)->disableOriginalConstructor()
+        $emptyOption = $this->getMockBuilder('\Magento\Bundle\Model\Option')->disableOriginalConstructor()
             ->setMethods(['getId', '__wakeup'])
             ->getMock();
         $emptyOption->expects($this->once())
@@ -323,7 +321,7 @@ class LinkManagementTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue(null));
 
         $optionsCollectionMock = $this->getMock(
-            \Magento\Bundle\Model\ResourceModel\Option\Collection::class, [], [], '', false
+            '\Magento\Bundle\Model\ResourceModel\Option\Collection', [], [], '', false
         );
         $optionsCollectionMock->expects($this->once())
             ->method('setIdFilter')
@@ -345,12 +343,12 @@ class LinkManagementTest extends \PHPUnit_Framework_TestCase
      */
     public function testAddChildLinkedProductIsComposite()
     {
-        $productLink = $this->getMock(\Magento\Bundle\Api\Data\LinkInterface::class);
+        $productLink = $this->getMock('\Magento\Bundle\Api\Data\LinkInterface');
         $productLink->expects($this->any())->method('getSku')->will($this->returnValue('linked_product_sku'));
         $productLink->expects($this->any())->method('getOptionId')->will($this->returnValue(1));
 
         $this->metadataMock->expects($this->once())->method('getLinkField')->willReturn($this->linkField);
-        $productMock = $this->getMock(\Magento\Catalog\Model\Product::class, [], [], '', false);
+        $productMock = $this->getMock('\Magento\Catalog\Model\Product', [], [], '', false);
         $productMock->expects($this->once())->method('getTypeId')->will($this->returnValue(
             \Magento\Catalog\Model\Product\Type::TYPE_BUNDLE
         ));
@@ -359,7 +357,7 @@ class LinkManagementTest extends \PHPUnit_Framework_TestCase
             ->with($this->linkField)
             ->willReturn($this->linkField);
 
-        $linkedProductMock = $this->getMock(\Magento\Catalog\Model\Product::class, [], [], '', false);
+        $linkedProductMock = $this->getMock('\Magento\Catalog\Model\Product', [], [], '', false);
         $linkedProductMock->expects($this->any())->method('getId')->will($this->returnValue(13));
         $linkedProductMock->expects($this->once())->method('isComposite')->will($this->returnValue(true));
         $this->productRepository
@@ -368,17 +366,17 @@ class LinkManagementTest extends \PHPUnit_Framework_TestCase
             ->with('linked_product_sku')
             ->will($this->returnValue($linkedProductMock));
 
-        $store = $this->getMock(\Magento\Store\Model\Store::class, [], [], '', false);
+        $store = $this->getMock('\Magento\Store\Model\Store', [], [], '', false);
         $this->storeManagerMock->expects($this->any())->method('getStore')->will($this->returnValue($store));
         $store->expects($this->any())->method('getId')->will($this->returnValue(0));
 
-        $option = $this->getMockBuilder(\Magento\Bundle\Model\Option::class)->disableOriginalConstructor()
+        $option = $this->getMockBuilder('\Magento\Bundle\Model\Option')->disableOriginalConstructor()
             ->setMethods(['getId', '__wakeup'])
             ->getMock();
         $option->expects($this->once())->method('getId')->will($this->returnValue(1));
 
         $optionsCollectionMock = $this->getMock(
-            \Magento\Bundle\Model\ResourceModel\Option\Collection::class,
+            '\Magento\Bundle\Model\ResourceModel\Option\Collection',
             [],
             [],
             '',
@@ -395,7 +393,7 @@ class LinkManagementTest extends \PHPUnit_Framework_TestCase
             $this->returnValue($optionsCollectionMock)
         );
 
-        $bundle = $this->getMock(\Magento\Bundle\Model\ResourceModel\Bundle::class, [], [], '', false);
+        $bundle = $this->getMock('\Magento\Bundle\Model\ResourceModel\Bundle', [], [], '', false);
         $bundle->expects($this->once())->method('getSelectionsData')->with($this->linkField)->willReturn([]);
         $this->bundleFactoryMock->expects($this->once())->method('create')->will($this->returnValue($bundle));
         $this->model->addChild($productMock, 1, $productLink);
@@ -406,12 +404,12 @@ class LinkManagementTest extends \PHPUnit_Framework_TestCase
      */
     public function testAddChildProductAlreadyExistsInOption()
     {
-        $productLink = $this->getMock(\Magento\Bundle\Api\Data\LinkInterface::class);
+        $productLink = $this->getMock('\Magento\Bundle\Api\Data\LinkInterface');
         $productLink->expects($this->any())->method('getSku')->will($this->returnValue('linked_product_sku'));
         $productLink->expects($this->any())->method('getOptionId')->will($this->returnValue(1));
 
         $this->metadataMock->expects($this->once())->method('getLinkField')->willReturn($this->linkField);
-        $productMock = $this->getMock(\Magento\Catalog\Model\Product::class, [], [], '', false);
+        $productMock = $this->getMock('\Magento\Catalog\Model\Product', [], [], '', false);
         $productMock->expects($this->once())->method('getTypeId')->will($this->returnValue(
             \Magento\Catalog\Model\Product\Type::TYPE_BUNDLE
         ));
@@ -421,7 +419,7 @@ class LinkManagementTest extends \PHPUnit_Framework_TestCase
             ->willReturn($this->linkField);
         $productMock->expects($this->any())->method('getCopyFromView')->will($this->returnValue(false));
 
-        $linkedProductMock = $this->getMock(\Magento\Catalog\Model\Product::class, [], [], '', false);
+        $linkedProductMock = $this->getMock('\Magento\Catalog\Model\Product', [], [], '', false);
         $linkedProductMock->expects($this->any())->method('getEntityId')->will($this->returnValue(13));
         $linkedProductMock->expects($this->once())->method('isComposite')->will($this->returnValue(false));
         $this->productRepository
@@ -430,17 +428,17 @@ class LinkManagementTest extends \PHPUnit_Framework_TestCase
             ->with('linked_product_sku')
             ->will($this->returnValue($linkedProductMock));
 
-        $store = $this->getMock(\Magento\Store\Model\Store::class, [], [], '', false);
+        $store = $this->getMock('\Magento\Store\Model\Store', [], [], '', false);
         $this->storeManagerMock->expects($this->any())->method('getStore')->will($this->returnValue($store));
         $store->expects($this->any())->method('getId')->will($this->returnValue(0));
 
-        $option = $this->getMockBuilder(\Magento\Bundle\Model\Option::class)->disableOriginalConstructor()
+        $option = $this->getMockBuilder('\Magento\Bundle\Model\Option')->disableOriginalConstructor()
             ->setMethods(['getId', '__wakeup'])
             ->getMock();
         $option->expects($this->once())->method('getId')->will($this->returnValue(1));
 
         $optionsCollectionMock = $this->getMock(
-            \Magento\Bundle\Model\ResourceModel\Option\Collection::class,
+            '\Magento\Bundle\Model\ResourceModel\Option\Collection',
             [],
             [],
             '',
@@ -461,7 +459,7 @@ class LinkManagementTest extends \PHPUnit_Framework_TestCase
             ['option_id' => 1, 'product_id' => 12],
             ['option_id' => 1, 'product_id' => 13],
         ];
-        $bundle = $this->getMock(\Magento\Bundle\Model\ResourceModel\Bundle::class, [], [], '', false);
+        $bundle = $this->getMock('\Magento\Bundle\Model\ResourceModel\Bundle', [], [], '', false);
         $bundle->expects($this->once())->method('getSelectionsData')
             ->with($this->linkField)
             ->will($this->returnValue($selections));
@@ -474,12 +472,12 @@ class LinkManagementTest extends \PHPUnit_Framework_TestCase
      */
     public function testAddChildCouldNotSave()
     {
-        $productLink = $this->getMock(\Magento\Bundle\Api\Data\LinkInterface::class);
+        $productLink = $this->getMock('\Magento\Bundle\Api\Data\LinkInterface');
         $productLink->expects($this->any())->method('getSku')->will($this->returnValue('linked_product_sku'));
         $productLink->expects($this->any())->method('getOptionId')->will($this->returnValue(1));
 
         $this->metadataMock->expects($this->once())->method('getLinkField')->willReturn($this->linkField);
-        $productMock = $this->getMock(\Magento\Catalog\Model\Product::class, [], [], '', false);
+        $productMock = $this->getMock('\Magento\Catalog\Model\Product', [], [], '', false);
         $productMock->expects($this->once())->method('getTypeId')->will($this->returnValue(
             \Magento\Catalog\Model\Product\Type::TYPE_BUNDLE
         ));
@@ -489,7 +487,7 @@ class LinkManagementTest extends \PHPUnit_Framework_TestCase
             ->willReturn($this->linkField);
 
 
-        $linkedProductMock = $this->getMock(\Magento\Catalog\Model\Product::class, [], [], '', false);
+        $linkedProductMock = $this->getMock('\Magento\Catalog\Model\Product', [], [], '', false);
         $linkedProductMock->expects($this->any())->method('getId')->will($this->returnValue(13));
         $linkedProductMock->expects($this->once())->method('isComposite')->will($this->returnValue(false));
         $this->productRepository
@@ -498,17 +496,17 @@ class LinkManagementTest extends \PHPUnit_Framework_TestCase
             ->with('linked_product_sku')
             ->will($this->returnValue($linkedProductMock));
 
-        $store = $this->getMock(\Magento\Store\Model\Store::class, [], [], '', false);
+        $store = $this->getMock('\Magento\Store\Model\Store', [], [], '', false);
         $this->storeManagerMock->expects($this->any())->method('getStore')->will($this->returnValue($store));
         $store->expects($this->any())->method('getId')->will($this->returnValue(0));
 
-        $option = $this->getMockBuilder(\Magento\Bundle\Model\Option::class)->disableOriginalConstructor()
+        $option = $this->getMockBuilder('\Magento\Bundle\Model\Option')->disableOriginalConstructor()
             ->setMethods(['getId', '__wakeup'])
             ->getMock();
         $option->expects($this->once())->method('getId')->will($this->returnValue(1));
 
         $optionsCollectionMock = $this->getMock(
-            \Magento\Bundle\Model\ResourceModel\Option\Collection::class, [], [], '', false
+            '\Magento\Bundle\Model\ResourceModel\Option\Collection', [], [], '', false
         );
         $optionsCollectionMock->expects($this->once())
             ->method('setIdFilter')
@@ -525,13 +523,13 @@ class LinkManagementTest extends \PHPUnit_Framework_TestCase
             ['option_id' => 1, 'product_id' => 11],
             ['option_id' => 1, 'product_id' => 12],
         ];
-        $bundle = $this->getMock(\Magento\Bundle\Model\ResourceModel\Bundle::class, [], [], '', false);
+        $bundle = $this->getMock('\Magento\Bundle\Model\ResourceModel\Bundle', [], [], '', false);
         $bundle->expects($this->once())->method('getSelectionsData')
             ->with($this->linkField)
             ->will($this->returnValue($selections));
         $this->bundleFactoryMock->expects($this->once())->method('create')->will($this->returnValue($bundle));
 
-        $selection = $this->getMock(\Magento\Bundle\Model\Selection::class, ['save'], [], '', false);
+        $selection = $this->getMock('\Magento\Bundle\Model\Selection', ['save'], [], '', false);
         $selection->expects($this->once())->method('save')
             ->will(
                 $this->returnCallback(
@@ -546,12 +544,12 @@ class LinkManagementTest extends \PHPUnit_Framework_TestCase
 
     public function testAddChild()
     {
-        $productLink = $this->getMock(\Magento\Bundle\Api\Data\LinkInterface::class);
+        $productLink = $this->getMock('\Magento\Bundle\Api\Data\LinkInterface');
         $productLink->expects($this->any())->method('getSku')->will($this->returnValue('linked_product_sku'));
         $productLink->expects($this->any())->method('getOptionId')->will($this->returnValue(1));
 
         $this->metadataMock->expects($this->once())->method('getLinkField')->willReturn($this->linkField);
-        $productMock = $this->getMock(\Magento\Catalog\Model\Product::class, [], [], '', false);
+        $productMock = $this->getMock('\Magento\Catalog\Model\Product', [], [], '', false);
         $productMock->expects($this->once())->method('getTypeId')->will($this->returnValue(
             \Magento\Catalog\Model\Product\Type::TYPE_BUNDLE
         ));
@@ -560,7 +558,7 @@ class LinkManagementTest extends \PHPUnit_Framework_TestCase
             ->with($this->linkField)
             ->willReturn($this->linkField);
 
-        $linkedProductMock = $this->getMock(\Magento\Catalog\Model\Product::class, [], [], '', false);
+        $linkedProductMock = $this->getMock('\Magento\Catalog\Model\Product', [], [], '', false);
         $linkedProductMock->expects($this->any())->method('getId')->will($this->returnValue(13));
         $linkedProductMock->expects($this->once())->method('isComposite')->will($this->returnValue(false));
         $this->productRepository
@@ -569,17 +567,17 @@ class LinkManagementTest extends \PHPUnit_Framework_TestCase
             ->with('linked_product_sku')
             ->will($this->returnValue($linkedProductMock));
 
-        $store = $this->getMock(\Magento\Store\Model\Store::class, [], [], '', false);
+        $store = $this->getMock('\Magento\Store\Model\Store', [], [], '', false);
         $this->storeManagerMock->expects($this->any())->method('getStore')->will($this->returnValue($store));
         $store->expects($this->any())->method('getId')->will($this->returnValue(0));
 
-        $option = $this->getMockBuilder(\Magento\Bundle\Model\Option::class)->disableOriginalConstructor()
+        $option = $this->getMockBuilder('\Magento\Bundle\Model\Option')->disableOriginalConstructor()
             ->setMethods(['getId', '__wakeup'])
             ->getMock();
         $option->expects($this->once())->method('getId')->will($this->returnValue(1));
 
         $optionsCollectionMock = $this->getMock(
-            \Magento\Bundle\Model\ResourceModel\Option\Collection::class, [], [], '', false
+            '\Magento\Bundle\Model\ResourceModel\Option\Collection', [], [], '', false
         );
         $optionsCollectionMock->expects($this->once())
             ->method('setIdFilter')
@@ -596,13 +594,13 @@ class LinkManagementTest extends \PHPUnit_Framework_TestCase
             ['option_id' => 1, 'product_id' => 11],
             ['option_id' => 1, 'product_id' => 12],
         ];
-        $bundle = $this->getMock(\Magento\Bundle\Model\ResourceModel\Bundle::class, [], [], '', false);
+        $bundle = $this->getMock('\Magento\Bundle\Model\ResourceModel\Bundle', [], [], '', false);
         $bundle->expects($this->once())->method('getSelectionsData')
             ->with($this->linkField)
             ->will($this->returnValue($selections));
         $this->bundleFactoryMock->expects($this->once())->method('create')->will($this->returnValue($bundle));
 
-        $selection = $this->getMock(\Magento\Bundle\Model\Selection::class, ['save', 'getId'], [], '', false);
+        $selection = $this->getMock('\Magento\Bundle\Model\Selection', ['save', 'getId'], [], '', false);
         $selection->expects($this->once())->method('save');
         $selection->expects($this->once())->method('getId')->will($this->returnValue(42));
         $this->bundleSelectionMock->expects($this->once())->method('create')->will($this->returnValue($selection));
@@ -624,7 +622,7 @@ class LinkManagementTest extends \PHPUnit_Framework_TestCase
         $parentProductId = 32;
         $bundleProductSku = 'bundleProductSku';
 
-        $productLink = $this->getMock(\Magento\Bundle\Api\Data\LinkInterface::class);
+        $productLink = $this->getMock('\Magento\Bundle\Api\Data\LinkInterface');
         $productLink->expects($this->any())->method('getSku')->will($this->returnValue('linked_product_sku'));
         $productLink->expects($this->any())->method('getId')->will($this->returnValue($id));
         $productLink->expects($this->any())->method('getOptionId')->will($this->returnValue($optionId));
@@ -636,7 +634,7 @@ class LinkManagementTest extends \PHPUnit_Framework_TestCase
         $productLink->expects($this->any())->method('getIsDefault')->will($this->returnValue($isDefault));
 
         $this->metadataMock->expects($this->once())->method('getLinkField')->willReturn($this->linkField);
-        $productMock = $this->getMock(\Magento\Catalog\Model\Product::class, [], [], '', false);
+        $productMock = $this->getMock('\Magento\Catalog\Model\Product', [], [], '', false);
         $productMock->expects($this->once())->method('getTypeId')->will($this->returnValue(
             \Magento\Catalog\Model\Product\Type::TYPE_BUNDLE
         ));
@@ -645,7 +643,7 @@ class LinkManagementTest extends \PHPUnit_Framework_TestCase
             ->with($this->linkField)
             ->willReturn($parentProductId);
 
-        $linkedProductMock = $this->getMock(\Magento\Catalog\Model\Product::class, [], [], '', false);
+        $linkedProductMock = $this->getMock('\Magento\Catalog\Model\Product', [], [], '', false);
         $linkedProductMock->expects($this->any())->method('getId')->will($this->returnValue($linkProductId));
         $linkedProductMock->expects($this->once())->method('isComposite')->will($this->returnValue(false));
         $this->productRepository
@@ -659,12 +657,12 @@ class LinkManagementTest extends \PHPUnit_Framework_TestCase
             ->with('linked_product_sku')
             ->will($this->returnValue($linkedProductMock));
 
-        $store = $this->getMock(\Magento\Store\Model\Store::class, [], [], '', false);
+        $store = $this->getMock('\Magento\Store\Model\Store', [], [], '', false);
         $this->storeManagerMock->expects($this->any())->method('getStore')->will($this->returnValue($store));
         $store->expects($this->any())->method('getId')->will($this->returnValue(0));
 
         $selection = $this->getMock(
-            \Magento\Bundle\Model\Selection::class,
+            '\Magento\Bundle\Model\Selection',
             [
                 'save',
                 'getId',
@@ -708,18 +706,18 @@ class LinkManagementTest extends \PHPUnit_Framework_TestCase
         $id = 12;
         $linkProductId = 45;
         $parentProductId = 32;
-        $productLink = $this->getMock(\Magento\Bundle\Api\Data\LinkInterface::class);
+        $productLink = $this->getMock('\Magento\Bundle\Api\Data\LinkInterface');
         $productLink->expects($this->any())->method('getSku')->will($this->returnValue('linked_product_sku'));
         $productLink->expects($this->any())->method('getId')->will($this->returnValue($id));
         $bundleProductSku = 'bundleProductSku';
 
-        $productMock = $this->getMock(\Magento\Catalog\Model\Product::class, [], [], '', false);
+        $productMock = $this->getMock('\Magento\Catalog\Model\Product', [], [], '', false);
         $productMock->expects($this->once())->method('getTypeId')->will($this->returnValue(
             \Magento\Catalog\Model\Product\Type::TYPE_BUNDLE
         ));
         $productMock->expects($this->any())->method('getId')->will($this->returnValue($parentProductId));
 
-        $linkedProductMock = $this->getMock(\Magento\Catalog\Model\Product::class, [], [], '', false);
+        $linkedProductMock = $this->getMock('\Magento\Catalog\Model\Product', [], [], '', false);
         $linkedProductMock->expects($this->any())->method('getId')->will($this->returnValue($linkProductId));
         $linkedProductMock->expects($this->once())->method('isComposite')->will($this->returnValue(false));
         $this->productRepository
@@ -733,12 +731,12 @@ class LinkManagementTest extends \PHPUnit_Framework_TestCase
             ->with('linked_product_sku')
             ->will($this->returnValue($linkedProductMock));
 
-        $store = $this->getMock(\Magento\Store\Model\Store::class, [], [], '', false);
+        $store = $this->getMock('\Magento\Store\Model\Store', [], [], '', false);
         $this->storeManagerMock->expects($this->any())->method('getStore')->will($this->returnValue($store));
         $store->expects($this->any())->method('getId')->will($this->returnValue(0));
 
         $selection = $this->getMock(
-            \Magento\Bundle\Model\Selection::class,
+            '\Magento\Bundle\Model\Selection',
             [
                 'save',
                 'getId',
@@ -758,7 +756,7 @@ class LinkManagementTest extends \PHPUnit_Framework_TestCase
             '',
             false
         );
-        $mockException = $this->getMock(\Exception::class);
+        $mockException = $this->getMock('\Exception');
         $selection->expects($this->once())->method('save')->will($this->throwException($mockException));
         $selection->expects($this->once())->method('load')->with($id)->will($this->returnSelf());
         $selection->expects($this->any())->method('getId')->will($this->returnValue($id));
@@ -775,16 +773,16 @@ class LinkManagementTest extends \PHPUnit_Framework_TestCase
     {
         $bundleProductSku = "bundleSku";
         $linkedProductSku = 'simple';
-        $productLink = $this->getMock(\Magento\Bundle\Api\Data\LinkInterface::class);
+        $productLink = $this->getMock('\Magento\Bundle\Api\Data\LinkInterface');
         $productLink->expects($this->any())->method('getId')->will($this->returnValue(null));
         $productLink->expects($this->any())->method('getSku')->will($this->returnValue($linkedProductSku));
 
-        $productMock = $this->getMock(\Magento\Catalog\Model\Product::class, [], [], '', false);
+        $productMock = $this->getMock('\Magento\Catalog\Model\Product', [], [], '', false);
         $productMock->expects($this->once())->method('getTypeId')->will($this->returnValue(
             \Magento\Catalog\Model\Product\Type::TYPE_BUNDLE
         ));
 
-        $linkedProductMock = $this->getMock(\Magento\Catalog\Model\Product::class, [], [], '', false);
+        $linkedProductMock = $this->getMock('\Magento\Catalog\Model\Product', [], [], '', false);
         $linkedProductMock->expects($this->once())->method('isComposite')->will($this->returnValue(false));
         $this->productRepository
             ->expects($this->at(0))
@@ -809,16 +807,16 @@ class LinkManagementTest extends \PHPUnit_Framework_TestCase
         $id = 12345;
         $linkedProductSku = 'simple';
         $bundleProductSku = "bundleProductSku";
-        $productLink = $this->getMock(\Magento\Bundle\Api\Data\LinkInterface::class);
+        $productLink = $this->getMock('\Magento\Bundle\Api\Data\LinkInterface');
         $productLink->expects($this->any())->method('getId')->will($this->returnValue($id));
         $productLink->expects($this->any())->method('getSku')->will($this->returnValue($linkedProductSku));
 
-        $productMock = $this->getMock(\Magento\Catalog\Model\Product::class, [], [], '', false);
+        $productMock = $this->getMock('\Magento\Catalog\Model\Product', [], [], '', false);
         $productMock->expects($this->once())->method('getTypeId')->will($this->returnValue(
             \Magento\Catalog\Model\Product\Type::TYPE_BUNDLE
         ));
 
-        $linkedProductMock = $this->getMock(\Magento\Catalog\Model\Product::class, [], [], '', false);
+        $linkedProductMock = $this->getMock('\Magento\Catalog\Model\Product', [], [], '', false);
         $linkedProductMock->expects($this->once())->method('isComposite')->will($this->returnValue(false));
         $this->productRepository
             ->expects($this->at(0))
@@ -832,7 +830,7 @@ class LinkManagementTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue($linkedProductMock));
 
         $selection = $this->getMock(
-            \Magento\Bundle\Model\Selection::class,
+            '\Magento\Bundle\Model\Selection',
             [
                 'getId',
                 'load',
@@ -857,16 +855,16 @@ class LinkManagementTest extends \PHPUnit_Framework_TestCase
         $bundleProductSku = "bundleProductSku";
         $id = 12;
         $linkedProductSku = 'simple';
-        $productLink = $this->getMock(\Magento\Bundle\Api\Data\LinkInterface::class);
+        $productLink = $this->getMock('\Magento\Bundle\Api\Data\LinkInterface');
         $productLink->expects($this->any())->method('getId')->will($this->returnValue($id));
         $productLink->expects($this->any())->method('getSku')->will($this->returnValue($linkedProductSku));
 
-        $productMock = $this->getMock(\Magento\Catalog\Model\Product::class, [], [], '', false);
+        $productMock = $this->getMock('\Magento\Catalog\Model\Product', [], [], '', false);
         $productMock->expects($this->once())->method('getTypeId')->will($this->returnValue(
             \Magento\Catalog\Model\Product\Type::TYPE_BUNDLE
         ));
 
-        $linkedProductMock = $this->getMock(\Magento\Catalog\Model\Product::class, [], [], '', false);
+        $linkedProductMock = $this->getMock('\Magento\Catalog\Model\Product', [], [], '', false);
         $linkedProductMock->expects($this->once())->method('isComposite')->will($this->returnValue(true));
         $this->productRepository
             ->expects($this->at(0))
@@ -891,11 +889,11 @@ class LinkManagementTest extends \PHPUnit_Framework_TestCase
         $linkedProductSku = 'simple';
         $bundleProductSku = "bundleProductSku";
 
-        $productLink = $this->getMock(\Magento\Bundle\Api\Data\LinkInterface::class);
+        $productLink = $this->getMock('\Magento\Bundle\Api\Data\LinkInterface');
         $productLink->expects($this->any())->method('getId')->will($this->returnValue($id));
         $productLink->expects($this->any())->method('getSku')->will($this->returnValue($linkedProductSku));
 
-        $productMock = $this->getMock(\Magento\Catalog\Model\Product::class, [], [], '', false);
+        $productMock = $this->getMock('\Magento\Catalog\Model\Product', [], [], '', false);
         $productMock->expects($this->once())->method('getTypeId')->will($this->returnValue(
             \Magento\Catalog\Model\Product\Type::TYPE_SIMPLE
         ));
@@ -909,7 +907,7 @@ class LinkManagementTest extends \PHPUnit_Framework_TestCase
     public function testRemoveChild()
     {
         $this->productRepository->expects($this->any())->method('get')->will($this->returnValue($this->product));
-        $bundle = $this->getMock(\Magento\Bundle\Model\ResourceModel\Bundle::class, [], [], '', false);
+        $bundle = $this->getMock('\Magento\Bundle\Model\ResourceModel\Bundle', [], [], '', false);
         $this->bundleFactoryMock->expects($this->once())->method('create')->will($this->returnValue($bundle));
         $productSku = 'productSku';
         $optionId = 1;
@@ -923,7 +921,7 @@ class LinkManagementTest extends \PHPUnit_Framework_TestCase
 
         $this->getRemoveOptions();
 
-        $selection = $this->getMockBuilder(\Magento\Bundle\Model\Selection::class)
+        $selection = $this->getMockBuilder('\Magento\Bundle\Model\Selection')
             ->setMethods(['getSku', 'getOptionId', 'getSelectionId', 'getProductId', '__wakeup'])
             ->disableOriginalConstructor()
             ->getMock();
@@ -978,7 +976,7 @@ class LinkManagementTest extends \PHPUnit_Framework_TestCase
 
         $this->getRemoveOptions();
 
-        $selection = $this->getMockBuilder(\Magento\Bundle\Model\Selection::class)
+        $selection = $this->getMockBuilder('\Magento\Bundle\Model\Selection')
             ->setMethods(['getSku', 'getOptionId', 'getSelectionId', 'getProductId', '__wakeup'])
             ->disableOriginalConstructor()
             ->getMock();
@@ -1008,7 +1006,7 @@ class LinkManagementTest extends \PHPUnit_Framework_TestCase
 
         $this->getRemoveOptions();
 
-        $selection = $this->getMockBuilder(\Magento\Bundle\Model\Selection::class)
+        $selection = $this->getMockBuilder('\Magento\Bundle\Model\Selection')
             ->setMethods(['getSku', 'getOptionId', 'getSelectionId', 'getProductId', '__wakeup'])
             ->disableOriginalConstructor()
             ->getMock();

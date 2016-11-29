@@ -16,10 +16,7 @@ class Critical extends \Magento\Framework\Model\ResourceModel\Db\Collection\Abst
      */
     protected function _construct()
     {
-        $this->_init(
-            \Magento\AdminNotification\Model\Inbox::class,
-            \Magento\AdminNotification\Model\ResourceModel\Inbox::class
-        );
+        $this->_init('Magento\AdminNotification\Model\Inbox', 'Magento\AdminNotification\Model\ResourceModel\Inbox');
     }
 
     /**

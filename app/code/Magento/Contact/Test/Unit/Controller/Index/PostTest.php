@@ -69,42 +69,39 @@ class PostTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->scopeConfigMock = $this->getMockForAbstractClass(
-            \Magento\Framework\App\Config\ScopeConfigInterface::class,
+            '\Magento\Framework\App\Config\ScopeConfigInterface',
             ['isSetFlag'],
             '',
             false
         );
         $context = $this->getMock(
-            \Magento\Framework\App\Action\Context::class,
+            '\Magento\Framework\App\Action\Context',
             ['getRequest', 'getResponse', 'getView', 'getUrl', 'getRedirect', 'getMessageManager'],
             [],
             '',
             false
         );
-        $this->urlMock = $this->getMock(\Magento\Framework\UrlInterface::class, [], [], '', false);
-        $this->messageManagerMock =
-            $this->getMock(\Magento\Framework\Message\ManagerInterface::class, [], [], '', false);
-        $this->requestMock =
-            $this->getMock(\Magento\Framework\App\Request\Http::class, ['getPostValue'], [], '', false);
-        $this->redirectMock =
-            $this->getMock(\Magento\Framework\App\Response\RedirectInterface::class, [], [], '', false);
-        $this->viewMock = $this->getMock(\Magento\Framework\App\ViewInterface::class, [], [], '', false);
-        $this->storeManagerMock = $this->getMock(\Magento\Store\Model\StoreManagerInterface::class, [], [], '', false);
+        $this->urlMock = $this->getMock('\Magento\Framework\UrlInterface', [], [], '', false);
+        $this->messageManagerMock = $this->getMock('\Magento\Framework\Message\ManagerInterface', [], [], '', false);
+        $this->requestMock = $this->getMock('\Magento\Framework\App\Request\Http', ['getPostValue'], [], '', false);
+        $this->redirectMock = $this->getMock('\Magento\Framework\App\Response\RedirectInterface', [], [], '', false);
+        $this->viewMock = $this->getMock('\Magento\Framework\App\ViewInterface', [], [], '', false);
+        $this->storeManagerMock = $this->getMock('\Magento\Store\Model\StoreManagerInterface', [], [], '', false);
         $this->transportBuilderMock = $this->getMock(
-            \Magento\Framework\Mail\Template\TransportBuilder::class,
+            '\Magento\Framework\Mail\Template\TransportBuilder',
             [],
             [],
             '',
             false
         );
         $this->inlineTranslationMock = $this->getMock(
-            \Magento\Framework\Translate\Inline\StateInterface::class,
+            '\Magento\Framework\Translate\Inline\StateInterface',
             [],
             [],
             '',
             false
         );
-        $this->dataPersistorMock = $this->getMockBuilder(\Magento\Framework\App\Request\DataPersistorInterface::class)
+        $this->dataPersistorMock = $this->getMockBuilder('Magento\Framework\App\Request\DataPersistorInterface')
             ->getMockForAbstractClass();
         $context->expects($this->any())
             ->method('getRequest')
@@ -112,7 +109,7 @@ class PostTest extends \PHPUnit_Framework_TestCase
 
         $context->expects($this->any())
             ->method('getResponse')
-            ->willReturn($this->getMock(\Magento\Framework\App\ResponseInterface::class, [], [], '', false));
+            ->willReturn($this->getMock('\Magento\Framework\App\ResponseInterface', [], [], '', false));
 
         $context->expects($this->any())
             ->method('getMessageManager')
@@ -133,7 +130,7 @@ class PostTest extends \PHPUnit_Framework_TestCase
         $objectManagerHelper = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
 
         $this->controller = $objectManagerHelper->getObject(
-            \Magento\Contact\Controller\Index\Post::class,
+            '\Magento\Contact\Controller\Index\Post',
             [
                 'context' => $context,
                 'transportBuilder' => $this->transportBuilderMock,
@@ -205,7 +202,7 @@ class PostTest extends \PHPUnit_Framework_TestCase
             ->method('getPostValue')
             ->willReturn($post);
 
-        $transport = $this->getMock(\Magento\Framework\Mail\TransportInterface::class, [], [], '', false);
+        $transport = $this->getMock('\Magento\Framework\Mail\TransportInterface', [], [], '', false);
 
         $this->transportBuilderMock->expects($this->once())
             ->method('setTemplateIdentifier')

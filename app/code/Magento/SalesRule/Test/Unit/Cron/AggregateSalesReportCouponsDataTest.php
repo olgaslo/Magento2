@@ -33,7 +33,7 @@ class AggregateSalesReportCouponsDataTest extends \PHPUnit_Framework_TestCase
         $this->initMocks();
 
         $this->model = $helper->getObject(
-            \Magento\SalesRule\Cron\AggregateSalesReportCouponsData::class,
+            'Magento\SalesRule\Cron\AggregateSalesReportCouponsData',
             [
                 'reportRule' => $this->reportRule,
                 'localeResolver' => $this->localeResolver,
@@ -44,15 +44,9 @@ class AggregateSalesReportCouponsDataTest extends \PHPUnit_Framework_TestCase
 
     protected function initMocks()
     {
-        $this->localeResolver = $this->getMock(\Magento\Framework\Locale\Resolver::class, [], [], '', false);
-        $this->localeDate = $this->getMock(\Magento\Framework\Stdlib\DateTime\Timezone::class, ['date'], [], '', false);
-        $this->reportRule = $this->getMock(
-            \Magento\SalesRule\Model\ResourceModel\Report\Rule::class,
-            [],
-            [],
-            '',
-            false
-        );
+        $this->localeResolver = $this->getMock('Magento\Framework\Locale\Resolver', [], [], '', false);
+        $this->localeDate = $this->getMock('Magento\Framework\Stdlib\DateTime\Timezone', ['date'], [], '', false);
+        $this->reportRule = $this->getMock('Magento\SalesRule\Model\ResourceModel\Report\Rule', [], [], '', false);
     }
 
     public function testExecute()
@@ -70,7 +64,7 @@ class AggregateSalesReportCouponsDataTest extends \PHPUnit_Framework_TestCase
         $this->localeResolver->expects($this->once())
             ->method('revert');
 
-        $scheduleMock = $this->getMock(\Magento\Cron\Model\Schedule::class, [], [], '', false);
+        $scheduleMock = $this->getMock('Magento\Cron\Model\Schedule', [], [], '', false);
 
         $this->assertEquals($this->model, $this->model->execute($scheduleMock));
     }

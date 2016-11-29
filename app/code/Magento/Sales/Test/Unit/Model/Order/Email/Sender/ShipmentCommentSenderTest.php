@@ -22,10 +22,10 @@ class ShipmentCommentSenderTest extends AbstractSenderTest
     protected function setUp()
     {
         $this->stepMockSetup();
-        $this->stepIdentityContainerInit(\Magento\Sales\Model\Order\Email\Container\ShipmentCommentIdentity::class);
+        $this->stepIdentityContainerInit('\Magento\Sales\Model\Order\Email\Container\ShipmentCommentIdentity');
         $this->addressRenderer->expects($this->any())->method('format')->willReturn(1);
         $this->shipmentMock = $this->getMock(
-            \Magento\Sales\Model\Order\Shipment::class,
+            '\Magento\Sales\Model\Order\Shipment',
             ['getStore', '__wakeup', 'getOrder'],
             [],
             '',

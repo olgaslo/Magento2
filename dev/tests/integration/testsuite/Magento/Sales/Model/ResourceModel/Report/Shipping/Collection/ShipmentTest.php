@@ -15,7 +15,7 @@ class ShipmentTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->_collection = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create(
-            \Magento\Sales\Model\ResourceModel\Report\Shipping\Collection\Shipment::class
+            'Magento\Sales\Model\ResourceModel\Report\Shipping\Collection\Shipment'
         );
         $this->_collection->setPeriod('day')->setDateRange(null, null)->addStoreFilter([1]);
     }

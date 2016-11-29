@@ -32,27 +32,27 @@ class PriceScopeTest extends \PHPUnit_Framework_TestCase
         $this->_objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
 
         $this->_indexerMock = $this->getMock(
-            \Magento\Indexer\Model\Indexer::class,
+            'Magento\Indexer\Model\Indexer',
             ['load', 'invalidate'],
             [],
             '',
             false
         );
         $this->indexerRegistryMock = $this->getMock(
-            \Magento\Framework\Indexer\IndexerRegistry::class,
+            'Magento\Framework\Indexer\IndexerRegistry',
             ['get'],
             [],
             '',
             false
         );
 
-        $contextMock = $this->getMock(\Magento\Framework\Model\Context::class, [], [], '', false);
-        $registryMock = $this->getMock(\Magento\Framework\Registry::class, [], [], '', false);
-        $storeManagerMock = $this->getMock(\Magento\Store\Model\StoreManagerInterface::class, [], [], '', false);
-        $configMock = $this->getMock(\Magento\Framework\App\Config\ScopeConfigInterface::class);
+        $contextMock = $this->getMock('Magento\Framework\Model\Context', [], [], '', false);
+        $registryMock = $this->getMock('Magento\Framework\Registry', [], [], '', false);
+        $storeManagerMock = $this->getMock('Magento\Store\Model\StoreManagerInterface', [], [], '', false);
+        $configMock = $this->getMock('Magento\Framework\App\Config\ScopeConfigInterface');
 
         $this->_model = $this->_objectManager->getObject(
-            \Magento\Catalog\Model\Indexer\Product\Price\System\Config\PriceScope::class,
+            'Magento\Catalog\Model\Indexer\Product\Price\System\Config\PriceScope',
             [
                 'context' => $contextMock,
                 'registry' => $registryMock,

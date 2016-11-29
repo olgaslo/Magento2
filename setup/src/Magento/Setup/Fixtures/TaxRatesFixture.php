@@ -29,11 +29,11 @@ class TaxRatesFixture extends Fixture
         /** Clean predefined tax rates to maintain consistency */
         /** @var $collection Magento\Tax\Model\ResourceModel\Calculation\Rate\Collection */
         $collection = $this->fixtureModel->getObjectManager()
-            ->get(\Magento\Tax\Model\ResourceModel\Calculation\Rate\Collection::class);
+            ->get('Magento\Tax\Model\ResourceModel\Calculation\Rate\Collection');
 
         /** @var $model Magento\Tax\Model\Calculation\Rate */
         $model = $this->fixtureModel->getObjectManager()
-            ->get(\Magento\Tax\Model\Calculation\Rate::class);
+            ->get('Magento\Tax\Model\Calculation\Rate');
 
         foreach ($collection->getAllIds() as $id) {
             $model->setId($id);
@@ -51,7 +51,7 @@ class TaxRatesFixture extends Fixture
             'size' => filesize($filename),
         ];
         $importHandler = $this->fixtureModel->getObjectManager()
-            ->create(\Magento\TaxImportExport\Model\Rate\CsvImportHandler::class);
+            ->create('Magento\TaxImportExport\Model\Rate\CsvImportHandler');
         $importHandler->importFromCsvFile($file);
 
     }

@@ -13,7 +13,7 @@ class AdditionalTest extends \PHPUnit_Framework_TestCase
     public function testToHtml()
     {
         $interpreter = $this->getMock(
-            \Magento\Framework\View\Layout\Argument\Interpreter\Options::class,
+            'Magento\Framework\View\Layout\Argument\Interpreter\Options',
             [],
             [],
             '',
@@ -23,10 +23,10 @@ class AdditionalTest extends \PHPUnit_Framework_TestCase
          * @var Additional $block
          */
         $block = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create(
-            \Magento\Backend\Block\Widget\Grid\Massaction\Additional::class,
+            'Magento\Backend\Block\Widget\Grid\Massaction\Additional',
             ['optionsInterpreter' => $interpreter]
         );
-        $modelClass = \Magento\Backend\Block\Widget\Grid\Massaction::class;
+        $modelClass = 'Magento\Backend\Block\Widget\Grid\Massaction';
         $data = [
             'fields' => [
                 'field1' => ['type' => 'select', 'values' => $modelClass, 'class' => 'custom_class'],

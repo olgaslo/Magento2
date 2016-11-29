@@ -23,7 +23,7 @@ class Block extends AbstractModel implements BlockInterface, IdentityInterface
     /**
      * CMS block cache tag
      */
-    const CACHE_TAG = 'cms_b';
+    const CACHE_TAG = 'cms_block';
 
     /**#@+
      * Block's statuses
@@ -32,11 +32,10 @@ class Block extends AbstractModel implements BlockInterface, IdentityInterface
     const STATUS_DISABLED = 0;
 
     /**#@-*/
-
     /**
      * @var string
      */
-    protected $_cacheTag = self::CACHE_TAG;
+    protected $_cacheTag = 'cms_block';
 
     /**
      * Prefix of model events names
@@ -50,7 +49,7 @@ class Block extends AbstractModel implements BlockInterface, IdentityInterface
      */
     protected function _construct()
     {
-        $this->_init(\Magento\Cms\Model\ResourceModel\Block::class);
+        $this->_init('Magento\Cms\Model\ResourceModel\Block');
     }
 
     /**

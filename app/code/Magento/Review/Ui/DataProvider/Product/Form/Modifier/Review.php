@@ -12,8 +12,6 @@ use Magento\Catalog\Model\Locator\LocatorInterface;
 use Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\AbstractModifier;
 use Magento\Ui\Component\Form;
 use Magento\Framework\UrlInterface;
-use Magento\Framework\Module\Manager as ModuleManager;
-use Magento\Framework\App\ObjectManager;
 
 /**
  * Class Review
@@ -37,11 +35,6 @@ class Review extends AbstractModifier
     protected $urlBuilder;
 
     /**
-     * @var ModuleManager
-     */
-    private $moduleManager;
-
-    /**
      * @param LocatorInterface $locator
      * @param UrlInterface $urlBuilder
      */
@@ -58,7 +51,7 @@ class Review extends AbstractModifier
      */
     public function modifyMeta(array $meta)
     {
-        if (!$this->locator->getProduct()->getId() || !$this->getModuleManager()->isOutputEnabled('Magento_Review')) {
+        if (!$this->locator->getProduct()->getId()) {
             return $meta;
         }
 
@@ -120,20 +113,5 @@ class Review extends AbstractModifier
         $data[$productId][self::DATA_SOURCE_DEFAULT]['current_product_id'] = $productId;
 
         return $data;
-    }
-
-    /**
-     * Retrieve module manager instance using dependency lookup to keep this class backward compatible.
-     *
-     * @return ModuleManager
-     *
-     * @deprecated
-     */
-    private function getModuleManager()
-    {
-        if ($this->moduleManager === null) {
-            $this->moduleManager = ObjectManager::getInstance()->get(ModuleManager::class);
-        }
-        return $this->moduleManager;
     }
 }

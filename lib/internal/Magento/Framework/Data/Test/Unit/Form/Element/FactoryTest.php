@@ -24,7 +24,7 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->_objectManagerMock = $this->getMock(
-            \Magento\Framework\ObjectManager\ObjectManager::class,
+            'Magento\Framework\ObjectManager\ObjectManager',
             ['create'],
             [],
             '',
@@ -176,12 +176,8 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
     public function createExceptionInvalidArgumentDataProvider()
     {
         return [
-            \Magento\Framework\Data\Form\Element\Factory::class => [
-                \Magento\Framework\Data\Form\Element\Factory::class
-            ],
-            \Magento\Framework\Data\Form\Element\Collection::class => [
-                \Magento\Framework\Data\Form\Element\Collection::class
-            ]
+            'Magento\Framework\Data\Form\Element\Factory' => ['Magento\Framework\Data\Form\Element\Factory'],
+            'Magento\Framework\Data\Form\Element\Collection' => ['Magento\Framework\Data\Form\Element\Collection']
         ];
     }
 }

@@ -22,26 +22,18 @@ class Combine extends \Magento\Rule\Model\Condition\Combine
     protected $elementName = 'parameters';
 
     /**
-     * @var array
-     */
-    private $excludedAttributes;
-
-    /**
      * @param \Magento\Rule\Model\Condition\Context $context
      * @param \Magento\CatalogWidget\Model\Rule\Condition\ProductFactory $conditionFactory
      * @param array $data
-     * @param array $excludedAttributes
      */
     public function __construct(
         \Magento\Rule\Model\Condition\Context $context,
         \Magento\CatalogWidget\Model\Rule\Condition\ProductFactory $conditionFactory,
-        array $data = [],
-        array $excludedAttributes = []
+        array $data = []
     ) {
         $this->productFactory = $conditionFactory;
         parent::__construct($context, $data);
-        $this->setType(\Magento\CatalogWidget\Model\Rule\Condition\Combine::class);
-        $this->excludedAttributes = $excludedAttributes;
+        $this->setType('Magento\CatalogWidget\Model\Rule\Condition\Combine');
     }
 
     /**
@@ -52,19 +44,17 @@ class Combine extends \Magento\Rule\Model\Condition\Combine
         $productAttributes = $this->productFactory->create()->loadAttributeOptions()->getAttributeOption();
         $attributes = [];
         foreach ($productAttributes as $code => $label) {
-            if (!in_array($code, $this->excludedAttributes)) {
-                $attributes[] = [
-                    'value' => 'Magento\CatalogWidget\Model\Rule\Condition\Product|' . $code,
-                    'label' => $label,
-                ];
-            }
+            $attributes[] = [
+                'value' => 'Magento\CatalogWidget\Model\Rule\Condition\Product|' . $code,
+                'label' => $label,
+            ];
         }
         $conditions = parent::getNewChildSelectOptions();
         $conditions = array_merge_recursive(
             $conditions,
             [
                 [
-                    'value' => \Magento\CatalogWidget\Model\Rule\Condition\Combine::class,
+                    'value' => 'Magento\CatalogWidget\Model\Rule\Condition\Combine',
                     'label' => __('Conditions Combination'),
                 ],
                 ['label' => __('Product Attribute'), 'value' => $attributes]
@@ -82,7 +72,7 @@ class Combine extends \Magento\Rule\Model\Condition\Combine
     public function collectValidatedAttributes($productCollection)
     {
         foreach ($this->getConditions() as $condition) {
-            $condition->collectValidatedAttributes($productCollection);
+            $condition->addToCollection($productCollection);
         }
         return $this;
     }

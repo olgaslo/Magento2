@@ -20,7 +20,7 @@ class ProductTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->_model = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create(
-            \Magento\Catalog\Model\Product::class
+            'Magento\Catalog\Model\Product'
         );
         $this->_model->setTypeId(\Magento\Catalog\Model\Product\Type::TYPE_BUNDLE);
     }
@@ -34,19 +34,19 @@ class ProductTest extends \PHPUnit_Framework_TestCase
     {
         // model getter
         $typeInstance = $this->_model->getTypeInstance();
-        $this->assertInstanceOf(\Magento\Bundle\Model\Product\Type::class, $typeInstance);
+        $this->assertInstanceOf('Magento\Bundle\Model\Product\Type', $typeInstance);
         $this->assertSame($typeInstance, $this->_model->getTypeInstance());
 
         // singleton getter
         $otherProduct = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create(
-            \Magento\Catalog\Model\Product::class
+            'Magento\Catalog\Model\Product'
         );
         $otherProduct->setTypeId(\Magento\Catalog\Model\Product\Type::TYPE_BUNDLE);
         $this->assertSame($typeInstance, $otherProduct->getTypeInstance());
 
         // model setter
         $customTypeInstance = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create(
-            \Magento\Bundle\Model\Product\Type::class
+            'Magento\Bundle\Model\Product\Type'
         );
         $this->_model->setTypeInstance($customTypeInstance);
         $this->assertSame($customTypeInstance, $this->_model->getTypeInstance());
@@ -88,7 +88,7 @@ class ProductTest extends \PHPUnit_Framework_TestCase
     {
         $this->_model->setTypeId(\Magento\Catalog\Model\Product\Type::TYPE_BUNDLE);
         $type = $this->_model->getPriceModel();
-        $this->assertInstanceOf(\Magento\Bundle\Model\Product\Price::class, $type);
+        $this->assertInstanceOf('Magento\Bundle\Model\Product\Price', $type);
         $this->assertSame($type, $this->_model->getPriceModel());
     }
 

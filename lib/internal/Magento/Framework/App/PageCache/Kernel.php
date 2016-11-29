@@ -97,7 +97,7 @@ class Kernel
     private function getCache()
     {
         if (!$this->fullPageCache) {
-            $this->fullPageCache = ObjectManager::getInstance()->get(\Magento\PageCache\Model\Cache\Type::class);
+            $this->fullPageCache = ObjectManager::getInstance()->get('\Magento\PageCache\Model\Cache\Type');
         }
         return $this->fullPageCache;
     }

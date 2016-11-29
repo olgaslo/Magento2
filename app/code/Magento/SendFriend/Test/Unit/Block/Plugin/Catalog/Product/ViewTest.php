@@ -25,17 +25,17 @@ class ViewTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->sendfriendModel = $this->getMock(
-            \Magento\SendFriend\Model\SendFriend::class,
+            'Magento\SendFriend\Model\SendFriend',
             ['__wakeup', 'canEmailToFriend'],
             [],
             '',
             false
         );
-        $this->productView = $this->getMock(\Magento\Catalog\Block\Product\View::class, [], [], '', false);
+        $this->productView = $this->getMock('Magento\Catalog\Block\Product\View', [], [], '', false);
 
         $this->objectManagerHelper = new ObjectManagerHelper($this);
         $this->view = $this->objectManagerHelper->getObject(
-            \Magento\SendFriend\Block\Plugin\Catalog\Product\View::class,
+            'Magento\SendFriend\Block\Plugin\Catalog\Product\View',
             [
                 'sendfriend' => $this->sendfriendModel
             ]

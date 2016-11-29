@@ -223,12 +223,4 @@ class Product extends \Magento\Rule\Model\Condition\Product\AbstractProduct
 
         return $result;
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function collectValidatedAttributes($productCollection)
-    {
-        return $this->addToCollection($productCollection);
-    }
 }

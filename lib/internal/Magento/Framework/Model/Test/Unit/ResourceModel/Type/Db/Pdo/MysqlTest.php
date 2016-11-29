@@ -27,9 +27,9 @@ class MysqlTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->string = $this->getMock(\Magento\Framework\Stdlib\StringUtils::class);
-        $this->dateTime = $this->getMock(\Magento\Framework\Stdlib\DateTime::class);
-        $this->selectFactory = $this->getMockBuilder(\Magento\Framework\DB\SelectFactory::class)
+        $this->string = $this->getMock('Magento\Framework\Stdlib\StringUtils');
+        $this->dateTime = $this->getMock('Magento\Framework\Stdlib\DateTime');
+        $this->selectFactory = $this->getMockBuilder('Magento\Framework\DB\SelectFactory')
             ->disableOriginalConstructor()
             ->getMock();
     }
@@ -96,7 +96,7 @@ class MysqlTest extends \PHPUnit_Framework_TestCase
     {
         $config = ['host' => 'localhost', 'active' => false];
         $object = new Mysql($this->string, $this->dateTime, $this->selectFactory, $config);
-        $logger = $this->getMockForAbstractClass(\Magento\Framework\DB\LoggerInterface::class);
+        $logger = $this->getMockForAbstractClass('Magento\Framework\DB\LoggerInterface');
         $this->assertNull($object->getConnection($logger));
     }
 }

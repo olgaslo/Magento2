@@ -26,14 +26,14 @@ use Magento\Mtf\TestCase\Injectable;
  * 4. Fill data according to dataset
  * 5. Perform all assertions
  *
- * @group Store_Management
+ * @group Store_Management_(PS)
  * @ZephyrId MAGETWO-27786
  */
 class UpdateStoreEntityTest extends Injectable
 {
     /* tags */
     const MVP = 'yes';
-    const SEVERITY = 'S2';
+    const DOMAIN = 'PS';
     /* end tags */
 
     /**

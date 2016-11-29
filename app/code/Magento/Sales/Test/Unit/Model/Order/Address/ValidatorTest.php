@@ -36,21 +36,21 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->addressMock = $this->getMock(
-            \Magento\Sales\Model\Order\Address::class,
+            'Magento\Sales\Model\Order\Address',
             ['hasData', 'getEmail', 'getAddressType', '__wakeup'],
             [],
             '',
             false
         );
         $this->directoryHelperMock = $this->getMock(
-            \Magento\Directory\Helper\Data::class,
+            'Magento\Directory\Helper\Data',
             [],
             [],
             '',
             false
         );
         $this->countryFactoryMock = $this->getMock(
-            \Magento\Directory\Model\CountryFactory::class,
+            'Magento\Directory\Model\CountryFactory',
             [],
             [],
             '',

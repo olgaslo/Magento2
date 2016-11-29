@@ -25,7 +25,7 @@ class SubTotalsTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->_parserMock = $this->getMock(
-            \Magento\Backend\Model\Widget\Grid\Parser::class,
+            'Magento\Backend\Model\Widget\Grid\Parser',
             [],
             [],
             '',
@@ -35,7 +35,7 @@ class SubTotalsTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->_factoryMock = $this->getMock(
-            \Magento\Framework\DataObject\Factory::class,
+            'Magento\Framework\DataObject\Factory',
             ['create'],
             [],
             '',
@@ -56,10 +56,7 @@ class SubTotalsTest extends \PHPUnit_Framework_TestCase
         $arguments = ['factory' => $this->_factoryMock, 'parser' => $this->_parserMock];
 
         $objectManagerHelper = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
-        $this->_model = $objectManagerHelper->getObject(
-            \Magento\Backend\Model\Widget\Grid\SubTotals::class,
-            $arguments
-        );
+        $this->_model = $objectManagerHelper->getObject('Magento\Backend\Model\Widget\Grid\SubTotals', $arguments);
 
         // setup columns
         $columns = ['sub_test1' => 'sum', 'sub_test2' => 'avg'];
@@ -88,7 +85,7 @@ class SubTotalsTest extends \PHPUnit_Framework_TestCase
     protected function _getTestCollection()
     {
         $collection = new \Magento\Framework\Data\Collection(
-            $this->getMock(\Magento\Framework\Data\Collection\EntityFactory::class, [], [], '', false)
+            $this->getMock('Magento\Framework\Data\Collection\EntityFactory', [], [], '', false)
         );
         $items = [
             new \Magento\Framework\DataObject(['sub_test1' => '1', 'sub_test2' => '2']),

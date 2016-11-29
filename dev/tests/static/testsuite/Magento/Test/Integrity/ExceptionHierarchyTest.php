@@ -19,7 +19,7 @@ class ExceptionHierarchyTest extends \PHPUnit_Framework_TestCase
     public function testIsInheritedLocalizedException(\ReflectionClass $reflectionException)
     {
         $this->assertTrue(
-            $reflectionException->isSubclassOf(\Magento\Framework\Exception\LocalizedException::class),
+            $reflectionException->isSubclassOf('Magento\Framework\Exception\LocalizedException'),
             "{$reflectionException->name} is not inherited LocalizedException"
         );
     }

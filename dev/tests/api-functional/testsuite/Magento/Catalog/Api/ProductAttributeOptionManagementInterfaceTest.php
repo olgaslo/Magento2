@@ -50,9 +50,8 @@ class ProductAttributeOptionManagementInterfaceTest extends WebapiAbstract
 
     /**
      * @magentoApiDataFixture Magento/Catalog/Model/Product/Attribute/_files/select_attribute.php
-     * @dataProvider addDataProvider
      */
-    public function testAdd($optionData)
+    public function testAdd()
     {
         $this->_markTestAsRestOnly('Fix inconsistencies in WSDL and Data interfaces');
         $testAttributeCode = 'select_attribute';
@@ -65,6 +64,18 @@ class ProductAttributeOptionManagementInterfaceTest extends WebapiAbstract
                 'service' => self::SERVICE_NAME,
                 'serviceVersion' => self::SERVICE_VERSION,
                 'operation' => self::SERVICE_NAME . 'add',
+            ],
+        ];
+
+        $optionData = [
+            AttributeOptionInterface::LABEL => 'new color',
+            AttributeOptionInterface::SORT_ORDER => 100,
+            AttributeOptionInterface::IS_DEFAULT => true,
+            AttributeOptionInterface::STORE_LABELS => [
+                [
+                    AttributeOptionLabelInterface::LABEL => 'DE label',
+                    AttributeOptionLabelInterface::STORE_ID => 1,
+                ],
             ],
         ];
 
@@ -83,37 +94,6 @@ class ProductAttributeOptionManagementInterfaceTest extends WebapiAbstract
             $optionData[AttributeOptionInterface::STORE_LABELS][0][AttributeOptionLabelInterface::LABEL],
             $lastOption['label']
         );
-    }
-
-    /**
-     * @return array
-     */
-    public function addDataProvider()
-    {
-        $optionPayload = [
-            AttributeOptionInterface::LABEL => 'new color',
-            AttributeOptionInterface::SORT_ORDER => 100,
-            AttributeOptionInterface::IS_DEFAULT => true,
-            AttributeOptionInterface::STORE_LABELS => [
-                [
-                    AttributeOptionLabelInterface::LABEL => 'DE label',
-                    AttributeOptionLabelInterface::STORE_ID => 1,
-                ],
-            ],
-        ];
-
-        return [
-            'option_without_value_node' => [
-                $optionPayload
-            ],
-            'option_with_value_node_that_starts_with_text' => [
-                array_merge($optionPayload, [AttributeOptionInterface::VALUE => 'some_text'])
-            ],
-            'option_with_value_node_that_starts_with_a_number' => [
-                array_merge($optionPayload, [AttributeOptionInterface::VALUE => '123_some_text'])
-            ],
-
-        ];
     }
 
     /**

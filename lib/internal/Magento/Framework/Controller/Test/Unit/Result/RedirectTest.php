@@ -6,7 +6,6 @@
 
 namespace Magento\Framework\Controller\Test\Unit\Result;
 
-use Magento\Framework\App\Response\HttpInterface as HttpResponseInterface;
 use \Magento\Framework\Controller\Result\Redirect;
 
 class RedirectTest extends \PHPUnit_Framework_TestCase
@@ -23,35 +22,35 @@ class RedirectTest extends \PHPUnit_Framework_TestCase
     /** @var \Magento\Framework\UrlInterface|\PHPUnit_Framework_MockObject_MockObject */
     protected $urlInterface;
 
-    /** @var HttpResponseInterface|\PHPUnit_Framework_MockObject_MockObject */
+    /** @var \Magento\Framework\App\ResponseInterface|\PHPUnit_Framework_MockObject_MockObject */
     protected $response;
 
     protected function setUp()
     {
         $this->redirectInterface = $this->getMock(
-            \Magento\Framework\App\Response\RedirectInterface::class,
+            'Magento\Framework\App\Response\RedirectInterface',
             [],
             [],
             '',
             false
         );
         $this->urlBuilder = $this->getMock(
-            \Magento\Framework\UrlInterface::class,
+            'Magento\Framework\UrlInterface',
             [],
             [],
             '',
             false
         );
         $this->urlInterface = $this->getMock(
-            \Magento\Framework\UrlInterface::class,
+            'Magento\Framework\UrlInterface',
             [],
             [],
             '',
             false
         );
         $this->response = $this->getMock(
-            HttpResponseInterface::class,
-            [],
+            'Magento\Framework\App\ResponseInterface',
+            ['setRedirect', 'sendResponse'],
             [],
             '',
             false
@@ -62,25 +61,19 @@ class RedirectTest extends \PHPUnit_Framework_TestCase
     public function testSetRefererUrl()
     {
         $this->redirectInterface->expects($this->once())->method('getRefererUrl');
-        $this->assertInstanceOf(
-            \Magento\Framework\Controller\Result\Redirect::class,
-            $this->redirect->setRefererUrl()
-        );
+        $this->assertInstanceOf('Magento\Framework\Controller\Result\Redirect', $this->redirect->setRefererUrl());
     }
 
     public function testSetRefererOrBaseUrl()
     {
         $this->redirectInterface->expects($this->once())->method('getRedirectUrl');
-        $this->assertInstanceOf(
-            \Magento\Framework\Controller\Result\Redirect::class,
-            $this->redirect->setRefererOrBaseUrl()
-        );
+        $this->assertInstanceOf('Magento\Framework\Controller\Result\Redirect', $this->redirect->setRefererOrBaseUrl());
     }
 
     public function testSetUrl()
     {
         $url = 'http://test.com';
-        $this->assertInstanceOf(\Magento\Framework\Controller\Result\Redirect::class, $this->redirect->setUrl($url));
+        $this->assertInstanceOf('Magento\Framework\Controller\Result\Redirect', $this->redirect->setUrl($url));
     }
 
     public function testSetPath()
@@ -91,7 +84,7 @@ class RedirectTest extends \PHPUnit_Framework_TestCase
             $this->returnValue($params)
         );
         $this->assertInstanceOf(
-            \Magento\Framework\Controller\Result\Redirect::class,
+            'Magento\Framework\Controller\Result\Redirect',
             $this->redirect->setPath($path, $params)
         );
     }
@@ -100,7 +93,7 @@ class RedirectTest extends \PHPUnit_Framework_TestCase
     {
         $this->response->expects($this->once())->method('setRedirect');
         $this->assertInstanceOf(
-            \Magento\Framework\Controller\Result\Redirect::class,
+            'Magento\Framework\Controller\Result\Redirect',
             $this->redirect->renderResult($this->response)
         );
     }

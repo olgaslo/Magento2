@@ -20,7 +20,7 @@ class AbstractAdapterTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->_adapterMock = $this->getMockForAbstractClass(
-            \Magento\Setup\Module\I18n\Parser\Adapter\AbstractAdapter::class,
+            'Magento\Setup\Module\I18n\Parser\Adapter\AbstractAdapter',
             [],
             '',
             false,
@@ -29,7 +29,7 @@ class AbstractAdapterTest extends \PHPUnit_Framework_TestCase
             ['_parse']
         );
         $this->_adapterReflection = new \ReflectionMethod(
-            \Magento\Setup\Module\I18n\Parser\Adapter\AbstractAdapter::class,
+            'Magento\Setup\Module\I18n\Parser\Adapter\AbstractAdapter',
             '_addPhrase'
         );
         $this->_adapterReflection->setAccessible(true);

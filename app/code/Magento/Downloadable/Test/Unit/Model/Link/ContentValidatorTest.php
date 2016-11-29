@@ -37,28 +37,28 @@ class ContentValidatorTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->fileValidatorMock = $this->getMock(
-            \Magento\Downloadable\Model\File\ContentValidator::class,
+            '\Magento\Downloadable\Model\File\ContentValidator',
             [],
             [],
             '',
             false
         );
         $this->urlValidatorMock = $this->getMock(
-            \Magento\Framework\Url\Validator::class,
+            '\Magento\Framework\Url\Validator',
             [],
             [],
             '',
             false
         );
-        $this->linkFileMock = $this->getMock(\Magento\Downloadable\Api\Data\File\ContentInterface::class);
-        $this->sampleFileMock = $this->getMock(\Magento\Downloadable\Api\Data\File\ContentInterface::class);
+        $this->linkFileMock = $this->getMock('\Magento\Downloadable\Api\Data\File\ContentInterface');
+        $this->sampleFileMock = $this->getMock('\Magento\Downloadable\Api\Data\File\ContentInterface');
         $this->validator = new ContentValidator($this->fileValidatorMock, $this->urlValidatorMock);
     }
 
     public function testIsValid()
     {
-        $linkFileContentMock = $this->getMock(\Magento\Downloadable\Api\Data\File\ContentInterface::class);
-        $sampleFileContentMock = $this->getMock(\Magento\Downloadable\Api\Data\File\ContentInterface::class);
+        $linkFileContentMock = $this->getMock('Magento\Downloadable\Api\Data\File\ContentInterface');
+        $sampleFileContentMock = $this->getMock('Magento\Downloadable\Api\Data\File\ContentInterface');
         $linkData = [
             'title' => 'Title',
             'sort_order' => 1,
@@ -78,7 +78,7 @@ class ContentValidatorTest extends \PHPUnit_Framework_TestCase
 
     public function testIsValidSkipLinkContent()
     {
-        $sampleFileContentMock = $this->getMock(\Magento\Downloadable\Api\Data\File\ContentInterface::class);
+        $sampleFileContentMock = $this->getMock('Magento\Downloadable\Api\Data\File\ContentInterface');
         $linkData = [
             'title' => 'Title',
             'sort_order' => 1,
@@ -98,7 +98,7 @@ class ContentValidatorTest extends \PHPUnit_Framework_TestCase
 
     public function testIsValidSkipSampleContent()
     {
-        $sampleFileContentMock = $this->getMock(\Magento\Downloadable\Api\Data\File\ContentInterface::class);
+        $sampleFileContentMock = $this->getMock('Magento\Downloadable\Api\Data\File\ContentInterface');
         $linkData = [
             'title' => 'Title',
             'sort_order' => 1,
@@ -226,7 +226,7 @@ class ContentValidatorTest extends \PHPUnit_Framework_TestCase
      */
     protected function getLinkMock(array $linkData)
     {
-        $linkMock = $this->getMock(\Magento\Downloadable\Api\Data\LinkInterface::class);
+        $linkMock = $this->getMock('\Magento\Downloadable\Api\Data\LinkInterface');
         $linkMock->expects($this->any())->method('getTitle')->will($this->returnValue(
             $linkData['title']
         ));

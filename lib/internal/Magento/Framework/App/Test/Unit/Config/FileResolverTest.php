@@ -38,21 +38,21 @@ class FileResolverTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->iteratorFactory = $this->getMock(
-            \Magento\Framework\Config\FileIteratorFactory::class,
+            'Magento\Framework\Config\FileIteratorFactory',
             [],
             ['getPath'],
             '',
             false
         );
         $this->filesystem = $this->getMock(
-            \Magento\Framework\Filesystem::class,
+            'Magento\Framework\Filesystem',
             ['getDirectoryRead'],
             [],
             '',
             false
         );
         $this->moduleReader = $this->getMock(
-            \Magento\Framework\Module\Dir\Reader::class,
+            'Magento\Framework\Module\Dir\Reader',
             [],
             ['getConfigurationFiles'],
             '',
@@ -76,7 +76,7 @@ class FileResolverTest extends \PHPUnit_Framework_TestCase
     public function testGetPrimary($filename, $fileList)
     {
         $scope = 'primary';
-        $directory = $this->getMock(\Magento\Framework\Filesystem\Directory\Read::class, [], [], '', false);
+        $directory = $this->getMock('Magento\Framework\Filesystem\Directory\Read', [], [], '', false);
         $directory->expects(
             $this->once()
         )->method(

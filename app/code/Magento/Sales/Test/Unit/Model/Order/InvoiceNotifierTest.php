@@ -44,27 +44,27 @@ class InvoiceNotifierTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->historyCollectionFactory = $this->getMock(
-            \Magento\Sales\Model\ResourceModel\Order\Status\History\CollectionFactory::class,
+            'Magento\Sales\Model\ResourceModel\Order\Status\History\CollectionFactory',
             ['create'],
             [],
             '',
             false
         );
         $this->invoice = $this->getMock(
-            \Magento\Sales\Model\Order\Invoice::class,
+            'Magento\Sales\Model\Order\Invoice',
             ['__wakeUp', 'getEmailSent'],
             [],
             '',
             false
         );
         $this->invoiceSenderMock = $this->getMock(
-            \Magento\Sales\Model\Order\Email\Sender\InvoiceSender::class,
+            'Magento\Sales\Model\Order\Email\Sender\InvoiceSender',
             ['send'],
             [],
             '',
             false
         );
-        $this->loggerMock = $this->getMock(\Psr\Log\LoggerInterface::class);
+        $this->loggerMock = $this->getMock('Psr\Log\LoggerInterface');
         $this->notifier = new InvoiceNotifier(
             $this->historyCollectionFactory,
             $this->loggerMock,
@@ -78,14 +78,14 @@ class InvoiceNotifierTest extends \PHPUnit_Framework_TestCase
     public function testNotifySuccess()
     {
         $historyCollection = $this->getMock(
-            \Magento\Sales\Model\ResourceModel\Order\Status\History\Collection::class,
+            'Magento\Sales\Model\ResourceModel\Order\Status\History\Collection',
             ['getUnnotifiedForInstance', 'save', 'setIsCustomerNotified'],
             [],
             '',
             false
         );
         $historyItem = $this->getMock(
-            \Magento\Sales\Model\Order\Status\History::class,
+            'Magento\Sales\Model\Order\Status\History',
             ['setIsCustomerNotified', 'save', '__wakeUp'],
             [],
             '',

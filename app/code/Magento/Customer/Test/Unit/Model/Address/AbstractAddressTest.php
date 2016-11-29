@@ -6,9 +6,6 @@
 
 namespace Magento\Customer\Test\Unit\Model\Address;
 
-/**
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
- */
 class AbstractAddressTest extends \PHPUnit_Framework_TestCase
 {
     /** @var \Magento\Framework\Model\Context|\PHPUnit_Framework_MockObject_MockObject  */
@@ -43,27 +40,27 @@ class AbstractAddressTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->contextMock = $this->getMock(\Magento\Framework\Model\Context::class, [], [], '', false);
-        $this->registryMock = $this->getMock(\Magento\Framework\Registry::class, [], [], '', false);
-        $this->directoryDataMock = $this->getMock(\Magento\Directory\Helper\Data::class, [], [], '', false);
-        $this->eavConfigMock = $this->getMock(\Magento\Eav\Model\Config::class, [], [], '', false);
-        $this->addressConfigMock = $this->getMock(\Magento\Customer\Model\Address\Config::class, [], [], '', false);
+        $this->contextMock = $this->getMock('Magento\Framework\Model\Context', [], [], '', false);
+        $this->registryMock = $this->getMock('Magento\Framework\Registry', [], [], '', false);
+        $this->directoryDataMock = $this->getMock('Magento\Directory\Helper\Data', [], [], '', false);
+        $this->eavConfigMock = $this->getMock('Magento\Eav\Model\Config', [], [], '', false);
+        $this->addressConfigMock = $this->getMock('Magento\Customer\Model\Address\Config', [], [], '', false);
         $this->regionFactoryMock = $this->getMock(
-            \Magento\Directory\Model\RegionFactory::class,
+            'Magento\Directory\Model\RegionFactory',
             ['create'],
             [],
             '',
             false
         );
         $this->countryFactoryMock = $this->getMock(
-            \Magento\Directory\Model\CountryFactory::class,
+            'Magento\Directory\Model\CountryFactory',
             ['create'],
             [],
             '',
             false
         );
         $regionCollectionMock = $this->getMock(
-            \Magento\Directory\Model\ResourceModel\Region\Collection::class,
+            'Magento\Directory\Model\ResourceModel\Region\Collection',
             [],
             [],
             '',
@@ -72,7 +69,7 @@ class AbstractAddressTest extends \PHPUnit_Framework_TestCase
         $regionCollectionMock->expects($this->any())
             ->method('getSize')
             ->will($this->returnValue(0));
-        $countryMock = $this->getMock(\Magento\Directory\Model\Country::class, [], [], '', false);
+        $countryMock = $this->getMock('Magento\Directory\Model\Country', [], [], '', false);
         $countryMock->expects($this->any())
             ->method('getRegionCollection')
             ->will($this->returnValue($regionCollectionMock));
@@ -80,13 +77,13 @@ class AbstractAddressTest extends \PHPUnit_Framework_TestCase
             ->method('create')
             ->will($this->returnValue($countryMock));
 
-        $this->resourceMock = $this->getMock(\Magento\Customer\Model\ResourceModel\Customer::class, [], [], '', false);
-        $this->resourceCollectionMock = $this->getMockBuilder(\Magento\Framework\Data\Collection\AbstractDb::class)
+        $this->resourceMock = $this->getMock('Magento\Customer\Model\ResourceModel\Customer', [], [], '', false);
+        $this->resourceCollectionMock = $this->getMockBuilder('Magento\Framework\Data\Collection\AbstractDb')
             ->disableOriginalConstructor()
             ->getMockForAbstractClass();
         $objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
         $this->model = $objectManager->getObject(
-            \Magento\Customer\Model\Address\AbstractAddress::class,
+            'Magento\Customer\Model\Address\AbstractAddress',
             [
                 'context' => $this->contextMock,
                 'registry' => $this->registryMock,
@@ -183,7 +180,7 @@ class AbstractAddressTest extends \PHPUnit_Framework_TestCase
     protected function prepareGetRegion($countryId, $regionName = 'RegionName')
     {
         $region = $this->getMock(
-            \Magento\Directory\Model\Region::class,
+            'Magento\Directory\Model\Region',
             ['getCountryId', 'getName', '__wakeup', 'load'],
             [],
             '',
@@ -206,7 +203,7 @@ class AbstractAddressTest extends \PHPUnit_Framework_TestCase
     protected function prepareGetRegionCode($countryId, $regionCode = 'UK')
     {
         $region = $this->getMock(
-            \Magento\Directory\Model\Region::class,
+            'Magento\Directory\Model\Region',
             ['getCountryId', 'getCode', '__wakeup', 'load'],
             [],
             '',
@@ -245,14 +242,15 @@ class AbstractAddressTest extends \PHPUnit_Framework_TestCase
      */
     public function testSetDataWithMultidimensionalArray()
     {
+        $this->markTestSkipped('Need to revert changes from  MAGETWO-39106 and then modify this test.');
         $expected = [
             'key' => 'value',
-            'street' => 'value1',
+            'array' => 'value1',
         ];
 
         $key = [
             'key' => 'value',
-            'street' => [
+            'array' => [
                 'key1' => 'value1',
             ]
         ];

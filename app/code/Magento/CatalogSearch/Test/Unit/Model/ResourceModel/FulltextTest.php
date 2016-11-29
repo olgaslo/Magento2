@@ -18,17 +18,14 @@ class FulltextTest extends \PHPUnit_Framework_TestCase
      * @var AdapterInterface|\PHPUnit_Framework_MockObject_MockObject
      */
     private $connection;
-
     /**
      * @var Resource|\PHPUnit_Framework_MockObject_MockObject
      */
     private $resource;
-
     /**
      * @var Context|\PHPUnit_Framework_MockObject_MockObject
      */
     private $context;
-
     /**
      * @var Fulltext
      */
@@ -36,16 +33,16 @@ class FulltextTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->context = $this->getMockBuilder(\Magento\Framework\Model\ResourceModel\Db\Context::class)
+        $this->context = $this->getMockBuilder('\Magento\Framework\Model\ResourceModel\Db\Context')
             ->disableOriginalConstructor()
             ->getMock();
-        $this->resource = $this->getMockBuilder(\Magento\Framework\App\ResourceConnection::class)
+        $this->resource = $this->getMockBuilder('\Magento\Framework\App\ResourceConnection')
             ->disableOriginalConstructor()
             ->getMock();
         $this->context->expects($this->once())
             ->method('getResources')
             ->willReturn($this->resource);
-        $this->connection = $this->getMockBuilder(\Magento\Framework\DB\Adapter\AdapterInterface::class)
+        $this->connection = $this->getMockBuilder('\Magento\Framework\DB\Adapter\AdapterInterface')
             ->disableOriginalConstructor()
             ->getMockForAbstractClass();
         $this->resource->expects($this->once())
@@ -54,7 +51,7 @@ class FulltextTest extends \PHPUnit_Framework_TestCase
 
         $objectManager = new ObjectManager($this);
         $this->target = $objectManager->getObject(
-            \Magento\CatalogSearch\Model\ResourceModel\Fulltext::class,
+            '\Magento\CatalogSearch\Model\ResourceModel\Fulltext',
             [
                 'context' => $this->context,
             ]

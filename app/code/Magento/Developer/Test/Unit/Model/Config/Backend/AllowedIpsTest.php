@@ -19,10 +19,10 @@ class AllowedIpsTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $contextMock = $this->getMockBuilder(\Magento\Framework\Model\Context::class)
+        $contextMock = $this->getMockBuilder('\Magento\Framework\Model\Context')
             ->disableOriginalConstructor()
             ->getMock();
-        $eventMangerMock = $this->getMockBuilder(\Magento\Framework\Event\ManagerInterface::class)
+        $eventMangerMock = $this->getMockBuilder('\Magento\Framework\Event\ManagerInterface')
             ->disableOriginalConstructor()
             ->getMock();
         $contextMock->expects($this->any())
@@ -30,9 +30,9 @@ class AllowedIpsTest extends \PHPUnit_Framework_TestCase
             ->willReturn($eventMangerMock);
 
         $objectManagerHelper = new ObjectManagerHelper($this);
-        $escaper = $objectManagerHelper->getObject(\Magento\Framework\Escaper::class);
+        $escaper = $objectManagerHelper->getObject('\Magento\Framework\Escaper');
         $this->model = $objectManagerHelper->getObject(
-            \Magento\Developer\Model\Config\Backend\AllowedIps::class,
+            'Magento\Developer\Model\Config\Backend\AllowedIps',
             [
                 'context' => $contextMock,
                 'escaper' => $escaper,

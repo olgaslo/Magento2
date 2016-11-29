@@ -22,14 +22,14 @@ class IteratorTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->_model = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create(
-            \Magento\Framework\Model\ResourceModel\Iterator::class
+            'Magento\Framework\Model\ResourceModel\Iterator'
         );
     }
 
     public function testWalk()
     {
         $collection = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create(
-            \Magento\Store\Model\ResourceModel\Store\Collection::class
+            'Magento\Store\Model\ResourceModel\Store\Collection'
         );
         $this->_model->walk($collection->getSelect(), [[$this, 'walkCallback']]);
         $this->assertGreaterThan(0, $this->_callbackCounter);

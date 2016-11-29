@@ -72,32 +72,6 @@ class Validator extends AbstractValidator implements RowValidatorInterface
     }
 
     /**
-     * Check if value is valid attribute option
-     *
-     * @param string $attrCode
-     * @param array $possibleOptions
-     * @param string $value
-     * @return bool
-     */
-    private function validateOption($attrCode, $possibleOptions, $value)
-    {
-        if (!isset($possibleOptions[strtolower($value)])) {
-            $this->_addMessages(
-                [
-                    sprintf(
-                        $this->context->retrieveMessageTemplate(
-                            RowValidatorInterface::ERROR_INVALID_ATTRIBUTE_OPTION
-                        ),
-                        $attrCode
-                    )
-                ]
-            );
-            return false;
-        }
-        return true;
-    }
-
-    /**
      * @param mixed $attrCode
      * @param string $type
      * @return bool
@@ -192,15 +166,23 @@ class Validator extends AbstractValidator implements RowValidatorInterface
                 break;
             case 'select':
             case 'boolean':
-                $valid = $this->validateOption($attrCode, $attrParams['options'], $rowData[$attrCode]);
-                break;
             case 'multiselect':
-                $values = $this->context->parseMultiselectValues($rowData[$attrCode]);
+                $values = explode(Product::PSEUDO_MULTI_LINE_SEPARATOR, $rowData[$attrCode]);
+                $valid = true;
                 foreach ($values as $value) {
-                    $valid = $this->validateOption($attrCode, $attrParams['options'], $value);
-                    if (!$valid) {
-                        break;
-                    }
+                    $valid = $valid && isset($attrParams['options'][strtolower($value)]);
+                }
+                if (!$valid) {
+                    $this->_addMessages(
+                        [
+                            sprintf(
+                                $this->context->retrieveMessageTemplate(
+                                    RowValidatorInterface::ERROR_INVALID_ATTRIBUTE_OPTION
+                                ),
+                                $attrCode
+                            )
+                        ]
+                    );
                 }
                 break;
             case 'datetime':

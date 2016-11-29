@@ -46,7 +46,7 @@ class Chooser extends \Magento\Backend\App\Action
 
         $layout = $this->layoutFactory->create();
         $productsGrid = $layout->createBlock(
-            \Magento\Catalog\Block\Adminhtml\Product\Widget\Chooser::class,
+            'Magento\Catalog\Block\Adminhtml\Product\Widget\Chooser',
             '',
             [
                 'data' => [
@@ -62,7 +62,7 @@ class Chooser extends \Magento\Backend\App\Action
 
         if (!$this->getRequest()->getParam('products_grid')) {
             $categoriesTree = $layout->createBlock(
-                \Magento\Catalog\Block\Adminhtml\Category\Widget\Chooser::class,
+                'Magento\Catalog\Block\Adminhtml\Category\Widget\Chooser',
                 '',
                 [
                     'data' => [
@@ -73,7 +73,7 @@ class Chooser extends \Magento\Backend\App\Action
                 ]
             );
 
-            $html = $layout->createBlock(\Magento\Catalog\Block\Adminhtml\Product\Widget\Chooser\Container::class)
+            $html = $layout->createBlock('Magento\Catalog\Block\Adminhtml\Product\Widget\Chooser\Container')
                 ->setTreeHtml($categoriesTree->toHtml())
                 ->setGridHtml($html)
                 ->toHtml();

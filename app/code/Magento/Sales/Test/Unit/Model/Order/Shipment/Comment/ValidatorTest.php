@@ -26,7 +26,7 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->commentModelMock = $this->getMock(
-            \Magento\Sales\Model\Order\Shipment\Comment::class,
+            'Magento\Sales\Model\Order\Shipment\Comment',
             ['hasData', 'getData', '__wakeup'],
             [],
             '',

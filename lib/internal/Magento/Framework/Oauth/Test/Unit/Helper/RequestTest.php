@@ -24,7 +24,7 @@ class RequestTest extends \PHPUnit_Framework_TestCase
     {
         $this->oauthRequestHelper = new \Magento\Framework\Oauth\Helper\Request();
         $this->response = $this->getMock(
-            \Magento\Framework\HTTP\PhpEnvironment\Response::class,
+            'Magento\Framework\HTTP\PhpEnvironment\Response',
             ['setHttpResponseCode'],
             [],
             '',
@@ -90,7 +90,7 @@ class RequestTest extends \PHPUnit_Framework_TestCase
     public function testGetRequestUrl($url, $host)
     {
         $httpRequestMock = $this->getMock(
-            \Magento\Framework\App\Request\Http::class,
+            'Magento\Framework\App\Request\Http',
             ['getHttpHost', 'getScheme', 'getRequestUri'],
             [],
             '',

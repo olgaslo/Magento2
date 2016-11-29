@@ -17,8 +17,6 @@ use Magento\Framework\DataObject;
 
 /**
  * Tests for Magento\Quote\Model\Service\Quote\Processor
- *
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
 class ProcessorTest extends \PHPUnit_Framework_TestCase
 {
@@ -65,7 +63,7 @@ class ProcessorTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->quoteItemFactoryMock = $this->getMock(
-            \Magento\Quote\Model\Quote\ItemFactory::class,
+            'Magento\Quote\Model\Quote\ItemFactory',
             ['create'],
             [],
             '',
@@ -73,7 +71,7 @@ class ProcessorTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->itemMock = $this->getMock(
-            \Magento\Quote\Model\Quote\Item::class,
+            'Magento\Quote\Model\Quote\Item',
             [
                 'getId',
                 'setOptions',
@@ -93,19 +91,19 @@ class ProcessorTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue($this->itemMock));
 
         $this->storeManagerMock = $this->getMock(
-            \Magento\Store\Model\StoreManager::class,
+            'Magento\Store\Model\StoreManager',
             ['getStore'],
             [],
             '',
             false
         );
-        $this->storeMock = $this->getMock(\Magento\Store\Model\Store::class, ['getId', '__wakeup'], [], '', false);
+        $this->storeMock = $this->getMock('Magento\Store\Model\Store', ['getId', '__wakeup'], [], '', false);
         $this->storeManagerMock->expects($this->any())
             ->method('getStore')
             ->will($this->returnValue($this->storeMock));
 
         $this->stateMock = $this->getMock(
-            \Magento\Framework\App\State::class,
+            'Magento\Framework\App\State',
             [],
             [],
             '',
@@ -119,14 +117,14 @@ class ProcessorTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->productMock = $this->getMock(
-            \Magento\Catalog\Model\Product::class,
+            'Magento\Catalog\Model\Product',
             ['getCustomOptions', '__wakeup', 'getParentProductId', 'getCartQty', 'getStickWithinParent'],
             [],
             '',
             false
         );
         $this->objectMock = $this->getMock(
-            \Magento\Framework\DataObject::class,
+            'Magento\Framework\DataObject',
             ['getResetCount', 'getId', 'getCustomPrice'],
             [],
             '',

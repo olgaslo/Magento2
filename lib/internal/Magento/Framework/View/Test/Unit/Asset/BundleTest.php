@@ -38,13 +38,13 @@ class BundleTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->filesystemMock = $this->getMockBuilder(\Magento\Framework\Filesystem::class)
+        $this->filesystemMock = $this->getMockBuilder('Magento\Framework\Filesystem')
             ->disableOriginalConstructor()
             ->getMock();
-        $this->bundleConfigMock = $this->getMockBuilder(\Magento\Framework\View\Asset\Bundle\ConfigInterface::class)
+        $this->bundleConfigMock = $this->getMockBuilder('Magento\Framework\View\Asset\Bundle\ConfigInterface')
             ->disableOriginalConstructor()
             ->getMock();
-        $this->minificationMock = $this->getMockBuilder(\Magento\Framework\View\Asset\Minification::class)
+        $this->minificationMock = $this->getMockBuilder('Magento\Framework\View\Asset\Minification')
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -76,7 +76,7 @@ class BundleTest extends \PHPUnit_Framework_TestCase
                 'path-to-theme/js/bundle/bundle0.min.js'
             );
 
-        $contextMock = $this->getMockBuilder(\Magento\Framework\View\Asset\File\FallbackContext::class)
+        $contextMock = $this->getMockBuilder('Magento\Framework\View\Asset\File\FallbackContext')
             ->disableOriginalConstructor()
             ->getMock();
         $contextMock
@@ -96,7 +96,7 @@ class BundleTest extends \PHPUnit_Framework_TestCase
             ->method('getPath')
             ->willReturn('path-to-theme');
 
-        $assetMock = $this->getMockBuilder(\Magento\Framework\View\Asset\LocalInterface::class)
+        $assetMock = $this->getMockBuilder('Magento\Framework\View\Asset\LocalInterface')
             ->setMethods(['getContentType', 'getContext'])
             ->getMockForAbstractClass();
         $assetMock
@@ -112,7 +112,7 @@ class BundleTest extends \PHPUnit_Framework_TestCase
             ->method('getFilePath')
             ->willReturn('onefile.js');
 
-        $writeMock = $this->getMockBuilder(\Magento\Framework\Filesystem\Directory\WriteInterface::class)
+        $writeMock = $this->getMockBuilder('Magento\Framework\Filesystem\Directory\WriteInterface')
             ->getMockForAbstractClass();
         $writeMock
             ->expects($this->once())

@@ -31,37 +31,17 @@ class Save extends \Magento\Backend\App\Action
     protected $dataPersistor;
 
     /**
-     * @var \Magento\Cms\Model\PageFactory
-     */
-    private $pageFactory;
-
-    /**
-     * @var \Magento\Cms\Api\PageRepositoryInterface
-     */
-    private $pageRepository;
-
-    /**
      * @param Action\Context $context
      * @param PostDataProcessor $dataProcessor
      * @param DataPersistorInterface $dataPersistor
-     * @param \Magento\Cms\Model\PageFactory $pageFactory
-     * @param \Magento\Cms\Api\PageRepositoryInterface $pageRepository
-     *
      */
     public function __construct(
         Action\Context $context,
         PostDataProcessor $dataProcessor,
-        DataPersistorInterface $dataPersistor,
-        \Magento\Cms\Model\PageFactory $pageFactory = null,
-        \Magento\Cms\Api\PageRepositoryInterface $pageRepository = null
+        DataPersistorInterface $dataPersistor
     ) {
         $this->dataProcessor = $dataProcessor;
         $this->dataPersistor = $dataPersistor;
-        $this->pageFactory = $pageFactory
-            ?: \Magento\Framework\App\ObjectManager::getInstance()->get(\Magento\Cms\Model\PageFactory::class);
-        $this->pageRepository = $pageRepository
-            ?: \Magento\Framework\App\ObjectManager::getInstance()
-                ->get(\Magento\Cms\Api\PageRepositoryInterface::class);
         parent::__construct($context);
     }
 
@@ -86,7 +66,7 @@ class Save extends \Magento\Backend\App\Action
             }
 
             /** @var \Magento\Cms\Model\Page $model */
-            $model = $this->pageFactory->create();
+            $model = $this->_objectManager->create('Magento\Cms\Model\Page');
 
             $id = $this->getRequest()->getParam('page_id');
             if ($id) {
@@ -105,7 +85,7 @@ class Save extends \Magento\Backend\App\Action
             }
 
             try {
-                $this->pageRepository->save($model);
+                $model->save();
                 $this->messageManager->addSuccess(__('You saved the page.'));
                 $this->dataPersistor->clear('cms_page');
                 if ($this->getRequest()->getParam('back')) {

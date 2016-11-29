@@ -32,7 +32,7 @@ class AbstractCollectionTest extends \Magento\Eav\Test\Unit\Model\Entity\Collect
         $objectManager = new ObjectManager($this);
 
         $this->entitySnapshot = $this->getMock(
-            \Magento\Framework\Model\ResourceModel\Db\VersionControl\Snapshot::class,
+            'Magento\Framework\Model\ResourceModel\Db\VersionControl\Snapshot',
             ['registerSnapshot'],
             [],
             '',
@@ -40,7 +40,7 @@ class AbstractCollectionTest extends \Magento\Eav\Test\Unit\Model\Entity\Collect
         );
 
         $this->subject = $objectManager->getObject(
-            \Magento\Eav\Test\Unit\Model\Entity\Collection\VersionControl\AbstractCollectionStub::class,
+            'Magento\Eav\Test\Unit\Model\Entity\Collection\VersionControl\AbstractCollectionStub',
             [
                 'entityFactory' => $this->coreEntityFactoryMock,
                 'universalFactory' => $this->validatorFactoryMock,

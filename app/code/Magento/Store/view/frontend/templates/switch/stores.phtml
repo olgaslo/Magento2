@@ -6,11 +6,17 @@
 
 // @codingStandardsIgnoreFile
 
-/** @var \Magento\Store\Block\Switcher $block */
+?>
+<?php
+/**
+ * Store switcher template
+ *
+ * @see \Magento\Store\Block\Store\Switcher
+ */
 ?>
 <?php if (count($block->getGroups())>1): ?>
 <div class="switcher store switcher-store" id="switcher-store">
-    <strong class="label switcher-label"><span><?php echo $block->escapeHtml(__('Select Store')) ?></span></strong>
+    <strong class="label switcher-label"><span><?php /* @escapeNotVerified */ echo __('Select Store') ?></span></strong>
     <div class="actions dropdown options switcher-options">
         <?php foreach ($block->getGroups() as $_group): ?>
         <?php if ($_group->getId() == $block->getCurrentGroupId()): ?>
@@ -31,7 +37,8 @@
             <?php foreach ($block->getGroups() as $_group): ?>
             <?php if (!($_group->getId() == $block->getCurrentGroupId())): ?>
                 <li class="switcher-option">
-                    <a href="#" data-post='<?php /* @noEscape */ echo $block->getTargetStorePostData($_group->getDefaultStore()); ?>'>
+                    <a href="#"
+                       data-post='<?php /* @escapeNotVerified */ echo $block->getTargetStorePostData($_group->getDefaultStore()); ?>'>
                         <?php echo $block->escapeHtml($_group->getName()) ?>
                     </a>
                 </li>

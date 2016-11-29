@@ -79,47 +79,47 @@ class MassSubscribeTest extends \PHPUnit_Framework_TestCase
     {
         $objectManagerHelper = new ObjectManagerHelper($this);
 
-        $this->contextMock = $this->getMock(\Magento\Backend\App\Action\Context::class, [], [], '', false);
+        $this->contextMock = $this->getMock('Magento\Backend\App\Action\Context', [], [], '', false);
         $resultRedirectFactory = $this->getMock(
-            \Magento\Backend\Model\View\Result\RedirectFactory::class,
+            'Magento\Backend\Model\View\Result\RedirectFactory',
             [],
             [],
             '',
             false
         );
-        $this->responseMock = $this->getMock(\Magento\Framework\App\ResponseInterface::class, [], [], '', false);
-        $this->requestMock = $this->getMockBuilder(\Magento\Framework\App\Request\Http::class)
+        $this->responseMock = $this->getMock('Magento\Framework\App\ResponseInterface', [], [], '', false);
+        $this->requestMock = $this->getMockBuilder('Magento\Framework\App\Request\Http')
             ->disableOriginalConstructor()->getMock();
         $this->objectManagerMock = $this->getMock(
-            \Magento\Framework\ObjectManager\ObjectManager::class,
+            'Magento\Framework\ObjectManager\ObjectManager',
             ['create'],
             [],
             '',
             false
         );
-        $this->messageManagerMock = $this->getMock(\Magento\Framework\Message\Manager::class, [], [], '', false);
+        $this->messageManagerMock = $this->getMock('Magento\Framework\Message\Manager', [], [], '', false);
         $this->customerCollectionMock =
-            $this->getMockBuilder(\Magento\Customer\Model\ResourceModel\Customer\Collection::class)
+            $this->getMockBuilder('Magento\Customer\Model\ResourceModel\Customer\Collection')
             ->disableOriginalConstructor()
             ->getMock();
         $this->customerCollectionFactoryMock =
-            $this->getMockBuilder(\Magento\Customer\Model\ResourceModel\Customer\CollectionFactory::class)
+            $this->getMockBuilder('Magento\Customer\Model\ResourceModel\Customer\CollectionFactory')
                 ->disableOriginalConstructor()
                 ->setMethods(['create'])
                 ->getMock();
-        $redirectMock = $this->getMockBuilder(\Magento\Backend\Model\View\Result\Redirect::class)
+        $redirectMock = $this->getMockBuilder('Magento\Backend\Model\View\Result\Redirect')
             ->disableOriginalConstructor()
             ->getMock();
 
-        $resultFactoryMock = $this->getMockBuilder(\Magento\Framework\Controller\ResultFactory::class)
+        $resultFactoryMock = $this->getMockBuilder('Magento\Framework\Controller\ResultFactory')
             ->disableOriginalConstructor()
             ->getMock();
         $resultFactoryMock->expects($this->any())
             ->method('create')
             ->with(\Magento\Framework\Controller\ResultFactory::TYPE_REDIRECT)
             ->willReturn($redirectMock);
-        $this->subscriberMock = $this->getMock(\Magento\Newsletter\Model\Subscriber::class, [], [], '', false);
-        $subscriberFactoryMock = $this->getMockBuilder(\Magento\Newsletter\Model\SubscriberFactory::class)
+        $this->subscriberMock = $this->getMock('Magento\Newsletter\Model\Subscriber', [], [], '', false);
+        $subscriberFactoryMock = $this->getMockBuilder('Magento\Newsletter\Model\SubscriberFactory')
             ->setMethods(['create'])
             ->disableOriginalConstructor()
             ->getMock();
@@ -127,13 +127,7 @@ class MassSubscribeTest extends \PHPUnit_Framework_TestCase
             ->method('create')
             ->willReturn($this->subscriberMock);
 
-        $this->resultRedirectMock = $this->getMock(
-            \Magento\Backend\Model\View\Result\Redirect::class,
-            [],
-            [],
-            '',
-            false
-        );
+        $this->resultRedirectMock = $this->getMock('Magento\Backend\Model\View\Result\Redirect', [], [], '', false);
         $resultRedirectFactory->expects($this->any())->method('create')->willReturn($this->resultRedirectMock);
 
         $this->contextMock->expects($this->once())->method('getMessageManager')->willReturn($this->messageManagerMock);
@@ -147,7 +141,7 @@ class MassSubscribeTest extends \PHPUnit_Framework_TestCase
             ->method('getResultFactory')
             ->willReturn($resultFactoryMock);
 
-        $this->filterMock = $this->getMock(\Magento\Ui\Component\MassAction\Filter::class, [], [], '', false);
+        $this->filterMock = $this->getMock('Magento\Ui\Component\MassAction\Filter', [], [], '', false);
         $this->filterMock->expects($this->once())
             ->method('getCollection')
             ->with($this->customerCollectionMock)
@@ -155,10 +149,10 @@ class MassSubscribeTest extends \PHPUnit_Framework_TestCase
         $this->customerCollectionFactoryMock->expects($this->once())
             ->method('create')
             ->willReturn($this->customerCollectionMock);
-        $this->customerRepositoryMock = $this->getMockBuilder(\Magento\Customer\Api\CustomerRepositoryInterface::class)
+        $this->customerRepositoryMock = $this->getMockBuilder('Magento\Customer\Api\CustomerRepositoryInterface')
             ->getMockForAbstractClass();
         $this->massAction = $objectManagerHelper->getObject(
-            \Magento\Customer\Controller\Adminhtml\Index\MassSubscribe::class,
+            'Magento\Customer\Controller\Adminhtml\Index\MassSubscribe',
             [
                 'context' => $this->contextMock,
                 'filter' => $this->filterMock,

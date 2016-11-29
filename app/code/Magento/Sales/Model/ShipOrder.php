@@ -11,10 +11,14 @@ use Magento\Sales\Api\ShipmentRepositoryInterface;
 use Magento\Sales\Api\ShipOrderInterface;
 use Magento\Sales\Model\Order\Config as OrderConfig;
 use Magento\Sales\Model\Order\OrderStateResolverInterface;
+use Magento\Sales\Model\Order\OrderValidatorInterface;
 use Magento\Sales\Model\Order\ShipmentDocumentFactory;
 use Magento\Sales\Model\Order\Shipment\NotifierInterface;
+use Magento\Sales\Model\Order\Shipment\ShipmentValidatorInterface;
+use Magento\Sales\Model\Order\Shipment\Validation\QuantityValidator;
+use Magento\Sales\Model\Order\Shipment\Validation\TrackValidator;
+use Magento\Sales\Model\Order\Validation\CanShip;
 use Magento\Sales\Model\Order\Shipment\OrderRegistrarInterface;
-use Magento\Sales\Model\Order\Validation\ShipOrderInterface as ShipOrderValidator;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -39,6 +43,11 @@ class ShipOrder implements ShipOrderInterface
     private $shipmentDocumentFactory;
 
     /**
+     * @var ShipmentValidatorInterface
+     */
+    private $shipmentValidator;
+
+    /**
      * @var OrderStateResolverInterface
      */
     private $orderStateResolver;
@@ -54,11 +63,6 @@ class ShipOrder implements ShipOrderInterface
     private $shipmentRepository;
 
     /**
-     * @var ShipOrderValidator
-     */
-    private $shipOrderValidator;
-
-    /**
      * @var NotifierInterface
      */
     private $notifierInterface;
@@ -69,6 +73,11 @@ class ShipOrder implements ShipOrderInterface
     private $logger;
 
     /**
+     * @var OrderValidatorInterface
+     */
+    private $orderValidator;
+
+    /**
      * @var OrderRegistrarInterface
      */
     private $orderRegistrar;
@@ -77,10 +86,11 @@ class ShipOrder implements ShipOrderInterface
      * @param ResourceConnection $resourceConnection
      * @param OrderRepositoryInterface $orderRepository
      * @param ShipmentDocumentFactory $shipmentDocumentFactory
+     * @param ShipmentValidatorInterface $shipmentValidator
+     * @param OrderValidatorInterface $orderValidator
      * @param OrderStateResolverInterface $orderStateResolver
      * @param OrderConfig $config
      * @param ShipmentRepositoryInterface $shipmentRepository
-     * @param ShipOrderValidator $shipOrderValidator
      * @param NotifierInterface $notifierInterface
      * @param OrderRegistrarInterface $orderRegistrar
      * @param LoggerInterface $logger
@@ -90,10 +100,11 @@ class ShipOrder implements ShipOrderInterface
         ResourceConnection $resourceConnection,
         OrderRepositoryInterface $orderRepository,
         ShipmentDocumentFactory $shipmentDocumentFactory,
+        ShipmentValidatorInterface $shipmentValidator,
+        OrderValidatorInterface $orderValidator,
         OrderStateResolverInterface $orderStateResolver,
         OrderConfig $config,
         ShipmentRepositoryInterface $shipmentRepository,
-        ShipOrderValidator $shipOrderValidator,
         NotifierInterface $notifierInterface,
         OrderRegistrarInterface $orderRegistrar,
         LoggerInterface $logger
@@ -101,10 +112,11 @@ class ShipOrder implements ShipOrderInterface
         $this->resourceConnection = $resourceConnection;
         $this->orderRepository = $orderRepository;
         $this->shipmentDocumentFactory = $shipmentDocumentFactory;
+        $this->shipmentValidator = $shipmentValidator;
+        $this->orderValidator = $orderValidator;
         $this->orderStateResolver = $orderStateResolver;
         $this->config = $config;
         $this->shipmentRepository = $shipmentRepository;
-        $this->shipOrderValidator = $shipOrderValidator;
         $this->notifierInterface = $notifierInterface;
         $this->logger = $logger;
         $this->orderRegistrar = $orderRegistrar;
@@ -147,19 +159,23 @@ class ShipOrder implements ShipOrderInterface
             $packages,
             $arguments
         );
-        $validationMessages = $this->shipOrderValidator->validate(
+        $orderValidationResult = $this->orderValidator->validate(
             $order,
-            $shipment,
-            $items,
-            $notify,
-            $appendComment,
-            $comment,
-            $tracks,
-            $packages
+            [
+                CanShip::class
+            ]
         );
-        if ($validationMessages->hasMessages()) {
+        $shipmentValidationResult = $this->shipmentValidator->validate(
+            $shipment,
+            [
+                QuantityValidator::class,
+                TrackValidator::class
+            ]
+        );
+        $validationMessages = array_merge($orderValidationResult, $shipmentValidationResult);
+        if (!empty($validationMessages)) {
             throw new \Magento\Sales\Exception\DocumentValidationException(
-                __("Shipment Document Validation Error(s):\n" . implode("\n", $validationMessages->getMessages()))
+                __("Shipment Document Validation Error(s):\n" . implode("\n", $validationMessages))
             );
         }
         $connection->beginTransaction();

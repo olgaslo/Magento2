@@ -71,11 +71,6 @@ abstract class AbstractAction
     protected $_indexers;
 
     /**
-     * @var \Magento\Catalog\Model\ResourceModel\Product
-     */
-    private $productResource;
-
-    /**
      * @param \Magento\Framework\App\Config\ScopeConfigInterface $config
      * @param \Magento\Store\Model\StoreManagerInterface $storeManager
      * @param \Magento\Directory\Model\CurrencyFactory $currencyFactory
@@ -218,19 +213,12 @@ abstract class AbstractAction
         $table = $this->_defaultIndexerResource->getTable('catalog_product_index_tier_price');
         $this->_emptyTable($table);
 
-        $tierPriceExpression = $this->_connection->getCheckSql(
-            'tp.value = 0',
-            'product_price.value * (1 - tp.percentage_value / 100)',
-            'tp.value'
-        );
         $websiteExpression = $this->_connection->getCheckSql(
             'tp.website_id = 0',
-            'ROUND(' . $tierPriceExpression . ' * cwd.rate, 4)',
-            $tierPriceExpression
+            'ROUND(tp.value * cwd.rate, 4)',
+            'tp.value'
         );
         $linkField = $this->getProductIdFieldName();
-        $priceAttribute = $this->getProductResource()->getAttribute('price');
-
         $select = $this->_connection->select()->from(
             ['cpe' => $this->_defaultIndexerResource->getTable('catalog_product_entity')],
             ['cpe.entity_id']
@@ -250,15 +238,8 @@ abstract class AbstractAction
             ['cwd' => $this->_defaultIndexerResource->getTable('catalog_product_index_website')],
             'cw.website_id = cwd.website_id',
             []
-        )->join(
-            ['product_price' => $priceAttribute->getBackend()->getTable()],
-            'tp.' . $linkField . ' = product_price.' . $linkField,
-            []
         )->where(
             'cw.website_id != 0'
-        )->where(
-            'product_price.attribute_id = ?',
-            $priceAttribute->getAttributeId()
         )->columns(
             new \Zend_Db_Expr("MIN({$websiteExpression})")
         )->group(
@@ -480,18 +461,5 @@ abstract class AbstractAction
         $table = $this->_defaultIndexerResource->getTable('catalog_product_entity');
         $indexList = $this->_connection->getIndexList($table);
         return $indexList[$this->_connection->getPrimaryKeyName($table)]['COLUMNS_LIST'][0];
-    }
-
-    /**
-     * @return \Magento\Catalog\Model\ResourceModel\Product
-     * @deprecated
-     */
-    private function getProductResource()
-    {
-        if (null === $this->productResource) {
-            $this->productResource = \Magento\Framework\App\ObjectManager::getInstance()
-                ->get(\Magento\Catalog\Model\ResourceModel\Product::class);
-        }
-        return $this->productResource;
     }
 }

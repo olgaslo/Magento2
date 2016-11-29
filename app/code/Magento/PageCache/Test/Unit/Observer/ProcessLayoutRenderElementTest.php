@@ -35,7 +35,7 @@ class ProcessLayoutRenderElementTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->_configMock = $this->getMock(
-            \Magento\PageCache\Model\Config::class,
+            'Magento\PageCache\Model\Config',
             ['getType', 'isEnabled'],
             [],
             '',
@@ -44,21 +44,21 @@ class ProcessLayoutRenderElementTest extends \PHPUnit_Framework_TestCase
 
         $this->_model = new \Magento\PageCache\Observer\ProcessLayoutRenderElement($this->_configMock);
         $this->_observerMock = $this->getMock(
-            \Magento\Framework\Event\Observer::class,
+            'Magento\Framework\Event\Observer',
             ['getEvent'],
             [],
             '',
             false
         );
         $this->_layoutMock = $this->getMock(
-            \Magento\Framework\View\Layout::class,
+            'Magento\Framework\View\Layout',
             ['isCacheable', 'getBlock', 'getUpdate', 'getHandles'],
             [],
             '',
             false
         );
         $this->_blockMock = $this->getMockForAbstractClass(
-            \Magento\Framework\View\Element\AbstractBlock::class,
+            'Magento\Framework\View\Element\AbstractBlock',
             [],
             '',
             false,
@@ -85,7 +85,7 @@ class ProcessLayoutRenderElementTest extends \PHPUnit_Framework_TestCase
         $expectedOutput
     ) {
         $eventMock = $this->getMock(
-            \Magento\Framework\Event::class,
+            'Magento\Framework\Event',
             ['getLayout', 'getElementName', 'getTransport'],
             [],
             '',

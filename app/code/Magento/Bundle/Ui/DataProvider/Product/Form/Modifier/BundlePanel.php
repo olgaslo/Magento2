@@ -268,12 +268,15 @@ class BundlePanel extends AbstractModifier
             'arguments' => [
                 'data' => [
                     'config' => [
-                        'componentType' => Container::NAME,
-                        'component' => 'Magento_Bundle/js/components/bundle-dynamic-rows',
+                        'componentType' => 'dynamicRows',
                         'template' => 'ui/dynamic-rows/templates/collapsible',
+                        'label' => '',
                         'additionalClasses' => 'admin__field-wide',
+                        'collapsibleHeader' => true,
+                        'columnsHeader' => false,
+                        'deleteProperty' => false,
+                        'addButton' => false,
                         'dataScope' => 'data.bundle_options',
-                        'bundleSelectionsName' => 'product_bundle_container.bundle_selections'
                     ],
                 ],
             ],
@@ -300,7 +303,6 @@ class BundlePanel extends AbstractModifier
                                 'data' => [
                                     'config' => [
                                         'componentType' => 'fieldset',
-                                        'collapsible' => true,
                                         'label' => '',
                                         'opened' => true,
                                     ],
@@ -315,11 +317,14 @@ class BundlePanel extends AbstractModifier
                                     'arguments' => [
                                         'data' => [
                                             'config' => [
-                                                'componentType' => Container::NAME,
-                                                'component' => 'Magento_Bundle/js/components/bundle-dynamic-rows-grid',
+                                                'componentType' => DynamicRows::NAME,
+                                                'label' => '',
                                                 'sortOrder' => 50,
                                                 'additionalClasses' => 'admin__field-wide',
+                                                'component' => 'Magento_Ui/js/dynamic-rows/dynamic-rows-grid',
                                                 'template' => 'ui/dynamic-rows/templates/default',
+                                                'columnsHeader' => false,
+                                                'columnsHeaderAfterRender' => true,
                                                 'provider' => 'product_form.product_form_data_source',
                                                 'dataProvider' => '${ $.dataScope }' . '.bundle_button_proxy',
                                                 'identificationDRProperty' => 'product_id',
@@ -336,8 +341,11 @@ class BundlePanel extends AbstractModifier
                                                     'selection_price_value' => '',
                                                     'selection_qty' => '',
                                                 ],
-                                                'links' => ['insertData' => '${ $.provider }:${ $.dataProvider }'],
-                                                'source' => 'product'
+                                                'links' => [
+                                                    'insertData' => '${ $.provider }:${ $.dataProvider }'
+                                                ],
+                                                'source' => 'product',
+                                                'addButton' => false,
                                             ],
                                         ],
                                     ],
@@ -554,7 +562,7 @@ class BundlePanel extends AbstractModifier
                         'componentType' => Container::NAME,
                         'isTemplate' => true,
                         'component' => 'Magento_Ui/js/dynamic-rows/record',
-                        'is_collection' => true
+                        'is_collection' => true,
                     ],
                 ],
             ],
@@ -579,7 +587,10 @@ class BundlePanel extends AbstractModifier
                                 'prefer' => 'radio',
                                 'value' => '0',
                                 'sortOrder' => 50,
-                                'valueMap' => ['false' => '0', 'true' => '1']
+                                'valueMap' => [
+                                    'false' => '0',
+                                    'true' => '1'
+                                ]
                             ],
                         ],
                     ],
@@ -630,8 +641,7 @@ class BundlePanel extends AbstractModifier
                                 'sortOrder' => 100,
                                 'validation' => [
                                     'required-entry' => true,
-                                    'validate-number' => true,
-                                    'validate-greater-than-zero' => true
+                                    'validate-zero-or-greater' => true
                                 ],
                                 'imports' => [
                                     'isInteger' => '${ $.provider }:${ $.parentScope }.selection_qty_is_integer'

@@ -23,16 +23,15 @@ class RedirectFactoryTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $objectManager = new ObjectManager($this);
-        $this->objectManagerMock = $this->getMock(\Magento\Framework\ObjectManagerInterface::class);
-        $this->model = $objectManager->getObject(
-            \Magento\Framework\Controller\Result\RedirectFactory::class,
+        $this->objectManagerMock = $this->getMock('Magento\Framework\ObjectManagerInterface');
+        $this->model = $objectManager->getObject('Magento\Framework\Controller\Result\RedirectFactory',
             ['objectManager' => $this->objectManagerMock]
         );
     }
 
     public function testCreate()
     {
-        $redirect = $this->getMockBuilder(\Magento\Framework\Controller\Result\Redirect::class)
+        $redirect = $this->getMockBuilder('Magento\Framework\Controller\Result\Redirect')
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -40,7 +39,7 @@ class RedirectFactoryTest extends \PHPUnit_Framework_TestCase
             ->willReturn($redirect);
 
         $resultRedirect = $this->model->create();
-        $this->assertInstanceOf(\Magento\Framework\Controller\Result\Redirect::class, $resultRedirect);
+        $this->assertInstanceOf('Magento\Framework\Controller\Result\Redirect', $resultRedirect);
         $this->assertSame($redirect, $resultRedirect);
     }
 }

@@ -24,7 +24,7 @@ class StoreGroupTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->_indexerMock = $this->getMock(
-            \Magento\CatalogInventory\Model\Indexer\Stock\Processor::class,
+            '\Magento\CatalogInventory\Model\Indexer\Stock\Processor',
             [],
             [],
             '',
@@ -39,9 +39,9 @@ class StoreGroupTest extends \PHPUnit_Framework_TestCase
      */
     public function testBeforeSave(array $data)
     {
-        $subjectMock = $this->getMock(\Magento\Store\Model\ResourceModel\Group::class, [], [], '', false);
+        $subjectMock = $this->getMock('Magento\Store\Model\ResourceModel\Group', [], [], '', false);
         $objectMock = $this->getMock(
-            \Magento\Framework\Model\AbstractModel::class,
+            'Magento\Framework\Model\AbstractModel',
             ['getId', 'dataHasChangedFor', '__wakeup'],
             [],
             '',

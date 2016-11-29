@@ -6,8 +6,6 @@
 namespace Magento\CatalogRule\Model;
 
 use Magento\Catalog\Model\Product;
-use Magento\CatalogRule\Api\Data\RuleInterface;
-use Magento\Framework\DataObject\IdentityInterface;
 
 /**
  * Catalog Rule data model
@@ -23,7 +21,7 @@ use Magento\Framework\DataObject\IdentityInterface;
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  * @SuppressWarnings(PHPMD.ExcessivePublicCount)
  */
-class Rule extends \Magento\Rule\Model\AbstractModel implements RuleInterface, IdentityInterface
+class Rule extends \Magento\Rule\Model\AbstractModel implements \Magento\CatalogRule\Api\Data\RuleInterface, \Magento\Framework\DataObject\IdentityInterface
 {
     /**
      * Prefix of model events names
@@ -213,7 +211,7 @@ class Rule extends \Magento\Rule\Model\AbstractModel implements RuleInterface, I
     protected function _construct()
     {
         parent::_construct();
-        $this->_init(\Magento\CatalogRule\Model\ResourceModel\Rule::class);
+        $this->_init('Magento\CatalogRule\Model\ResourceModel\Rule');
         $this->setIdFieldName('rule_id');
     }
 

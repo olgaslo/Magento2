@@ -21,7 +21,7 @@ class PhpTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->_phraseCollectorMock = $this->getMock(
-            \Magento\Setup\Module\I18n\Parser\Adapter\Php\Tokenizer\PhraseCollector::class,
+            'Magento\Setup\Module\I18n\Parser\Adapter\Php\Tokenizer\PhraseCollector',
             [],
             [],
             '',
@@ -30,7 +30,7 @@ class PhpTest extends \PHPUnit_Framework_TestCase
 
         $objectManagerHelper = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
         $this->_adapter = $objectManagerHelper->getObject(
-            \Magento\Setup\Module\I18n\Parser\Adapter\Php::class,
+            'Magento\Setup\Module\I18n\Parser\Adapter\Php',
             ['phraseCollector' => $this->_phraseCollectorMock]
         );
     }

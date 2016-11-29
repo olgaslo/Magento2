@@ -15,7 +15,7 @@ class RelatedTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
-        $this->block = $objectManager->getObject(\Magento\Catalog\Block\Product\ProductList\Related::class);
+        $this->block = $objectManager->getObject('Magento\Catalog\Block\Product\ProductList\Related');
     }
 
     protected function tearDown()
@@ -26,11 +26,11 @@ class RelatedTest extends \PHPUnit_Framework_TestCase
     public function testGetIdentities()
     {
         $productTag = ['compare_item_1'];
-        $product = $this->getMock(\Magento\Catalog\Model\Product::class, [], [], '', false);
+        $product = $this->getMock('Magento\Catalog\Model\Product', [], [], '', false);
         $product->expects($this->once())->method('getIdentities')->will($this->returnValue($productTag));
 
         $itemsCollection = new \ReflectionProperty(
-            \Magento\Catalog\Block\Product\ProductList\Related::class,
+            'Magento\Catalog\Block\Product\ProductList\Related',
             '_itemCollection'
         );
         $itemsCollection->setAccessible(true);
@@ -52,7 +52,7 @@ class RelatedTest extends \PHPUnit_Framework_TestCase
     public function testCanItemsAddToCart($isComposite, $isSaleable, $hasRequiredOptions, $canItemsAddToCart)
     {
         $product = $this->getMock(
-            \Magento\Catalog\Model\Product::class,
+            'Magento\Catalog\Model\Product',
             ['isComposite', 'isSaleable', 'getRequiredOptions'],
             [],
             '',
@@ -63,7 +63,7 @@ class RelatedTest extends \PHPUnit_Framework_TestCase
         $product->expects($this->any())->method('getRequiredOptions')->willReturn($hasRequiredOptions);
 
         $itemsCollection = new \ReflectionProperty(
-            \Magento\Catalog\Block\Product\ProductList\Related::class,
+            'Magento\Catalog\Block\Product\ProductList\Related',
             '_itemCollection'
         );
         $itemsCollection->setAccessible(true);

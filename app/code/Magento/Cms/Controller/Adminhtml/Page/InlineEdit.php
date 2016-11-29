@@ -17,11 +17,6 @@ use Magento\Cms\Api\Data\PageInterface;
  */
 class InlineEdit extends \Magento\Backend\App\Action
 {
-    /**
-     * Authorization level of a basic admin session
-     */
-    const ADMIN_RESOURCE = 'Magento_Cms::save';
-
     /** @var PostDataProcessor */
     protected $dataProcessor;
 

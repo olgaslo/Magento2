@@ -124,7 +124,7 @@ class Address extends \Magento\Customer\Model\Address\AbstractAddress
      */
     protected function _construct()
     {
-        $this->_init(\Magento\Customer\Model\ResourceModel\Address::class);
+        $this->_init('Magento\Customer\Model\ResourceModel\Address');
     }
 
     /**
@@ -138,7 +138,7 @@ class Address extends \Magento\Customer\Model\Address\AbstractAddress
     {
         // Set all attributes
         $attributes = $this->dataProcessor
-            ->buildOutputDataArray($address, \Magento\Customer\Api\Data\AddressInterface::class);
+            ->buildOutputDataArray($address, '\Magento\Customer\Api\Data\AddressInterface');
 
         foreach ($attributes as $attributeCode => $attributeData) {
             if (AddressInterface::REGION === $attributeCode) {

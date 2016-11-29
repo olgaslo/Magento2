@@ -18,7 +18,7 @@ class FullTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->_processor = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->get(
-            \Magento\Catalog\Model\Indexer\Product\Eav\Processor::class
+            'Magento\Catalog\Model\Indexer\Product\Eav\Processor'
         );
     }
 
@@ -30,7 +30,7 @@ class FullTest extends \PHPUnit_Framework_TestCase
     public function testReindexAll()
     {
         /** @var \Magento\Catalog\Model\ResourceModel\Eav\Attribute $attr **/
-        $attr = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->get(\Magento\Eav\Model\Config::class)
+        $attr = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->get('Magento\Eav\Model\Config')
             ->getAttribute('catalog_product', 'weight');
         $attr->setIsFilterable(1)->save();
 
@@ -39,11 +39,11 @@ class FullTest extends \PHPUnit_Framework_TestCase
         $this->_processor->reindexAll();
 
         $categoryFactory = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->get(
-            \Magento\Catalog\Model\CategoryFactory::class
+            'Magento\Catalog\Model\CategoryFactory'
         );
         /** @var \Magento\Catalog\Block\Product\ListProduct $listProduct */
         $listProduct = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->get(
-            \Magento\Catalog\Block\Product\ListProduct::class
+            'Magento\Catalog\Block\Product\ListProduct'
         );
 
         $category = $categoryFactory->create()->load(2);

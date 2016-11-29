@@ -28,7 +28,7 @@ class Option extends AbstractModel implements AttributeOptionInterface
      */
     public function _construct()
     {
-        $this->_init(\Magento\Eav\Model\ResourceModel\Entity\Attribute\Option::class);
+        $this->_init('Magento\Eav\Model\ResourceModel\Entity\Attribute\Option');
     }
 
     /**
@@ -70,7 +70,6 @@ class Option extends AbstractModel implements AttributeOptionInterface
     {
         return $this->getData(AttributeOptionInterface::STORE_LABELS);
     }
-
     /**
      * Set option label
      *

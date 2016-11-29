@@ -21,17 +21,17 @@ class StateTest extends \PHPUnit_Framework_TestCase
     {
         $this->_objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
 
-        $indexerMock = $this->getMock(\Magento\Indexer\Model\Indexer::class, [], [], '', false);
+        $indexerMock = $this->getMock('Magento\Indexer\Model\Indexer', [], [], '', false);
         $flatIndexerHelperMock = $this->getMock(
-            \Magento\Catalog\Helper\Product\Flat\Indexer::class,
+            'Magento\Catalog\Helper\Product\Flat\Indexer',
             [],
             [],
             '',
             false
         );
-        $configMock = $this->getMock(\Magento\Framework\App\Config\ScopeConfigInterface::class);
+        $configMock = $this->getMock('Magento\Framework\App\Config\ScopeConfigInterface');
         $this->_model = $this->_objectManager->getObject(
-            \Magento\Catalog\Model\Indexer\Product\Flat\State::class,
+            'Magento\Catalog\Model\Indexer\Product\Flat\State',
             [
                 'scopeConfig' => $configMock,
                 'flatIndexer' => $indexerMock,
@@ -43,9 +43,6 @@ class StateTest extends \PHPUnit_Framework_TestCase
 
     public function testGetIndexer()
     {
-        $this->assertInstanceOf(
-            \Magento\Catalog\Helper\Product\Flat\Indexer::class,
-            $this->_model->getFlatIndexerHelper()
-        );
+        $this->assertInstanceOf('\Magento\Catalog\Helper\Product\Flat\Indexer', $this->_model->getFlatIndexerHelper());
     }
 }

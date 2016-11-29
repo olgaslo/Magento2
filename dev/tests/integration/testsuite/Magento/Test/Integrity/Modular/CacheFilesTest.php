@@ -13,14 +13,14 @@ class CacheFilesTest extends \PHPUnit_Framework_TestCase
      */
     public function testCacheConfig($area)
     {
-        $validationStateMock = $this->getMock(\Magento\Framework\Config\ValidationStateInterface::class);
+        $validationStateMock = $this->getMock('Magento\Framework\Config\ValidationStateInterface');
         $validationStateMock->expects($this->any())->method('isValidationRequired')->will($this->returnValue(true));
 
         $objectManager = \Magento\TestFramework\Helper\Bootstrap::getObjectManager();
 
         /** @var \Magento\Framework\Cache\Config\Reader $reader */
         $reader = $objectManager->create(
-            \Magento\Framework\Cache\Config\Reader::class,
+            'Magento\Framework\Cache\Config\Reader',
             ['validationState' => $validationStateMock]
         );
         try {

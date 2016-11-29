@@ -16,7 +16,7 @@ abstract class AbstractSearchResult extends AbstractDataObject implements Search
      *
      * @var string
      */
-    protected $dataInterface = \Magento\Framework\DataObject::class;
+    protected $dataInterface = 'Magento\Framework\DataObject';
 
     /**
      * Name prefix of events that are dispatched by model

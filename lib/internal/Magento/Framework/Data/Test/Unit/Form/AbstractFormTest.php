@@ -29,6 +29,9 @@ class AbstractFormTest extends \PHPUnit_Framework_TestCase
      * @var \PHPUnit_Framework_MockObject_MockObject
      */
     protected $allElementsMock;
+    /**
+     * @var \Magento\Framework\Data\Form
+     */
 
     /**
      * @var \Magento\Framework\Data\Form\AbstractForm
@@ -38,23 +41,23 @@ class AbstractFormTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->factoryElementMock = $this->getMock(
-            \Magento\Framework\Data\Form\Element\Factory::class,
+            'Magento\Framework\Data\Form\Element\Factory',
             ['create'],
             [],
             '',
             false
         );
         $this->factoryCollectionMock = $this->getMock(
-            \Magento\Framework\Data\Form\Element\CollectionFactory::class,
+            'Magento\Framework\Data\Form\Element\CollectionFactory',
             ['create'],
             [],
             '',
             false
         );
         $this->allElementsMock =
-            $this->getMock(\Magento\Framework\Data\Form\Element\Collection::class, [], [], '', false);
+            $this->getMock('Magento\Framework\Data\Form\Element\Collection', [], [], '', false);
         $this->elementMock =
-            $this->getMock(\Magento\Framework\Data\Form\Element\AbstractElement::class, [], [], '', false);
+            $this->getMock('Magento\Framework\Data\Form\Element\AbstractElement', [], [], '', false);
 
         $this->abstractForm = new AbstractForm($this->factoryElementMock, $this->factoryCollectionMock, []);
     }

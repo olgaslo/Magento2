@@ -11,9 +11,6 @@ namespace Magento\Theme\Test\Unit\Helper;
 
 use Magento\Theme\Helper\Storage;
 
-/**
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
- */
 class StorageTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -82,27 +79,27 @@ class StorageTest extends \PHPUnit_Framework_TestCase
     {
         $this->customizationPath = '/' . implode('/', ['var', 'theme']);
 
-        $this->request = $this->getMock(\Magento\Framework\App\Request\Http::class, [], [], '', false);
-        $this->filesystem = $this->getMock(\Magento\Framework\Filesystem::class, [], [], '', false);
-        $this->session = $this->getMock(\Magento\Backend\Model\Session::class, [], [], '', false);
-        $this->contextHelper = $this->getMock(\Magento\Framework\App\Helper\Context::class, [], [], '', false);
+        $this->request = $this->getMock('\Magento\Framework\App\Request\Http', [], [], '', false);
+        $this->filesystem = $this->getMock('Magento\Framework\Filesystem', [], [], '', false);
+        $this->session = $this->getMock('Magento\Backend\Model\Session', [], [], '', false);
+        $this->contextHelper = $this->getMock('Magento\Framework\App\Helper\Context', [], [], '', false);
         $this->directoryWrite = $this->getMock(
-            \Magento\Framework\Filesystem\Directory\Write::class,
+            'Magento\Framework\Filesystem\Directory\Write',
             [],
             [],
             '',
             false
         );
         $this->themeFactory = $this->getMock(
-            \Magento\Framework\View\Design\Theme\FlyweightFactory::class,
+            'Magento\Framework\View\Design\Theme\FlyweightFactory',
             [],
             [],
             '',
             false
         );
-        $this->theme = $this->getMock(\Magento\Theme\Model\Theme::class, [], [], '', false);
+        $this->theme = $this->getMock('Magento\Theme\Model\Theme', [], [], '', false);
         $this->customization = $this->getMock(
-            \Magento\Framework\View\Design\Theme\Customization::class,
+            'Magento\Framework\View\Design\Theme\Customization',
             [],
             [],
             '',
@@ -112,8 +109,8 @@ class StorageTest extends \PHPUnit_Framework_TestCase
         $this->filesystem->expects($this->any())
             ->method('getDirectoryWrite')
             ->will($this->returnValue($this->directoryWrite));
-        $this->urlEncoder = $this->getMockBuilder(\Magento\Framework\Url\EncoderInterface::class)->getMock();
-        $this->urlDecoder = $this->getMockBuilder(\Magento\Framework\Url\DecoderInterface::class)->getMock();
+        $this->urlEncoder = $this->getMockBuilder('Magento\Framework\Url\EncoderInterface')->getMock();
+        $this->urlDecoder = $this->getMockBuilder('Magento\Framework\Url\DecoderInterface')->getMock();
 
         $this->directoryWrite->expects($this->any())->method('create')->willReturn(true);
         $this->contextHelper->expects($this->any())->method('getRequest')->willReturn($this->request);
@@ -355,7 +352,7 @@ class StorageTest extends \PHPUnit_Framework_TestCase
 
     public function testGetSession()
     {
-        $this->assertInstanceOf(\Magento\Backend\Model\Session::class, $this->helper->getSession());
+        $this->assertInstanceOf('Magento\Backend\Model\Session', $this->helper->getSession());
     }
 
     public function testGetRelativeUrl()

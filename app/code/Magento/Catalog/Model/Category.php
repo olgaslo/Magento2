@@ -65,7 +65,7 @@ class Category extends \Magento\Catalog\Model\AbstractModel implements
      */
     const TREE_ROOT_ID = 1;
 
-    const CACHE_TAG = 'cat_c';
+    const CACHE_TAG = 'catalog_category';
 
     /**#@+
      * Constants
@@ -306,10 +306,10 @@ class Category extends \Magento\Catalog\Model\AbstractModel implements
     {
         // If Flat Index enabled then use it but only on frontend
         if ($this->flatState->isAvailable()) {
-            $this->_init(\Magento\Catalog\Model\ResourceModel\Category\Flat::class);
+            $this->_init('Magento\Catalog\Model\ResourceModel\Category\Flat');
             $this->_useFlatResource = true;
         } else {
-            $this->_init(\Magento\Catalog\Model\ResourceModel\Category::class);
+            $this->_init('Magento\Catalog\Model\ResourceModel\Category');
         }
     }
 
@@ -652,14 +652,14 @@ class Category extends \Magento\Catalog\Model\AbstractModel implements
     }
 
     /**
-     * @param string $attributeCode
-     * @return bool|string
-     * @throws \Magento\Framework\Exception\LocalizedException
+     * Retrieve image URL
+     *
+     * @return string
      */
-    public function getImageUrl($attributeCode = 'image')
+    public function getImageUrl()
     {
         $url = false;
-        $image = $this->getData($attributeCode);
+        $image = $this->getImage();
         if ($image) {
             if (is_string($image)) {
                 $url = $this->_storeManager->getStore()->getBaseUrl(

@@ -21,14 +21,14 @@ class RelationTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->customerFactoryMock = $this->getMock(
-            \Magento\Customer\Model\CustomerFactory::class,
+            'Magento\Customer\Model\CustomerFactory',
             ['create'],
             [],
             '',
             false
         );
         $this->relation = (new ObjectManagerHelper($this))->getObject(
-            \Magento\Customer\Model\ResourceModel\Address\Relation::class,
+            'Magento\Customer\Model\ResourceModel\Address\Relation',
             [
                 'customerFactory' => $this->customerFactoryMock
             ]
@@ -44,7 +44,7 @@ class RelationTest extends \PHPUnit_Framework_TestCase
     public function testProcessRelation($addressId, $isDefaultBilling, $isDefaultShipping)
     {
         $addressModel = $this->getMock(
-            \Magento\Framework\Model\AbstractModel::class,
+            'Magento\Framework\Model\AbstractModel',
             [
                 '__wakeup',
                 'getId',
@@ -62,14 +62,14 @@ class RelationTest extends \PHPUnit_Framework_TestCase
             false
         );
         $customerModel = $this->getMock(
-            \Magento\Customer\Model\Customer::class,
+            'Magento\Customer\Model\Customer',
             ['__wakeup', 'setDefaultBilling', 'setDefaultShipping', 'save', 'load', 'getResource', 'getId'],
             [],
             '',
             false
         );
         $customerResource = $this->getMockForAbstractClass(
-            \Magento\Framework\Model\ResourceModel\Db\AbstractDb::class,
+            'Magento\Framework\Model\ResourceModel\Db\AbstractDb',
             [],
             '',
             false,
@@ -78,7 +78,7 @@ class RelationTest extends \PHPUnit_Framework_TestCase
             ['getConnection', 'getTable']
         );
         $connectionMock = $this->getMockForAbstractClass(
-            \Magento\Framework\DB\Adapter\AdapterInterface::class,
+            'Magento\Framework\DB\Adapter\AdapterInterface',
             [],
             '',
             false,

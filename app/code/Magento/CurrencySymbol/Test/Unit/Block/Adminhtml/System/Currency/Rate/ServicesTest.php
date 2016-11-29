@@ -30,21 +30,21 @@ class ServicesTest extends \PHPUnit_Framework_TestCase
         $service = 'service';
 
         $sourceServiceFactoryMock = $this->getMock(
-            \Magento\Directory\Model\Currency\Import\Source\ServiceFactory::class,
+            'Magento\Directory\Model\Currency\Import\Source\ServiceFactory',
             ['create'],
             [],
             '',
             false
         );
         $sourceServiceMock = $this->getMock(
-            \Magento\Directory\Model\Currency\Import\Source\Service::class,
+            'Magento\Directory\Model\Currency\Import\Source\Service',
             [],
             [],
             '',
             false
         );
         $backendSessionMock = $this->getMock(
-            \Magento\Backend\Model\Session::class,
+            'Magento\Backend\Model\Session',
             ['getCurrencyRateService'],
             [],
             '',
@@ -53,7 +53,7 @@ class ServicesTest extends \PHPUnit_Framework_TestCase
 
         /** @var $layoutMock \Magento\Framework\View\LayoutInterface|\PHPUnit_Framework_MockObject_MockObject */
         $layoutMock = $this->getMockForAbstractClass(
-            \Magento\Framework\View\LayoutInterface::class,
+            'Magento\Framework\View\LayoutInterface',
             [],
             '',
             false,
@@ -63,7 +63,7 @@ class ServicesTest extends \PHPUnit_Framework_TestCase
         );
 
         $blockMock = $this->getMock(
-            \Magento\Framework\View\Element\Html\Select::class,
+            'Magento\Framework\View\Element\Html\Select',
             ['setOptions', 'setId', 'setName', 'setValue', 'setTitle'],
             [],
             '',
@@ -84,7 +84,7 @@ class ServicesTest extends \PHPUnit_Framework_TestCase
 
         /** @var $block \Magento\CurrencySymbol\Block\Adminhtml\System\Currency\Rate\Services */
         $block = $this->objectManagerHelper->getObject(
-            \Magento\CurrencySymbol\Block\Adminhtml\System\Currency\Rate\Services::class,
+            'Magento\CurrencySymbol\Block\Adminhtml\System\Currency\Rate\Services',
             [
                 'srcCurrencyFactory' => $sourceServiceFactoryMock,
                 'backendSession' => $backendSessionMock

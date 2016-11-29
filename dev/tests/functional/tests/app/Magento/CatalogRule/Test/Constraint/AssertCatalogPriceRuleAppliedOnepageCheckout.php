@@ -39,36 +39,34 @@ class AssertCatalogPriceRuleAppliedOnepageCheckout extends AbstractConstraint
         array $payment
     ) {
         $this->objectManager->create(
-            \Magento\Customer\Test\TestStep\LoginCustomerOnFrontendStep::class,
+            '\Magento\Customer\Test\TestStep\LoginCustomerOnFrontendStep',
             ['customer' => $customer]
         )->run();
         $this->objectManager->create(
-            \Magento\Checkout\Test\TestStep\AddProductsToTheCartStep::class,
+            '\Magento\Checkout\Test\TestStep\AddProductsToTheCartStep',
             ['products' => $products]
         )->run();
-        $this->objectManager->create(\Magento\Checkout\Test\TestStep\ProceedToCheckoutStep::class)->run();
+        $this->objectManager->create('\Magento\Checkout\Test\TestStep\ProceedToCheckoutStep')->run();
         $this->objectManager->create(
-            \Magento\Checkout\Test\TestStep\FillBillingInformationStep::class,
+            '\Magento\Checkout\Test\TestStep\FillBillingInformationStep',
             ['customer' => $customer, 'checkoutMethod' => 'register']
         )->run();
         $this->objectManager->create(
-            \Magento\Checkout\Test\TestStep\FillShippingMethodStep::class,
+            '\Magento\Checkout\Test\TestStep\FillShippingMethodStep',
             ['shipping' => $shipping]
         )->run();
         $this->objectManager->create(
-            \Magento\Checkout\Test\TestStep\SelectPaymentMethodStep::class,
+            '\Magento\Checkout\Test\TestStep\SelectPaymentMethodStep',
             ['payment' => $payment]
         )->run();
         $actualPrices['grand_total'] = $checkoutOnepage->getReviewBlock()->getGrandTotal();
         $actualPrices['sub_total'] = $checkoutOnepage->getReviewBlock()->getSubtotal();
-        $expectedPrices['grand_total'] = $cartPrice['grand_total'];
+        $expectedPrices['grand_total'] = $cartPrice['grand_total'] + $cartPrice['shipping_price'];
         $expectedPrices['sub_total'] = $cartPrice['sub_total'];
         \PHPUnit_Framework_Assert::assertEquals(
             $expectedPrices,
             $actualPrices,
             'Wrong total cart prices are displayed.'
-            . "\nExpected: " . implode(PHP_EOL, $expectedPrices)
-            . "\nActual: " . implode(PHP_EOL, $actualPrices) . "\n"
         );
     }
 

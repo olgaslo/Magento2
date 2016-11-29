@@ -53,7 +53,7 @@ class RelationTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->itemResourceMock = $this->getMockBuilder(\Magento\Sales\Model\ResourceModel\Order\Shipment\Item::class)
+        $this->itemResourceMock = $this->getMockBuilder('Magento\Sales\Model\ResourceModel\Order\Shipment\Item')
             ->disableOriginalConstructor()
             ->setMethods(
                 [
@@ -61,9 +61,7 @@ class RelationTest extends \PHPUnit_Framework_TestCase
                 ]
             )
             ->getMock();
-        $this->commentResourceMock = $this->getMockBuilder(
-            \Magento\Sales\Model\ResourceModel\Order\Shipment\Comment::class
-        )
+        $this->commentResourceMock = $this->getMockBuilder('Magento\Sales\Model\ResourceModel\Order\Shipment\Comment')
             ->disableOriginalConstructor()
             ->setMethods(
                 [
@@ -71,7 +69,7 @@ class RelationTest extends \PHPUnit_Framework_TestCase
                 ]
             )
             ->getMock();
-        $this->trackResourceMock = $this->getMockBuilder(\Magento\Sales\Model\ResourceModel\Order\Shipment\Track::class)
+        $this->trackResourceMock = $this->getMockBuilder('Magento\Sales\Model\ResourceModel\Order\Shipment\Track')
             ->disableOriginalConstructor()
             ->setMethods(
                 [
@@ -79,7 +77,7 @@ class RelationTest extends \PHPUnit_Framework_TestCase
                 ]
             )
             ->getMock();
-        $this->shipmentMock = $this->getMockBuilder(\Magento\Sales\Model\Order\Shipment::class)
+        $this->shipmentMock = $this->getMockBuilder('Magento\Sales\Model\Order\Shipment')
             ->disableOriginalConstructor()
             ->setMethods(
                 [
@@ -90,7 +88,7 @@ class RelationTest extends \PHPUnit_Framework_TestCase
                 ]
             )
             ->getMock();
-        $this->itemMock = $this->getMockBuilder(\Magento\Sales\Model\Order\Item::class)
+        $this->itemMock = $this->getMockBuilder('Magento\Sales\Model\Order\Item')
             ->disableOriginalConstructor()
             ->setMethods(
                 [
@@ -98,10 +96,10 @@ class RelationTest extends \PHPUnit_Framework_TestCase
                 ]
             )
             ->getMock();
-        $this->trackMock = $this->getMockBuilder(\Magento\Sales\Model\Order\Shipment\Track::class)
+        $this->trackMock = $this->getMockBuilder('Magento\Sales\Model\Order\Shipment\Track')
             ->disableOriginalConstructor()
             ->getMock();
-        $this->commentMock = $this->getMockBuilder(\Magento\Sales\Model\Order\Shipment::class)
+        $this->commentMock = $this->getMockBuilder('Magento\Sales\Model\Order\Shipment')
             ->disableOriginalConstructor()
             ->getMock();
         $this->relationProcessor = new \Magento\Sales\Model\ResourceModel\Order\Shipment\Relation(

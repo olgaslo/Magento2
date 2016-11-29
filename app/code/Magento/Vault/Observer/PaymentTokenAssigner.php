@@ -57,7 +57,10 @@ class PaymentTokenAssigner extends AbstractDataAssignObserver
         }
 
         $quote = $paymentModel->getQuote();
-        $customerId = (int) $quote->getCustomer()->getId();
+        $customerId = $quote->getCustomer()->getId();
+        if ($customerId === null) {
+            return;
+        }
 
         $paymentToken = $this->paymentTokenManagement->getByPublicHash($tokenPublicHash, $customerId);
         if ($paymentToken === null) {
@@ -65,6 +68,7 @@ class PaymentTokenAssigner extends AbstractDataAssignObserver
         }
 
         $paymentModel->setAdditionalInformation(
+            Vault::TOKEN_METADATA_KEY,
             [
                 PaymentTokenInterface::CUSTOMER_ID => $customerId,
                 PaymentTokenInterface::PUBLIC_HASH => $tokenPublicHash

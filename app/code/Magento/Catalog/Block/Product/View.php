@@ -7,6 +7,7 @@ namespace Magento\Catalog\Block\Product;
 
 use Magento\Catalog\Api\ProductRepositoryInterface;
 use Magento\Catalog\Model\Category;
+use Magento\Catalog\Model\Product;
 
 /**
  * Product View block
@@ -28,7 +29,6 @@ class View extends AbstractProduct implements \Magento\Framework\DataObject\Iden
 
     /**
      * @var \Magento\Framework\Pricing\PriceCurrencyInterface
-     * @deprecated
      */
     protected $priceCurrency;
 
@@ -124,7 +124,7 @@ class View extends AbstractProduct implements \Magento\Framework\DataObject\Iden
      */
     protected function _prepareLayout()
     {
-        $this->getLayout()->createBlock(\Magento\Catalog\Block\Breadcrumbs::class);
+        $this->getLayout()->createBlock('Magento\Catalog\Block\Breadcrumbs');
         $product = $this->getProduct();
         if (!$product) {
             return parent::_prepareLayout();
@@ -225,34 +225,40 @@ class View extends AbstractProduct implements \Magento\Framework\DataObject\Iden
             $config = [
                 'productId' => $product->getId(),
                 'priceFormat' => $this->_localeFormat->getPriceFormat()
-            ];
+                ];
             return $this->_jsonEncoder->encode($config);
         }
 
         $tierPrices = [];
         $tierPricesList = $product->getPriceInfo()->getPrice('tier_price')->getTierPriceList();
         foreach ($tierPricesList as $tierPrice) {
-            $tierPrices[] = $tierPrice['price']->getValue();
+            $tierPrices[] = $this->priceCurrency->convert($tierPrice['price']->getValue());
         }
         $config = [
-            'productId'   => $product->getId(),
+            'productId' => $product->getId(),
             'priceFormat' => $this->_localeFormat->getPriceFormat(),
-            'prices'      => [
-                'oldPrice'   => [
-                    'amount'      => $product->getPriceInfo()->getPrice('regular_price')->getAmount()->getValue(),
+            'prices' => [
+                'oldPrice' => [
+                    'amount' => $this->priceCurrency->convert(
+                        $product->getPriceInfo()->getPrice('regular_price')->getAmount()->getValue()
+                    ),
                     'adjustments' => []
                 ],
-                'basePrice'  => [
-                    'amount'      => $product->getPriceInfo()->getPrice('final_price')->getAmount()->getBaseAmount(),
+                'basePrice' => [
+                    'amount' => $this->priceCurrency->convert(
+                        $product->getPriceInfo()->getPrice('final_price')->getAmount()->getBaseAmount()
+                    ),
                     'adjustments' => []
                 ],
                 'finalPrice' => [
-                    'amount'      => $product->getPriceInfo()->getPrice('final_price')->getAmount()->getValue(),
+                    'amount' => $this->priceCurrency->convert(
+                        $product->getPriceInfo()->getPrice('final_price')->getAmount()->getValue()
+                    ),
                     'adjustments' => []
                 ]
             ],
-            'idSuffix'    => '_clone',
-            'tierPrices'  => $tierPrices
+            'idSuffix' => '_clone',
+            'tierPrices' => $tierPrices
         ];
 
         $responseObject = new \Magento\Framework\DataObject();

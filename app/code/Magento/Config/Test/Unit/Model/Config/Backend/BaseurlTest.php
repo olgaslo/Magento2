@@ -14,21 +14,21 @@ class BaseurlTest extends \PHPUnit_Framework_TestCase
     public function testSaveMergedJsCssMustBeCleaned()
     {
 
-        $context = (new ObjectManager($this))->getObject(\Magento\Framework\Model\Context::class);
+        $context = (new ObjectManager($this))->getObject('Magento\Framework\Model\Context');
 
-        $resource = $this->getMock(\Magento\Config\Model\ResourceModel\Config\Data::class, [], [], '', false);
+        $resource = $this->getMock('Magento\Config\Model\ResourceModel\Config\Data', [], [], '', false);
         $resource->expects($this->any())->method('addCommitCallback')->will($this->returnValue($resource));
-        $resourceCollection = $this->getMockBuilder(\Magento\Framework\Data\Collection\AbstractDb::class)
+        $resourceCollection = $this->getMockBuilder('Magento\Framework\Data\Collection\AbstractDb')
             ->disableOriginalConstructor()
             ->getMockForAbstractClass();
-        $mergeService = $this->getMock(\Magento\Framework\View\Asset\MergeService::class, [], [], '', false);
-        $coreRegistry = $this->getMock(\Magento\Framework\Registry::class, [], [], '', false);
-        $coreConfig = $this->getMock(\Magento\Framework\App\Config\ScopeConfigInterface::class);
-        $cacheTypeListMock = $this->getMockBuilder(\Magento\Framework\App\Cache\TypeListInterface::class)
+        $mergeService = $this->getMock('Magento\Framework\View\Asset\MergeService', [], [], '', false);
+        $coreRegistry = $this->getMock('Magento\Framework\Registry', [], [], '', false);
+        $coreConfig = $this->getMock('Magento\Framework\App\Config\ScopeConfigInterface');
+        $cacheTypeListMock = $this->getMockBuilder('Magento\Framework\App\Cache\TypeListInterface')
             ->disableOriginalConstructor()
             ->getMock();
         $model = $this->getMock(
-            \Magento\Config\Model\Config\Backend\Baseurl::class,
+            'Magento\Config\Model\Config\Backend\Baseurl',
             ['getOldValue'],
             [$context, $coreRegistry, $coreConfig, $cacheTypeListMock, $mergeService, $resource, $resourceCollection]
         );

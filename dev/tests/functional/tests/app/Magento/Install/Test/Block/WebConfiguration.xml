@@ -13,7 +13,7 @@
         <admin />
         <keyOwn>
             <selector>[value="user"]</selector>
-            <input>radiobutton</input>
+            <input>checkbox</input>
         </keyOwn>
         <keyValue>
             <selector>[name="key"]</selector>
@@ -24,12 +24,12 @@
         </apacheRewrites>
         <httpsFront>
             <selector>[ng-model*="front"]</selector>
-            <input>radiobutton</input>
+            <input>checkbox</input>
         </httpsFront>
         <https />
         <httpsAdmin>
             <selector>[type="checkbox"][ng-model*="admin"]</selector>
-            <input>radiobutton</input>
+            <input>checkbox</input>
         </httpsAdmin>
     </fields>
 </mapping>

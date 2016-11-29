@@ -37,28 +37,28 @@ class EmailSenderTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->messageManagerMock = $this->getMock(
-            \Magento\Framework\Message\Manager::class,
+            '\Magento\Framework\Message\Manager',
             [],
             [],
             '',
             false
         );
         $this->loggerMock = $this->getMock(
-            \Psr\Log\LoggerInterface::class,
+            '\Psr\Log\LoggerInterface',
             [],
             [],
             '',
             false
         );
         $this->orderMock = $this->getMock(
-            \Magento\Sales\Model\Order::class,
+            '\Magento\Sales\Model\Order',
             [],
             [],
             '',
             false
         );
         $this->orderSenderMock = $this->getMock(
-            \Magento\Sales\Model\Order\Email\Sender\OrderSender::class,
+            '\Magento\Sales\Model\Order\Email\Sender\OrderSender',
             [],
             [],
             '',

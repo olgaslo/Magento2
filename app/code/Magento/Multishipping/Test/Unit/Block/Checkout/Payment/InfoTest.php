@@ -26,10 +26,9 @@ class InfoTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->multiShippingMock =
-            $this->getMock(\Magento\Multishipping\Model\Checkout\Type\Multishipping::class, [], [], '', false);
+            $this->getMock('Magento\Multishipping\Model\Checkout\Type\Multishipping', [], [], '', false);
         $objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
-        $this->model = $objectManager->getObject(
-            \Magento\Multishipping\Block\Checkout\Payment\Info::class,
+        $this->model = $objectManager->getObject('Magento\Multishipping\Block\Checkout\Payment\Info',
             [
                 'multishipping' => $this->multiShippingMock,
             ]
@@ -38,8 +37,8 @@ class InfoTest extends \PHPUnit_Framework_TestCase
 
     public function testGetPaymentInfo()
     {
-        $quoteMock = $this->getMock(\Magento\Quote\Model\Quote::class, [], [], '', false);
-        $paymentInfoMock = $this->getMock(\Magento\Payment\Model\Info::class, [], [], '', false);
+        $quoteMock = $this->getMock('Magento\Quote\Model\Quote', [], [], '', false);
+        $paymentInfoMock = $this->getMock('Magento\Payment\Model\Info', [], [], '', false);
         $this->multiShippingMock->expects($this->once())->method('getQuote')->willReturn($quoteMock);
         $quoteMock->expects($this->once())->method('getPayment')->willReturn($paymentInfoMock);
 

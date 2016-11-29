@@ -34,21 +34,15 @@ class EavTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->_productEavIndexerRow = $this->getMockBuilder(
-            \Magento\Catalog\Model\Indexer\Product\Eav\Action\Row::class
-        )
+        $this->_productEavIndexerRow = $this->getMockBuilder('Magento\Catalog\Model\Indexer\Product\Eav\Action\Row')
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->_productEavIndexerRows = $this->getMockBuilder(
-            \Magento\Catalog\Model\Indexer\Product\Eav\Action\Rows::class
-        )
+        $this->_productEavIndexerRows = $this->getMockBuilder('Magento\Catalog\Model\Indexer\Product\Eav\Action\Rows')
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->_productEavIndexerFull = $this->getMockBuilder(
-            \Magento\Catalog\Model\Indexer\Product\Eav\Action\Full::class
-        )
+        $this->_productEavIndexerFull = $this->getMockBuilder('Magento\Catalog\Model\Indexer\Product\Eav\Action\Full')
             ->disableOriginalConstructor()
             ->getMock();
 

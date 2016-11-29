@@ -18,7 +18,7 @@ class ExtensionAttributesFactoryTest extends \PHPUnit_Framework_TestCase
         $objectManager = \Magento\TestFramework\Helper\Bootstrap::getObjectManager();
 
         $this->factory = $objectManager->create(
-            \Magento\Framework\Api\ExtensionAttributesFactory::class,
+            'Magento\Framework\Api\ExtensionAttributesFactory',
             ['objectManager' => $objectManager]
         );
     }
@@ -28,7 +28,7 @@ class ExtensionAttributesFactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testCreateThrowExceptionIfInterfaceNotImplemented()
     {
-        $this->factory->create(\Magento\Framework\Api\ExtensionAttributesFactoryTest::class);
+        $this->factory->create('Magento\Framework\Api\ExtensionAttributesFactoryTest');
     }
 
     /**
@@ -36,7 +36,7 @@ class ExtensionAttributesFactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testCreateThrowExceptionIfInterfaceNotOverridden()
     {
-        $this->factory->create(\Magento\Wonderland\Model\Data\FakeExtensibleOne::class);
+        $this->factory->create('\Magento\Wonderland\Model\Data\FakeExtensibleOne');
     }
 
     /**
@@ -44,14 +44,14 @@ class ExtensionAttributesFactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testCreateThrowExceptionIfReturnIsIncorrect()
     {
-        $this->factory->create(\Magento\Wonderland\Model\Data\FakeExtensibleTwo::class);
+        $this->factory->create('\Magento\Wonderland\Model\Data\FakeExtensibleTwo');
     }
 
     public function testCreate()
     {
         $this->assertInstanceOf(
-            \Magento\Wonderland\Api\Data\FakeRegionExtension::class,
-            $this->factory->create(\Magento\Wonderland\Model\Data\FakeRegion::class)
+            'Magento\Wonderland\Api\Data\FakeRegionExtension',
+            $this->factory->create('Magento\Wonderland\Model\Data\FakeRegion')
         );
     }
 

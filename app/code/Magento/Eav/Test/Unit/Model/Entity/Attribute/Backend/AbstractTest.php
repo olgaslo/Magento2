@@ -15,7 +15,7 @@ class AbstractTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->_model = $this->getMockForAbstractClass(
-            \Magento\Eav\Model\Entity\Attribute\Backend\AbstractBackend::class,
+            'Magento\Eav\Model\Entity\Attribute\Backend\AbstractBackend',
             [],
             '',
             false
@@ -28,7 +28,7 @@ class AbstractTest extends \PHPUnit_Framework_TestCase
         $attributeId = 42;
 
         $attribute = $this->getMock(
-            \Magento\Eav\Model\Entity\Attribute\AbstractAttribute::class,
+            'Magento\Eav\Model\Entity\Attribute\AbstractAttribute',
             ['getBackendTable', 'isStatic', 'getAttributeId', '__wakeup'],
             [],
             '',

@@ -35,17 +35,11 @@ class ItemConverterTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->configPoolMock = $this->getMock(
-            \Magento\Catalog\Helper\Product\ConfigurationPool::class,
-            [],
-            [],
-            '',
-            false
-        );
-        $this->eventManagerMock = $this->getMock(\Magento\Framework\Event\ManagerInterface::class);
-        $this->dataObjectHelperMock = $this->getMock(\Magento\Framework\Api\DataObjectHelper::class, [], [], '', false);
+        $this->configPoolMock = $this->getMock('Magento\Catalog\Helper\Product\ConfigurationPool', [], [], '', false);
+        $this->eventManagerMock = $this->getMock('Magento\Framework\Event\ManagerInterface');
+        $this->dataObjectHelperMock = $this->getMock('Magento\Framework\Api\DataObjectHelper', [], [], '', false);
         $this->totalsFactoryMock = $this->getMock(
-            \Magento\Quote\Api\Data\TotalsItemInterfaceFactory::class,
+            'Magento\Quote\Api\Data\TotalsItemInterfaceFactory',
             ['create'],
             [],
             '',
@@ -64,12 +58,12 @@ class ItemConverterTest extends \PHPUnit_Framework_TestCase
     {
         $productType = 'simple';
 
-        $itemMock = $this->getMock(\Magento\Quote\Model\Quote\Item::class, [], [], '', false);
+        $itemMock = $this->getMock('Magento\Quote\Model\Quote\Item', [], [], '', false);
         $itemMock->expects($this->once())->method('toArray')->will($this->returnValue(['options' => []]));
         $itemMock->expects($this->any())->method('getProductType')->will($this->returnValue($productType));
 
-        $simpleConfigMock = $this->getMock(\Magento\Catalog\Helper\Product\Configuration::class, [], [], '', false);
-        $defaultConfigMock = $this->getMock(\Magento\Catalog\Helper\Product\Configuration::class, [], [], '', false);
+        $simpleConfigMock = $this->getMock('Magento\Catalog\Helper\Product\Configuration', [], [], '', false);
+        $defaultConfigMock = $this->getMock('Magento\Catalog\Helper\Product\Configuration', [], [], '', false);
 
         $this->configPoolMock->expects($this->any())->method('getByProductType')
             ->will($this->returnValueMap([['simple', $simpleConfigMock], ['default', $defaultConfigMock]]));
@@ -90,7 +84,7 @@ class ItemConverterTest extends \PHPUnit_Framework_TestCase
             'options' => '{"1":{"data":"optionsData","label":"option1"},"2":{"data":"optionsData","label":"option2"}}'
         ];
         $this->dataObjectHelperMock->expects($this->once())->method('populateWithArray')
-            ->with(null, $expectedData, \Magento\Quote\Api\Data\TotalsItemInterface::class);
+            ->with(null, $expectedData, '\Magento\Quote\Api\Data\TotalsItemInterface');
 
         $this->model->modelToDataObject($itemMock);
     }

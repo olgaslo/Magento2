@@ -9,10 +9,10 @@ class OrderRendererTest extends \PHPUnit_Framework_TestCase
 {
     public function testRender()
     {
-        $quoteMock = $this->getMockBuilder(\Magento\Framework\DB\Platform\Quote::class)
+        $quoteMock = $this->getMockBuilder('Magento\Framework\DB\Platform\Quote')
             ->disableOriginalConstructor()
             ->getMock();
-        $selectMock = $this->getMockBuilder(\Magento\Framework\DB\Select::class)
+        $selectMock = $this->getMockBuilder('Magento\Framework\DB\Select')
             ->disableOriginalConstructor()
             ->getMock();
         $parts = [

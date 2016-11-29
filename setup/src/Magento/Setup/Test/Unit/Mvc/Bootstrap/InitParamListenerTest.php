@@ -47,27 +47,24 @@ class InitParamListenerTest extends \PHPUnit_Framework_TestCase
     public function testOnBootstrap()
     {
         /** @var \Zend\Mvc\MvcEvent|\PHPUnit_Framework_MockObject_MockObject $mvcEvent */
-        $mvcEvent = $this->getMock(\Zend\Mvc\MvcEvent::class);
-        $mvcApplication = $this->getMockBuilder(\Zend\Mvc\Application::class)->disableOriginalConstructor()->getMock();
+        $mvcEvent = $this->getMock('Zend\Mvc\MvcEvent');
+        $mvcApplication = $this->getMockBuilder('Zend\Mvc\Application')->disableOriginalConstructor()->getMock();
         $mvcEvent->expects($this->once())->method('getApplication')->willReturn($mvcApplication);
-        $serviceManager = $this->getMock(\Zend\ServiceManager\ServiceManager::class);
+        $serviceManager = $this->getMock('Zend\ServiceManager\ServiceManager');
         $initParams[AppBootstrap::INIT_PARAM_FILESYSTEM_DIR_PATHS][DirectoryList::ROOT] = ['path' => '/test'];
         $serviceManager->expects($this->once())->method('get')
             ->willReturn($initParams);
         $serviceManager->expects($this->exactly(2))->method('setService')
             ->withConsecutive(
                 [
-                    \Magento\Framework\App\Filesystem\DirectoryList::class,
-                    $this->isInstanceOf(\Magento\Framework\App\Filesystem\DirectoryList::class),
+                    'Magento\Framework\App\Filesystem\DirectoryList',
+                    $this->isInstanceOf('Magento\Framework\App\Filesystem\DirectoryList'),
                 ],
-                [
-                    \Magento\Framework\Filesystem::class,
-                    $this->isInstanceOf(\Magento\Framework\Filesystem::class),
-                ]
+                ['Magento\Framework\Filesystem', $this->isInstanceOf('Magento\Framework\Filesystem')]
             );
         $mvcApplication->expects($this->any())->method('getServiceManager')->willReturn($serviceManager);
 
-        $eventManager = $this->getMockForAbstractClass(\Zend\EventManager\EventManagerInterface::class);
+        $eventManager = $this->getMockForAbstractClass('Zend\EventManager\EventManagerInterface');
         $mvcApplication->expects($this->any())->method('getEventManager')->willReturn($eventManager);
         $eventManager->expects($this->any())->method('attach');
 
@@ -97,9 +94,9 @@ class InitParamListenerTest extends \PHPUnit_Framework_TestCase
         /**
          * @var \Zend\ServiceManager\ServiceLocatorInterface|\PHPUnit_Framework_MockObject_MockObject $serviceLocator
          */
-        $serviceLocator = $this->getMock(\Zend\ServiceManager\ServiceLocatorInterface::class);
-        $mvcApplication = $this->getMockBuilder(\Zend\Mvc\Application::class)->disableOriginalConstructor()->getMock();
-        $request = $this->getMock(\Zend\Stdlib\RequestInterface::class);
+        $serviceLocator = $this->getMock('Zend\ServiceManager\ServiceLocatorInterface');
+        $mvcApplication = $this->getMockBuilder('Zend\Mvc\Application')->disableOriginalConstructor()->getMock();
+        $request = $this->getMock('Zend\Stdlib\RequestInterface');
         $mvcApplication->expects($this->any())->method('getRequest')->willReturn($request);
         $serviceLocator->expects($this->once())->method('get')->with('Application')
             ->willReturn($mvcApplication);
@@ -123,9 +120,9 @@ class InitParamListenerTest extends \PHPUnit_Framework_TestCase
         /**
          * @var \Zend\ServiceManager\ServiceLocatorInterface|\PHPUnit_Framework_MockObject_MockObject $serviceLocator
          */
-        $serviceLocator = $this->getMock(\Zend\ServiceManager\ServiceLocatorInterface::class);
-        $mvcApplication = $this->getMockBuilder(\Zend\Mvc\Application::class)->disableOriginalConstructor()->getMock();
-        $request = $this->getMockBuilder(\Zend\Console\Request::class)->disableOriginalConstructor()->getMock();
+        $serviceLocator = $this->getMock('Zend\ServiceManager\ServiceLocatorInterface');
+        $mvcApplication = $this->getMockBuilder('Zend\Mvc\Application')->disableOriginalConstructor()->getMock();
+        $request = $this->getMockBuilder('Zend\Console\Request')->disableOriginalConstructor()->getMock();
         $request->expects($this->any())
             ->method('getContent')
             ->willReturn(
@@ -209,7 +206,7 @@ class InitParamListenerTest extends \PHPUnit_Framework_TestCase
          * @var \Magento\Framework\App\Filesystem\DirectoryList|
          * \PHPUnit_Framework_MockObject_MockObject $directoryList
          */
-        $directoryList = $this->getMockBuilder(\Magento\Framework\App\Filesystem\DirectoryList::class)
+        $directoryList = $this->getMockBuilder('Magento\Framework\App\Filesystem\DirectoryList')
             ->disableOriginalConstructor()->getMock();
         $directoryList->expects($this->any())->method('getPath')->willReturn($testPath);
         $filesystem = $this->listener->createFilesystem($directoryList);
@@ -225,16 +222,15 @@ class InitParamListenerTest extends \PHPUnit_Framework_TestCase
      */
     private function prepareEventManager()
     {
-        $this->callbackHandler = $this->getMockBuilder(\Zend\Stdlib\CallbackHandler::class)
-            ->disableOriginalConstructor()
+        $this->callbackHandler = $this->getMockBuilder('Zend\Stdlib\CallbackHandler')->disableOriginalConstructor()
             ->getMock();
 
         /** @var \Zend\EventManager\EventManagerInterface|\PHPUnit_Framework_MockObject_MockObject $events */
-        $eventManager = $this->getMock(\Zend\EventManager\EventManagerInterface::class);
+        $eventManager = $this->getMock('Zend\EventManager\EventManagerInterface');
 
-        $sharedManager = $this->getMock(\Zend\EventManager\SharedEventManager::class);
+        $sharedManager = $this->getMock('Zend\EventManager\SharedEventManager');
         $sharedManager->expects($this->once())->method('attach')->with(
-            \Zend\Mvc\Application::class,
+            'Zend\Mvc\Application',
             MvcEvent::EVENT_BOOTSTRAP,
             [$this->listener, 'onBootstrap']
         )->willReturn($this->callbackHandler);
@@ -362,7 +358,7 @@ class InitParamListenerTest extends \PHPUnit_Framework_TestCase
             ->willReturn($objectManagerMock);
         $adminAppStateMock->expects($this->once())
             ->method('setAreaCode')
-            ->with(\Magento\Framework\App\Area::AREA_ADMINHTML);
+            ->with(\Magento\Framework\App\Area::AREA_ADMIN);
         $applicationMock->expects($this->once())
             ->method('getServiceManager')
             ->willReturn($serviceManagerMock);

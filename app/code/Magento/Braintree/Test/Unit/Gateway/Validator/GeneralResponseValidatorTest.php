@@ -37,7 +37,7 @@ class GeneralResponseValidatorTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->resultInterfaceFactoryMock = $this->getMockBuilder(
-            \Magento\Payment\Gateway\Validator\ResultInterfaceFactory::class
+            'Magento\Payment\Gateway\Validator\ResultInterfaceFactory'
         )->disableOriginalConstructor()
             ->setMethods(['create'])
             ->getMock();

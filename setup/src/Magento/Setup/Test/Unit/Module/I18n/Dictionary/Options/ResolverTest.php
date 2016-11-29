@@ -21,7 +21,7 @@ class ResolverTest extends \PHPUnit_Framework_TestCase
     public function testGetOptions($directory, $withContext, $result)
     {
         $objectManagerHelper = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
-        $componentRegistrar = $this->getMock(\Magento\Framework\Component\ComponentRegistrar::class, [], [], '', false);
+        $componentRegistrar = $this->getMock('Magento\Framework\Component\ComponentRegistrar', [], [], '', false);
         $root = __DIR__ . '/_files/source';
         $componentRegistrar->expects($this->any())
             ->method('getPaths')
@@ -31,11 +31,11 @@ class ResolverTest extends \PHPUnit_Framework_TestCase
                     [ComponentRegistrar::THEME, [$root . '/app/design']],
                 ])
             );
-        $directoryList = $this->getMock(\Magento\Framework\App\Filesystem\DirectoryList::class, [], [], '', false);
+        $directoryList = $this->getMock('Magento\Framework\App\Filesystem\DirectoryList', [], [], '', false);
         $directoryList->expects($this->any())->method('getRoot')->willReturn('root');
         /** @var \Magento\Setup\Module\I18n\Dictionary\Options\Resolver $resolver */
         $resolver = $objectManagerHelper->getObject(
-            \Magento\Setup\Module\I18n\Dictionary\Options\Resolver::class,
+            'Magento\Setup\Module\I18n\Dictionary\Options\Resolver',
             [
                 'directory' => $directory,
                 'withContext' => $withContext,
@@ -119,16 +119,16 @@ class ResolverTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetOptionsWrongDir($directory, $withContext, $message)
     {
-        $componentRegistrar = $this->getMock(\Magento\Framework\Component\ComponentRegistrar::class, [], [], '', false);
+        $componentRegistrar = $this->getMock('Magento\Framework\Component\ComponentRegistrar', [], [], '', false);
         $root = __DIR__ . '/_files/source';
         $componentRegistrar->expects($this->any())
             ->method('getPaths')
             ->willReturn([$root . '/app/code/module1', $root . '/app/code/module2']);
-        $directoryList = $this->getMock(\Magento\Framework\App\Filesystem\DirectoryList::class, [], [], '', false);
+        $directoryList = $this->getMock('Magento\Framework\App\Filesystem\DirectoryList', [], [], '', false);
         $objectManagerHelper = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
         /** @var \Magento\Setup\Module\I18n\Dictionary\Options\Resolver $resolver */
         $resolver = $objectManagerHelper->getObject(
-            \Magento\Setup\Module\I18n\Dictionary\Options\Resolver::class,
+            'Magento\Setup\Module\I18n\Dictionary\Options\Resolver',
             [
                 'directory' => $directory,
                 'withContext' => $withContext,

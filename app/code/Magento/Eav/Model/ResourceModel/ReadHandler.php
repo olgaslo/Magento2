@@ -13,7 +13,6 @@ use Magento\Framework\Model\Entity\ScopeResolver;
 use Magento\Framework\Model\Entity\ScopeInterface;
 use Magento\Framework\EntityManager\Operation\AttributeInterface;
 use Magento\Eav\Model\Entity\AttributeCache;
-use Psr\Log\LoggerInterface;
 
 /**
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
@@ -51,11 +50,6 @@ class ReadHandler implements AttributeInterface
     protected $scopeResolver;
 
     /**
-     * @var LoggerInterface
-     */
-    private $logger;
-
-    /**
      * ReadHandler constructor.
      *
      * @param AttributeRepository $attributeRepository
@@ -64,7 +58,6 @@ class ReadHandler implements AttributeInterface
      * @param AppResource $appResource
      * @param ScopeResolver $scopeResolver
      * @param AttributeCache $attributeCache
-     * @param LoggerInterface $logger
      */
     public function __construct(
         AttributeRepository $attributeRepository,
@@ -72,8 +65,7 @@ class ReadHandler implements AttributeInterface
         SearchCriteriaBuilder $searchCriteriaBuilder,
         AppResource $appResource,
         ScopeResolver $scopeResolver,
-        AttributeCache $attributeCache,
-        LoggerInterface $logger
+        AttributeCache $attributeCache
     ) {
         $this->attributeRepository = $attributeRepository;
         $this->metadataPool = $metadataPool;
@@ -81,7 +73,6 @@ class ReadHandler implements AttributeInterface
         $this->appResource = $appResource;
         $this->scopeResolver = $scopeResolver;
         $this->attributeCache = $attributeCache;
-        $this->logger = $logger;
     }
 
     /**
@@ -172,14 +163,7 @@ class ReadHandler implements AttributeInterface
                 \Magento\Framework\DB\Select::SQL_UNION_ALL
             );
             foreach ($connection->fetchAll($unionSelect) as $attributeValue) {
-                if (isset($attributesMap[$attributeValue['attribute_id']])) {
-                    $entityData[$attributesMap[$attributeValue['attribute_id']]] = $attributeValue['value'];
-                } else {
-                    $this->logger->warning(
-                        "Attempt to load value of nonexistent EAV attribute '{$attributeValue['attribute_id']}' 
-                        for entity type '$entityType'."
-                    );
-                }
+                $entityData[$attributesMap[$attributeValue['attribute_id']]] = $attributeValue['value'];
             }
         }
         return $entityData;

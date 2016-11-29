@@ -36,16 +36,16 @@ class SessionCheckerTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->cookieManager = $this->getMockBuilder(\Magento\Framework\Stdlib\Cookie\PhpCookieManager::class)
+        $this->cookieManager = $this->getMockBuilder('Magento\Framework\Stdlib\Cookie\PhpCookieManager')
             ->disableOriginalConstructor()
             ->getMock();
-        $this->metadataFactory = $this->getMockBuilder(\Magento\Framework\Stdlib\Cookie\CookieMetadataFactory::class)
+        $this->metadataFactory = $this->getMockBuilder('Magento\Framework\Stdlib\Cookie\CookieMetadataFactory')
             ->disableOriginalConstructor()
             ->getMock();
-        $this->metadata = $this->getMockBuilder(\Magento\Framework\Stdlib\Cookie\CookieMetadata::class)
+        $this->metadata = $this->getMockBuilder('Magento\Framework\Stdlib\Cookie\CookieMetadata')
             ->disableOriginalConstructor()
             ->getMock();
-        $this->sessionManager = $this->getMockBuilder(\Magento\Framework\Session\SessionManager::class)
+        $this->sessionManager = $this->getMockBuilder('Magento\Framework\Session\SessionManager')
             ->disableOriginalConstructor()
             ->getMock();
 

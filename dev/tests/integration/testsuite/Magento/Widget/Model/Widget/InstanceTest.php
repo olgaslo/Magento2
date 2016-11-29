@@ -15,7 +15,7 @@ class InstanceTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->_model = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create(
-            \Magento\Widget\Model\Widget\Instance::class
+            'Magento\Widget\Model\Widget\Instance'
         );
     }
 
@@ -28,10 +28,10 @@ class InstanceTest extends \PHPUnit_Framework_TestCase
 
     public function testSetThemeId()
     {
-        \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->get(\Magento\Framework\App\State::class)
+        \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->get('Magento\Framework\App\State')
             ->setAreaCode('frontend');
         $theme = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->get(
-            \Magento\Framework\View\DesignInterface::class
+            'Magento\Framework\View\DesignInterface'
         )->setDefaultDesignTheme()->getDesignTheme();
         $this->_model->setThemeId($theme->getId());
 
@@ -43,8 +43,7 @@ class InstanceTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetWidgetConfigAsArray()
     {
-        $config = $this->_model->setType(\Magento\Catalog\Block\Product\Widget\NewWidget::class)
-            ->getWidgetConfigAsArray();
+        $config = $this->_model->setType('Magento\Catalog\Block\Product\Widget\NewWidget')->getWidgetConfigAsArray();
         $this->assertTrue(is_array($config));
         $element = null;
         if (isset(
@@ -74,7 +73,7 @@ class InstanceTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetWidgetSupportedContainers()
     {
-        $this->_model->setType(\Magento\Catalog\Block\Product\Widget\NewWidget::class);
+        $this->_model->setType('Magento\Catalog\Block\Product\Widget\NewWidget');
         $containers = $this->_model->getWidgetSupportedContainers();
         $this->assertInternalType('array', $containers);
         $this->assertContains('sidebar.main', $containers);
@@ -109,13 +108,13 @@ class InstanceTest extends \PHPUnit_Framework_TestCase
             'types' => ['type_1', 'type_2'],
             'conditions' => [
                 '1' => [
-                    'type' => \Magento\CatalogWidget\Model\Rule\Condition\Combine::class,
+                    'type' => 'Magento\CatalogWidget\Model\Rule\Condition\Combine',
                     'aggregator' => 'all',
                     'value' => '1',
                     'new_child' => '',
                 ],
                 '1--1' => [
-                    'type' => \Magento\CatalogWidget\Model\Rule\Condition\Product::class,
+                    'type' => 'Magento\CatalogWidget\Model\Rule\Condition\Product',
                     'attribute' => 'attribute_set_id',
                     'value' => '4',
                     'operator' => '==',

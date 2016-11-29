@@ -28,9 +28,9 @@ class ActionsTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->objectManagerHelper = new ObjectManagerHelper($this);
-        $this->actions = $this->objectManagerHelper->getObject(\Magento\Rule\Model\Renderer\Actions::class);
+        $this->actions = $this->objectManagerHelper->getObject('Magento\Rule\Model\Renderer\Actions');
         $this->_element = $this->getMock(
-            \Magento\Framework\Data\Form\Element\AbstractElement::class,
+            '\Magento\Framework\Data\Form\Element\AbstractElement',
             ['getRule'],
             [],
             '',
@@ -40,11 +40,11 @@ class ActionsTest extends \PHPUnit_Framework_TestCase
 
     public function testRender()
     {
-        $rule = $this->getMockBuilder(\Magento\Rule\Model\AbstractModel::class)
+        $rule = $this->getMockBuilder('Magento\Rule\Model\AbstractModel')
             ->setMethods(['getActions', '__sleep', '__wakeup'])
             ->disableOriginalConstructor()
             ->getMockForAbstractClass();
-        $actions = $this->getMock(\Magento\Rule\Model\Action\Collection::class, ['asHtmlRecursive'], [], '', false);
+        $actions = $this->getMock('\Magento\Rule\Model\Action\Collection', ['asHtmlRecursive'], [], '', false);
 
         $this->_element->expects($this->any())
             ->method('getRule')

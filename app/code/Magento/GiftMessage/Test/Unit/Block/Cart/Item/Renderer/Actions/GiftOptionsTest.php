@@ -30,21 +30,19 @@ class GiftOptionsTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->contextMock = $this->getMockBuilder(\Magento\Backend\Block\Template\Context::class)
+        $this->contextMock = $this->getMockBuilder('Magento\Backend\Block\Template\Context')
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->jsonEncoderMock = $this->getMockBuilder(\Magento\Framework\Json\Encoder::class)
+        $this->jsonEncoderMock = $this->getMockBuilder('Magento\Framework\Json\Encoder')
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->compositeConfigProvider = $this->getMockBuilder(\Magento\Checkout\Model\CompositeConfigProvider::class)
+        $this->compositeConfigProvider = $this->getMockBuilder('Magento\Checkout\Model\CompositeConfigProvider')
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->layoutProcessorMock = $this->getMockBuilder(
-            \Magento\Checkout\Block\Checkout\LayoutProcessorInterface::class
-        )
+        $this->layoutProcessorMock = $this->getMockBuilder('Magento\Checkout\Block\Checkout\LayoutProcessorInterface')
             ->disableOriginalConstructor()
             ->getMockForAbstractClass();
 
@@ -61,7 +59,7 @@ class GiftOptionsTest extends \PHPUnit_Framework_TestCase
         /**
          * @var Item|\PHPUnit_Framework_MockObject_MockObject $itemMock
          */
-        $itemMock = $this->getMockBuilder(\Magento\Quote\Model\Quote\Item::class)
+        $itemMock = $this->getMockBuilder('Magento\Quote\Model\Quote\Item')
             ->disableOriginalConstructor()
             ->getMock();
 

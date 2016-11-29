@@ -37,11 +37,6 @@ class ConfigurableTest extends \PHPUnit_Framework_TestCase
     ];
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
-     */
-    private $eavConfig;
-
-    /**
      * @var Configurable
      */
     protected $_model;
@@ -105,53 +100,47 @@ class ConfigurableTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->_objectHelper = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
-        $eventManager = $this->getMock(\Magento\Framework\Event\ManagerInterface::class, [], [], '', false);
-        $fileStorageDbMock = $this->getMock(
-            \Magento\MediaStorage\Helper\File\Storage\Database::class,
-            [],
-            [],
-            '',
-            false
-        );
-        $filesystem = $this->getMockBuilder(\Magento\Framework\Filesystem::class)
+        $eventManager = $this->getMock('Magento\Framework\Event\ManagerInterface', [], [], '', false);
+        $fileStorageDbMock = $this->getMock('Magento\MediaStorage\Helper\File\Storage\Database', [], [], '', false);
+        $filesystem = $this->getMockBuilder('Magento\Framework\Filesystem')
             ->disableOriginalConstructor()
             ->getMock();
-        $coreRegistry = $this->getMock(\Magento\Framework\Registry::class, [], [], '', false);
-        $logger = $this->getMockBuilder(\Psr\Log\LoggerInterface::class)
+        $coreRegistry = $this->getMock('Magento\Framework\Registry', [], [], '', false);
+        $logger = $this->getMockBuilder('\Psr\Log\LoggerInterface')
             ->disableOriginalConstructor()
             ->setMethods([])
             ->getMockForAbstractClass();
         $this->_typeConfigurableFactory = $this->getMock(
-            \Magento\ConfigurableProduct\Model\ResourceModel\Product\Type\ConfigurableFactory::class,
+            'Magento\ConfigurableProduct\Model\ResourceModel\Product\Type\ConfigurableFactory',
             ['create', 'saveProducts'],
             [],
             '',
             false
         );
         $this->_configurableAttributeFactoryMock = $this->getMock(
-            \Magento\ConfigurableProduct\Model\Product\Type\Configurable\AttributeFactory::class,
+            'Magento\ConfigurableProduct\Model\Product\Type\Configurable\AttributeFactory',
             ['create'],
             [],
             '',
             false
         );
         $this->_productCollectionFactory = $this->getMock(
-            \Magento\ConfigurableProduct\Model\ResourceModel\Product\Type\Configurable\Product\CollectionFactory::class,
+            'Magento\ConfigurableProduct\Model\ResourceModel\Product\Type\Configurable\Product\CollectionFactory',
             ['create'],
             [],
             '',
             false
         );
         $this->_attributeCollectionFactory = $this->getMock(
-            \Magento\ConfigurableProduct\Model\ResourceModel\Product\Type\Configurable\Attribute\CollectionFactory::class,
+            'Magento\ConfigurableProduct\Model\ResourceModel\Product\Type\Configurable\Attribute\CollectionFactory',
             ['create'],
             [],
             '',
             false
         );
-        $this->productRepository = $this->getMock(\Magento\Catalog\Api\ProductRepositoryInterface::class);
+        $this->productRepository = $this->getMock('Magento\Catalog\Api\ProductRepositoryInterface');
         $this->extensionAttributesJoinProcessorMock = $this->getMock(
-            \Magento\Framework\Api\ExtensionAttribute\JoinProcessorInterface::class,
+            'Magento\Framework\Api\ExtensionAttribute\JoinProcessorInterface',
             [],
             [],
             '',
@@ -173,13 +162,9 @@ class ConfigurableTest extends \PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->eavConfig = $this->getMockBuilder(\Magento\Eav\Model\Config::class)->disableOriginalConstructor()
-            ->getMock();
-
         $this->_model = $this->_objectHelper->getObject(
             Configurable::class,
             [
-                'eavConfig' => $this->eavConfig,
                 'typeConfigurableFactory' => $this->_typeConfigurableFactory,
                 'configurableAttributeFactory' => $this->_configurableAttributeFactoryMock,
                 'productCollectionFactory' => $this->_productCollectionFactory,
@@ -212,7 +197,7 @@ class ConfigurableTest extends \PHPUnit_Framework_TestCase
      */
     public function testSave()
     {
-        $product = $this->getMockBuilder(\Magento\Catalog\Model\Product::class)
+        $product = $this->getMockBuilder('\Magento\Catalog\Model\Product')
             ->setMethods(
                 [
                     'getIsDuplicate',
@@ -253,8 +238,7 @@ class ConfigurableTest extends \PHPUnit_Framework_TestCase
         $product->expects($this->any())
             ->method('getData')
             ->willReturnMap($dataMap);
-        $attribute = $this->getMockBuilder(
-            \Magento\ConfigurableProduct\Model\Product\Type\Configurable\Attribute::class)
+        $attribute = $this->getMockBuilder('\Magento\ConfigurableProduct\Model\Product\Type\Configurable\Attribute')
             ->disableOriginalConstructor()
             ->setMethods(['addData', 'setStoreId', 'setProductId', 'save', '__wakeup', '__sleep'])
             ->getMock();
@@ -269,7 +253,7 @@ class ConfigurableTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue($attribute));
 
         $attributeCollection = $this->getMockBuilder(
-            \Magento\ConfigurableProduct\Model\ResourceModel\Product\Type\Configurable\Attribute\Collection::class
+            '\Magento\ConfigurableProduct\Model\ResourceModel\Product\Type\Configurable\Attribute\Collection'
         )->setMethods(['setProductFilter', 'addFieldToFilter', 'walk'])->disableOriginalConstructor()
             ->getMock();
         $this->_attributeCollectionFactory->expects($this->any())->method('create')
@@ -285,7 +269,7 @@ class ConfigurableTest extends \PHPUnit_Framework_TestCase
     public function testGetRelationInfo()
     {
         $info = $this->_model->getRelationInfo();
-        $this->assertInstanceOf(\Magento\Framework\DataObject::class, $info);
+        $this->assertInstanceOf('Magento\Framework\DataObject', $info);
         $this->assertEquals('catalog_product_super_link', $info->getData('table'));
         $this->assertEquals('parent_id', $info->getData('parent_field_name'));
         $this->assertEquals('product_id', $info->getData('child_field_name'));
@@ -294,7 +278,7 @@ class ConfigurableTest extends \PHPUnit_Framework_TestCase
     public function testCanUseAttribute()
     {
         $attribute = $this->getMock(
-            \Magento\Catalog\Model\ResourceModel\Eav\Attribute::class,
+            'Magento\Catalog\Model\ResourceModel\Eav\Attribute',
             [
                 'getIsGlobal',
                 'getIsVisible',
@@ -326,13 +310,13 @@ class ConfigurableTest extends \PHPUnit_Framework_TestCase
     public function testGetUsedProducts()
     {
         $attributeCollection = $this->getMockBuilder(
-            \Magento\ConfigurableProduct\Model\ResourceModel\Product\Type\Configurable\Attribute\Collection::class
+            '\Magento\ConfigurableProduct\Model\ResourceModel\Product\Type\Configurable\Attribute\Collection'
         )->setMethods(['setProductFilter', 'addFieldToFilter', 'walk'])->disableOriginalConstructor()
             ->getMock();
         $attributeCollection->expects($this->any())->method('setProductFilter')->will($this->returnSelf());
         $this->_attributeCollectionFactory->expects($this->any())->method('create')
             ->will($this->returnValue($attributeCollection));
-        $product = $this->getMockBuilder(\Magento\Catalog\Model\Product::class)
+        $product = $this->getMockBuilder('\Magento\Catalog\Model\Product')
             ->setMethods(
                 [
                     'dataHasChangedFor',
@@ -375,7 +359,7 @@ class ConfigurableTest extends \PHPUnit_Framework_TestCase
 
 
         $productCollection = $this->getMockBuilder(
-            \Magento\ConfigurableProduct\Model\ResourceModel\Product\Type\Configurable\Product\Collection::class
+            'Magento\ConfigurableProduct\Model\ResourceModel\Product\Type\Configurable\Product\Collection'
         )->setMethods(
             [
                 'setFlag',
@@ -384,7 +368,7 @@ class ConfigurableTest extends \PHPUnit_Framework_TestCase
                 'addAttributeToSelect',
                 'addFilterByRequiredOptions',
                 'setStoreId',
-                'addTierPriceData',
+                'addPriceData',
                 'getIterator',
                 'load',
             ]
@@ -393,7 +377,7 @@ class ConfigurableTest extends \PHPUnit_Framework_TestCase
         $productCollection->expects($this->any())->method('addAttributeToSelect')->will($this->returnSelf());
         $productCollection->expects($this->any())->method('setProductFilter')->will($this->returnSelf());
         $productCollection->expects($this->any())->method('setFlag')->will($this->returnSelf());
-        $productCollection->expects($this->any())->method('addTierPriceData')->will($this->returnSelf());
+        $productCollection->expects($this->any())->method('addPriceData')->will($this->returnSelf());
         $productCollection->expects($this->any())->method('addFilterByRequiredOptions')->will($this->returnSelf());
         $productCollection->expects($this->any())->method('setStoreId')->with(5)->will($this->returnValue([]));
         $productCollection->expects($this->any())->method('getIterator')->willReturn(
@@ -415,7 +399,7 @@ class ConfigurableTest extends \PHPUnit_Framework_TestCase
     public function testGetConfigurableAttributesAsArray($productStore, $attributeStore)
     {
         $attributeSource = $this->getMockForAbstractClass(
-            \Magento\Eav\Model\Entity\Attribute\Source\AbstractSource::class,
+            'Magento\Eav\Model\Entity\Attribute\Source\AbstractSource',
             [],
             '',
             false,
@@ -426,7 +410,7 @@ class ConfigurableTest extends \PHPUnit_Framework_TestCase
         $attributeSource->expects($this->any())->method('getAllOptions')->will($this->returnValue([]));
 
         $attributeFrontend = $this->getMockForAbstractClass(
-            \Magento\Eav\Model\Entity\Attribute\Frontend\AbstractFrontend::class,
+            'Magento\Eav\Model\Entity\Attribute\Frontend\AbstractFrontend',
             [],
             '',
             false,
@@ -437,7 +421,7 @@ class ConfigurableTest extends \PHPUnit_Framework_TestCase
         $attributeFrontend->expects($this->any())->method('getLabel')->will($this->returnValue('Label'));
 
         $eavAttribute = $this->getMock(
-            \Magento\Catalog\Model\ResourceModel\Eav\Attribute::class,
+            'Magento\Catalog\Model\ResourceModel\Eav\Attribute',
             ['getFrontend', 'getSource', 'getStoreLabel', '__wakeup', 'setStoreId', '__sleep'],
             [],
             '',
@@ -448,14 +432,13 @@ class ConfigurableTest extends \PHPUnit_Framework_TestCase
         $eavAttribute->expects($this->any())->method('getStoreLabel')->will($this->returnValue('Store Label'));
         $eavAttribute->expects($this->any())->method('setStoreId')->with($attributeStore);
 
-        $attribute = $this->getMockBuilder(
-            \Magento\ConfigurableProduct\Model\Product\Type\Configurable\Attribute::class)
+        $attribute = $this->getMockBuilder('\Magento\ConfigurableProduct\Model\Product\Type\Configurable\Attribute')
             ->disableOriginalConstructor()
             ->setMethods(['getProductAttribute', '__wakeup', '__sleep'])
             ->getMock();
         $attribute->expects($this->any())->method('getProductAttribute')->will($this->returnValue($eavAttribute));
 
-        $product = $this->getMockBuilder(\Magento\Catalog\Model\Product::class)
+        $product = $this->getMockBuilder('\Magento\Catalog\Model\Product')
             ->setMethods(['getStoreId', 'getData', 'hasData', '__wakeup', '__sleep'])
             ->disableOriginalConstructor()
             ->getMock();
@@ -498,7 +481,7 @@ class ConfigurableTest extends \PHPUnit_Framework_TestCase
         $configurableAttributes = '_cache_instance_configurable_attributes';
 
         /** @var \Magento\Catalog\Model\Product|\PHPUnit_Framework_MockObject_MockObject $product */
-        $product = $this->getMockBuilder(\Magento\Catalog\Model\Product::class)
+        $product = $this->getMockBuilder('Magento\Catalog\Model\Product')
             ->setMethods(['getData', 'hasData', 'setData', 'getIdentities', 'getId', 'getStoreId'])
             ->disableOriginalConstructor()
             ->getMock();
@@ -522,7 +505,7 @@ class ConfigurableTest extends \PHPUnit_Framework_TestCase
             ->willReturn('link');
 
         $attributeCollection = $this->getMockBuilder(
-            \Magento\ConfigurableProduct\Model\ResourceModel\Product\Type\Configurable\Attribute\Collection::class
+            'Magento\ConfigurableProduct\Model\ResourceModel\Product\Type\Configurable\Attribute\Collection'
         )
             ->setMethods(['setProductFilter', 'orderByPosition', 'load'])
             ->disableOriginalConstructor()
@@ -534,7 +517,8 @@ class ConfigurableTest extends \PHPUnit_Framework_TestCase
         $this->extensionAttributesJoinProcessorMock->expects($this->once())
             ->method('process')
             ->with(
-                $this->isInstanceOf(\Magento\ConfigurableProduct\Model\ResourceModel\Product\Type\Configurable\Attribute\Collection::class
+                $this->isInstanceOf(
+                    'Magento\ConfigurableProduct\Model\ResourceModel\Product\Type\Configurable\Attribute\Collection'
                 )
             );
 
@@ -543,7 +527,7 @@ class ConfigurableTest extends \PHPUnit_Framework_TestCase
 
     public function testResetConfigurableAttributes()
     {
-        $product = $this->getMockBuilder(\Magento\Catalog\Model\Product::class)
+        $product = $this->getMockBuilder('\Magento\Catalog\Model\Product')
             ->setMethods(['unsetData', '__wakeup', '__sleep', 'getStoreId', 'getId'])
             ->disableOriginalConstructor()
             ->getMock();
@@ -556,7 +540,7 @@ class ConfigurableTest extends \PHPUnit_Framework_TestCase
 
     public function testHasOptions()
     {
-        $productMock = $this->getMockBuilder(\Magento\Catalog\Model\Product::class)
+        $productMock = $this->getMockBuilder('\Magento\Catalog\Model\Product')
             ->setMethods(['__wakeup', 'getOptions'])
             ->disableOriginalConstructor()
             ->getMock();
@@ -567,12 +551,11 @@ class ConfigurableTest extends \PHPUnit_Framework_TestCase
 
     public function testHasOptionsConfigurableAttribute()
     {
-        $productMock = $this->getMockBuilder(\Magento\Catalog\Model\Product::class)
+        $productMock = $this->getMockBuilder('\Magento\Catalog\Model\Product')
             ->setMethods(['__wakeup', 'getAttributeCode', 'getOptions', 'hasData', 'getData'])
             ->disableOriginalConstructor()
             ->getMock();
-        $attributeMock = $this->getMockBuilder(
-            \Magento\ConfigurableProduct\Model\Product\Type\Configurable\Attribute::class)
+        $attributeMock = $this->getMockBuilder('\Magento\ConfigurableProduct\Model\Product\Type\Configurable\Attribute')
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -589,7 +572,7 @@ class ConfigurableTest extends \PHPUnit_Framework_TestCase
 
     public function testHasOptionsFalse()
     {
-        $productMock = $this->getMockBuilder(\Magento\Catalog\Model\Product::class)
+        $productMock = $this->getMockBuilder('\Magento\Catalog\Model\Product')
             ->setMethods(['__wakeup', 'getOptions', 'hasData', 'getData'])
             ->disableOriginalConstructor()
             ->getMock();
@@ -607,11 +590,11 @@ class ConfigurableTest extends \PHPUnit_Framework_TestCase
 
     public function testIsSalable()
     {
-        $productMock = $this->getMockBuilder(\Magento\Catalog\Model\Product::class)
+        $productMock = $this->getMockBuilder('\Magento\Catalog\Model\Product')
             ->setMethods(['__wakeup', 'getStatus', 'hasData', 'getData', 'getStoreId', 'setData'])
             ->disableOriginalConstructor()
             ->getMock();
-        $childProductMock = $this->getMockBuilder(\Magento\Catalog\Model\Product::class)
+        $childProductMock = $this->getMockBuilder('\Magento\Catalog\Model\Product')
             ->setMethods(['__wakeup', 'isSalable'])
             ->disableOriginalConstructor()
             ->getMock();
@@ -629,22 +612,21 @@ class ConfigurableTest extends \PHPUnit_Framework_TestCase
 
     public function testGetSelectedAttributesInfo()
     {
-        $productMock = $this->getMockBuilder(\Magento\Catalog\Model\Product::class)
+        $productMock = $this->getMockBuilder('\Magento\Catalog\Model\Product')
             ->setMethods(['__wakeup', 'getCustomOption', 'hasData', 'getData'])
             ->disableOriginalConstructor()
             ->getMock();
-        $optionMock = $this->getMockBuilder(
-            \Magento\Catalog\Model\Product\Configuration\Item\Option\OptionInterface::class)
+        $optionMock = $this->getMockBuilder('Magento\Catalog\Model\Product\Configuration\Item\Option\OptionInterface')
             ->setMethods(['getValue'])
             ->disableOriginalConstructor()
             ->getMock();
         $usedAttributeMock = $this->getMockBuilder(
-            \Magento\ConfigurableProduct\Model\Product\Type\Configurable\Attribute::class
+            '\Magento\ConfigurableProduct\Model\Product\Type\Configurable\Attribute'
         )
             ->setMethods(['getProductAttribute'])
             ->disableOriginalConstructor()
             ->getMock();
-        $attributeMock = $this->getMockBuilder(\Magento\Catalog\Model\ResourceModel\Eav\Attribute::class)
+        $attributeMock = $this->getMockBuilder('\Magento\Catalog\Model\ResourceModel\Eav\Attribute')
             ->setMethods(['getStoreLabel', 'getSourceModel'])
             ->disableOriginalConstructor()
             ->getMock();
@@ -660,25 +642,18 @@ class ConfigurableTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(
             $this->_model->getSelectedAttributesInfo($productMock),
-            [
-                [
-                'label' => 'attr_store_label',
-                'value' => '',
-                'option_id' => 1,
-                'option_value' => ''
-                ]
-            ]
+            [['label' => 'attr_store_label', 'value' => '']]
         );
     }
 
     public function testCheckProductBuyState()
     {
         $this->markTestIncomplete('checkProductBuyState() method is not complete in parent class');
-        $productMock = $this->getMockBuilder(\Magento\Catalog\Model\Product::class)
+        $productMock = $this->getMockBuilder('\Magento\Catalog\Model\Product')
             ->setMethods(['__wakeup', 'getCustomOption', 'getSkipCheckRequiredOption'])
             ->disableOriginalConstructor()
             ->getMock();
-        $optionMock = $this->getMockBuilder(\Magento\Quote\Model\Quote\Item\Option::class)
+        $optionMock = $this->getMockBuilder('\Magento\Quote\Model\Quote\Item\Option')
             ->setMethods(['getValue'])
             ->disableOriginalConstructor()
             ->getMock();
@@ -702,11 +677,11 @@ class ConfigurableTest extends \PHPUnit_Framework_TestCase
     public function testCheckProductBuyStateException()
     {
         $this->markTestIncomplete('checkProductBuyState() method is not complete in parent class');
-        $productMock = $this->getMockBuilder(\Magento\Catalog\Model\Product::class)
+        $productMock = $this->getMockBuilder('\Magento\Catalog\Model\Product')
             ->setMethods(['__wakeup', 'getCustomOption', 'getSkipCheckRequiredOption'])
             ->disableOriginalConstructor()
             ->getMock();
-        $optionMock = $this->getMockBuilder(\Magento\Quote\Model\Quote\Item\Option::class)
+        $optionMock = $this->getMockBuilder('\Magento\Quote\Model\Quote\Item\Option')
             ->setMethods(['getValue'])
             ->disableOriginalConstructor()
             ->getMock();
@@ -723,24 +698,24 @@ class ConfigurableTest extends \PHPUnit_Framework_TestCase
 
     public function testGetProductByAttributesReturnUsedProduct()
     {
-        $productMock = $this->getMockBuilder(\Magento\Catalog\Model\Product::class)
+        $productMock = $this->getMockBuilder('\Magento\Catalog\Model\Product')
             ->setMethods(['__wakeup', 'hasData', 'getData', 'getResource', 'getAttributeSetId'])
             ->disableOriginalConstructor()
             ->getMock();
-        $firstItemMock = $this->getMockBuilder(\Magento\Catalog\Model\Product::class)
+        $firstItemMock = $this->getMockBuilder('\Magento\Catalog\Model\Product')
             ->setMethods(['__wakeup', 'getId'])
             ->disableOriginalConstructor()
             ->getMock();
-        $usedProductMock = $this->getMockBuilder(\Magento\Catalog\Model\Product::class)
+        $usedProductMock = $this->getMockBuilder('\Magento\Catalog\Model\Product')
             ->setMethods(['__wakeup', 'getData'])
             ->disableOriginalConstructor()
             ->getMock();
-        $eavAttributeMock = $this->getMockBuilder(\Magento\Eav\Model\Entity\Attribute\AbstractAttribute::class)
+        $eavAttributeMock = $this->getMockBuilder('Magento\Eav\Model\Entity\Attribute\AbstractAttribute')
             ->setMethods(['__wakeup', 'getId', 'getAttributeCode'])
             ->disableOriginalConstructor()
             ->getMock();
         $productCollection = $this->getMockBuilder(
-            \Magento\ConfigurableProduct\Model\ResourceModel\Product\Type\Configurable\Product\Collection::class
+            'Magento\ConfigurableProduct\Model\ResourceModel\Product\Type\Configurable\Product\Collection'
         )
             ->setMethods(
                 [
@@ -774,11 +749,14 @@ class ConfigurableTest extends \PHPUnit_Framework_TestCase
             ->willReturn('some_filter');
         $productMock->expects($this->any())->method('hasData')->willReturn(true);
 
+        $productMock->expects($this->at(3))->method('getData')
+            ->with('_cache_instance_product_set_attributes')
+            ->willReturn([$eavAttributeMock]);
+        $eavAttributeMock->expects($this->once())->method('getId')->willReturn(1);
         $eavAttributeMock->expects($this->once())->method('getAttributeCode')->willReturn('attr_code');
         $usedProductMock->expects($this->once())
             ->method('getData')->with('attr_code')
             ->willReturn($this->attributeData[1]);
-        $this->eavConfig->expects($this->any())->method('getAttribute')->willReturn($eavAttributeMock);
 
         $this->assertEquals(
             $usedProductMock,
@@ -788,16 +766,16 @@ class ConfigurableTest extends \PHPUnit_Framework_TestCase
 
     public function testGetProductByAttributesReturnFirstItem()
     {
-        $productMock = $this->getMockBuilder(\Magento\Catalog\Model\Product::class)
+        $productMock = $this->getMockBuilder('\Magento\Catalog\Model\Product')
             ->setMethods(['__wakeup', 'hasData', 'getData', 'getResource', 'getAttributeSetId'])
             ->disableOriginalConstructor()
             ->getMock();
-        $firstItemMock = $this->getMockBuilder(\Magento\Catalog\Model\Product::class)
+        $firstItemMock = $this->getMockBuilder('\Magento\Catalog\Model\Product')
             ->setMethods(['__wakeup', 'getId'])
             ->disableOriginalConstructor()
             ->getMock();
         $productCollection = $this->getMockBuilder(
-            \Magento\ConfigurableProduct\Model\ResourceModel\Product\Type\Configurable\Product\Collection::class
+            'Magento\ConfigurableProduct\Model\ResourceModel\Product\Type\Configurable\Product\Collection'
         )
             ->setMethods(
                 [
@@ -833,11 +811,11 @@ class ConfigurableTest extends \PHPUnit_Framework_TestCase
 
     public function testSetImageFromChildProduct()
     {
-        $productMock = $this->getMockBuilder(\Magento\Catalog\Model\Product::class)
+        $productMock = $this->getMockBuilder('\Magento\Catalog\Model\Product')
             ->setMethods(['__wakeup', 'hasData', 'getData', 'setImage'])
             ->disableOriginalConstructor()
             ->getMock();
-        $childProductMock = $this->getMockBuilder(\Magento\Catalog\Model\Product::class)
+        $childProductMock = $this->getMockBuilder('\Magento\Catalog\Model\Product')
             ->setMethods(['__wakeup', 'getData'])
             ->disableOriginalConstructor()
             ->getMock();

@@ -35,12 +35,12 @@ class FraudHandlerTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->paymentMock = $this->getMockBuilder(\Magento\Payment\Model\InfoInterface::class)
+        $this->paymentMock = $this->getMockBuilder('Magento\Payment\Model\InfoInterface')
             ->getMock();
-        $this->responseMock = $this->getMockBuilder(\Magento\Framework\DataObject::class)
+        $this->responseMock = $this->getMockBuilder('Magento\Framework\DataObject')
             ->disableOriginalConstructor()
             ->getMock();
-        $this->paypalInfoManagerMock = $this->getMockBuilder(\Magento\Paypal\Model\Info::class)
+        $this->paypalInfoManagerMock = $this->getMockBuilder('Magento\Paypal\Model\Info')
             ->disableOriginalConstructor()
             ->getMock();
 

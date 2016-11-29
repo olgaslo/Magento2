@@ -30,18 +30,17 @@ class ProductTest extends \PHPUnit_Framework_TestCase
     {
         /** @var \Magento\Framework\Indexer\IndexerInterface indexer */
         $this->indexer = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create(
-            \Magento\Indexer\Model\Indexer::class
+            'Magento\Indexer\Model\Indexer'
         );
         $this->indexer->load('catalog_category_product');
 
         /** @var \Magento\Catalog\Model\ResourceModel\Product $productResource */
         $this->productResource = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->get(
-            \Magento\Catalog\Model\ResourceModel\Product::class
+            'Magento\Catalog\Model\ResourceModel\Product'
         );
     }
 
     /**
-     * @magentoAppArea adminhtml
      * @magentoDataFixture Magento/Catalog/_files/indexer_catalog_category.php
      * @magentoDbIsolation enabled
      */
@@ -174,7 +173,7 @@ class ProductTest extends \PHPUnit_Framework_TestCase
 
         /** @var Category $categorySixth */
         $categorySixth = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create(
-            \Magento\Catalog\Model\Category::class
+            'Magento\Catalog\Model\Category'
         );
         $categorySixth->setName(
             'Category 6'
@@ -212,10 +211,10 @@ class ProductTest extends \PHPUnit_Framework_TestCase
     {
         /** @var Category $category */
         $category = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create(
-            \Magento\Catalog\Model\Category::class
+            'Magento\Catalog\Model\Category'
         );
 
-        $result = $category->getCollection()->addAttributeToSelect('name')->getItems();
+        $result = $category->getCollection()->getItems();
         $result = array_slice($result, 2);
 
         return array_slice($result, 0, $count);
@@ -229,7 +228,7 @@ class ProductTest extends \PHPUnit_Framework_TestCase
     {
         /** @var \Magento\Catalog\Model\Product $product */
         $product = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create(
-            \Magento\Catalog\Model\Product::class
+            'Magento\Catalog\Model\Product'
         );
 
         $result[] = $product->load(1);

@@ -29,21 +29,15 @@ class LogTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->logResourceMock = $this->getMock(
-            \Magento\Customer\Model\ResourceModel\Visitor::class,
-            [],
-            [],
-            '',
-            false
-        );
+        $this->logResourceMock = $this->getMock('Magento\Customer\Model\ResourceModel\Visitor', [], [], '', false);
         $this->compareItemMock = $this->getMock(
-            \Magento\Catalog\Model\Product\Compare\Item::class,
+            'Magento\Catalog\Model\Product\Compare\Item',
             [],
             [],
             '',
             false
         );
-        $this->subjectMock = $this->getMock(\Magento\Customer\Model\ResourceModel\Visitor::class, [], [], '', false);
+        $this->subjectMock = $this->getMock('Magento\Customer\Model\ResourceModel\Visitor', [], [], '', false);
         $this->model = new \Magento\Catalog\Model\Plugin\Log($this->compareItemMock);
     }
 

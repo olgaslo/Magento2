@@ -20,13 +20,12 @@ class StatusTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->config = $this->getMock(\Magento\Sales\Model\Order\Config::class, [], [], '', false);
+        $this->config = $this->getMock('Magento\Sales\Model\Order\Config', [], [], '', false);
 
         $this->objectManager = new ObjectManager($this);
-        $this->object = $this->objectManager->getObject(
-            \Magento\Sales\Model\Config\Source\Order\Status::class,
-            ['orderConfig' => $this->config]
-        );
+        $this->object = $this->objectManager->getObject('Magento\Sales\Model\Config\Source\Order\Status', [
+            'orderConfig' => $this->config
+        ]);
     }
 
     public function testToOptionArray()

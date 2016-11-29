@@ -13,11 +13,12 @@ class IntegrationTest extends \Magento\TestFramework\TestCase\WebapiAbstract
     /** @var  \Magento\Integration\Model\Integration */
     protected $integration;
 
+
     protected function setUp()
     {
         $objectManager = Bootstrap::getObjectManager();
         /** @var $integrationService \Magento\Integration\Api\IntegrationServiceInterface */
-        $integrationService = $objectManager->get(\Magento\Integration\Api\IntegrationServiceInterface::class);
+        $integrationService = $objectManager->get('Magento\Integration\Api\IntegrationServiceInterface');
 
         $params = [
             'all_resources' => true,
@@ -31,7 +32,7 @@ class IntegrationTest extends \Magento\TestFramework\TestCase\WebapiAbstract
 
     protected function tearDown()
     {
-        $this->integration = null;
+        unset($this->integration);
         OauthHelper::clearApiAccessCredentials();
         parent::tearDown();
     }

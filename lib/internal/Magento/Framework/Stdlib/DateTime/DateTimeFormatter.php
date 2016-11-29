@@ -43,7 +43,7 @@ class DateTimeFormatter implements DateTimeFormatterInterface
     {
         if ($this->localeResolver === null) {
             $this->localeResolver = \Magento\Framework\App\ObjectManager::getInstance()->get(
-                \Magento\Framework\Locale\ResolverInterface::class
+                'Magento\Framework\Locale\ResolverInterface'
             );
         }
         return $this->localeResolver;

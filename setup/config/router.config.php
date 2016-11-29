@@ -13,7 +13,7 @@ return [
                 'options' => [
                     'route'    => '/',
                     'defaults' => [
-                        'controller' => \Magento\Setup\Controller\Index::class,
+                        'controller' => 'Magento\Setup\Controller\Index',
                         'action'     => 'index',
                     ],
                 ],

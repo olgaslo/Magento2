@@ -24,7 +24,6 @@ class ImageMagickTest extends \PHPUnit_Framework_TestCase
      * @var \PHPUnit_Framework_MockObject_MockObject | \Magento\Framework\Filesystem\Directory\WriteInterface
      */
     protected $writeMock;
-
     /**
      * @var \Magento\Framework\Image\Adapter\ImageMagick
      */
@@ -33,12 +32,10 @@ class ImageMagickTest extends \PHPUnit_Framework_TestCase
     public function setup()
     {
         $objectManager = new ObjectManager($this);
-        $this->loggerMock = $this->getMockBuilder(\Psr\Log\LoggerInterface::class)->getMock();
-        $this->writeMock = $this->getMockBuilder(
-            \Magento\Framework\Filesystem\Directory\WriteInterface::class
-        )->getMock();
+        $this->loggerMock = $this->getMockBuilder('Psr\Log\LoggerInterface')->getMock();
+        $this->writeMock = $this->getMockBuilder('Magento\Framework\Filesystem\Directory\WriteInterface')->getMock();
         $this->filesystemMock = $this->getMock(
-            \Magento\Framework\Filesystem::class,
+            'Magento\Framework\Filesystem',
             ['getDirectoryWrite'],
             [],
             '',
@@ -51,12 +48,11 @@ class ImageMagickTest extends \PHPUnit_Framework_TestCase
 
         $this->imageMagic = $objectManager
             ->getObject(
-                \Magento\Framework\Image\Adapter\ImageMagick::class,
+                'Magento\Framework\Image\Adapter\ImageMagick',
                 ['filesystem' => $this->filesystemMock,
                     'logger' => $this->loggerMock]
             );
     }
-
     /**
      * @param string $imagePath
      * @param string $expectedMessage

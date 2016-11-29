@@ -6,7 +6,6 @@
 
 namespace Magento\Setup\Test\Unit\Model;
 
-use Magento\Composer\InfoCommand;
 use Magento\Setup\Model\SystemPackage;
 
 class SystemPackageTest extends \PHPUnit_Framework_TestCase
@@ -53,58 +52,50 @@ class SystemPackageTest extends \PHPUnit_Framework_TestCase
         [
             'id' => '1.2.0',
             'name' => 'Version 1.2.0 EE (latest)',
-            'package' => SystemPackage::EDITION_ENTERPRISE,
-            'stable' => true,
-            'current' => false,
+            'package' => 'magento/product-enterprise-edition',
+            'stable' => true
         ],
         [
             'id' => '1.2.0',
             'name' => 'Version 1.2.0 CE (latest)',
-            'package' => SystemPackage::EDITION_COMMUNITY,
-            'stable' => true,
-            'current' => false,
+            'package' => 'magento/product-community-edition',
+            'stable' => true
         ],
         [
             'id' => '1.1.0',
             'name' => 'Version 1.1.0 EE',
-            'package' => SystemPackage::EDITION_ENTERPRISE,
-            'stable' => true,
-            'current' => false,
+            'package' => 'magento/product-enterprise-edition',
+            'stable' => true
         ],
         [
             'id' => '1.1.0',
             'name' => 'Version 1.1.0 CE',
-            'package' => SystemPackage::EDITION_COMMUNITY,
-            'stable' => true,
-            'current' => false,
+            'package' => 'magento/product-community-edition',
+            'stable' => true
         ],
         [
             'id' => '1.1.0-RC1',
             'name' => 'Version 1.1.0-RC1 EE (unstable version)',
-            'package' => SystemPackage::EDITION_ENTERPRISE,
-            'stable' => false,
-            'current' => false,
+            'package' => 'magento/product-enterprise-edition',
+            'stable' => false
         ],
         [
             'id' => '1.1.0-RC1',
             'name' => 'Version 1.1.0-RC1 CE (unstable version)',
-            'package' => SystemPackage::EDITION_COMMUNITY,
-            'stable' => false,
-            'current' => false,
+            'package' => 'magento/product-community-edition',
+            'stable' => false
         ],
         [
             'id' => '1.0.0',
-            'name' => 'Version 1.0.0 EE',
-            'package' => SystemPackage::EDITION_ENTERPRISE,
-            'stable' => true,
-            'current' => true,
+            'name' => 'Version 1.0.0 EE (current)',
+            'package' => 'magento/product-enterprise-edition',
+            'stable' => true
         ],
         [
             'id' => '1.0.0',
-            'name' => 'Version 1.0.0 CE',
-            'package' => SystemPackage::EDITION_COMMUNITY,
-            'stable' => true,
-            'current' => true,
+            'name' => 'Version 1.0.0 CE (current)',
+            'package' => 'magento/product-community-edition',
+            'stable' => true
         ],
     ];
 
@@ -116,7 +107,7 @@ class SystemPackageTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->composerAppFactory = $this->getMock(
-            \Magento\Framework\Composer\MagentoComposerApplicationFactory::class,
+            'Magento\Framework\Composer\MagentoComposerApplicationFactory',
             [],
             [],
             '',
@@ -124,20 +115,19 @@ class SystemPackageTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->infoCommand = $this->getMock(
-            \Magento\Composer\InfoCommand::class,
+            '\Magento\Composer\InfoCommand',
             [],
             [],
             '',
             false
         );
 
-        $this->magentoComposerApp =
-            $this->getMock(\Magento\Composer\MagentoComposerApplication::class, [], [], '', false);
-        $this->locker = $this->getMock(\Composer\Package\Locker::class, [], [], '', false);
-        $this->repository = $this->getMock(\Composer\Repository\ArrayRepository::class, [], [], '', false);
-        $this->composer = $this->getMock(\Composer\Composer::class, [], [], '', false);
+        $this->magentoComposerApp = $this->getMock('Magento\Composer\MagentoComposerApplication', [], [], '', false);
+        $this->locker = $this->getMock('Composer\Package\Locker', [], [], '', false);
+        $this->repository = $this->getMock('Composer\Repository\ArrayRepository', [], [], '', false);
+        $this->composer = $this->getMock('Composer\Composer', [], [], '', false);
         $this->composerInformation = $this->getMock(
-            \Magento\Framework\Composer\ComposerInformation::class,
+            'Magento\Framework\Composer\ComposerInformation',
             [],
             [],
             '',
@@ -147,10 +137,10 @@ class SystemPackageTest extends \PHPUnit_Framework_TestCase
 
     public function testGetPackageVersions()
     {
-        $communityPackage = $this->getMock(\Composer\Package\Package::class, [], [], '', false);
-        $communityPackage->expects($this->once())->method('getName')->willReturn(SystemPackage::EDITION_COMMUNITY);
-        $enterprisePackage = $this->getMock(\Composer\Package\Package::class, [], [], '', false);
-        $enterprisePackage->expects($this->once())->method('getName')->willReturn(SystemPackage::EDITION_ENTERPRISE);
+        $communityPackage = $this->getMock('\Composer\Package\Package', [], [], '', false);
+        $communityPackage->expects($this->once())->method('getName')->willReturn('magento/product-community-edition');
+        $enterprisePackage = $this->getMock('\Composer\Package\Package', [], [], '', false);
+        $enterprisePackage->expects($this->once())->method('getName')->willReturn('magento/product-enterprise-edition');
         $this->composerInformation->expects($this->any())->method('isSystemPackage')->willReturn(true);
         $this->composerInformation->expects($this->once())->method('isPackageInComposerJson')->willReturn(true);
         $this->repository
@@ -177,62 +167,43 @@ class SystemPackageTest extends \PHPUnit_Framework_TestCase
 
         $this->systemPackage = new SystemPackage($this->composerAppFactory, $this->composerInformation);
 
-        $this->infoCommand->expects($this->any())
+        $this->infoCommand->expects($this->at(0))
             ->method('run')
-            ->willReturnMap([
+            ->with('magento/product-community-edition')
+            ->willReturn(
                 [
-                    SystemPackage::EDITION_COMMUNITY,
-                    false,
-                    [
-                        'name' => SystemPackage::EDITION_COMMUNITY,
-                        'description' => 'eCommerce Platform for Growth (Enterprise Edition)',
-                        'keywords' => '',
-                        'versions' => '1.2.0, 1.1.0, 1.1.0-RC1, * 1.0.0',
-                        'type' => 'metapackage',
-                        'license' => 'OSL-3.0, AFL-3.0',
-                        'source' => '[]',
-                        'names' => SystemPackage::EDITION_COMMUNITY,
-                        'current_version' => '1.0.0',
-                        InfoCommand::AVAILABLE_VERSIONS => [1 => '1.2.0', 2 => '1.1.0', 3 => '1.1.0-RC1', 4 => '1.0.0'],
-                        'new_versions' => ['1.2.0', '1.1.0', '1.1.0-RC1'],
-                    ],
-                ],
-                [
-                    SystemPackage::EDITION_ENTERPRISE,
-                    false,
-                    [
-                        'name' => SystemPackage::EDITION_ENTERPRISE,
-                        'description' => 'eCommerce Platform for Growth (Enterprise Edition)',
-                        'keywords' => '',
-                        'versions' => '1.2.0, 1.1.0, 1.1.0-RC1, * 1.0.0',
-                        'type' => 'metapackage',
-                        'license' => 'OSL-3.0, AFL-3.0',
-                        'source' => '[]',
-                        'names' => SystemPackage::EDITION_ENTERPRISE,
-                        'current_version' => '1.0.0',
-                        InfoCommand::AVAILABLE_VERSIONS => [1 => '1.2.0', 2 => '1.1.0', 3 => '1.1.0-RC1', 4 => '1.0.0'],
-                        'new_versions' => ['1.2.0', '1.1.0', '1.1.0-RC1'],
-                    ],
+                    'name' => 'magento/product-community-edition',
+                    'description' => 'eCommerce Platform for Growth (Enterprise Edition)',
+                    'keywords' => '',
+                    'versions' => '1.2.0, 1.1.0, 1.1.0-RC1, * 1.0.0',
+                    'type' => 'metapackage',
+                    'license' => 'OSL-3.0, AFL-3.0',
+                    'source' => '[]',
+                    'names' => 'magento/product-community-edition',
+                    'current_version' => '1.0.0',
+                    'available_versions' => [1 => '1.2.0', 2 => '1.1.0', 3 => '1.1.0-RC1', 4 => '1.0.0'],
+                    'new_versions' => ['1.2.0', '1.1.0', '1.1.0-RC1']
+                ]
+            );
 
-                ],
+        $this->infoCommand->expects($this->at(1))
+            ->method('run')
+            ->with('magento/product-enterprise-edition')
+            ->willReturn(
                 [
-
-                    SystemPackage::EDITION_B2B,
-                    false,
-                    [
-                        'name' => SystemPackage::EDITION_B2B,
-                        'description' => 'eCommerce Platform for Growth (B2B Edition)',
-                        'keywords' => '',
-                        'versions' => '1.2.0, 1.1.0, 1.1.0-RC1, * 1.0.0',
-                        'type' => 'metapackage',
-                        'license' => 'OSL-3.0, AFL-3.0',
-                        'source' => '[]',
-                        'names' => SystemPackage::EDITION_B2B,
-                        InfoCommand::AVAILABLE_VERSIONS => [],
-                        'new_versions' => ['1.2.0', '1.1.0', '1.1.0-RC1'],
-                    ],
-                ],
-            ]);
+                    'name' => 'magento/product-enterprise-edition',
+                    'description' => 'eCommerce Platform for Growth (Enterprise Edition)',
+                    'keywords' => '',
+                    'versions' => '1.2.0, 1.1.0, 1.1.0-RC1, * 1.0.0',
+                    'type' => 'metapackage',
+                    'license' => 'OSL-3.0, AFL-3.0',
+                    'source' => '[]',
+                    'names' => 'magento/product-enterprise-edition',
+                    'current_version' => '1.0.0',
+                    'available_versions' => [1 => '1.2.0', 2 => '1.1.0', 3 => '1.1.0-RC1', 4 => '1.0.0'],
+                    'new_versions' => ['1.2.0', '1.1.0', '1.1.0-RC1']
+                ]
+            );
         $this->assertEquals($this->expectedPackages, $this->systemPackage->getPackageVersions());
     }
 
@@ -242,7 +213,7 @@ class SystemPackageTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetPackageVersionGitCloned()
     {
-        $package = $this->getMock(\Composer\Package\Package::class, [], [], '', false);
+        $package = $this->getMock('\Composer\Package\Package', [], [], '', false);
         $this->repository
             ->expects($this->once())
             ->method('getPackages')
@@ -271,11 +242,11 @@ class SystemPackageTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetPackageVersionsFailed()
     {
-        $communityPackage = $this->getMock(\Composer\Package\Package::class, [], [], '', false);
-        $enterprisePackage = $this->getMock(\Composer\Package\Package::class, [], [], '', false);
+        $communityPackage = $this->getMock('\Composer\Package\Package', [], [], '', false);
+        $enterprisePackage = $this->getMock('\Composer\Package\Package', [], [], '', false);
 
-        $communityPackage->expects($this->once())->method('getName')->willReturn(SystemPackage::EDITION_COMMUNITY);
-        $enterprisePackage->expects($this->once())->method('getName')->willReturn(SystemPackage::EDITION_ENTERPRISE);
+        $communityPackage->expects($this->once())->method('getName')->willReturn('magento/product-community-edition');
+        $enterprisePackage->expects($this->once())->method('getName')->willReturn('magento/product-enterprise-edition');
         $this->composerInformation->expects($this->any())->method('isSystemPackage')->willReturn(true);
         $this->composerInformation->expects($this->once())->method('isPackageInComposerJson')->willReturn(true);
 
@@ -301,7 +272,7 @@ class SystemPackageTest extends \PHPUnit_Framework_TestCase
 
         $this->infoCommand->expects($this->once())
             ->method('run')
-            ->with(SystemPackage::EDITION_COMMUNITY)
+            ->with('magento/product-community-edition')
             ->willReturn(false);
 
         $this->systemPackage->getPackageVersions();
@@ -321,10 +292,10 @@ class SystemPackageTest extends \PHPUnit_Framework_TestCase
         $this->systemPackage = new SystemPackage($this->composerAppFactory, $this->composerInformation);
         $this->infoCommand->expects($this->once())
             ->method('run')
-            ->with(SystemPackage::EDITION_ENTERPRISE)
-            ->willReturn([InfoCommand::AVAILABLE_VERSIONS => ['1.0.0', '1.0.1', '1.0.2']]);
-        $require = $this->getMock(\Composer\Package\Link::class, [], [], '', false);
-        $constraintMock = $this->getMock(\Composer\Semver\Constraint\Constraint::class, [], [], '', false);
+            ->with('magento/product-enterprise-edition')
+            ->willReturn(['available_versions' => ['1.0.0', '1.0.1', '1.0.2']]);
+        $require = $this->getMock('\Composer\Package\Link', [], [], '', false);
+        $constraintMock = $this->getMock('\Composer\Semver\Constraint\Constraint', [], [], '', false);
         $constraintMock->expects($this->any())->method('getPrettyString')
             ->willReturn('1.0.1');
         $require->expects($this->any())
@@ -333,43 +304,10 @@ class SystemPackageTest extends \PHPUnit_Framework_TestCase
 
         $this->composerInformation->expects($this->any())
             ->method('getPackageRequirements')
-            ->willReturn([SystemPackage::EDITION_COMMUNITY => $require]);
+            ->willReturn(['magento/product-community-edition' => $require]);
         $this->assertEquals(
             $expectedResult,
             $this->systemPackage->getAllowedEnterpriseVersions($ceCurrentVersion)
-        );
-    }
-
-    /**
-     * @param string $eeCurrentVersion
-     * @param array $expectedResult
-     *
-     * @dataProvider getAllowedB2bVersionsDataProvider
-     */
-    public function testGetAllowedB2bVersions($eeCurrentVersion, $expectedResult)
-    {
-        $this->composerAppFactory->expects($this->once())
-            ->method('createInfoCommand')
-            ->willReturn($this->infoCommand);
-        $this->systemPackage = new SystemPackage($this->composerAppFactory, $this->composerInformation);
-        $this->infoCommand->expects($this->once())
-            ->method('run')
-            ->with(SystemPackage::EDITION_B2B)
-            ->willReturn([InfoCommand::AVAILABLE_VERSIONS => ['1.0.0', '1.0.1', '1.0.2']]);
-        $require = $this->getMock(\Composer\Package\Link::class, [], [], '', false);
-        $constraintMock = $this->getMock(\Composer\Semver\Constraint\Constraint::class, [], [], '', false);
-        $constraintMock->expects($this->any())->method('getPrettyString')
-            ->willReturn('1.0.1');
-        $require->expects($this->any())
-            ->method('getConstraint')
-            ->willReturn($constraintMock);
-
-        $this->composerInformation->expects($this->any())
-            ->method('getPackageRequirements')
-            ->willReturn([SystemPackage::EDITION_ENTERPRISE => $require]);
-        $this->assertEquals(
-            $expectedResult,
-            $this->systemPackage->getAllowedB2BVersions($eeCurrentVersion)
         );
     }
 
@@ -380,68 +318,27 @@ class SystemPackageTest extends \PHPUnit_Framework_TestCase
     {
         return [
             ['2.0.0', []],
-            [
-                '1.0.0',
+            ['1.0.0', [
                 [
-                    [
-                        'package' => SystemPackage::EDITION_ENTERPRISE,
-                        'versions' => [
-                            [
-                                'id' => '1.0.2',
-                                'name' => 'Version 1.0.2 EE (latest)',
-                                'current' => false,
-                            ],
-                            [
-                                'id' => '1.0.1',
-                                'name' => 'Version 1.0.1 EE',
-                                'current' => false,
-                            ],
-                            [
-
-                                'id' => '1.0.0',
-                                'name' => 'Version 1.0.0 EE',
-                                'current' => false,
-                            ],
+                    'package' => 'magento/product-enterprise-edition',
+                    'versions' => [
+                        [
+                            'id' => '1.0.2',
+                            'name' => 'Version 1.0.2 EE (latest)'
                         ],
-                    ],
-                ],
-            ],
-        ];
-    }
-
-    /**
-     * @return array
-     */
-    public function getAllowedB2bVersionsDataProvider()
-    {
-        return [
-            ['2.0.0', []],
-            [
-                '1.0.0',
-                [
-                    [
-                        'package' => SystemPackage::EDITION_B2B,
-                        'versions' => [
-                            [
-                                'id' => '1.0.2',
-                                'name' => 'Version 1.0.2 B2B (latest)',
-                                'current' => false,
-                            ],
-                            [
-                                'id' => '1.0.1',
-                                'name' => 'Version 1.0.1 B2B',
-                                'current' => false,
-                            ],
-                            [
-
-                                'id' => '1.0.0',
-                                'name' => 'Version 1.0.0 B2B',
-                                'current' => false,
-                            ],
+                        [
+                            'id' => '1.0.1',
+                            'name' => 'Version 1.0.1 EE'
                         ],
-                    ],
-                ],
-            ],
+                        [
+
+                            'id' => '1.0.0',
+                            'name' => 'Version 1.0.0 EE'
+                        ]
+                    ]
+                ]
+            ]
+            ]
         ];
     }
 }

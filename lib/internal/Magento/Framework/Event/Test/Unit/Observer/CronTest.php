@@ -99,7 +99,7 @@ class CronTest extends \PHPUnit_Framework_TestCase
      */
     public function testIsValidFor($time, $expression, $expectedResult)
     {
-        $eventMock = $this->getMock(\Magento\Framework\Event::class, [], [], '', false);
+        $eventMock = $this->getMock('Magento\Framework\Event', [], [], '', false);
 
         $this->cron->setCronExpr($expression);
         $this->cron->setNow($time);

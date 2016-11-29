@@ -30,7 +30,7 @@ class Backup extends \Magento\Backend\Block\Template
 
         $this->getToolbar()->addChild(
             'createSnapshotButton',
-            \Magento\Backend\Block\Widget\Button::class,
+            'Magento\Backend\Block\Widget\Button',
             [
                 'label' => __('System Backup'),
                 'onclick' => "return backup.backup('" . \Magento\Framework\Backup\Factory::TYPE_SYSTEM_SNAPSHOT . "')",
@@ -39,7 +39,7 @@ class Backup extends \Magento\Backend\Block\Template
         );
         $this->getToolbar()->addChild(
             'createMediaBackupButton',
-            \Magento\Backend\Block\Widget\Button::class,
+            'Magento\Backend\Block\Widget\Button',
             [
                 'label' => __('Database and Media Backup'),
                 'onclick' => "return backup.backup('" . \Magento\Framework\Backup\Factory::TYPE_MEDIA . "')",
@@ -48,7 +48,7 @@ class Backup extends \Magento\Backend\Block\Template
         );
         $this->getToolbar()->addChild(
             'createButton',
-            \Magento\Backend\Block\Widget\Button::class,
+            'Magento\Backend\Block\Widget\Button',
             [
                 'label' => __('Database Backup'),
                 'onclick' => "return backup.backup('" . \Magento\Framework\Backup\Factory::TYPE_DB . "')",
@@ -56,7 +56,7 @@ class Backup extends \Magento\Backend\Block\Template
             ]
         );
 
-        $this->addChild('dialogs', \Magento\Backup\Block\Adminhtml\Dialogs::class);
+        $this->addChild('dialogs', 'Magento\Backup\Block\Adminhtml\Dialogs');
     }
 
     /**

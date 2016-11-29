@@ -13,22 +13,17 @@ class TimeZoneProviderTest extends \PHPUnit_Framework_TestCase
 {
     public function testGet()
     {
-        $timeZone = $this->getMock(\Magento\Framework\Stdlib\DateTime\Timezone::class, [], [], '', false);
-        $objectManager = $this->getMockForAbstractClass(
-            \Magento\Framework\ObjectManagerInterface::class,
-            [],
-            '',
-            false
-        );
+        $timeZone = $this->getMock('\Magento\Framework\Stdlib\DateTime\Timezone', [], [], '', false);
+        $objectManager = $this->getMockForAbstractClass('\Magento\Framework\ObjectManagerInterface', [], '', false);
         $objectManager->expects($this->once())
             ->method('create')
             ->with(
-                \Magento\Framework\Stdlib\DateTime\Timezone::class,
+                'Magento\Framework\Stdlib\DateTime\Timezone',
                 ['scopeType' => ScopeConfigInterface::SCOPE_TYPE_DEFAULT]
             )
             ->willReturn($timeZone);
         /** @var ObjectManagerProvider|\PHPUnit_Framework_MockObject_MockObject $objectManagerProvider */
-        $objectManagerProvider = $this->getMock(\Magento\Setup\Model\ObjectManagerProvider::class, [], [], '', false);
+        $objectManagerProvider = $this->getMock('\Magento\Setup\Model\ObjectManagerProvider', [], [], '', false);
         $objectManagerProvider->expects($this->any())
             ->method('get')
             ->willReturn($objectManager);

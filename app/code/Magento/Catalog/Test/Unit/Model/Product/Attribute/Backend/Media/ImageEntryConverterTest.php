@@ -41,7 +41,7 @@ class ImageEntryConverterTest extends \PHPUnit_Framework_TestCase
     {
         $this->mediaGalleryEntryFactoryMock =
             $this->getMock(
-                \Magento\Catalog\Api\Data\ProductAttributeMediaGalleryEntryInterfaceFactory::class,
+                '\Magento\Catalog\Api\Data\ProductAttributeMediaGalleryEntryInterfaceFactory',
                 ['create'],
                 [],
                 '',
@@ -50,7 +50,7 @@ class ImageEntryConverterTest extends \PHPUnit_Framework_TestCase
 
         $this->mediaGalleryEntryMock =
             $this->getMock(
-                \Magento\Catalog\Api\Data\ProductAttributeMediaGalleryEntryInterface::class,
+                '\Magento\Catalog\Api\Data\ProductAttributeMediaGalleryEntryInterface',
                 [
                     'getId',
                     'setId',
@@ -80,14 +80,14 @@ class ImageEntryConverterTest extends \PHPUnit_Framework_TestCase
             $this->mediaGalleryEntryMock
         );
 
-        $this->dataObjectHelperMock = $this->getMock(\Magento\Framework\Api\DataObjectHelper::class, [], [], '', false);
+        $this->dataObjectHelperMock = $this->getMock('\Magento\Framework\Api\DataObjectHelper', [], [], '', false);
 
-        $this->productMock = $this->getMock(\Magento\Catalog\Model\Product::class, [], [], '', false);
+        $this->productMock = $this->getMock('\Magento\Catalog\Model\Product', [], [], '', false);
 
         $objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
 
         $this->modelObject = $objectManager->getObject(
-            \Magento\Catalog\Model\Product\Attribute\Backend\Media\ImageEntryConverter::class,
+            '\Magento\Catalog\Model\Product\Attribute\Backend\Media\ImageEntryConverter',
             [
                 'mediaGalleryEntryFactory' => $this->mediaGalleryEntryFactoryMock,
                 'dataObjectHelper' => $this->dataObjectHelperMock
@@ -173,13 +173,7 @@ class ImageEntryConverterTest extends \PHPUnit_Framework_TestCase
                 1 => 'swatch_image',
             ]
         );
-        $imageContentInterface = $this->getMock(
-            \Magento\Framework\Api\Data\ImageContentInterface::class,
-            [],
-            [],
-            '',
-            false
-        );
+        $imageContentInterface = $this->getMock('Magento\Framework\Api\Data\ImageContentInterface', [], [], '', false);
 
         $imageContentInterface->expects($this->once())->method('getBase64EncodedData')->willReturn(
             base64_encode('some_content')

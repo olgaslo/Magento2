@@ -27,28 +27,20 @@ class FlushCacheByTags
     private $cacheState;
 
     /**
-     * @var Tag\Resolver
-     */
-    private $tagResolver;
-
-    /**
      * FlushCacheByTags constructor.
      *
      * @param Type\FrontendPool $cachePool
      * @param StateInterface $cacheState
      * @param array $cacheList
-     * @param Tag\Resolver $tagResolver
      */
     public function __construct(
         \Magento\Framework\App\Cache\Type\FrontendPool $cachePool,
         \Magento\Framework\App\Cache\StateInterface $cacheState,
-        array $cacheList,
-        \Magento\Framework\App\Cache\Tag\Resolver $tagResolver
+        array $cacheList
     ) {
         $this->cachePool = $cachePool;
         $this->cacheState = $cacheState;
         $this->cacheList = $cacheList;
-        $this->tagResolver = $tagResolver;
     }
 
     /**
@@ -66,9 +58,9 @@ class FlushCacheByTags
         \Magento\Framework\Model\AbstractModel $object
     ) {
         $result = $proceed($object);
-        $tags = $this->tagResolver->getTags($object);
-        $this->cleanCacheByTags($tags);
-
+        if ($object instanceof \Magento\Framework\DataObject\IdentityInterface) {
+            $this->cleanCacheByTags($object->getIdentities());
+        }
         return $result;
     }
 
@@ -86,7 +78,10 @@ class FlushCacheByTags
         \Closure $proceed,
         \Magento\Framework\Model\AbstractModel $object
     ) {
-        $tags = $this->tagResolver->getTags($object);
+        $tags = [];
+        if ($object instanceof \Magento\Framework\DataObject\IdentityInterface) {
+            $tags = $object->getIdentities();
+        }
         $result = $proceed($object);
         $this->cleanCacheByTags($tags);
         return $result;

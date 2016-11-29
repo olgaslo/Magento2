@@ -15,9 +15,6 @@ use Magento\Authorization\Model\ResourceModel\Rules\CollectionFactory as RulesCo
 use Magento\Authorization\Model\Role;
 use Magento\Authorization\Model\UserContextInterface;
 
-/**
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
- */
 class AclRetrieverTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -81,7 +78,7 @@ class AclRetrieverTest extends \PHPUnit_Framework_TestCase
     protected function createAclRetriever()
     {
         $this->roleMock = $this->getMock(
-            \Magento\Authorization\Model\Role::class,
+            'Magento\Authorization\Model\Role',
             ['getId', '__wakeup'],
             [],
             '',
@@ -90,7 +87,7 @@ class AclRetrieverTest extends \PHPUnit_Framework_TestCase
 
         /** @var \PHPUnit_Framework_MockObject_MockObject|RoleCollection $roleCollectionMock */
         $roleCollectionMock = $this->getMock(
-            \Magento\Authorization\Model\ResourceModel\Role\Collection::class,
+            'Magento\Authorization\Model\ResourceModel\Role\Collection',
             ['setUserFilter', 'getFirstItem'],
             [],
             '',
@@ -101,7 +98,7 @@ class AclRetrieverTest extends \PHPUnit_Framework_TestCase
 
         /** @var \PHPUnit_Framework_MockObject_MockObject|RoleCollectionFactory $roleCollectionFactoryMock */
         $roleCollectionFactoryMock = $this->getMock(
-            \Magento\Authorization\Model\ResourceModel\Role\CollectionFactory::class,
+            'Magento\Authorization\Model\ResourceModel\Role\CollectionFactory',
             ['create'],
             [],
             '',
@@ -113,7 +110,7 @@ class AclRetrieverTest extends \PHPUnit_Framework_TestCase
 
         /** @var \PHPUnit_Framework_MockObject_MockObject|\Magento\Authorization\Model\Rules $rulesMock1 */
         $rulesMock1 = $this->getMock(
-            \Magento\Authorization\Model\Rules::class,
+            'Magento\Authorization\Model\Rules',
             ['getResourceId', '__wakeup'],
             [],
             '',
@@ -124,7 +121,7 @@ class AclRetrieverTest extends \PHPUnit_Framework_TestCase
         );
         /** @var \PHPUnit_Framework_MockObject_MockObject|\Magento\Authorization\Model\Rules $rulesMock1 */
         $rulesMock2 = $this->getMock(
-            \Magento\Authorization\Model\Rules::class,
+            'Magento\Authorization\Model\Rules',
             ['getResourceId', '__wakeup'],
             [],
             '',
@@ -134,7 +131,7 @@ class AclRetrieverTest extends \PHPUnit_Framework_TestCase
 
         /** @var \PHPUnit_Framework_MockObject_MockObject|RulesCollection $rulesCollectionMock */
         $rulesCollectionMock = $this->getMock(
-            \Magento\Authorization\Model\ResourceModel\Rules\Collection::class,
+            'Magento\Authorization\Model\ResourceModel\Rules\Collection',
             ['getByRoles', 'load', 'getItems'],
             [],
             '',
@@ -148,7 +145,7 @@ class AclRetrieverTest extends \PHPUnit_Framework_TestCase
 
         /** @var \PHPUnit_Framework_MockObject_MockObject|RulesCollectionFactory $rulesCollectionFactoryMock */
         $rulesCollectionFactoryMock = $this->getMock(
-            \Magento\Authorization\Model\ResourceModel\Rules\CollectionFactory::class,
+            'Magento\Authorization\Model\ResourceModel\Rules\CollectionFactory',
             ['create'],
             [],
             '',
@@ -159,19 +156,19 @@ class AclRetrieverTest extends \PHPUnit_Framework_TestCase
         );
 
         /** @var \PHPUnit_Framework_MockObject_MockObject|\Magento\Framework\Acl $aclMock */
-        $aclMock = $this->getMock(\Magento\Framework\Acl::class, ['has', 'isAllowed'], [], '', false);
+        $aclMock = $this->getMock('Magento\Framework\Acl', ['has', 'isAllowed'], [], '', false);
         $aclMock->expects($this->any())->method('has')->will($this->returnValue(true));
         $aclMock->expects($this->any())->method('isAllowed')->will($this->returnValue(true));
 
         /** @var \PHPUnit_Framework_MockObject_MockObject|\Magento\Framework\Acl\Builder $aclBuilderMock */
-        $aclBuilderMock = $this->getMock(\Magento\Framework\Acl\Builder::class, ['getAcl'], [], '', false);
+        $aclBuilderMock = $this->getMock('Magento\Framework\Acl\Builder', ['getAcl'], [], '', false);
         $aclBuilderMock->expects($this->any())->method('getAcl')->will($this->returnValue($aclMock));
 
         return new AclRetriever(
             $aclBuilderMock,
             $roleCollectionFactoryMock,
             $rulesCollectionFactoryMock,
-            $this->getMock(\Psr\Log\LoggerInterface::class)
+            $this->getMock('Psr\Log\LoggerInterface')
         );
     }
 }

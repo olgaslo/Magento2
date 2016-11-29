@@ -5,9 +5,6 @@
  */
 namespace Magento\Captcha\Test\Unit\Model;
 
-/**
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
- */
 class DefaultTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -91,7 +88,7 @@ class DefaultTest extends \PHPUnit_Framework_TestCase
         $this->session = $this->_getSessionStub();
 
         $this->_storeManager = $this->getMock(
-            \Magento\Store\Model\StoreManager::class,
+            'Magento\Store\Model\StoreManager',
             ['getStore'],
             [],
             '',
@@ -106,7 +103,7 @@ class DefaultTest extends \PHPUnit_Framework_TestCase
         );
 
         // \Magento\Customer\Model\Session
-        $this->_objectManager = $this->getMock(\Magento\Framework\ObjectManagerInterface::class);
+        $this->_objectManager = $this->getMock('Magento\Framework\ObjectManagerInterface');
         $this->_objectManager->expects(
             $this->any()
         )->method(
@@ -114,14 +111,14 @@ class DefaultTest extends \PHPUnit_Framework_TestCase
         )->will(
             $this->returnValueMap(
                 [
-                    \Magento\Captcha\Helper\Data::class => $this->_getHelperStub(),
-                    \Magento\Customer\Model\Session::class => $this->session,
+                    'Magento\Captcha\Helper\Data' => $this->_getHelperStub(),
+                    'Magento\Customer\Model\Session' => $this->session,
                 ]
             )
         );
 
         $this->_resLogFactory = $this->getMock(
-            \Magento\Captcha\Model\ResourceModel\LogFactory::class,
+            'Magento\Captcha\Model\ResourceModel\LogFactory',
             ['create'],
             [],
             '',
@@ -148,7 +145,7 @@ class DefaultTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetBlockName()
     {
-        $this->assertEquals($this->_object->getBlockName(), \Magento\Captcha\Block\Captcha\DefaultCaptcha::class);
+        $this->assertEquals($this->_object->getBlockName(), 'Magento\Captcha\Block\Captcha\DefaultCaptcha');
     }
 
     /**
@@ -249,11 +246,11 @@ class DefaultTest extends \PHPUnit_Framework_TestCase
     {
         $helper = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
         $sessionArgs = $helper->getConstructArguments(
-            \Magento\Customer\Model\Session::class,
+            'Magento\Customer\Model\Session',
             ['storage' => new \Magento\Framework\Session\Storage()]
         );
         $session = $this->getMock(
-            \Magento\Customer\Model\Session::class,
+            'Magento\Customer\Model\Session',
             ['isLoggedIn', 'getUserCreateWord'],
             $sessionArgs
         );
@@ -270,7 +267,7 @@ class DefaultTest extends \PHPUnit_Framework_TestCase
     protected function _getHelperStub()
     {
         $helper = $this->getMockBuilder(
-            \Magento\Captcha\Helper\Data::class
+            'Magento\Captcha\Helper\Data'
         )->disableOriginalConstructor()->setMethods(
             ['getConfig', 'getFonts', '_getWebsiteCode', 'getImgUrl']
         )->getMock();
@@ -305,7 +302,7 @@ class DefaultTest extends \PHPUnit_Framework_TestCase
     protected function _getResourceModelStub()
     {
         $resourceModel = $this->getMock(
-            \Magento\Captcha\Model\ResourceModel\Log::class,
+            'Magento\Captcha\Model\ResourceModel\Log',
             ['countAttemptsByRemoteAddress', 'countAttemptsByUserLogin', 'logAttempt', '__wakeup'],
             [],
             '',
@@ -345,7 +342,7 @@ class DefaultTest extends \PHPUnit_Framework_TestCase
      */
     protected function _getStoreStub()
     {
-        $store = $this->getMock(\Magento\Store\Model\Store::class, [], [], '', false);
+        $store = $this->getMock('Magento\Store\Model\Store', [], [], '', false);
         $store->expects($this->any())->method('getBaseUrl')->will($this->returnValue('http://localhost/pub/media/'));
         $store->expects($this->any())->method('isAdmin')->will($this->returnValue(false));
         return $store;

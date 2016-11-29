@@ -12,8 +12,6 @@
 namespace Magento\Framework\Config;
 
 use Magento\Framework\Config\Dom\UrnResolver;
-use Magento\Framework\Config\Dom\ValidationSchemaException;
-use Magento\Framework\Phrase;
 
 /**
  * Class Dom
@@ -251,7 +249,7 @@ class Dom
                 $value = $node->getAttribute($attribute);
                 $constraints[] = "@{$attribute}='{$value}'";
             }
-            $path .= '[' . implode(' and ', $constraints) . ']';
+            $path .= '[' . join(' and ', $constraints) . ']';
         } elseif ($idAttribute && ($value = $node->getAttribute($idAttribute))) {
             $path .= "[@{$idAttribute}='{$value}']";
         }
@@ -315,10 +313,8 @@ class Dom
                 $errors = self::getXmlErrors($errorFormat);
             }
         } catch (\Exception $exception) {
-            $errors = self::getXmlErrors($errorFormat);
             libxml_use_internal_errors(false);
-            array_unshift($errors, new Phrase('Processed schema file: %1', [$schema]));
-            throw new ValidationSchemaException(new Phrase(implode("\n", $errors)));
+            throw $exception;
         }
         libxml_set_external_entity_loader(null);
         libxml_use_internal_errors(false);
@@ -351,7 +347,7 @@ class Dom
                 }
                 if (!empty($unsupported)) {
                     throw new \InvalidArgumentException(
-                        "Error format '{$format}' contains unsupported placeholders: " . implode(', ', $unsupported)
+                        "Error format '{$format}' contains unsupported placeholders: " . join(', ', $unsupported)
                     );
                 }
             }

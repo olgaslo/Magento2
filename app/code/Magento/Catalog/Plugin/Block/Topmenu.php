@@ -79,18 +79,11 @@ class Topmenu
         $currentCategory = $this->getCurrentCategory();
         $mapping = [$rootId => $subject->getMenu()];  // use nodes stack to avoid recursion
         foreach ($collection as $category) {
-            $categoryParentId = $category->getParentId();
-            if (!isset($mapping[$categoryParentId])) {
-                $parentIds = $category->getParentIds();
-                foreach ($parentIds as $parentId) {
-                    if (isset($mapping[$parentId])) {
-                        $categoryParentId = $parentId;
-                    }
-                }
+            if (!isset($mapping[$category->getParentId()])) {
+                continue;
             }
-
             /** @var Node $parentCategoryNode */
-            $parentCategoryNode = $mapping[$categoryParentId];
+            $parentCategoryNode = $mapping[$category->getParentId()];
 
             $categoryNode = new Node(
                 $this->getCategoryAsArray($category, $currentCategory),

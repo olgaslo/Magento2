@@ -52,16 +52,16 @@ class DownloadableTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->jsonHelperMock = $this->getMock(\Magento\Framework\Json\Helper\Data::class, [], [], '', false);
-        $this->requestMock = $this->getMock(\Magento\Framework\App\Request\Http::class, [], [], '', false);
+        $this->requestMock = $this->getMock('Magento\Framework\App\Request\Http', [], [], '', false);
         $this->productMock = $this->getMock(
-            \Magento\Catalog\Model\Product::class,
+            'Magento\Catalog\Model\Product',
             ['setDownloadableData', 'getExtensionAttributes', '__wakeup'],
             [],
             '',
             false
         );
         $this->subjectMock = $this->getMock(
-            \Magento\Catalog\Controller\Adminhtml\Product\Initialization\Helper::class,
+            'Magento\Catalog\Controller\Adminhtml\Product\Initialization\Helper',
             [],
             [],
             '',
@@ -71,11 +71,11 @@ class DownloadableTest extends \PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->setMethods(['setDownloadableProductSamples', 'setDownloadableProductLinks'])
             ->getMockForAbstractClass();
-        $this->sampleFactoryMock = $this->getMockBuilder(\Magento\Downloadable\Api\Data\SampleInterfaceFactory::class)
+        $this->sampleFactoryMock = $this->getMockBuilder('\Magento\Downloadable\Api\Data\SampleInterfaceFactory')
             ->disableOriginalConstructor()
             ->setMethods(['create'])
             ->getMock();
-        $this->linkFactoryMock = $this->getMockBuilder(\Magento\Downloadable\Api\Data\LinkInterfaceFactory::class)
+        $this->linkFactoryMock = $this->getMockBuilder('\Magento\Downloadable\Api\Data\LinkInterfaceFactory')
             ->disableOriginalConstructor()
             ->setMethods(['create'])
             ->getMock();

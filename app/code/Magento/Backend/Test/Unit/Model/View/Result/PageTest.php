@@ -36,20 +36,20 @@ class PageTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->layoutMock = $this->getMockBuilder(\Magento\Framework\View\LayoutInterface::class)
+        $this->layoutMock = $this->getMockBuilder('Magento\Framework\View\LayoutInterface')
             ->setMethods(['setGeneratorPool'])
             ->getMockForAbstractClass();
-        $this->breadcrumbsBlockMock = $this->getMockBuilder(\Magento\Backend\Block\Widget\Breadcrumbs::class)
+        $this->breadcrumbsBlockMock = $this->getMockBuilder('Magento\Backend\Block\Widget\Breadcrumbs')
             ->disableOriginalConstructor()
             ->getMock();
 
         $this->objectManagerHelper = new ObjectManagerHelper($this);
         $this->context = $this->objectManagerHelper->getObject(
-            \Magento\Framework\View\Element\Template\Context::class,
+            'Magento\Framework\View\Element\Template\Context',
             ['layout' => $this->layoutMock]
         );
         $this->resultPage = $this->objectManagerHelper->getObject(
-            \Magento\Backend\Model\View\Result\Page::class,
+            'Magento\Backend\Model\View\Result\Page',
             ['context' => $this->context]
         );
     }

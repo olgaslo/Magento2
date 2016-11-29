@@ -284,7 +284,7 @@ class ReadTest extends \PHPUnit_Framework_TestCase
         $fullPath = __DIR__ . '/../_files/' . $path;
         $objectManager = Bootstrap::getObjectManager();
         /** @var \Magento\Framework\Filesystem\Directory\ReadFactory $directoryFactory */
-        $directoryFactory = $objectManager->create(\Magento\Framework\Filesystem\Directory\ReadFactory::class);
+        $directoryFactory = $objectManager->create('Magento\Framework\Filesystem\Directory\ReadFactory');
         return $directoryFactory->create($fullPath);
     }
 

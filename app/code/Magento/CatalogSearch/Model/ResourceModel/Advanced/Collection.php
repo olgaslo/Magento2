@@ -112,7 +112,7 @@ class Collection extends \Magento\Catalog\Model\ResourceModel\Product\Collection
         $this->temporaryStorageFactory = $temporaryStorageFactory;
         if ($searchResultFactory === null) {
             $this->searchResultFactory = \Magento\Framework\App\ObjectManager::getInstance()
-                ->get(\Magento\Framework\Api\Search\SearchResultFactory::class);
+                ->get('Magento\Framework\Api\Search\SearchResultFactory');
         }
         parent::__construct(
             $entityFactory,
@@ -256,7 +256,7 @@ class Collection extends \Magento\Catalog\Model\ResourceModel\Product\Collection
     {
         if (null === $this->search) {
             $this->search = \Magento\Framework\App\ObjectManager::getInstance()
-                ->get(\Magento\Search\Api\SearchInterface::class);
+                ->get('Magento\Search\Api\SearchInterface');
         }
         return $this->search;
     }
@@ -268,7 +268,7 @@ class Collection extends \Magento\Catalog\Model\ResourceModel\Product\Collection
     {
         if (null === $this->searchCriteriaBuilder) {
             $this->searchCriteriaBuilder = \Magento\Framework\App\ObjectManager::getInstance()
-                ->get(\Magento\Framework\Api\Search\SearchCriteriaBuilder::class);
+                ->get('Magento\Framework\Api\Search\SearchCriteriaBuilder');
         }
         return $this->searchCriteriaBuilder;
     }
@@ -280,7 +280,7 @@ class Collection extends \Magento\Catalog\Model\ResourceModel\Product\Collection
     {
         if (null === $this->filterBuilder) {
             $this->filterBuilder = \Magento\Framework\App\ObjectManager::getInstance()
-                ->get(\Magento\Framework\Api\FilterBuilder::class);
+                ->get('Magento\Framework\Api\FilterBuilder');
         }
         return $this->filterBuilder;
     }

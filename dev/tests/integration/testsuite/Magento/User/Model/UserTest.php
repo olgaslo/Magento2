@@ -30,11 +30,9 @@ class UserTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->_model = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create(
-            \Magento\User\Model\User::class
-        );
+        $this->_model = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create('Magento\User\Model\User');
         $this->_dateTime = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create(
-            \Magento\Framework\Stdlib\DateTime::class
+            'Magento\Framework\Stdlib\DateTime'
         );
     }
 
@@ -99,7 +97,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
     public static function roleDataFixture()
     {
         self::$_newRole = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create(
-            \Magento\Authorization\Model\Role::class
+            'Magento\Authorization\Model\Role'
         );
         self::$_newRole->setName('admin_role')->setRoleType('G')->setPid('1');
         self::$_newRole->save();
@@ -139,7 +137,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
     {
         $this->_model->loadByUsername(\Magento\TestFramework\Bootstrap::ADMIN_NAME);
         $role = $this->_model->getRole();
-        $this->assertInstanceOf(\Magento\Authorization\Model\Role::class, $role);
+        $this->assertInstanceOf('Magento\Authorization\Model\Role', $role);
         $this->assertEquals(1, $role->getId());
         $this->_model->setRoleId(self::$_newRole->getId())->save();
         $role = $this->_model->getRole();
@@ -168,8 +166,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
 
     public function testGetCollection()
     {
-        $this->assertInstanceOf(
-             \Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection::class,
+        $this->assertInstanceOf('Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection',
             $this->_model->getCollection());
     }
 
@@ -184,7 +181,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
 
     public function testGetUninitializedAclRole()
     {
-        $newuser = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create(\Magento\User\Model\User::class);
+        $newuser = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create('Magento\User\Model\User');
         $newuser->setUserId(10);
         $this->assertNull($newuser->getAclRole(), "User role was not initialized and is expected to be empty.");
     }
@@ -338,7 +335,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
         );
 
         /** @var \Magento\User\Model\User $model */
-        $model = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create(\Magento\User\Model\User::class);
+        $model = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create('Magento\User\Model\User');
         $model->load($this->_model->getId());
         $this->assertEquals(
             $this->_model->getPassword(),

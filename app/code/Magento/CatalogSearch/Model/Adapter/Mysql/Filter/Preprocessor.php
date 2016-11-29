@@ -8,11 +8,8 @@ namespace Magento\CatalogSearch\Model\Adapter\Mysql\Filter;
 use Magento\Catalog\Api\Data\ProductInterface;
 use Magento\Catalog\Model\Product;
 use Magento\Catalog\Model\ResourceModel\Eav\Attribute;
-use Magento\CatalogInventory\Model\Stock;
 use Magento\CatalogSearch\Model\Search\TableMapper;
 use Magento\Eav\Model\Config;
-use Magento\Framework\App\Config\ScopeConfigInterface;
-use Magento\Framework\App\ObjectManager;
 use Magento\Framework\App\ResourceConnection;
 use Magento\Framework\App\ScopeResolverInterface;
 use Magento\Framework\DB\Adapter\AdapterInterface;
@@ -20,7 +17,6 @@ use Magento\Framework\EntityManager\MetadataPool;
 use Magento\Framework\Search\Adapter\Mysql\ConditionManager;
 use Magento\Framework\Search\Adapter\Mysql\Filter\PreprocessorInterface;
 use Magento\Framework\Search\Request\FilterInterface;
-use Magento\Store\Model\ScopeInterface;
 use Magento\Store\Model\Store;
 
 /**
@@ -64,14 +60,9 @@ class Preprocessor implements PreprocessorInterface
     private $metadataPool;
 
     /**
-     * @var ScopeConfigInterface
+     * @var TableMapper
      */
-    private $scopeConfig;
-
-    /**
-     * @var AliasResolver
-     */
-    private $aliasResolver;
+    private $tableMapper;
 
     /**
      * @param ConditionManager $conditionManager
@@ -80,9 +71,6 @@ class Preprocessor implements PreprocessorInterface
      * @param ResourceConnection $resource
      * @param TableMapper $tableMapper
      * @param string $attributePrefix
-     * @param ScopeConfigInterface $scopeConfig
-     * @param AliasResolver $aliasResolver
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function __construct(
         ConditionManager $conditionManager,
@@ -90,9 +78,7 @@ class Preprocessor implements PreprocessorInterface
         Config $config,
         ResourceConnection $resource,
         TableMapper $tableMapper,
-        $attributePrefix,
-        ScopeConfigInterface $scopeConfig = null,
-        AliasResolver $aliasResolver = null
+        $attributePrefix
     ) {
         $this->conditionManager = $conditionManager;
         $this->scopeResolver = $scopeResolver;
@@ -100,16 +86,7 @@ class Preprocessor implements PreprocessorInterface
         $this->resource = $resource;
         $this->connection = $resource->getConnection();
         $this->attributePrefix = $attributePrefix;
-
-        if (null === $scopeConfig) {
-            $scopeConfig = ObjectManager::getInstance()->get(ScopeConfigInterface::class);
-        }
-        if (null === $aliasResolver) {
-            $aliasResolver = ObjectManager::getInstance()->get(AliasResolver::class);
-        }
-
-        $this->scopeConfig = $scopeConfig;
-        $this->aliasResolver = $aliasResolver;
+        $this->tableMapper = $tableMapper;
     }
 
     /**
@@ -140,7 +117,7 @@ class Preprocessor implements PreprocessorInterface
         } elseif ($filter->getField() === 'category_ids') {
             return 'category_ids_index.category_id = ' . (int) $filter->getValue();
         } elseif ($attribute->isStatic()) {
-            $alias = $this->aliasResolver->getAlias($filter);
+            $alias = $this->tableMapper->getMappingAlias($filter);
             $resultQuery = str_replace(
                 $this->connection->quoteIdentifier($attribute->getAttributeCode()),
                 $this->connection->quoteIdentifier($alias . '.' . $attribute->getAttributeCode()),
@@ -231,7 +208,7 @@ class Preprocessor implements PreprocessorInterface
      */
     private function processTermSelect(FilterInterface $filter, $isNegation)
     {
-        $alias = $this->aliasResolver->getAlias($filter);
+        $alias = $this->tableMapper->getMappingAlias($filter);
         if (is_array($filter->getValue())) {
             $value = sprintf(
                 '%s IN (%s)',
@@ -247,29 +224,7 @@ class Preprocessor implements PreprocessorInterface
             $value
         );
 
-        if ($this->isAddStockFilter()) {
-            $resultQuery = sprintf(
-                '%1$s AND %2$s%3$s.stock_status = %4$s',
-                $resultQuery,
-                $alias,
-                AliasResolver::STOCK_FILTER_SUFFIX,
-                Stock::STOCK_IN_STOCK
-            );
-        }
-
         return $resultQuery;
-    }
-
-    /**
-     * @return bool
-     */
-    private function isAddStockFilter()
-    {
-        $isShowOutOfStock = $this->scopeConfig->isSetFlag(
-            'cataloginventory/options/show_out_of_stock',
-            ScopeInterface::SCOPE_STORE
-        );
-        return false === $isShowOutOfStock;
     }
 
     /**

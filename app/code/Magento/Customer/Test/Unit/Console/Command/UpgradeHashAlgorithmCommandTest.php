@@ -29,7 +29,7 @@ class UpgradeHashAlgorithmCommandTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->customerCollectionFactory = $this->getMockBuilder(
-            \Magento\Customer\Model\ResourceModel\Customer\CollectionFactory::class
+            'Magento\Customer\Model\ResourceModel\Customer\CollectionFactory'
         )->setMethods(['create'])
             ->disableOriginalConstructor()
             ->getMock();
@@ -37,7 +37,7 @@ class UpgradeHashAlgorithmCommandTest extends \PHPUnit_Framework_TestCase
         $this->objectManager = new ObjectManager($this);
 
         $this->command = $this->objectManager->getObject(
-            \Magento\Customer\Console\Command\UpgradeHashAlgorithmCommand::class,
+            'Magento\Customer\Console\Command\UpgradeHashAlgorithmCommand',
             [
                 'customerCollectionFactory' => $this->customerCollectionFactory
             ]

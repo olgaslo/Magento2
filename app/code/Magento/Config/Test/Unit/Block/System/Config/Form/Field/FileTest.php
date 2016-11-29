@@ -39,7 +39,7 @@ class FileTest extends \PHPUnit_Framework_TestCase
         ];
 
         $this->file = $objectManager->getObject(
-            \Magento\Config\Block\System\Config\Form\Field\File::class,
+            'Magento\Config\Block\System\Config\Form\Field\File',
             ['data' => $this->testData]
         );
 

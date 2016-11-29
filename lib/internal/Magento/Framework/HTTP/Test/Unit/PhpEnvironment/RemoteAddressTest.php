@@ -20,7 +20,7 @@ class RemoteAddressTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->_request = $this->getMockBuilder(
-            \Magento\Framework\App\Request\Http::class
+            'Magento\Framework\App\Request\Http'
         )->disableOriginalConstructor()->setMethods(
             ['getServer']
         )->getMock();
@@ -34,7 +34,7 @@ class RemoteAddressTest extends \PHPUnit_Framework_TestCase
     public function testGetRemoteAddress($alternativeHeaders, $serverValueMap, $expected, $ipToLong)
     {
         $remoteAddress = $this->_objectManager->getObject(
-            \Magento\Framework\HTTP\PhpEnvironment\RemoteAddress::class,
+            'Magento\Framework\HTTP\PhpEnvironment\RemoteAddress',
             ['httpRequest' => $this->_request, 'alternativeHeaders' => $alternativeHeaders]
         );
         $this->_request->expects($this->any())->method('getServer')->will($this->returnValueMap($serverValueMap));

@@ -44,7 +44,7 @@ class View extends ParentView
     public function getGroupedProductBlock()
     {
         return $this->blockFactory->create(
-            \Magento\GroupedProduct\Test\Block\Catalog\Product\View\Type\Grouped::class,
+            'Magento\GroupedProduct\Test\Block\Catalog\Product\View\Type\Grouped',
             [
                 'element' => $this->_rootElement->find($this->groupedProductBlock)
             ]

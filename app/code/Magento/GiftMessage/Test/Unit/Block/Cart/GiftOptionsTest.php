@@ -29,17 +29,17 @@ class GiftOptionsTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->context = $this->getMock(\Magento\Backend\Block\Template\Context::class, [], [], '', false);
-        $this->jsonEncoderMock = $this->getMock(\Magento\Framework\Json\Encoder::class, [], [], '', false);
+        $this->context = $this->getMock('Magento\Backend\Block\Template\Context', [], [], '', false);
+        $this->jsonEncoderMock = $this->getMock('Magento\Framework\Json\Encoder', [], [], '', false);
         $this->compositeConfigProvider = $this->getMock(
-            \Magento\GiftMessage\Model\CompositeConfigProvider::class,
+            'Magento\GiftMessage\Model\CompositeConfigProvider',
             [],
             [],
             '',
             false
         );
         $this->layoutProcessorMock = $this->getMockForAbstractClass(
-            \Magento\Checkout\Block\Checkout\LayoutProcessorInterface::class,
+            'Magento\Checkout\Block\Checkout\LayoutProcessorInterface',
             [],
             '',
             false

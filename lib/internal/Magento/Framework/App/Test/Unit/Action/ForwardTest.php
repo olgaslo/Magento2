@@ -33,13 +33,13 @@ class ForwardTest extends \PHPUnit_Framework_TestCase
     {
         $objectManager = new ObjectManager($this);
         $cookieMetadataFactoryMock = $this->getMockBuilder(
-            \Magento\Framework\Stdlib\Cookie\CookieMetadataFactory::class
+            'Magento\Framework\Stdlib\Cookie\CookieMetadataFactory'
         )->disableOriginalConstructor()->getMock();
-        $cookieManagerMock = $this->getMock(\Magento\Framework\Stdlib\CookieManagerInterface::class);
-        $contextMock = $this->getMockBuilder(\Magento\Framework\App\Http\Context::class)->disableOriginalConstructor()
+        $cookieManagerMock = $this->getMock('Magento\Framework\Stdlib\CookieManagerInterface');
+        $contextMock = $this->getMockBuilder('Magento\Framework\App\Http\Context')->disableOriginalConstructor()
             ->getMock();
         $this->response = $objectManager->getObject(
-            \Magento\Framework\App\Response\Http::class,
+            'Magento\Framework\App\Response\Http',
             [
                 'cookieManager' => $cookieManagerMock,
                 'cookieMetadataFactory' => $cookieMetadataFactoryMock,
@@ -47,11 +47,11 @@ class ForwardTest extends \PHPUnit_Framework_TestCase
             ]
         );
 
-        $this->request = $this->getMockBuilder(\Magento\Framework\App\Request\Http::class)
+        $this->request = $this->getMockBuilder('Magento\Framework\App\Request\Http')
             ->disableOriginalConstructor()->getMock();
 
         $this->actionAbstract = $objectManager->getObject(
-            \Magento\Framework\App\Action\Forward::class,
+            'Magento\Framework\App\Action\Forward',
             [
                 'request' => $this->request,
                 'response' => $this->response

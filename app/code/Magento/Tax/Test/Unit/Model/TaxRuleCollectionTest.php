@@ -56,34 +56,28 @@ class TaxRuleCollectionTest extends \PHPUnit_Framework_TestCase
     
     protected function setUp()
     {
-        $this->entityFactoryMock = $this->getMock(
-            \Magento\Framework\Data\Collection\EntityFactory::class,
-            [],
-            [],
-            '',
-            false
-        );
-        $this->filterBuilderMock = $this->getMock(\Magento\Framework\Api\FilterBuilder::class, [], [], '', false);
+        $this->entityFactoryMock = $this->getMock('Magento\Framework\Data\Collection\EntityFactory', [], [], '', false);
+        $this->filterBuilderMock = $this->getMock('Magento\Framework\Api\FilterBuilder', [], [], '', false);
         $this->searchCriteriaBuilderMock =
-            $this->getMock(\Magento\Framework\Api\SearchCriteriaBuilder::class, [], [], '', false);
-        $this->sortOrderBuilderMock = $this->getMock(\Magento\Framework\Api\SortOrderBuilder::class, [], [], '', false);
-        $this->ruleServiceMock = $this->getMock(\Magento\Tax\Api\TaxRuleRepositoryInterface::class, [], [], '', false);
+            $this->getMock('Magento\Framework\Api\SearchCriteriaBuilder', [], [], '', false);
+        $this->sortOrderBuilderMock = $this->getMock('Magento\Framework\Api\SortOrderBuilder', [], [], '', false);
+        $this->ruleServiceMock = $this->getMock('Magento\Tax\Api\TaxRuleRepositoryInterface', [], [], '', false);
         $this->searchCriteriaMock = $this->getMock(
-            \Magento\Framework\Api\SearchCriteria::class,
+            'Magento\Framework\Api\SearchCriteria',
             [],
             [],
             '',
             false
         );
         $this->searchResultsMock = $this->getMock(
-            \Magento\Tax\Api\Data\TaxRateSearchResultsInterface::class,
+            'Magento\Tax\Api\Data\TaxRateSearchResultsInterface',
             [],
             [],
             '',
             false
         );
 
-        $this->taxRuleMock = $this->getMock(\Magento\Tax\Model\Calculation\Rule::class, [], [], '', false);
+        $this->taxRuleMock = $this->getMock('Magento\Tax\Model\Calculation\Rule', [], [], '', false);
         $this->searchCriteriaBuilderMock->expects($this->any())
             ->method('create')
             ->willReturn($this->searchCriteriaMock);

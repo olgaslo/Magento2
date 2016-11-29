@@ -17,7 +17,7 @@ class DeveloperTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $envFactoryMock = $this->getMock(\Magento\Framework\App\EnvironmentFactory::class, [], [], '', false);
+        $envFactoryMock = $this->getMock('Magento\Framework\App\EnvironmentFactory', [], [], '', false);
         $this->_developer = new Developer($envFactoryMock);
     }
 
@@ -39,32 +39,36 @@ class DeveloperTest extends \PHPUnit_Framework_TestCase
             $origObjectManager = null;
         }
 
-        $objectManagerMock = $this->getMockBuilder(\Magento\Framework\App\ObjectManager::class)
+
+        $objectManagerMock = $this->getMockBuilder('Magento\Framework\App\ObjectManager')
             ->disableOriginalConstructor()
             ->getMock();
         ObjectManager::setInstance($objectManagerMock);
-        $diConfigMock = $this->getMockBuilder(\Magento\Framework\Interception\ObjectManager\ConfigInterface::class)
+        $diConfigMock = $this->getMockBuilder('\Magento\Framework\Interception\ObjectManager\ConfigInterface')
             ->disableOriginalConstructor()
             ->getMock();
 
-        $configLoaderMock = $this->getMockBuilder(\Magento\Framework\App\ObjectManager\ConfigLoader::class)
+        $configLoaderMock = $this->getMockBuilder('Magento\Framework\App\ObjectManager\ConfigLoader')
             ->disableOriginalConstructor()
             ->getMock();
         $configLoaderMock->expects($this->any())->method('load')->willReturn([]);
         $omReturnMap = [
-            [\Magento\Framework\App\ObjectManager\ConfigLoader::class,  $configLoaderMock],
-            [\Magento\Framework\Config\ScopeInterface::class,
-                $this->getMockBuilder(\Magento\Framework\Config\ScopeInterface::class)
+            ['Magento\Framework\App\ObjectManager\ConfigLoader',  $configLoaderMock],
+            [
+                'Magento\Framework\Config\ScopeInterface',
+                $this->getMockBuilder('Magento\Framework\Config\ScopeInterface')
                     ->disableOriginalConstructor()
                     ->getMock()
             ],
-            [\Magento\Framework\App\ObjectManager\ConfigCache::class,
-                $this->getMockBuilder(\Magento\Framework\App\ObjectManager\ConfigCache::class)
+            [
+                'Magento\Framework\App\ObjectManager\ConfigCache',
+                $this->getMockBuilder('Magento\Framework\App\ObjectManager\ConfigCache')
                     ->disableOriginalConstructor()
                     ->getMock()
             ],
-            [\Magento\Framework\Interception\Config\Config::class,
-                $this->getMockBuilder(\Magento\Framework\Interception\Config\Config::class)
+            [
+                'Magento\Framework\Interception\Config\Config',
+                $this->getMockBuilder('Magento\Framework\Interception\Config\Config')
                     ->disableOriginalConstructor()
                     ->getMock()
             ]
@@ -76,7 +80,7 @@ class DeveloperTest extends \PHPUnit_Framework_TestCase
 
         $expectedSharedInstances = [
             'class_name' => 'shared_object',
-            \Magento\Framework\ObjectManager\ConfigLoaderInterface::class =>  $configLoaderMock
+            'Magento\Framework\ObjectManager\ConfigLoaderInterface' =>  $configLoaderMock
         ];
         $this->assertSame($expectedSharedInstances, $sharedInstances);
         if (isset($origObjectManager)) {

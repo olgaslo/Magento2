@@ -34,14 +34,14 @@ class ModulesTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->objectManager = $this->getMockForAbstractClass(\Magento\Framework\ObjectManagerInterface::class);
+        $this->objectManager = $this->getMockForAbstractClass('Magento\Framework\ObjectManagerInterface');
         /** @var
          * $objectManagerProvider \PHPUnit_Framework_MockObject_MockObject|\Magento\Setup\Model\ObjectManagerProvider
          */
-        $objectManagerProvider = $this->getMock(\Magento\Setup\Model\ObjectManagerProvider::class, [], [], '', false);
+        $objectManagerProvider = $this->getMock('Magento\Setup\Model\ObjectManagerProvider', [], [], '', false);
         $objectManagerProvider->expects($this->once())->method('get')->willReturn($this->objectManager);
-        $this->modules = $this->getMock(\Magento\Setup\Model\ModuleStatus::class, [], [], '', false);
-        $this->status = $this->getMock(\Magento\Framework\Module\Status::class, [], [], '', false);
+        $this->modules = $this->getMock('Magento\Setup\Model\ModuleStatus', [], [], '', false);
+        $this->status = $this->getMock('Magento\Framework\Module\Status', [], [], '', false);
         $this->objectManager->expects($this->once())->method('create')->will($this->returnValue($this->status));
         $this->controller = new Modules($this->modules, $objectManagerProvider);
     }
@@ -56,7 +56,7 @@ class ModulesTest extends \PHPUnit_Framework_TestCase
         $this->modules->expects($this->once())->method('getAllModules')->willReturn($expected['modules']);
         $this->status->expects($this->once())->method('checkConstraints')->willReturn([]);
         $jsonModel = $this->controller->indexAction();
-        $this->assertInstanceOf(\Zend\View\Model\JsonModel::class, $jsonModel);
+        $this->assertInstanceOf('Zend\View\Model\JsonModel', $jsonModel);
         $variables = $jsonModel->getVariables();
         $this->assertArrayHasKey('success', $variables);
         $this->assertTrue($variables['success']);
@@ -74,7 +74,7 @@ class ModulesTest extends \PHPUnit_Framework_TestCase
             ->method('checkConstraints')
             ->willReturn(['ModuleA', 'ModuleB']);
         $jsonModel = $this->controller->indexAction();
-        $this->assertInstanceOf(\Zend\View\Model\JsonModel::class, $jsonModel);
+        $this->assertInstanceOf('Zend\View\Model\JsonModel', $jsonModel);
         $variables = $jsonModel->getVariables();
         $this->assertArrayHasKey('success', $variables);
         $this->assertArrayHasKey('error', $variables);

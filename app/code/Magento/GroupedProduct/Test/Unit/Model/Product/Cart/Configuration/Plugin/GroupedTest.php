@@ -29,9 +29,9 @@ class GroupedTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->productMock = $this->getMock(\Magento\Catalog\Model\Product::class, [], [], '', false);
+        $this->productMock = $this->getMock('Magento\Catalog\Model\Product', [], [], '', false);
         $this->subjectMock = $this->getMock(
-            \Magento\Catalog\Model\Product\CartConfiguration::class,
+            'Magento\Catalog\Model\Product\CartConfiguration',
             [],
             [],
             '',

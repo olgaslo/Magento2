@@ -44,10 +44,10 @@ class LogoutTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->contextMock = $this->getMockBuilder(\Magento\Framework\App\Action\Context::class)
+        $this->contextMock = $this->getMockBuilder('Magento\Framework\App\Action\Context')
             ->disableOriginalConstructor()
             ->getMock();
-        $this->sessionMock = $this->getMockBuilder(\Magento\Customer\Model\Session::class)
+        $this->sessionMock = $this->getMockBuilder('Magento\Customer\Model\Session')
             ->disableOriginalConstructor()
             ->setMethods(['getId', 'logout', 'setBeforeAuthUrl', 'setLastCustomerId'])
             ->getMock();
@@ -87,6 +87,8 @@ class LogoutTest extends \PHPUnit_Framework_TestCase
         $cookieMetadataFactoryProperty = $refClass->getProperty('cookieMetadataFactory');
         $cookieMetadataFactoryProperty->setAccessible(true);
         $cookieMetadataFactoryProperty->setValue($this->controller, $this->cookieMetadataFactory);
+
+
     }
 
     public function testExecute()

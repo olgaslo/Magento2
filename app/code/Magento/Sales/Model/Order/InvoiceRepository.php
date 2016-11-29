@@ -6,7 +6,6 @@
 
 namespace Magento\Sales\Model\Order;
 
-use Magento\Framework\Api\SearchCriteria\CollectionProcessorInterface;
 use Magento\Sales\Api\InvoiceRepositoryInterface;
 use Magento\Sales\Model\ResourceModel\Metadata;
 use Magento\Framework\Exception\NoSuchEntityException;
@@ -34,23 +33,18 @@ class InvoiceRepository implements InvoiceRepositoryInterface
      */
     protected $searchResultFactory;
 
-    /** @var  CollectionProcessorInterface */
-    private $collectionProcessor;
-
     /**
-     * InvoiceRepository constructor.
+     * Repository constructor
+     *
      * @param Metadata $invoiceMetadata
      * @param SearchResultFactory $searchResultFactory
-     * @param CollectionProcessorInterface|null $collectionProcessor
      */
     public function __construct(
         Metadata $invoiceMetadata,
-        SearchResultFactory $searchResultFactory,
-        CollectionProcessorInterface $collectionProcessor = null
+        SearchResultFactory $searchResultFactory
     ) {
         $this->metadata = $invoiceMetadata;
         $this->searchResultFactory = $searchResultFactory;
-        $this->collectionProcessor = $collectionProcessor ?: $this->getCollectionProcessor();
     }
 
     /**
@@ -95,8 +89,15 @@ class InvoiceRepository implements InvoiceRepositoryInterface
     {
         /** @var \Magento\Sales\Model\ResourceModel\Order\Invoice\Collection $collection */
         $collection = $this->searchResultFactory->create();
-        $this->collectionProcessor->process($searchCriteria, $collection);
+        foreach ($searchCriteria->getFilterGroups() as $filterGroup) {
+            foreach ($filterGroup->getFilters() as $filter) {
+                $condition = $filter->getConditionType() ? $filter->getConditionType() : 'eq';
+                $collection->addFieldToFilter($filter->getField(), [$condition => $filter->getValue()]);
+            }
+        }
         $collection->setSearchCriteria($searchCriteria);
+        $collection->setCurPage($searchCriteria->getCurrentPage());
+        $collection->setPageSize($searchCriteria->getPageSize());
         return $collection;
     }
 
@@ -136,21 +137,5 @@ class InvoiceRepository implements InvoiceRepositoryInterface
         $this->metadata->getMapper()->save($entity);
         $this->registry[$entity->getEntityId()] = $entity;
         return $this->registry[$entity->getEntityId()];
-    }
-
-    /**
-     * Retrieve collection processor
-     *
-     * @deprecated
-     * @return CollectionProcessorInterface
-     */
-    private function getCollectionProcessor()
-    {
-        if (!$this->collectionProcessor) {
-            $this->collectionProcessor = \Magento\Framework\App\ObjectManager::getInstance()->get(
-                \Magento\Framework\Api\SearchCriteria\CollectionProcessorInterface::class
-            );
-        }
-        return $this->collectionProcessor;
     }
 }

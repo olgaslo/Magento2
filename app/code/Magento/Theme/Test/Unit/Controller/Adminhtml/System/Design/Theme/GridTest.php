@@ -41,24 +41,22 @@ class GridTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $context = $this->getMockBuilder(\Magento\Backend\App\Action\Context::class)
+        $context = $this->getMockBuilder('Magento\Backend\App\Action\Context')
             ->disableOriginalConstructor()
             ->getMock();
-        $this->view = $this->getMockBuilder(\Magento\Framework\App\ViewInterface::class)->getMock();
+        $this->view = $this->getMockBuilder('Magento\Framework\App\ViewInterface')->getMock();
         $context->expects($this->any())
             ->method('getView')
             ->willReturn($this->view);
 
-        $this->registry = $this->getMockBuilder(
-            \Magento\Framework\Registry::class
-        )->disableOriginalConstructor()->getMock();
-        $this->fileFactory = $this->getMockBuilder(\Magento\Framework\App\Response\Http\FileFactory::class)
+        $this->registry = $this->getMockBuilder('Magento\Framework\Registry')->disableOriginalConstructor()->getMock();
+        $this->fileFactory = $this->getMockBuilder('Magento\Framework\App\Response\Http\FileFactory')
             ->disableOriginalConstructor()
             ->getMock();
-        $this->repository = $this->getMockBuilder(\Magento\Framework\View\Asset\Repository::class)
+        $this->repository = $this->getMockBuilder('Magento\Framework\View\Asset\Repository')
             ->disableOriginalConstructor()
             ->getMock();
-        $this->filesystem = $this->getMockBuilder(\Magento\Framework\Filesystem::class)
+        $this->filesystem = $this->getMockBuilder('Magento\Framework\Filesystem')
             ->disableOriginalConstructor()
             ->getMock();
 

@@ -22,15 +22,14 @@ use Magento\Ui\Test\Block\Adminhtml\DataGrid;
  * 3. Perfrom full text search
  * 5. Perform Asserts
  *
- * @group Ui
+ * @group Ui_(CS)
  * @ZephyrId MAGETWO-41330
  */
 class GridFullTextSearchTest extends Injectable
 {
     /* tags */
-    const SEVERITY = 'S2';
-    const STABLE = 'no';
     const MVP = 'no';
+    const DOMAIN = 'CS';
     /* end tags */
 
     /**

@@ -261,7 +261,7 @@ class Email extends \Magento\Framework\Model\AbstractModel
     protected function _getPriceBlock()
     {
         if ($this->_priceBlock === null) {
-            $this->_priceBlock = $this->_productAlertData->createBlock(\Magento\ProductAlert\Block\Email\Price::class);
+            $this->_priceBlock = $this->_productAlertData->createBlock('Magento\ProductAlert\Block\Email\Price');
         }
         return $this->_priceBlock;
     }
@@ -274,7 +274,7 @@ class Email extends \Magento\Framework\Model\AbstractModel
     protected function _getStockBlock()
     {
         if ($this->_stockBlock === null) {
-            $this->_stockBlock = $this->_productAlertData->createBlock(\Magento\ProductAlert\Block\Email\Stock::class);
+            $this->_stockBlock = $this->_productAlertData->createBlock('Magento\ProductAlert\Block\Email\Stock');
         }
         return $this->_stockBlock;
     }

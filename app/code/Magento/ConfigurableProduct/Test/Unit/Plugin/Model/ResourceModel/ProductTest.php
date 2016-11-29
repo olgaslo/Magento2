@@ -13,16 +13,10 @@ class ProductTest extends \PHPUnit_Framework_TestCase
 {
     public function testBeforeSaveConfigurable()
     {
-        $subject = $this->getMock(\Magento\Catalog\Model\ResourceModel\Product::class, [], [], '', false);
-        $object = $this->getMock(
-            \Magento\Catalog\Model\Product::class,
-            ['getTypeId', 'getTypeInstance'],
-            [],
-            '',
-            false
-        );
+        $subject = $this->getMock('Magento\Catalog\Model\ResourceModel\Product', [], [], '', false);
+        $object = $this->getMock('Magento\Catalog\Model\Product', ['getTypeId', 'getTypeInstance'], [], '', false);
         $type = $this->getMock(
-            \Magento\ConfigurableProduct\Model\Product\Type\Configurable::class,
+            'Magento\ConfigurableProduct\Model\Product\Type\Configurable',
             ['getSetAttributes'],
             [],
             '',
@@ -42,14 +36,8 @@ class ProductTest extends \PHPUnit_Framework_TestCase
 
     public function testBeforeSaveSimple()
     {
-        $subject = $this->getMock(\Magento\Catalog\Model\ResourceModel\Product::class, [], [], '', false);
-        $object = $this->getMock(
-            \Magento\Catalog\Model\Product::class,
-            ['getTypeId', 'getTypeInstance'],
-            [],
-            '',
-            false
-        );
+        $subject = $this->getMock('Magento\Catalog\Model\ResourceModel\Product', [], [], '', false);
+        $object = $this->getMock('Magento\Catalog\Model\Product', ['getTypeId', 'getTypeInstance'], [], '', false);
         $object->expects($this->once())->method('getTypeId')->will($this->returnValue(Type::TYPE_SIMPLE));
         $object->expects($this->never())->method('getTypeInstance');
 

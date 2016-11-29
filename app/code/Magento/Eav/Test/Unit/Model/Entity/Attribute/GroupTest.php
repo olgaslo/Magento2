@@ -28,7 +28,7 @@ class GroupTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->resourceMock = $this->getMock(
-            \Magento\Eav\Model\ResourceModel\Entity\Attribute\Group::class,
+            'Magento\Eav\Model\ResourceModel\Entity\Attribute\Group',
             [],
             [],
             '',
@@ -39,8 +39,8 @@ class GroupTest extends \PHPUnit_Framework_TestCase
             ->getMock();
         $translitFilter->expects($this->atLeastOnce())->method('filter')->willReturnArgument(0);
 
-        $this->eventManagerMock = $this->getMock(\Magento\Framework\Event\ManagerInterface::class);
-        $contextMock = $this->getMock(\Magento\Framework\Model\Context::class, [], [], '', false);
+        $this->eventManagerMock = $this->getMock('Magento\Framework\Event\ManagerInterface');
+        $contextMock = $this->getMock('Magento\Framework\Model\Context', [], [], '', false);
         $contextMock->expects($this->any())->method('getEventDispatcher')->willReturn($this->eventManagerMock);
         $constructorArguments = [
             'resource' => $this->resourceMock,
@@ -48,10 +48,7 @@ class GroupTest extends \PHPUnit_Framework_TestCase
             'context' => $contextMock,
         ];
         $objectManager = new ObjectManager($this);
-        $this->model = $objectManager->getObject(
-            \Magento\Eav\Model\Entity\Attribute\Group::class,
-            $constructorArguments
-        );
+        $this->model = $objectManager->getObject('Magento\Eav\Model\Entity\Attribute\Group', $constructorArguments);
     }
 
     /**

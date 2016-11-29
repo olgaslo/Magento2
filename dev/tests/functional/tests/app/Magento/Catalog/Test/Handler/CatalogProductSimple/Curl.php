@@ -90,6 +90,9 @@ class Curl extends AbstractCurl implements CatalogProductSimpleInterface
             'Search' => 3,
             'Catalog, Search' => 4
         ],
+        'website_ids' => [
+            'Main Website' => 1
+        ],
         'status' => [
             'No' => 2,
             'Yes' => 1
@@ -179,7 +182,7 @@ class Curl extends AbstractCurl implements CatalogProductSimpleInterface
             'use_config_manage_stock' => 'No',
             'min_sale_qty' => 1,
             'use_config_min_sale_qty' => 1,
-            'max_sale_qty' => 10000,
+            'max_sale_qty' => 10000 ,
             'use_config_max_sale_qty' => 1,
             'enable_qty_increments' => 'No',
             'use_config_enable_qty_increments' => 'No',
@@ -412,13 +415,12 @@ class Curl extends AbstractCurl implements CatalogProductSimpleInterface
     protected function prepareWebsites()
     {
         if (!empty($this->fields['product']['website_ids'])) {
-            foreach ($this->fixture->getDataFieldConfig('website_ids')['source']->getWebsites() as $key => $website) {
-                $this->fields['product']['extension_attributes']['website_ids'][$key] = $website->getWebsiteId();
+            foreach ($this->fields['product']['website_ids'] as $key => $website) {
+                $website = isset($this->mappingData['website_ids'][$website])
+                    ? $this->mappingData['website_ids'][$website]
+                    : $website;
+                $this->fields['product']['website_ids'][$key] = $website;
             }
-        } else {
-            $website = \Magento\Mtf\ObjectManagerFactory::getObjectManager()
-                ->create(\Magento\Store\Test\Fixture\Website::class, ['dataset' => 'default']);
-            $this->fields['product']['extension_attributes']['website_ids'][] = $website->getWebsiteId();
         }
     }
 

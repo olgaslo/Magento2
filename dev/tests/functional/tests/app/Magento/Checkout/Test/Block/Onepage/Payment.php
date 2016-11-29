@@ -8,6 +8,7 @@ namespace Magento\Checkout\Test\Block\Onepage;
 
 use Magento\Mtf\Block\Block;
 use Magento\Mtf\Fixture\InjectableFixture;
+use Magento\Payment\Test\Fixture\CreditCard;
 
 /**
  * Checkout payment block.
@@ -84,17 +85,11 @@ class Payment extends Block
         $paymentLabelSelector = sprintf($this->paymentMethodLabel, $payment['method']);
 
         try {
-            $this->waitForElementNotVisible($this->waitElement);
             $this->waitForElementVisible($paymentLabelSelector);
         } catch (\Exception $exception) {
             throw new \Exception('Such payment method is absent.');
         }
-        $browser = $this->browser;
-        $browser->waitUntil(
-            function () use ($browser, $paymentSelector) {
-                return $browser->find($paymentSelector);
-            }
-        );
+
         $paymentRadioButton = $this->_rootElement->find($paymentSelector);
         if ($paymentRadioButton->isVisible()) {
             $paymentRadioButton->click();
@@ -125,7 +120,7 @@ class Payment extends Block
         $element = $this->_rootElement->find($this->activePaymentMethodSelector);
 
         return $this->blockFactory->create(
-            \Magento\Checkout\Test\Block\Onepage\Payment\Method::class,
+            '\Magento\Checkout\Test\Block\Onepage\Payment\Method',
             ['element' => $element]
         );
     }

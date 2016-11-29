@@ -29,14 +29,14 @@ use Magento\Mtf\TestCase\Injectable;
  * 6. Click "Delete Store View"
  * 7. Perform all assertions
  *
- * @group Store_Management
+ * @group Store_Management_(PS)
  * @ZephyrId MAGETWO-27942
  */
 class DeleteStoreEntityTest extends Injectable
 {
     /* tags */
     const MVP = 'yes';
-    const SEVERITY = 'S2';
+    const DOMAIN = 'PS';
     /* end tags */
 
     /**

@@ -35,14 +35,13 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->entityFactoryMock = $this->getMockBuilder(\Magento\Framework\Data\Collection\EntityFactory::class)
+        $this->entityFactoryMock = $this->getMockBuilder('Magento\Framework\Data\Collection\EntityFactory')
             ->disableOriginalConstructor()
             ->getMock();
-        $this->timezoneMock = $this->getMockBuilder(\Magento\Framework\Stdlib\DateTime\TimezoneInterface::class)
+        $this->timezoneMock = $this->getMockBuilder('Magento\Framework\Stdlib\DateTime\TimezoneInterface')
             ->getMock();
-        $this->factoryMock = $this->getMockBuilder(
-            \Magento\Reports\Model\ResourceModel\Report\Collection\Factory::class
-        )->disableOriginalConstructor()
+        $this->factoryMock = $this->getMockBuilder('Magento\Reports\Model\ResourceModel\Report\Collection\Factory')
+            ->disableOriginalConstructor()
             ->getMock();
 
         $this->timezoneMock
@@ -117,7 +116,7 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
         $this->collection->setInterval($fromDate, $toDate);
         $reports = $this->collection->getReports();
         foreach ($reports as $report) {
-            $this->assertInstanceOf(\Magento\Framework\DataObject::class, $report);
+            $this->assertInstanceOf('\Magento\Framework\DataObject', $report);
             $reportData = $report->getData();
             $this->assertTrue(empty($reportData['children']));
             $this->assertTrue($reportData['is_empty']);
@@ -131,7 +130,7 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
     public function testLoadData()
     {
         $this->assertInstanceOf(
-            \Magento\Reports\Model\ResourceModel\Report\Collection::class,
+            '\Magento\Reports\Model\ResourceModel\Report\Collection',
             $this->collection->loadData()
         );
     }

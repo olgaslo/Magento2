@@ -12,11 +12,11 @@ class LogoTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetLogoSrc()
     {
-        $filesystem = $this->getMock(\Magento\Framework\Filesystem::class, [], [], '', false);
-        $mediaDirectory = $this->getMock(\Magento\Framework\Filesystem\Directory\Read::class, [], [], '', false);
-        $scopeConfig = $this->getMock(\Magento\Framework\App\Config\ScopeConfigInterface::class);
+        $filesystem = $this->getMock('\Magento\Framework\Filesystem', [], [], '', false);
+        $mediaDirectory = $this->getMock('\Magento\Framework\Filesystem\Directory\Read', [], [], '', false);
+        $scopeConfig = $this->getMock('Magento\Framework\App\Config\ScopeConfigInterface');
 
-        $urlBuilder = $this->getMock(\Magento\Framework\UrlInterface::class);
+        $urlBuilder = $this->getMock('Magento\Framework\UrlInterface');
 
         $scopeConfig->expects($this->once())->method('getValue')->will($this->returnValue('default/image.gif'));
         $urlBuilder->expects(
@@ -30,7 +30,7 @@ class LogoTest extends \PHPUnit_Framework_TestCase
 
         $filesystem->expects($this->any())->method('getDirectoryRead')->will($this->returnValue($mediaDirectory));
         $helper = $this->getMock(
-            \Magento\MediaStorage\Helper\File\Storage\Database::class,
+            'Magento\MediaStorage\Helper\File\Storage\Database',
             ['checkDbUsage'],
             [],
             '',
@@ -47,7 +47,7 @@ class LogoTest extends \PHPUnit_Framework_TestCase
             'fileStorageHelper' => $helper,
             'filesystem' => $filesystem,
         ];
-        $block = $objectManager->getObject(\Magento\Theme\Block\Html\Header\Logo::class, $arguments);
+        $block = $objectManager->getObject('Magento\Theme\Block\Html\Header\Logo', $arguments);
 
         $this->assertEquals('http://localhost/pub/media/logo/default/image.gif', $block->getLogoSrc());
     }

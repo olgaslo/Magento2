@@ -6,11 +6,12 @@
 /*global define*/
 define([
     'jquery',
+    'Magento_Braintree/js/view/payment/method-renderer/cc-form',
     'Magento_Vault/js/view/payment/method-renderer/vault',
     'Magento_Braintree/js/view/payment/adapter',
     'Magento_Ui/js/model/messageList',
     'Magento_Checkout/js/model/full-screen-loader'
-], function ($, VaultComponent, Braintree, globalMessageList, fullScreenLoader) {
+], function ($, Component, VaultComponent, Braintree, globalMessageList, fullScreenLoader) {
     'use strict';
 
     return VaultComponent.extend({
@@ -52,7 +53,7 @@ define([
             var self = this;
 
             /**
-             * Define already callback
+             * Define on ready callback
              */
             Braintree.onReady = function () {
                 self.getPaymentMethodNonce();

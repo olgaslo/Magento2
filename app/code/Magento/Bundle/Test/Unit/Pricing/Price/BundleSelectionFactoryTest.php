@@ -29,14 +29,14 @@ class BundleSelectionFactoryTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->bundleMock = $this->getMock(\Magento\Catalog\Model\Product::class, [], [], '', false);
-        $this->selectionMock = $this->getMock(\Magento\Catalog\Model\Product::class, [], [], '', false);
+        $this->bundleMock = $this->getMock('Magento\Catalog\Model\Product', [], [], '', false);
+        $this->selectionMock = $this->getMock('Magento\Catalog\Model\Product', [], [], '', false);
 
-        $this->objectManagerMock = $this->getMock(\Magento\Framework\ObjectManagerInterface::class);
+        $this->objectManagerMock = $this->getMock('Magento\Framework\ObjectManagerInterface');
 
         $this->objectManagerHelper = new ObjectManagerHelper($this);
         $this->bundleSelectionFactory = $this->objectManagerHelper->getObject(
-            \Magento\Bundle\Pricing\Price\BundleSelectionFactory::class,
+            'Magento\Bundle\Pricing\Price\BundleSelectionFactory',
             [
                 'objectManager' => $this->objectManagerMock
             ]
@@ -45,7 +45,7 @@ class BundleSelectionFactoryTest extends \PHPUnit_Framework_TestCase
 
     public function testCreate()
     {
-        $result = $this->getMock(\Magento\Bundle\Pricing\Price\BundleSelectionPrice::class, [], [], '', false);
+        $result = $this->getMock('Magento\Bundle\Pricing\Price\BundleSelectionPrice', [], [], '', false);
         $this->objectManagerMock->expects($this->once())
             ->method('create')
             ->with(
@@ -65,5 +65,27 @@ class BundleSelectionFactoryTest extends \PHPUnit_Framework_TestCase
             $this->bundleSelectionFactory
                 ->create($this->bundleMock, $this->selectionMock, 2., ['test' => 'some value'])
         );
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testCreateException()
+    {
+        $this->objectManagerMock->expects($this->once())
+            ->method('create')
+            ->with(
+                $this->equalTo(BundleSelectionFactory::SELECTION_CLASS_DEFAULT),
+                $this->equalTo(
+                    [
+                        'test' => 'some value',
+                        'bundleProduct' => $this->bundleMock,
+                        'saleableItem' => $this->selectionMock,
+                        'quantity' => 2.,
+                    ]
+                )
+            )
+            ->will($this->returnValue(new \stdClass()));
+        $this->bundleSelectionFactory->create($this->bundleMock, $this->selectionMock, 2., ['test' => 'some value']);
     }
 }

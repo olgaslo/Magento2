@@ -156,7 +156,7 @@ class Filesystem
         OutputInterface $output
     ) {
         $output->writeln('Starting deployment of static content');
-        $cmd = $this->functionCallPath . 'setup:static-content:deploy -f '
+        $cmd = $this->functionCallPath . 'setup:static-content:deploy '
             . implode(' ', $this->getUsedLocales());
 
         /**

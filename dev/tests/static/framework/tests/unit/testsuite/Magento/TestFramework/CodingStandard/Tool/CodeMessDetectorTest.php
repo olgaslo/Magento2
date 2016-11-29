@@ -15,7 +15,7 @@ class CodeMessDetectorTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->assertEquals(
-            class_exists(\PHPMD\TextUI\Command::class),
+            class_exists('PHPMD\TextUI\Command'),
             $messDetector->canRun()
         );
     }

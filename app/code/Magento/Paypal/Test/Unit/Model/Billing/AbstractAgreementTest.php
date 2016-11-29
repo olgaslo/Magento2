@@ -19,23 +19,23 @@ class AbstractAgreementTest extends \PHPUnit_Framework_TestCase
      */
     protected $paymentDataMock;
 
+
     protected function setUp()
     {
         $objectManager = new ObjectManager($this);
 
-        $this->paymentDataMock = $this->getMockBuilder(\Magento\Payment\Helper\Data::class)
+        $this->paymentDataMock = $this->getMockBuilder('Magento\Payment\Helper\Data')
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->model = $objectManager->getObject(
-            \Magento\Paypal\Model\Billing\Agreement::class,
-            ['paymentData' => $this->paymentDataMock]
-        );
+        $this->model = $objectManager->getObject('Magento\Paypal\Model\Billing\Agreement', [
+            'paymentData' => $this->paymentDataMock
+        ]);
     }
 
     public function testGetPaymentMethodInstance()
     {
-        $paymentMethodInstance = $this->getMockBuilder(\Magento\Payment\Model\Method\AbstractMethod::class)
+        $paymentMethodInstance = $this->getMockBuilder('Magento\Payment\Model\Method\AbstractMethod')
             ->disableOriginalConstructor()
             ->setMethods(['setStore'])
             ->getMockForAbstractClass();

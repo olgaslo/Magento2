@@ -30,7 +30,7 @@ class Collection extends AbstractAction
         parent::__construct($assetRepo, $layout, $data);
 
         $this->setActions([]);
-        $this->setType(\Magento\Rule\Model\Action\Collection::class);
+        $this->setType('Magento\Rule\Model\Action\Collection');
     }
 
     /**
@@ -120,7 +120,7 @@ class Collection extends AbstractAction
                 'value_name' => $this->getNewChildName()
             ]
         )->setRenderer(
-            $this->_layout->getBlockSingleton(\Magento\Rule\Block\Newchild::class)
+            $this->_layout->getBlockSingleton('Magento\Rule\Block\Newchild')
         );
     }
 

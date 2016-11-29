@@ -165,7 +165,7 @@ define(
                 }
 
                 if (!availableRate && window.checkoutConfig.selectedShippingMethod) {
-                    availableRate = window.checkoutConfig.selectedShippingMethod;
+                    availableRate = true;
                     selectShippingMethodAction(window.checkoutConfig.selectedShippingMethod);
                 }
 

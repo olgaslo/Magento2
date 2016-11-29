@@ -97,7 +97,7 @@ class Copier
     {
         if (null === $this->optionRepository) {
             $this->optionRepository = \Magento\Framework\App\ObjectManager::getInstance()
-                ->get(\Magento\Catalog\Model\Product\Option\Repository::class);
+                ->get('Magento\Catalog\Model\Product\Option\Repository');
         }
         return $this->optionRepository;
     }
@@ -110,7 +110,7 @@ class Copier
     {
         if (null === $this->metadataPool) {
             $this->metadataPool = \Magento\Framework\App\ObjectManager::getInstance()
-                ->get(\Magento\Framework\EntityManager\MetadataPool::class);
+                ->get('Magento\Framework\EntityManager\MetadataPool');
         }
         return $this->metadataPool;
     }

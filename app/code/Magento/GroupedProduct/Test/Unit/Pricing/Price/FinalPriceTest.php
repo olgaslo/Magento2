@@ -36,16 +36,10 @@ class FinalPriceTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->saleableItemMock =  $this->getMock(\Magento\Catalog\Model\Product::class, [], [], '', false);
-        $this->calculatorMock = $this->getMock(
-            \Magento\Framework\Pricing\Adjustment\Calculator::class,
-            [],
-            [],
-            '',
-            false
-        );
+        $this->saleableItemMock =  $this->getMock('Magento\Catalog\Model\Product', [], [], '', false);
+        $this->calculatorMock = $this->getMock('Magento\Framework\Pricing\Adjustment\Calculator', [], [], '', false);
 
-        $this->priceCurrencyMock = $this->getMock(\Magento\Framework\Pricing\PriceCurrencyInterface::class);
+        $this->priceCurrencyMock = $this->getMock('\Magento\Framework\Pricing\PriceCurrencyInterface');
 
         $this->finalPrice = new \Magento\GroupedProduct\Pricing\Price\FinalPrice(
             $this->saleableItemMock,
@@ -61,7 +55,7 @@ class FinalPriceTest extends \PHPUnit_Framework_TestCase
         $product2 = $this->getProductMock(20);
 
         $typeInstanceMock = $this->getMock(
-            \Magento\GroupedProduct\Model\Product\Type\Grouped::class,
+            'Magento\GroupedProduct\Model\Product\Type\Grouped',
             [],
             [],
             '',
@@ -85,7 +79,7 @@ class FinalPriceTest extends \PHPUnit_Framework_TestCase
         $product2 = $this->getProductMock(20);
 
         $typeInstanceMock = $this->getMock(
-            \Magento\GroupedProduct\Model\Product\Type\Grouped::class,
+            'Magento\GroupedProduct\Model\Product\Type\Grouped',
             [],
             [],
             '',
@@ -105,18 +99,18 @@ class FinalPriceTest extends \PHPUnit_Framework_TestCase
 
     protected function getProductMock($price)
     {
-        $priceTypeMock = $this->getMock(\Magento\Catalog\Pricing\Price\FinalPrice::class, [], [], '', false);
+        $priceTypeMock = $this->getMock('Magento\Catalog\Pricing\Price\FinalPrice', [], [], '', false);
         $priceTypeMock->expects($this->any())
             ->method('getValue')
             ->will($this->returnValue($price));
 
-        $priceInfoMock = $this->getMock(\Magento\Framework\Pricing\PriceInfo\Base::class, [], [], '', false);
+        $priceInfoMock = $this->getMock('Magento\Framework\Pricing\PriceInfo\Base', [], [], '', false);
         $priceInfoMock->expects($this->any())
             ->method('getPrice')
             ->with($this->equalTo(\Magento\Catalog\Pricing\Price\FinalPrice::PRICE_CODE))
             ->will($this->returnValue($priceTypeMock));
 
-        $productMock = $this->getMock(\Magento\Catalog\Model\Product::class, [], [], '', false);
+        $productMock = $this->getMock('Magento\Catalog\Model\Product', [], [], '', false);
         $productMock->expects($this->any())
             ->method('setQty')
             ->with($this->equalTo(\Magento\Framework\Pricing\PriceInfoInterface::PRODUCT_QUANTITY_DEFAULT));

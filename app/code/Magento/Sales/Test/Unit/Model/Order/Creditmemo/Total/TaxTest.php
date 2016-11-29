@@ -41,10 +41,10 @@ class TaxTest extends \PHPUnit_Framework_TestCase
     {
         $this->objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
         /** @var \Magento\Sales\Model\Order\Creditmemo\Total\Tax $model */
-        $this->model = $this->objectManager->getObject(\Magento\Sales\Model\Order\Creditmemo\Total\Tax::class);
+        $this->model = $this->objectManager->getObject('Magento\Sales\Model\Order\Creditmemo\Total\Tax');
 
         $this->order = $this->getMock(
-            \Magento\Sales\Model\Order::class,
+            '\Magento\Sales\Model\Order',
             [
                 '__wakeup'
             ],
@@ -54,7 +54,7 @@ class TaxTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->invoice = $this->getMock(
-            \Magento\Sales\Model\Order\Invoice::class,
+            '\Magento\Sales\Model\Order\Invoice',
             [
                 '__wakeup',
             ],
@@ -64,7 +64,7 @@ class TaxTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->creditmemo = $this->getMock(
-            \Magento\Sales\Model\Order\Creditmemo::class,
+            '\Magento\Sales\Model\Order\Creditmemo',
             [
                 'getAllItems',
                 'getOrder',
@@ -632,7 +632,7 @@ class TaxTest extends \PHPUnit_Framework_TestCase
     {
         /** @var \Magento\Sales\Model\Order\Item|\PHPUnit_Framework_MockObject_MockObject $orderItem */
         $orderItem = $this->getMock(
-            \Magento\Sales\Model\Order\Item::class,
+            '\Magento\Sales\Model\Order\Item',
             [
                 'isDummy',
                 '__wakeup'
@@ -647,7 +647,7 @@ class TaxTest extends \PHPUnit_Framework_TestCase
 
         /** @var \Magento\Sales\Model\Order\Creditmemo\Item|\PHPUnit_Framework_MockObject_MockObject $creditmemoItem */
         $creditmemoItem = $this->getMock(
-            \Magento\Sales\Model\Order\Creditmemo\Item::class,
+            '\Magento\Sales\Model\Order\Creditmemo\Item',
             [
                 'getOrderItem',
                 'isLast',

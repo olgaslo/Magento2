@@ -31,7 +31,7 @@ class EavCustomAttributeTypeLocatorTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->attributeRepository = $this->getMock(
-            \Magento\Eav\Model\AttributeRepository::class,
+            'Magento\Eav\Model\AttributeRepository',
             ['get'],
             [],
             '',
@@ -64,7 +64,7 @@ class EavCustomAttributeTypeLocatorTest extends \PHPUnit_Framework_TestCase
             ->expects($this->any())
             ->method('get')
             ->willReturn($attributeRepositoryResponse);
-
+        
         $this->eavCustomAttributeTypeLocator = new EavCustomAttributeTypeLocator(
             $this->attributeRepository,
             $stringUtility,
@@ -97,16 +97,16 @@ class EavCustomAttributeTypeLocatorTest extends \PHPUnit_Framework_TestCase
      */
     public function getTypeDataProvider()
     {
-        $serviceInterface = \Magento\Catalog\Api\Data\ProductInterface::class;
+        $serviceInterface = 'Magento\Catalog\Api\Data\ProductInterface';
         $eavEntityType = 'catalog_product';
-        $mediaBackEndModelClass = \Magento\Catalog\Api\Data\ProductAttributeMediaGalleryEntryInterface::class;
-        $mediaAttributeDataInterface = \Magento\Catalog\Api\Data\ProductAttributeMediaGalleryEntryInterface::class;
+        $mediaBackEndModelClass = 'Magento\Catalog\Model\Product\Attribute\Backend\Media';
+        $mediaAttributeDataInterface = '\Magento\Catalog\Api\Data\ProductAttributeMediaGalleryEntryInterface';
         $serviceBackendModelDataInterfaceMapData = [
             $serviceInterface => [$mediaBackEndModelClass => $mediaAttributeDataInterface]
         ];
 
         $attribute = $this->getMock(
-            \Magento\Catalog\Model\ResourceModel\Eav\Attribute::class,
+            'Magento\Catalog\Model\ResourceModel\Eav\Attribute',
             ['getBackendModel'],
             [],
             '',
@@ -118,7 +118,7 @@ class EavCustomAttributeTypeLocatorTest extends \PHPUnit_Framework_TestCase
             ->willReturn($mediaBackEndModelClass);
 
         $attributeNoBackendModel = $this->getMock(
-            \Magento\Catalog\Model\ResourceModel\Eav\Attribute::class,
+            'Magento\Catalog\Model\ResourceModel\Eav\Attribute',
             ['getBackendModel', 'getFrontendInput'],
             [],
             '',
@@ -174,7 +174,7 @@ class EavCustomAttributeTypeLocatorTest extends \PHPUnit_Framework_TestCase
             ],
             [
                 'attributeCode' => 'media_galley',
-                'serviceClass' => \Magento\Catalog\Api\Data\ProductInterface::class,
+                'serviceClass' => 'Magento\Catalog\Api\Data\ProductInterface',
                 'attributeRepositoryResponse' => $attribute,
                 'stringUtility' => $stringUtility,
                 'serviceEntityTypeMapData' => [$serviceInterface => $eavEntityType],
@@ -190,7 +190,8 @@ class EavCustomAttributeTypeLocatorTest extends \PHPUnit_Framework_TestCase
                 'serviceBackendModelDataInterfaceMapData' =>
                     [
                         $serviceInterface =>
-                            [\Magento\Eav\Model\Attribute\Data\Image::class => $mediaAttributeDataInterface
+                            [
+                                'Magento\Eav\Model\Attribute\Data\Image' => $mediaAttributeDataInterface
                             ]
                     ],
                 'expected' => $mediaAttributeDataInterface
@@ -214,10 +215,7 @@ class EavCustomAttributeTypeLocatorTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(
             'mixed',
-            $this->eavCustomAttributeTypeLocator->getType(
-                'media_galley',
-                \Magento\Catalog\Api\Data\ProductInterface::class
-            )
+            $this->eavCustomAttributeTypeLocator->getType('media_galley', 'Magento\Catalog\Api\Data\ProductInterface')
         );
     }
 

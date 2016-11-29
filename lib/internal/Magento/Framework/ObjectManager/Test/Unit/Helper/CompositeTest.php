@@ -26,9 +26,7 @@ class CompositeTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
-        $this->compositeHelper = $this->objectManager->getObject(
-            \Magento\Framework\ObjectManager\Helper\Composite::class
-        );
+        $this->compositeHelper = $this->objectManager->getObject('Magento\Framework\ObjectManager\Helper\Composite');
     }
 
     public function testFilterAndSortDeclaredComponents()

@@ -26,9 +26,9 @@ class HelperMethodTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->_objectManager = $this->getMock(\Magento\Framework\ObjectManagerInterface::class);
+        $this->_objectManager = $this->getMock('Magento\Framework\ObjectManagerInterface');
         $this->_interpreter = $this->getMock(
-            \Magento\Framework\View\Layout\Argument\Interpreter\NamedParams::class,
+            'Magento\Framework\View\Layout\Argument\Interpreter\NamedParams',
             [],
             [],
             '',

@@ -16,7 +16,7 @@ class PagerTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $sessionMock = $this->getMockBuilder(
-            \Magento\Backend\Model\Session::class
+            'Magento\Backend\Model\Session'
         )->disableOriginalConstructor()->setMethods(
             ['setData', 'getData']
         )->getMock();
@@ -39,7 +39,7 @@ class PagerTest extends \PHPUnit_Framework_TestCase
         );
 
         $contextMock = $this->getMock(
-            \Magento\Framework\App\Helper\Context::class,
+            'Magento\Framework\App\Helper\Context',
             ['getModuleManager', 'getRequest'],
             [],
             '',

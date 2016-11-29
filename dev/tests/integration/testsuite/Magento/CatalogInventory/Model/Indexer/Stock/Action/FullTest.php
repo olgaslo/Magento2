@@ -18,7 +18,7 @@ class FullTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->_processor = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->get(
-            \Magento\CatalogInventory\Model\Indexer\Stock\Processor::class
+            'Magento\CatalogInventory\Model\Indexer\Stock\Processor'
         );
     }
 
@@ -32,11 +32,11 @@ class FullTest extends \PHPUnit_Framework_TestCase
         $this->_processor->reindexAll();
 
         $categoryFactory = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->get(
-            \Magento\Catalog\Model\CategoryFactory::class
+            'Magento\Catalog\Model\CategoryFactory'
         );
         /** @var \Magento\Catalog\Block\Product\ListProduct $listProduct */
         $listProduct = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->get(
-            \Magento\Catalog\Block\Product\ListProduct::class
+            'Magento\Catalog\Block\Product\ListProduct'
         );
 
         $category = $categoryFactory->create()->load(2);

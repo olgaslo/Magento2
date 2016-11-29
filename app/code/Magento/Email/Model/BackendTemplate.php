@@ -88,7 +88,7 @@ class BackendTemplate extends Template
 
         $templatePaths = $this->structure->getFieldPathsByAttribute(
             'source_model',
-            \Magento\Config\Model\Config\Source\Email\Template::class
+            'Magento\Config\Model\Config\Source\Email\Template'
         );
 
         if (!count($templatePaths)) {

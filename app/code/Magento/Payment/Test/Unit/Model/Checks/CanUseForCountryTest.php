@@ -28,7 +28,7 @@ class CanUseForCountryTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->countryProvider = $this->getMock(
-            \Magento\Payment\Model\Checks\CanUseForCountry\CountryProvider::class,
+            'Magento\Payment\Model\Checks\CanUseForCountry\CountryProvider',
             [],
             [],
             '',
@@ -44,12 +44,12 @@ class CanUseForCountryTest extends \PHPUnit_Framework_TestCase
      */
     public function testIsApplicable($expectation)
     {
-        $quoteMock = $this->getMockBuilder(\Magento\Quote\Model\Quote::class)->disableOriginalConstructor()->setMethods(
+        $quoteMock = $this->getMockBuilder('Magento\Quote\Model\Quote')->disableOriginalConstructor()->setMethods(
             []
         )->getMock();
 
         $paymentMethod = $this->getMockBuilder(
-            \Magento\Payment\Model\MethodInterface::class
+            '\Magento\Payment\Model\MethodInterface'
         )->disableOriginalConstructor()->setMethods([])->getMock();
         $paymentMethod->expects($this->once())->method('canUseForCountry')->with(
             self::EXPECTED_COUNTRY_ID

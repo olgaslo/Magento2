@@ -30,14 +30,14 @@ class ProductTest extends \PHPUnit_Framework_TestCase
         $objectManager = new ObjectManager($this);
 
         $this->setFactoryMock = $this->getMock(
-            \Magento\Eav\Model\Entity\Attribute\SetFactory::class,
+            '\Magento\Eav\Model\Entity\Attribute\SetFactory',
             ['create', '__wakeup'],
             [],
             '',
             false
         );
         $this->typeFactoryMock = $this->getMock(
-            \Magento\Eav\Model\Entity\TypeFactory::class,
+            '\Magento\Eav\Model\Entity\TypeFactory',
             ['create', '__wakeup'],
             [],
             '',
@@ -45,7 +45,7 @@ class ProductTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->model = $objectManager->getObject(
-            \Magento\Catalog\Model\ResourceModel\Product::class,
+            'Magento\Catalog\Model\ResourceModel\Product',
             [
                 'setFactory' => $this->setFactoryMock,
                 'typeFactory' => $this->typeFactoryMock,
@@ -59,20 +59,20 @@ class ProductTest extends \PHPUnit_Framework_TestCase
         $expectedErrorMessage = ['attribute_set' => 'Invalid attribute set entity type'];
 
         $productMock = $this->getMock(
-            \Magento\Framework\DataObject::class,
+            '\Magento\Framework\DataObject',
             ['getAttributeSetId', '__wakeup'],
             [],
             '',
             false
         );
         $attributeSetMock = $this->getMock(
-            \Magento\Eav\Model\Entity\Attribute\Set::class,
+            '\Magento\Eav\Model\Entity\Attribute\Set',
             ['load', 'getEntityTypeId', '__wakeup'],
             [],
             '',
             false
         );
-        $entityTypeMock = $this->getMock(\Magento\Eav\Model\Entity\Type::class, [], [], '', false);
+        $entityTypeMock = $this->getMock('\Magento\Eav\Model\Entity\Type', [], [], '', false);
 
         $this->typeFactoryMock->expects($this->once())->method('create')->will($this->returnValue($entityTypeMock));
         $entityTypeMock->expects($this->once())->method('loadByCode')->with('catalog_product')->willReturnSelf();

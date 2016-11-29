@@ -18,7 +18,7 @@ class FinalPriceTest extends \PHPUnit_Framework_TestCase
     public function testFinalPrice()
     {
         $productRepository = Bootstrap::getObjectManager()
-            ->get(\Magento\Catalog\Api\ProductRepositoryInterface::class);
+            ->get('\Magento\Catalog\Api\ProductRepositoryInterface');
         /** @var $product \Magento\Catalog\Model\Product */
         $product = $productRepository->get('grouped-product');
 
@@ -32,7 +32,7 @@ class FinalPriceTest extends \PHPUnit_Framework_TestCase
     public function testFinalPriceWithTearPrice()
     {
         $productRepository = Bootstrap::getObjectManager()
-            ->get(\Magento\Catalog\Api\ProductRepositoryInterface::class);
+            ->get('\Magento\Catalog\Api\ProductRepositoryInterface');
         /** @var ProductTierPriceInterface $tierPrice */
         $tierPrice = Bootstrap::getObjectManager()->create(ProductTierPriceInterface::class);
         $tierPrice->setQty(1);
@@ -58,7 +58,7 @@ class FinalPriceTest extends \PHPUnit_Framework_TestCase
     public function testFinalPriceWithSpecialPrice()
     {
         $productRepository = Bootstrap::getObjectManager()
-            ->get(\Magento\Catalog\Api\ProductRepositoryInterface::class);
+            ->get('\Magento\Catalog\Api\ProductRepositoryInterface');
 
         /** @var $simpleProduct \Magento\Catalog\Api\Data\ProductInterface */
         $simpleProduct = $productRepository->get('simple');

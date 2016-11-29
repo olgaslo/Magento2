@@ -56,20 +56,20 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
         }
         $this->objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
         $this->filePath = __DIR__ . '/_files/';
-        $this->fileResolverMock = $this->getMock(\Magento\Framework\Config\FileResolverInterface::class);
-        $this->converterMock = $this->getMock(\Magento\Framework\App\Config\Initial\Converter::class);
+        $this->fileResolverMock = $this->getMock('Magento\Framework\Config\FileResolverInterface');
+        $this->converterMock = $this->getMock('Magento\Framework\App\Config\Initial\Converter');
         $this->schemaLocatorMock = $this->getMock(
-            \Magento\Framework\App\Config\Initial\SchemaLocator::class,
+            'Magento\Framework\App\Config\Initial\SchemaLocator',
             [],
             [],
             '',
             false
         );
-        $this->validationStateMock = $this->getMock(\Magento\Framework\Config\ValidationStateInterface::class);
+        $this->validationStateMock = $this->getMock('Magento\Framework\Config\ValidationStateInterface');
         $this->validationStateMock->expects($this->any())
             ->method('isValidationRequired')
             ->will($this->returnValue(true));
-        $this->domFactoryMock = $this->getMock(\Magento\Framework\Config\DomFactory::class, [], [], '', false);
+        $this->domFactoryMock = $this->getMock('Magento\Framework\Config\DomFactory', [], [], '', false);
     }
 
     public function testConstructor()
@@ -168,7 +168,7 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
         $schemaFile = $this->filePath . 'config.xsd';
         $this->schemaLocatorMock->expects($this->once())->method('getSchema')->will($this->returnValue($schemaFile));
         $this->model = $this->objectManager->getObject(
-            \Magento\Framework\App\Config\Initial\Reader::class,
+            'Magento\Framework\App\Config\Initial\Reader',
             [
                 'fileResolver' => $this->fileResolverMock,
                 'converter' => $this->converterMock,

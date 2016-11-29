@@ -31,19 +31,15 @@ class AlternativeTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->directory = $this->getMock(\Magento\Framework\Filesystem\Directory\Read::class, [], [], '', false);
-        $readFactory = $this->getMock(\Magento\Framework\Filesystem\Directory\ReadFactory::class, [], [], '', false);
+        $this->directory = $this->getMock('\Magento\Framework\Filesystem\Directory\Read', [], [], '', false);
+        $readFactory = $this->getMock('\Magento\Framework\Filesystem\Directory\ReadFactory', [], [], '', false);
         $readFactory->expects($this->any())
             ->method('create')
             ->will($this->returnValue($this->directory));
         $this->rule = $this->getMock(
-            \Magento\Framework\View\Design\Fallback\Rule\RuleInterface::class,
-            [],
-            [],
-            '',
-            false
+            '\Magento\Framework\View\Design\Fallback\Rule\RuleInterface', [], [], '', false
         );
-        $rulePool = $this->getMock(\Magento\Framework\View\Design\Fallback\RulePool::class, [], [], '', false);
+        $rulePool = $this->getMock('Magento\Framework\View\Design\Fallback\RulePool', [], [], '', false);
         $rulePool->expects($this->any())
             ->method('getRule')
             ->with('type')
@@ -61,8 +57,8 @@ class AlternativeTest extends \PHPUnit_Framework_TestCase
         $this->setExpectedException('\InvalidArgumentException', "\$alternativeExtensions must be an array with format:"
             . " array('ext1' => array('ext1', 'ext2'), 'ext3' => array(...)]");
 
-        $readFactory = $this->getMock(\Magento\Framework\Filesystem\Directory\ReadFactory::class, [], [], '', false);
-        $rulePool = $this->getMock(\Magento\Framework\View\Design\Fallback\RulePool::class, [], [], '', false);
+        $readFactory = $this->getMock('Magento\Framework\Filesystem\Directory\ReadFactory', [], [], '', false);
+        $rulePool = $this->getMock('Magento\Framework\View\Design\Fallback\RulePool', [], [], '', false);
         new Alternative($readFactory, $rulePool, $alternativeExtensions);
     }
 
@@ -82,7 +78,7 @@ class AlternativeTest extends \PHPUnit_Framework_TestCase
         $requestedFile = 'file.css';
         $expected = 'some/dir/file.less';
 
-        $theme = $this->getMockForAbstractClass(\Magento\Framework\View\Design\ThemeInterface::class);
+        $theme = $this->getMockForAbstractClass('Magento\Framework\View\Design\ThemeInterface');
         $theme->expects($this->any())
             ->method('getFullPath')
             ->will($this->returnValue('magento_theme'));

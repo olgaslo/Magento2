@@ -27,7 +27,7 @@ class MatrixTest extends \PHPUnit_Framework_TestCase
         $objectHelper = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
 
         $this->stockRegistryMock = $this->getMockForAbstractClass(
-            \Magento\CatalogInventory\Api\StockRegistryInterface::class,
+            'Magento\CatalogInventory\Api\StockRegistryInterface',
             [],
             '',
             false,
@@ -37,18 +37,18 @@ class MatrixTest extends \PHPUnit_Framework_TestCase
         );
 
         $context = $objectHelper->getObject(
-            \Magento\Backend\Block\Template\Context::class
+            'Magento\Backend\Block\Template\Context'
         );
         $data = [
             'context' => $context,
-            'formFactory' => $this->getMock(\Magento\Framework\Data\FormFactory::class, [], [], '', false),
-            'productFactory' => $this->getMock(\Magento\Catalog\Model\ProductFactory::class, [], [], '', false),
+            'formFactory' => $this->getMock('Magento\Framework\Data\FormFactory', [], [], '', false),
+            'productFactory' => $this->getMock('Magento\Catalog\Model\ProductFactory', [], [], '', false),
             'stockRegistry' => $this->stockRegistryMock,
         ];
         $helper = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
-        $this->_object = $helper->getObject(\Magento\Config\Block\System\Config\Form::class, $data);
+        $this->_object = $helper->getObject('Magento\Config\Block\System\Config\Form', $data);
         $this->_block = $helper->getObject(
-            \Magento\ConfigurableProduct\Block\Adminhtml\Product\Edit\Tab\Variations\Config\Matrix::class,
+            'Magento\ConfigurableProduct\Block\Adminhtml\Product\Edit\Tab\Variations\Config\Matrix',
             $data
         );
     }
@@ -65,21 +65,21 @@ class MatrixTest extends \PHPUnit_Framework_TestCase
         $qty = 100.00;
 
         $productMock = $this->getMock(
-            \Magento\Catalog\Model\Product::class,
+            'Magento\Catalog\Model\Product',
             ['getId', 'getStore'],
             [],
             '',
             false
         );
         $storeMock = $this->getMock(
-            \Magento\Store\Model\Store::class,
+            'Magento\Store\Model\Store',
             ['getWebsiteId'],
             [],
             '',
             false
         );
         $stockItemMock = $this->getMockForAbstractClass(
-            \Magento\CatalogInventory\Api\Data\StockItemInterface::class,
+            'Magento\CatalogInventory\Api\Data\StockItemInterface',
             [],
             '',
             false,
@@ -123,8 +123,8 @@ class MatrixTest extends \PHPUnit_Framework_TestCase
             ]
         ];
 
-        $layout = $this->getMock(\Magento\Framework\View\LayoutInterface::class);
-        $wizardBlock = $this->getMock(\Magento\Ui\Block\Component\StepsWizard::class, [], [], '', false);
+        $layout = $this->getMock('Magento\Framework\View\LayoutInterface');
+        $wizardBlock = $this->getMock('Magento\Ui\Block\Component\StepsWizard', [], [], '', false);
         $layout->expects($this->any())->method('getChildName')->with(null, $wizardName)
             ->willReturn($wizardBlockName);
         $layout->expects($this->any())->method('getBlock')->with($wizardBlockName)->willReturn($wizardBlock);

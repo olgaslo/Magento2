@@ -406,7 +406,7 @@ class Onepage
         $address = $this->getQuote()->getShippingAddress();
 
         $addressForm = $this->_formFactory->create(
-            \customer_address::class,
+            'customer_address',
             'customer_address_edit',
             [],
             $this->_request->isAjax(),
@@ -586,7 +586,7 @@ class Onepage
         $this->dataObjectHelper->populateWithArray(
             $customer,
             $dataArray,
-            \Magento\Customer\Api\Data\CustomerInterface::class
+            '\Magento\Customer\Api\Data\CustomerInterface'
         );
         $quote->setCustomer($customer)->setCustomerId(true);
 

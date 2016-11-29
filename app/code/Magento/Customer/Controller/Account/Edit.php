@@ -73,13 +73,14 @@ class Edit extends \Magento\Customer\Controller\AbstractAccount
             $this->dataObjectHelper->populateWithArray(
                 $customerDataObject,
                 $data,
-                \Magento\Customer\Api\Data\CustomerInterface::class
+                '\Magento\Customer\Api\Data\CustomerInterface'
             );
         }
         $this->session->setCustomerData($customerDataObject);
         $this->session->setChangePassword($this->getRequest()->getParam('changepass') == 1);
 
         $resultPage->getConfig()->getTitle()->set(__('Account Information'));
+        $resultPage->getLayout()->getBlock('messages')->setEscapeMessageFlag(true);
         return $resultPage;
     }
 }

@@ -24,7 +24,7 @@ class OrderSenderTest extends AbstractSenderTest
         $this->stepMockSetup();
 
         $this->orderResourceMock = $this->getMock(
-            \Magento\Sales\Model\ResourceModel\Order::class,
+            '\Magento\Sales\Model\ResourceModel\Order',
             ['saveAttribute'],
             [],
             '',
@@ -32,7 +32,7 @@ class OrderSenderTest extends AbstractSenderTest
         );
 
         $this->identityContainerMock = $this->getMock(
-            \Magento\Sales\Model\Order\Email\Container\OrderIdentity::class,
+            '\Magento\Sales\Model\Order\Email\Container\OrderIdentity',
             ['getStore', 'isEnabled', 'getConfigValue', 'getTemplateId', 'getGuestTemplateId'],
             [],
             '',
@@ -83,7 +83,7 @@ class OrderSenderTest extends AbstractSenderTest
 
             if ($emailSendingResult) {
                 $addressMock = $this->getMock(
-                    \Magento\Sales\Model\Order\Address::class,
+                    'Magento\Sales\Model\Order\Address',
                     [],
                     [],
                     '',
@@ -145,10 +145,7 @@ class OrderSenderTest extends AbstractSenderTest
                 );
             }
         } else {
-            $this->orderResourceMock->expects($this->at(0))
-                ->method('saveAttribute')
-                ->with($this->orderMock, 'email_sent');
-            $this->orderResourceMock->expects($this->at(1))
+            $this->orderResourceMock->expects($this->once())
                 ->method('saveAttribute')
                 ->with($this->orderMock, 'send_email');
 
@@ -198,7 +195,7 @@ class OrderSenderTest extends AbstractSenderTest
             ->method('isEnabled')
             ->willReturn(true);
 
-        $addressMock = $this->getMock(\Magento\Sales\Model\Order\Address::class, [], [], '', false);
+        $addressMock = $this->getMock('Magento\Sales\Model\Order\Address', [], [], '', false);
 
         $this->addressRenderer->expects($this->exactly($formatCallCount))
             ->method('format')

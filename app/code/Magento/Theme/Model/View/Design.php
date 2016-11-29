@@ -251,7 +251,7 @@ class Design implements \Magento\Framework\View\DesignInterface
     public function getLocale()
     {
         if (null === $this->_locale) {
-            $this->_locale = $this->objectManager->get(\Magento\Framework\Locale\ResolverInterface::class);
+            $this->_locale = $this->objectManager->get('Magento\Framework\Locale\ResolverInterface');
         }
         return $this->_locale->getLocale();
     }

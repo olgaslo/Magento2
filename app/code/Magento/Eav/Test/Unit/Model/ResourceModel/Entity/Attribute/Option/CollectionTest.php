@@ -59,45 +59,39 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->entityFactoryMock = $this->getMock(
-            \Magento\Framework\Data\Collection\EntityFactory::class,
-            [],
-            [],
-            '',
-            false
-        );
-        $this->loggerMock = $this->getMock(\Psr\Log\LoggerInterface::class);
+        $this->entityFactoryMock = $this->getMock('Magento\Framework\Data\Collection\EntityFactory', [], [], '', false);
+        $this->loggerMock = $this->getMock('Psr\Log\LoggerInterface');
         $this->fetchStrategyMock = $this->getMock(
-            \Magento\Framework\Data\Collection\Db\FetchStrategyInterface::class,
+            'Magento\Framework\Data\Collection\Db\FetchStrategyInterface',
             [],
             [],
             '',
             false
         );
         $this->eventManagerMock = $this->getMock(
-            \Magento\Framework\Event\ManagerInterface::class,
+            'Magento\Framework\Event\ManagerInterface',
             [],
             [],
             '',
             false
         );
         $this->coreResourceMock = $this->getMock(
-            \Magento\Framework\App\ResourceConnection::class,
+            'Magento\Framework\App\ResourceConnection',
             [],
             [],
             '',
             false
         );
         $this->storeManagerMock = $this->getMock(
-            \Magento\Store\Model\StoreManagerInterface::class,
+            'Magento\Store\Model\StoreManagerInterface',
             [],
             [],
             '',
             false
         );
-        $this->connectionMock = $this->getMock(\Magento\Framework\DB\Adapter\Pdo\Mysql::class, [], [], '', false);
+        $this->connectionMock = $this->getMock('Magento\Framework\DB\Adapter\Pdo\Mysql', [], [], '', false);
         $this->resourceMock = $this->getMockForAbstractClass(
-            \Magento\Framework\Model\ResourceModel\Db\AbstractDb::class,
+            'Magento\Framework\Model\ResourceModel\Db\AbstractDb',
             [],
             '',
             false,
@@ -105,11 +99,24 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
             true,
             ['__wakeup', 'getConnection', 'getMainTable', 'getTable']
         );
-        $this->selectMock = $this->getMock(\Magento\Framework\DB\Select::class, [], [], '', false);
+        $this->selectMock = $this->getMock('Magento\Framework\DB\Select', [], [], '', false);
 
-        $this->coreResourceMock->expects($this->any())->method('getConnection')->willReturn($this->connectionMock);
-        $this->coreResourceMock->expects($this->any())->method('getTableName')->with('eav_attribute_option_value')
-            ->will($this->returnValue(null));
+        $this->coreResourceMock->expects(
+            $this->any()
+        )->method(
+            'getConnection'
+        )->will(
+            $this->returnValue($this->connectionMock)
+        );
+        $this->coreResourceMock->expects(
+            $this->any()
+        )->method(
+            'getTableName'
+        )->with(
+            'eav_attribute_option_value'
+        )->will(
+            $this->returnValue(null)
+        );
 
         $this->connectionMock->expects($this->any())->method('select')->will($this->returnValue($this->selectMock));
         $this->connectionMock->expects($this->any())->method('quoteIdentifier')->will($this->returnArgument(0));

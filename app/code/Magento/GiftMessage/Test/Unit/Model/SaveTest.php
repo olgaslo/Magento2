@@ -20,19 +20,13 @@ class SaveTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $productRepositoryMock = $this->getMock(
-            \Magento\Catalog\Api\ProductRepositoryInterface::class,
-            [],
-            [],
-            '',
-            false
-        );
-        $this->messageFactoryMock = $this->getMockBuilder(\Magento\GiftMessage\Model\MessageFactory::class)
+        $productRepositoryMock = $this->getMock('\Magento\Catalog\Api\ProductRepositoryInterface', [], [], '', false);
+        $this->messageFactoryMock = $this->getMockBuilder('\Magento\GiftMessage\Model\MessageFactory')
             ->setMethods(['create'])
             ->disableOriginalConstructor()
             ->getMock();
-        $sessionMock = $this->getMock(\Magento\Backend\Model\Session\Quote::class, [], [], '', false);
-        $giftMessageHelperMock = $this->getMock(\Magento\GiftMessage\Helper\Message::class, [], [], '', false);
+        $sessionMock = $this->getMock('\Magento\Backend\Model\Session\Quote', [], [], '', false);
+        $giftMessageHelperMock = $this->getMock('\Magento\GiftMessage\Helper\Message', [], [], '', false);
         $this->model = new \Magento\GiftMessage\Model\Save(
             $productRepositoryMock,
             $this->messageFactoryMock,
@@ -53,8 +47,8 @@ class SaveTest extends \PHPUnit_Framework_TestCase
         ];
         $this->model->setGiftmessages($message);
 
-        $messageMock = $this->getMock(\Magento\GiftMessage\Model\Message::class, [], [], '', false);
-        $entityModelMock = $this->getMock(\Magento\Sales\Model\Order::class, [], [], '', false);
+        $messageMock = $this->getMock('\Magento\GiftMessage\Model\Message', [], [], '', false);
+        $entityModelMock = $this->getMock('\Magento\Sales\Model\Order', [], [], '', false);
 
         $this->messageFactoryMock->expects($this->once())->method('create')->willReturn($messageMock);
         $messageMock->expects($this->once())->method('getEntityModelByType')->with('order')->willReturnSelf();

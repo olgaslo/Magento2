@@ -21,13 +21,13 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
     {
         $objectManager = \Magento\TestFramework\Helper\Bootstrap::getObjectManager();
         /** @var $cache \Magento\Framework\App\Cache */
-        $cache = $objectManager->create(\Magento\Framework\App\Cache::class);
+        $cache = $objectManager->create('Magento\Framework\App\Cache');
         $cache->clean();
         $this->_fileResolverMock = $this->getMockBuilder(
-            \Magento\Framework\Config\FileResolverInterface::class
+            'Magento\Framework\Config\FileResolverInterface'
         )->disableOriginalConstructor()->getMock();
         $this->_model = $objectManager->create(
-            \Magento\Payment\Model\Config\Reader::class,
+            'Magento\Payment\Model\Config\Reader',
             ['fileResolver' => $this->_fileResolverMock]
         );
     }

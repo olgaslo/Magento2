@@ -5,9 +5,6 @@
  */
 namespace Magento\Framework\App\Test\Unit;
 
-/**
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
- */
 class ViewTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -58,29 +55,28 @@ class ViewTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $helper = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
-        $this->_layoutMock = $this->getMock(\Magento\Framework\View\Layout::class, [], [], '', false);
-        $this->_requestMock = $this->getMock(\Magento\Framework\App\Request\Http::class, [], [], '', false);
-        $this->_configScopeMock = $this->getMock(\Magento\Framework\Config\ScopeInterface::class);
-        $this->_layoutProcessor = $this->getMock(\Magento\Framework\View\Model\Layout\Merge::class, [], [], '', false);
+        $this->_layoutMock = $this->getMock('Magento\Framework\View\Layout', [], [], '', false);
+        $this->_requestMock = $this->getMock('Magento\Framework\App\Request\Http', [], [], '', false);
+        $this->_configScopeMock = $this->getMock('Magento\Framework\Config\ScopeInterface');
+        $this->_layoutProcessor = $this->getMock('Magento\Framework\View\Model\Layout\Merge', [], [], '', false);
         $this->_layoutMock->expects($this->any())->method('getUpdate')
             ->will($this->returnValue($this->_layoutProcessor));
-        $this->_actionFlagMock = $this->getMock(\Magento\Framework\App\ActionFlag::class, [], [], '', false);
-        $this->_eventManagerMock = $this->getMock(\Magento\Framework\Event\ManagerInterface::class);
-        $pageConfigMock = $this->getMockBuilder(
-            \Magento\Framework\View\Page\Config::class
-        )->disableOriginalConstructor()->getMock();
+        $this->_actionFlagMock = $this->getMock('Magento\Framework\App\ActionFlag', [], [], '', false);
+        $this->_eventManagerMock = $this->getMock('Magento\Framework\Event\ManagerInterface');
+        $pageConfigMock = $this->getMockBuilder('\Magento\Framework\View\Page\Config')->disableOriginalConstructor()
+            ->getMock();
         $pageConfigMock->expects($this->any())
             ->method('publicBuild')
             ->willReturnSelf();
 
-        $pageConfigRendererFactory = $this->getMockBuilder(\Magento\Framework\View\Page\Config\RendererFactory::class)
+        $pageConfigRendererFactory = $this->getMockBuilder('Magento\Framework\View\Page\Config\RendererFactory')
             ->disableOriginalConstructor()
             ->setMethods(['create'])
             ->getMock();
 
-        $this->resultPage = $this->getMockBuilder(\Magento\Framework\View\Result\Page::class)
+        $this->resultPage = $this->getMockBuilder('Magento\Framework\View\Result\Page')
             ->setConstructorArgs(
-                $helper->getConstructArguments(\Magento\Framework\View\Result\Page::class, [
+                $helper->getConstructArguments('Magento\Framework\View\Result\Page', [
                 'request' => $this->_requestMock,
                 'pageConfigRendererFactory' => $pageConfigRendererFactory,
                 'layout' => $this->_layoutMock
@@ -91,7 +87,7 @@ class ViewTest extends \PHPUnit_Framework_TestCase
         $this->resultPage->expects($this->any())
             ->method('getConfig')
             ->will($this->returnValue($pageConfigMock));
-        $pageFactory = $this->getMockBuilder(\Magento\Framework\View\Result\PageFactory::class)
+        $pageFactory = $this->getMockBuilder('Magento\Framework\View\Result\PageFactory')
             ->disableOriginalConstructor()
             ->setMethods(['create'])
             ->getMock();
@@ -99,10 +95,10 @@ class ViewTest extends \PHPUnit_Framework_TestCase
             ->method('create')
             ->will($this->returnValue($this->resultPage));
 
-        $this->response = $this->getMock(\Magento\Framework\App\Response\Http::class, [], [], '', false);
+        $this->response = $this->getMock('Magento\Framework\App\Response\Http', [], [], '', false);
 
         $this->_view = $helper->getObject(
-            \Magento\Framework\App\View::class,
+            'Magento\Framework\App\View',
             [
                 'layout' => $this->_layoutMock,
                 'request' => $this->_requestMock,

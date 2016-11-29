@@ -9,14 +9,12 @@
  */
 namespace Magento\Wishlist\Block;
 
-use Magento\Customer\Block\Account\SortLinkInterface;
-
 /**
  * Class Link
  *
  * @SuppressWarnings(PHPMD.DepthOfInheritance)
  */
-class Link extends \Magento\Framework\View\Element\Html\Link implements SortLinkInterface
+class Link extends \Magento\Framework\View\Element\Html\Link
 {
     /**
      * Template name
@@ -69,13 +67,5 @@ class Link extends \Magento\Framework\View\Element\Html\Link implements SortLink
     public function getLabel()
     {
         return __('My Wish List');
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getSortOrder()
-    {
-        return $this->getData(self::SORT_ORDER);
     }
 }

@@ -105,7 +105,7 @@ class Item extends \Magento\Framework\Model\AbstractModel implements \Magento\Fr
      */
     protected function _construct()
     {
-        $this->_init(\Magento\Catalog\Model\ResourceModel\Product\Compare\Item::class);
+        $this->_init('Magento\Catalog\Model\ResourceModel\Product\Compare\Item');
     }
 
     /**

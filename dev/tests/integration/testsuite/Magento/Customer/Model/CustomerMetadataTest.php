@@ -27,19 +27,20 @@ class CustomerMetadataTest extends \PHPUnit_Framework_TestCase
     {
         $objectManager = \Magento\TestFramework\Helper\Bootstrap::getObjectManager();
         $objectManager->configure(
-            [\Magento\Framework\Api\ExtensionAttribute\Config\Reader::class => [
+            [
+                'Magento\Framework\Api\ExtensionAttribute\Config\Reader' => [
                     'arguments' => [
-                        'fileResolver' => ['instance' => \Magento\Customer\Model\FileResolverStub::class],
+                        'fileResolver' => ['instance' => 'Magento\Customer\Model\FileResolverStub'],
                     ],
                 ],
             ]
         );
         $this->customerRepository = $objectManager->create(
-            \Magento\Customer\Api\CustomerRepositoryInterface::class
+            'Magento\Customer\Api\CustomerRepositoryInterface'
         );
-        $this->_service = $objectManager->create(\Magento\Customer\Api\CustomerMetadataInterface::class);
+        $this->_service = $objectManager->create('Magento\Customer\Api\CustomerMetadataInterface');
         $this->_extensibleDataObjectConverter = $objectManager->get(
-            \Magento\Framework\Api\ExtensibleDataObjectConverter::class
+            'Magento\Framework\Api\ExtensibleDataObjectConverter'
         );
     }
 
@@ -119,7 +120,7 @@ class CustomerMetadataTest extends \PHPUnit_Framework_TestCase
         $attributes = $this->_extensibleDataObjectConverter->toFlatArray(
             $customer,
             [],
-            \Magento\Customer\Api\Data\CustomerInterface::class
+            '\Magento\Customer\Api\Data\CustomerInterface'
         );
         $this->assertNotEmpty($attributes);
 
@@ -165,7 +166,7 @@ class CustomerMetadataTest extends \PHPUnit_Framework_TestCase
 
         /** Check some fields of one attribute metadata */
         $attributeMetadata = $formAttributesMetadata['firstname'];
-        $this->assertInstanceOf(\Magento\Customer\Model\Data\AttributeMetadata::class, $attributeMetadata);
+        $this->assertInstanceOf('Magento\Customer\Model\Data\AttributeMetadata', $attributeMetadata);
         $this->assertEquals('firstname', $attributeMetadata->getAttributeCode(), 'Attribute code is invalid');
         $this->assertNotEmpty($attributeMetadata->getValidationRules(), 'Validation rules are not set');
         $this->assertEquals('1', $attributeMetadata->isSystem(), '"Is system" field value is invalid');
@@ -177,7 +178,7 @@ class CustomerMetadataTest extends \PHPUnit_Framework_TestCase
         $objectManager = \Magento\TestFramework\Helper\Bootstrap::getObjectManager();
 
         /* @var \Magento\Framework\Config\CacheInterface $cache */
-        $cache = $objectManager->create(\Magento\Framework\Config\CacheInterface::class);
+        $cache = $objectManager->create('Magento\Framework\Config\CacheInterface');
         $cache->remove('extension_attributes_config');
     }
 }

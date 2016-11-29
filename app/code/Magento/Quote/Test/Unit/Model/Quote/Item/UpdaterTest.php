@@ -41,7 +41,7 @@ class UpdaterTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->productMock = $this->getMock(
-            \Magento\Catalog\Model\Product::class,
+            'Magento\Catalog\Model\Product',
             [
                 'getStockItem',
                 '__wakeup',
@@ -54,7 +54,7 @@ class UpdaterTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->localeFormat = $this->getMock(
-            \Magento\Framework\Locale\Format::class,
+            'Magento\Framework\Locale\Format',
             [
                 'getNumber', 'getPriceFormat'
             ],
@@ -64,7 +64,7 @@ class UpdaterTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->itemMock = $this->getMock(
-            \Magento\Quote\Model\Quote\Item::class,
+            'Magento\Quote\Model\Quote\Item',
             [
                 'updateItem',
                 'getProduct',
@@ -85,7 +85,7 @@ class UpdaterTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->stockItemMock = $this->getMock(
-            \Magento\CatalogInventory\Model\Stock\Item::class,
+            'Magento\CatalogInventory\Model\Stock\Item',
             [
                 'getIsQtyDecimal',
                 '__wakeup'
@@ -97,7 +97,7 @@ class UpdaterTest extends \PHPUnit_Framework_TestCase
 
         $this->object = (new ObjectManager($this))
             ->getObject(
-                \Magento\Quote\Model\Quote\Item\Updater::class,
+                'Magento\Quote\Model\Quote\Item\Updater',
                 [
                     'localeFormat' => $this->localeFormat
                 ]
@@ -231,7 +231,7 @@ class UpdaterTest extends \PHPUnit_Framework_TestCase
         $customPrice = 9.99;
         $qty = 3;
         $buyRequestMock = $this->getMock(
-            \Magento\Framework\DataObject::class,
+            'Magento\Framework\DataObject',
             [
                 'setCustomPrice',
                 'setValue',
@@ -297,7 +297,7 @@ class UpdaterTest extends \PHPUnit_Framework_TestCase
     {
         $qty = 3;
         $buyRequestMock = $this->getMock(
-            \Magento\Framework\DataObject::class,
+            'Magento\Framework\DataObject',
             [
                 'setCustomPrice',
                 'setValue',

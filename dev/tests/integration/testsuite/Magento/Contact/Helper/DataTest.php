@@ -31,14 +31,12 @@ class DataTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $customerIdFromFixture = 1;
-        $this->contactsHelper = Bootstrap::getObjectManager()->create(\Magento\Contact\Helper\Data::class);
-        $this->customerSession = Bootstrap::getObjectManager()->create(\Magento\Customer\Model\Session::class);
+        $this->contactsHelper = Bootstrap::getObjectManager()->create('Magento\Contact\Helper\Data');
+        $this->customerSession = Bootstrap::getObjectManager()->create('Magento\Customer\Model\Session');
         /**
          * @var $customerRepository \Magento\Customer\Api\CustomerRepositoryInterface
          */
-        $customerRepository = Bootstrap::getObjectManager()->create(
-            \Magento\Customer\Api\CustomerRepositoryInterface::class
-        );
+        $customerRepository = Bootstrap::getObjectManager()->create('Magento\Customer\Api\CustomerRepositoryInterface');
         $customerData = $customerRepository->getById($customerIdFromFixture);
         $this->customerSession->setCustomerDataObject($customerData);
     }

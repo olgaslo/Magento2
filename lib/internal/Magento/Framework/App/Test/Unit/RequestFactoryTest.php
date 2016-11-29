@@ -21,7 +21,7 @@ class RequestFactoryTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->objectManagerMock = $this->getMock(\Magento\Framework\ObjectManagerInterface::class);
+        $this->objectManagerMock = $this->getMock('Magento\Framework\ObjectManagerInterface');
         $this->model = new RequestFactory($this->objectManagerMock);
     }
 
@@ -33,11 +33,11 @@ class RequestFactoryTest extends \PHPUnit_Framework_TestCase
     {
         $arguments = ['some_key' => 'same_value'];
 
-        $appRequest = $this->getMock(\Magento\Framework\App\RequestInterface::class);
+        $appRequest = $this->getMock('Magento\Framework\App\RequestInterface');
 
         $this->objectManagerMock->expects($this->once())
             ->method('create')
-            ->with(\Magento\Framework\App\RequestInterface::class, $arguments)
+            ->with('Magento\Framework\App\RequestInterface', $arguments)
             ->will($this->returnValue($appRequest));
 
         $this->assertEquals($appRequest, $this->model->create($arguments));

@@ -11,8 +11,6 @@ use Magento\Framework\TestFramework\Unit\Helper\ObjectManager as ObjectManagerHe
 
 /**
  * Class UnholdTest
- *
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
 class UnholdTest extends \PHPUnit_Framework_TestCase
 {
@@ -65,44 +63,44 @@ class UnholdTest extends \PHPUnit_Framework_TestCase
     {
         $objectManagerHelper = new ObjectManagerHelper($this);
         $this->context = $this->getMock(
-            \Magento\Backend\App\Action\Context::class,
+            'Magento\Backend\App\Action\Context',
             [],
             [],
             '',
             false
         );
         $resultRedirectFactory = $this->getMock(
-            \Magento\Backend\Model\View\Result\RedirectFactory::class,
+            'Magento\Backend\Model\View\Result\RedirectFactory',
             ['create'],
             [],
             '',
             false
         );
         $this->response = $this->getMock(
-            \Magento\Framework\App\ResponseInterface::class,
+            'Magento\Framework\App\ResponseInterface',
             ['setRedirect', 'sendResponse'],
             [],
             '',
             false
         );
-        $this->request = $this->getMockBuilder(\Magento\Framework\App\Request\Http::class)
+        $this->request = $this->getMockBuilder('Magento\Framework\App\Request\Http')
             ->disableOriginalConstructor()->getMock();
         $this->messageManager = $this->getMock(
-            \Magento\Framework\Message\Manager::class,
+            'Magento\Framework\Message\Manager',
             ['addSuccess', 'addError'],
             [],
             '',
             false
         );
-        $this->orderRepositoryMock = $this->getMockBuilder(\Magento\Sales\Api\OrderRepositoryInterface::class)
+        $this->orderRepositoryMock = $this->getMockBuilder('Magento\Sales\Api\OrderRepositoryInterface')
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->validatorMock = $this->getMockBuilder(\Magento\Framework\Data\Form\FormKey\Validator::class)
+        $this->validatorMock = $this->getMockBuilder('Magento\Framework\Data\Form\FormKey\Validator')
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->resultRedirect = $this->getMock(\Magento\Backend\Model\View\Result\Redirect::class, [], [], '', false);
+        $this->resultRedirect = $this->getMock('Magento\Backend\Model\View\Result\Redirect', [], [], '', false);
         $resultRedirectFactory->expects($this->any())->method('create')->willReturn($this->resultRedirect);
 
         $this->context->expects($this->once())->method('getMessageManager')->willReturn($this->messageManager);
@@ -113,7 +111,7 @@ class UnholdTest extends \PHPUnit_Framework_TestCase
         $this->context->expects($this->once())->method('getFormKeyValidator')->willReturn($this->validatorMock);
 
         $this->controller = $objectManagerHelper->getObject(
-            \Magento\Sales\Controller\Adminhtml\Order\Unhold::class,
+            'Magento\Sales\Controller\Adminhtml\Order\Unhold',
             [
                 'context' => $this->context,
                 'request' => $this->request,

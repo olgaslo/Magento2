@@ -68,10 +68,10 @@ class Installer
     /**#@+
      * Instance types for schema and data handler
      */
-    const SCHEMA_INSTALL = \Magento\Framework\Setup\InstallSchemaInterface::class;
-    const SCHEMA_UPGRADE = \Magento\Framework\Setup\UpgradeSchemaInterface::class;
-    const DATA_INSTALL = \Magento\Framework\Setup\InstallDataInterface::class;
-    const DATA_UPGRADE = \Magento\Framework\Setup\UpgradeDataInterface::class;
+    const SCHEMA_INSTALL = 'Magento\Framework\Setup\InstallSchemaInterface';
+    const SCHEMA_UPGRADE = 'Magento\Framework\Setup\UpgradeSchemaInterface';
+    const DATA_INSTALL = 'Magento\Framework\Setup\InstallDataInterface';
+    const DATA_UPGRADE = 'Magento\Framework\Setup\UpgradeDataInterface';
     /**#@- */
 
     const INFO_MESSAGE = 'message';
@@ -777,6 +777,7 @@ class Installer
         $this->setupCoreTables($setup);
         $this->log->log('Schema creation/updates:');
         $this->handleDBSchemaData($setup, 'schema');
+        $this->cleanDdlCache();
     }
 
     /**
@@ -898,15 +899,15 @@ class Installer
     {
         $userConfig = new StoreConfigurationDataMapper();
         /** @var \Magento\Framework\App\State $appState */
-        $appState = $this->objectManagerProvider->get()->get(\Magento\Framework\App\State::class);
-        $appState->setAreaCode(\Magento\Framework\App\Area::AREA_GLOBAL);
+        $appState = $this->objectManagerProvider->get()->get('Magento\Framework\App\State');
+        $appState->setAreaCode('setup');
         $configData = $userConfig->getConfigData($data);
         if (count($configData) === 0) {
             return;
         }
 
         /** @var \Magento\Config\Model\Config\Factory $configFactory */
-        $configFactory = $this->objectManagerProvider->get()->create(\Magento\Config\Model\Config\Factory::class);
+        $configFactory = $this->objectManagerProvider->get()->create('Magento\Config\Model\Config\Factory');
         foreach ($configData as $key => $val) {
             $configModel = $configFactory->create();
             $configModel->setDataByPath($key, $val);
@@ -1057,7 +1058,7 @@ class Installer
     private function enableCaches()
     {
         /** @var \Magento\Framework\App\Cache\Manager $cacheManager */
-        $cacheManager = $this->objectManagerProvider->get()->create(\Magento\Framework\App\Cache\Manager::class);
+        $cacheManager = $this->objectManagerProvider->get()->create('Magento\Framework\App\Cache\Manager');
         $types = $cacheManager->getAvailableTypes();
         $enabledTypes = $cacheManager->setEnabled($types, true);
         $cacheManager->clean($enabledTypes);
@@ -1070,16 +1071,27 @@ class Installer
      * Clean caches after installing application
      *
      * @return void
-     *
-     * @SuppressWarnings(PHPMD.UnusedPrivateMethod) Called by install() via callback.
      */
     private function cleanCaches()
     {
         /** @var \Magento\Framework\App\Cache\Manager $cacheManager */
-        $cacheManager = $this->objectManagerProvider->get()->get(\Magento\Framework\App\Cache\Manager::class);
+        $cacheManager = $this->objectManagerProvider->get()->get('Magento\Framework\App\Cache\Manager');
         $types = $cacheManager->getAvailableTypes();
         $cacheManager->clean($types);
         $this->log->log('Cache cleared successfully');
+    }
+
+    /**
+     * Clean DDL cache
+     *
+     * @return void
+     */
+    private function cleanDdlCache()
+    {
+        /** @var \Magento\Framework\App\Cache\Manager $cacheManager */
+        $cacheManager = $this->objectManagerProvider->get()->get(\Magento\Framework\App\Cache\Manager::class);
+        $cacheManager->clean([\Magento\Framework\DB\Adapter\DdlCache::TYPE_IDENTIFIER]);
+        $this->log->log('DDL cache cleared successfully');
     }
 
     /**

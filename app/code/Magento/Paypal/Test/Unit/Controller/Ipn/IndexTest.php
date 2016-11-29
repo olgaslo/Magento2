@@ -22,13 +22,13 @@ class IndexTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->logger = $this->getMock(\Psr\Log\LoggerInterface::class);
-        $this->request = $this->getMock(\Magento\Framework\App\Request\Http::class, [], [], '', false);
-        $this->response = $this->getMock(\Magento\Framework\App\Response\Http::class, [], [], '', false);
+        $this->logger = $this->getMock('Psr\Log\LoggerInterface');
+        $this->request = $this->getMock('Magento\Framework\App\Request\Http', [], [], '', false);
+        $this->response = $this->getMock('Magento\Framework\App\Response\Http', [], [], '', false);
 
         $objectManagerHelper = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
         $this->model = $objectManagerHelper->getObject(
-            \Magento\Paypal\Controller\Ipn\Index::class,
+            'Magento\Paypal\Controller\Ipn\Index',
             [
                 'logger' => $this->logger,
                 'request' => $this->request,

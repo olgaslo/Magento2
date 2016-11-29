@@ -28,7 +28,7 @@ class RouteTest extends \PHPUnit_Framework_TestCase
     {
         $this->objectManager = new ObjectManager($this);
 
-        $this->request = $this->getMockBuilder(\Magento\Framework\App\RequestInterface::class)
+        $this->request = $this->getMockBuilder('Magento\Framework\App\RequestInterface')
             ->setMethods(['getPathInfo'])
             ->getMockForAbstractClass();
     }
@@ -42,7 +42,7 @@ class RouteTest extends \PHPUnit_Framework_TestCase
     {
         /** @var Route $model */
         $model = $this->objectManager->getObject(
-            \Magento\Webapi\Controller\Rest\Router\Route::class,
+            'Magento\Webapi\Controller\Rest\Router\Route',
             ['route' => '/V1/one']
         );
 
@@ -66,7 +66,7 @@ class RouteTest extends \PHPUnit_Framework_TestCase
     {
         /** @var Route $model */
         $model = $this->objectManager->getObject(
-            \Magento\Webapi\Controller\Rest\Router\Route::class,
+            'Magento\Webapi\Controller\Rest\Router\Route',
             ['route' => $route]
         );
 

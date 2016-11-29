@@ -23,6 +23,9 @@ class State
      */
     public function check(Order $order)
     {
+        if (!$order->getId()) {
+            return $order;
+        }
         if (!$order->isCanceled() && !$order->canUnhold() && !$order->canInvoice() && !$order->canShip()) {
             if (0 == $order->getBaseGrandTotal() || $order->canCreditmemo()) {
                 if ($order->getState() !== Order::STATE_COMPLETE) {

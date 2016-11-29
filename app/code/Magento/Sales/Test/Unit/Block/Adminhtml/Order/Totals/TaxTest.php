@@ -20,7 +20,7 @@ class TaxTest extends \PHPUnit_Framework_TestCase
             'tax' => 'tax',
             'shipping_tax' => 'shipping_tax',
         ];
-        $taxHelperMock = $this->getMockBuilder(\Magento\Tax\Helper\Data::class)
+        $taxHelperMock = $this->getMockBuilder('Magento\Tax\Helper\Data')
             ->setMethods(['getCalculatedTaxes'])
             ->disableOriginalConstructor()
             ->getMock();
@@ -28,7 +28,7 @@ class TaxTest extends \PHPUnit_Framework_TestCase
             ->method('getCalculatedTaxes')
             ->will($this->returnValue($getCalculatedTax));
 
-        $this->taxMock = $this->getMockBuilder(\Magento\Sales\Block\Adminhtml\Order\Totals\Tax::class)
+        $this->taxMock = $this->getMockBuilder('Magento\Sales\Block\Adminhtml\Order\Totals\Tax')
             ->setConstructorArgs($this->_getConstructArguments($taxHelperMock))
             ->setMethods(['getOrder', 'getSource'])
             ->getMock();
@@ -84,7 +84,7 @@ class TaxTest extends \PHPUnit_Framework_TestCase
     {
         $objectManagerHelper = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
         return $objectManagerHelper->getConstructArguments(
-            \Magento\Sales\Block\Adminhtml\Order\Totals\Tax::class,
+            'Magento\Sales\Block\Adminhtml\Order\Totals\Tax',
             ['taxHelper' => $taxHelperMock]
         );
     }
@@ -98,7 +98,7 @@ class TaxTest extends \PHPUnit_Framework_TestCase
      */
     public function getFullTaxInfoDataProvider()
     {
-        $salesModelOrderMock = $this->getMockBuilder(\Magento\Sales\Model\Order::class)
+        $salesModelOrderMock = $this->getMockBuilder('Magento\Sales\Model\Order')
             ->disableOriginalConstructor()
             ->getMock();
         return [
@@ -122,11 +122,11 @@ class TaxTest extends \PHPUnit_Framework_TestCase
      */
     public function getCreditAndInvoiceFullTaxInfoDataProvider()
     {
-        $invoiceMock = $this->getMockBuilder(\Magento\Sales\Model\Order\Invoice::class)
+        $invoiceMock = $this->getMockBuilder('Magento\Sales\Model\Order\Invoice')
             ->disableOriginalConstructor()
             ->setMethods(['__wakeup'])
             ->getMock();
-        $creditMemoMock = $this->getMockBuilder(\Magento\Sales\Model\Order\Creditmemo::class)
+        $creditMemoMock = $this->getMockBuilder('Magento\Sales\Model\Order\Creditmemo')
             ->disableOriginalConstructor()
             ->setMethods(['__wakeup'])
             ->getMock();

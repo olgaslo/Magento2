@@ -22,13 +22,20 @@ define([
                 });
         });
 
-        describe('initConfig method', function () {
+        describe('initProperties method', function () {
             it('check for chainable', function () {
-                expect(date.initConfig()).toEqual(date);
+                expect(date.initProperties()).toEqual(date);
             });
             it('check for extend', function () {
-                date.initConfig();
+                date.initProperties();
                 expect(date.dateFormat).toBeDefined();
+            });
+        });
+
+        describe('getLabel method', function () {
+            it('check format', function () {
+                date.dateFormat = dateFormat;
+                expect(date.getLabel(dateRaw)).toBe(dateFormatted);
             });
         });
     });

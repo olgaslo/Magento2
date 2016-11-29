@@ -35,7 +35,7 @@ class ColumnTest extends \PHPUnit_Framework_TestCase
         $this->objectManager = new ObjectManager($this);
 
         $this->contextMock = $this->getMockForAbstractClass(
-            \Magento\Framework\View\Element\UiComponent\ContextInterface::class,
+            'Magento\Framework\View\Element\UiComponent\ContextInterface',
             [],
             '',
             false,
@@ -43,7 +43,7 @@ class ColumnTest extends \PHPUnit_Framework_TestCase
             true,
             []
         );
-        $processor = $this->getMockBuilder(\Magento\Framework\View\Element\UiComponent\Processor::class)
+        $processor = $this->getMockBuilder('Magento\Framework\View\Element\UiComponent\Processor')
             ->disableOriginalConstructor()
             ->getMock();
         $this->contextMock->expects($this->any())->method('getProcessor')->willReturn($processor);
@@ -57,7 +57,7 @@ class ColumnTest extends \PHPUnit_Framework_TestCase
     public function testGetComponentName()
     {
         $column = $this->objectManager->getObject(
-            \Magento\Ui\Component\Listing\Columns\Column::class,
+            'Magento\Ui\Component\Listing\Columns\Column',
             [
                 'context' => $this->contextMock,
                 'data' => [
@@ -83,7 +83,7 @@ class ColumnTest extends \PHPUnit_Framework_TestCase
     {
         $testItems = ['item1','item2', 'item3'];
         $column = $this->objectManager->getObject(
-            \Magento\Ui\Component\Listing\Columns\Column::class,
+            'Magento\Ui\Component\Listing\Columns\Column',
             ['context' => $this->contextMock]
         );
 
@@ -105,7 +105,7 @@ class ColumnTest extends \PHPUnit_Framework_TestCase
 
         /** @var UiComponentFactory|\PHPUnit_Framework_MockObject_MockObject $uiComponentFactoryMock */
         $uiComponentFactoryMock = $this->getMock(
-            \Magento\Framework\View\Element\UiComponentFactory::class,
+            'Magento\Framework\View\Element\UiComponentFactory',
             [],
             [],
             '',
@@ -114,14 +114,14 @@ class ColumnTest extends \PHPUnit_Framework_TestCase
 
         /** @var UiComponentInterface|\PHPUnit_Framework_MockObject_MockObject $wrappedComponentMock */
         $wrappedComponentMock = $this->getMockForAbstractClass(
-            \Magento\Framework\View\Element\UiComponentInterface::class,
+            'Magento\Framework\View\Element\UiComponentInterface',
             [],
             '',
             false
         );
         /** @var DataProviderInterface|\PHPUnit_Framework_MockObject_MockObject $dataProviderMock */
         $dataProviderMock = $this->getMockForAbstractClass(
-            \Magento\Framework\View\Element\UiComponent\DataProvider\DataProviderInterface::class,
+            'Magento\Framework\View\Element\UiComponent\DataProvider\DataProviderInterface',
             [],
             '',
             false
@@ -158,7 +158,7 @@ class ColumnTest extends \PHPUnit_Framework_TestCase
 
         /** @var Column $column */
         $column = $this->objectManager->getObject(
-            \Magento\Ui\Component\Listing\Columns\Column::class,
+            'Magento\Ui\Component\Listing\Columns\Column',
             [
                 'context' => $this->contextMock,
                 'uiComponentFactory' => $uiComponentFactoryMock,

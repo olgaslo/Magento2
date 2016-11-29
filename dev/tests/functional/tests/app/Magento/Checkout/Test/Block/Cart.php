@@ -100,13 +100,6 @@ class Cart extends Block
     protected $preloaderSpinner = '#preloaderSpinner';
 
     /**
-     * Cart item class name.
-     *
-     * @var string
-     */
-    protected $cartItemClass = \Magento\Checkout\Test\Block\Cart\CartItem::class;
-
-    /**
      * Wait for PayPal page is loaded.
      *
      * @return void
@@ -136,7 +129,7 @@ class Cart extends Block
                 Locator::SELECTOR_XPATH
             );
             $cartItem = $this->blockFactory->create(
-                $this->cartItemClass,
+                'Magento\Checkout\Test\Block\Cart\CartItem',
                 ['element' => $cartItemBlock]
             );
         }

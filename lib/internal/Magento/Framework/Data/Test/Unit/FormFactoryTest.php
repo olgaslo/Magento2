@@ -20,7 +20,7 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->_objectManagerMock = $this->getMock(
-            \Magento\Framework\ObjectManager\ObjectManager::class,
+            'Magento\Framework\ObjectManager\ObjectManager',
             [],
             [],
             '',
@@ -45,7 +45,7 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
 
     public function testCreate()
     {
-        $className = \Magento\Framework\Data\Form::class;
+        $className = 'Magento\Framework\Data\Form';
         $formMock = $this->getMock($className, [], [], '', false);
         $this->_objectManagerMock->expects(
             $this->once()

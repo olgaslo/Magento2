@@ -391,11 +391,11 @@ define([
                     'small_image': row['small_image'],
                     image: row.image,
                     'thumbnail': row.thumbnail,
-                    'attributes': attributesText,
-                    'was_changed': true
+                    'attributes': attributesText
                 };
                 product[this.canEditField] = row.editable;
                 product[this.newProductField] = row.newProduct;
+
                 tmpArray.push(product);
             }, this);
 

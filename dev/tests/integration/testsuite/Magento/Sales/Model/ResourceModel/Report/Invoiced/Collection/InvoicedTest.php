@@ -15,7 +15,7 @@ class InvoicedTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->_collection = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create(
-            \Magento\Sales\Model\ResourceModel\Report\Invoiced\Collection\Invoiced::class
+            'Magento\Sales\Model\ResourceModel\Report\Invoiced\Collection\Invoiced'
         );
         $this->_collection->setPeriod('day')->setDateRange(null, null)->addStoreFilter([1]);
     }

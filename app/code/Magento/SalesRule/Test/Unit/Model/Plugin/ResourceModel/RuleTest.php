@@ -31,17 +31,17 @@ class RuleTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
-        $this->ruleResource = $this->getMockBuilder(\Magento\SalesRule\Model\ResourceModel\Rule::class)
+        $this->ruleResource = $this->getMockBuilder('Magento\SalesRule\Model\ResourceModel\Rule')
             ->disableOriginalConstructor()
             ->getMock();
         $this->genericClosure = function () {
             return;
         };
-        $this->abstractModel = $this->getMockBuilder(\Magento\Framework\Model\AbstractModel::class)
+        $this->abstractModel = $this->getMockBuilder('Magento\Framework\Model\AbstractModel')
             ->disableOriginalConstructor()
             ->getMockForAbstractClass();
 
-        $this->plugin = $objectManager->getObject(\Magento\SalesRule\Model\Plugin\ResourceModel\Rule::class);
+        $this->plugin = $objectManager->getObject('Magento\SalesRule\Model\Plugin\ResourceModel\Rule');
     }
 
     public function testAroundLoadCustomerGroupIds()

@@ -19,7 +19,7 @@ class AclTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->authorizationMock = $this->getMockBuilder(\Magento\Framework\AuthorizationInterface::class)
+        $this->authorizationMock = $this->getMockBuilder('Magento\Framework\AuthorizationInterface')
             ->getMock();
 
         $this->model = new \Magento\Backend\Model\View\Layout\Filter\Acl($this->authorizationMock);
@@ -27,13 +27,14 @@ class AclTest extends \PHPUnit_Framework_TestCase
 
     public function testFilterAclElements()
     {
-        $scheduledStructureMock = $this->getMockBuilder(\Magento\Framework\View\Layout\ScheduledStructure::class)
+        $scheduledStructureMock = $this->getMockBuilder('Magento\Framework\View\Layout\ScheduledStructure')
             ->disableOriginalConstructor()
             ->getMock();
 
-        $structureMock = $this->getMockBuilder(\Magento\Framework\View\Layout\Data\Structure::class)
+        $structureMock = $this->getMockBuilder('Magento\Framework\View\Layout\Data\Structure')
             ->disableOriginalConstructor()
             ->getMock();
+
 
         $elements = [
             'element_0' => [

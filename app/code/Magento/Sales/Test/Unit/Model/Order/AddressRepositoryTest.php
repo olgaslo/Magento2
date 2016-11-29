@@ -5,13 +5,10 @@
  */
 namespace Magento\Sales\Test\Unit\Model\Order;
 
-use Magento\Framework\Api\SearchCriteria\CollectionProcessorInterface;
 use Magento\Framework\TestFramework\Unit\Helper\ObjectManager;
 
 /**
  * Unit test for order address repository class.
- *
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
 class AddressRepositoryTest extends \PHPUnit_Framework_TestCase
 {
@@ -34,17 +31,12 @@ class AddressRepositoryTest extends \PHPUnit_Framework_TestCase
      */
     protected $searchResultFactory;
 
-    /**
-     * @var CollectionProcessorInterface |\PHPUnit_Framework_MockObject_MockObject
-     */
-    private $collectionProcessorMock;
-
     protected function setUp()
     {
         $objectManager = new ObjectManager($this);
 
         $this->metadata = $this->getMock(
-            \Magento\Sales\Model\ResourceModel\Metadata::class,
+            'Magento\Sales\Model\ResourceModel\Metadata',
             ['getNewInstance', 'getMapper'],
             [],
             '',
@@ -52,22 +44,18 @@ class AddressRepositoryTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->searchResultFactory = $this->getMock(
-            \Magento\Sales\Api\Data\OrderAddressSearchResultInterfaceFactory::class,
+            'Magento\Sales\Api\Data\OrderAddressSearchResultInterfaceFactory',
             ['create'],
             [],
             '',
             false
         );
 
-        $this->collectionProcessorMock = $this->getMockBuilder(CollectionProcessorInterface::class)
-            ->getMock();
-
         $this->subject = $objectManager->getObject(
-            \Magento\Sales\Model\Order\AddressRepository::class,
+            'Magento\Sales\Model\Order\AddressRepository',
             [
                 'metadata' => $this->metadata,
-                'searchResultFactory' => $this->searchResultFactory,
-                'collectionProcessor' => $this->collectionProcessorMock,
+                'searchResultFactory' => $this->searchResultFactory
             ]
         );
     }
@@ -81,13 +69,13 @@ class AddressRepositoryTest extends \PHPUnit_Framework_TestCase
     {
         if (!$id) {
             $this->setExpectedException(
-                \Magento\Framework\Exception\InputException::class
+                'Magento\Framework\Exception\InputException'
             );
 
             $this->subject->get($id);
         } else {
             $address = $this->getMock(
-                \Magento\Sales\Model\Order\Address::class,
+                'Magento\Sales\Model\Order\Address',
                 ['load', 'getEntityId'],
                 [],
                 '',
@@ -107,7 +95,7 @@ class AddressRepositoryTest extends \PHPUnit_Framework_TestCase
 
             if (!$entityId) {
                 $this->setExpectedException(
-                    \Magento\Framework\Exception\NoSuchEntityException::class
+                    'Magento\Framework\Exception\NoSuchEntityException'
                 );
 
                 $this->subject->get($id);
@@ -146,24 +134,56 @@ class AddressRepositoryTest extends \PHPUnit_Framework_TestCase
 
     public function testGetList()
     {
-        $searchCriteria = $this->getMock(
-            \Magento\Framework\Api\SearchCriteria::class,
-            [],
-            [],
-            '',
-            false
-        );
-        $collection = $this->getMock(
-            \Magento\Sales\Model\ResourceModel\Order\Address\Collection::class,
-            [],
+        $filter = $this->getMock(
+            'Magento\Framework\Api\Filter',
+            ['getConditionType', 'getField', 'getValue'],
             [],
             '',
             false
         );
+        $filter->expects($this->any())
+            ->method('getConditionType')
+            ->willReturn(false);
+        $filter->expects($this->any())
+            ->method('getField')
+            ->willReturn('test_field');
+        $filter->expects($this->any())
+            ->method('getValue')
+            ->willReturn('test_value');
 
-        $this->collectionProcessorMock->expects($this->once())
-            ->method('process')
-            ->with($searchCriteria, $collection);
+        $filterGroup = $this->getMock(
+            'Magento\Framework\Api\Search\FilterGroup',
+            ['getFilters'],
+            [],
+            '',
+            false
+        );
+        $filterGroup->expects($this->once())
+            ->method('getFilters')
+            ->willReturn([$filter]);
+
+        $searchCriteria = $this->getMock(
+            'Magento\Framework\Api\SearchCriteria',
+            ['getFilterGroups'],
+            [],
+            '',
+            false
+        );
+        $searchCriteria->expects($this->once())
+            ->method('getFilterGroups')
+            ->willReturn([$filterGroup]);
+
+        $collection = $this->getMock(
+            'Magento\Sales\Model\ResourceModel\Order\Address\Collection',
+            ['addFieldToFilter'],
+            [],
+            '',
+            false
+        );
+        $collection->expects($this->once())
+            ->method('addFieldToFilter')
+            ->withAnyParameters();
+
         $this->searchResultFactory->expects($this->once())
             ->method('create')
             ->willReturn($collection);
@@ -174,7 +194,7 @@ class AddressRepositoryTest extends \PHPUnit_Framework_TestCase
     public function testDelete()
     {
         $address = $this->getMock(
-            \Magento\Sales\Model\Order\Address::class,
+            'Magento\Sales\Model\Order\Address',
             ['getEntityId'],
             [],
             '',
@@ -185,7 +205,7 @@ class AddressRepositoryTest extends \PHPUnit_Framework_TestCase
             ->willReturn(1);
 
         $mapper = $this->getMockForAbstractClass(
-            \Magento\Framework\Model\ResourceModel\Db\AbstractDb::class,
+            'Magento\Framework\Model\ResourceModel\Db\AbstractDb',
             [],
             '',
             false,
@@ -211,7 +231,7 @@ class AddressRepositoryTest extends \PHPUnit_Framework_TestCase
     public function testDeleteWithException()
     {
         $address = $this->getMock(
-            \Magento\Sales\Model\Order\Address::class,
+            'Magento\Sales\Model\Order\Address',
             ['getEntityId'],
             [],
             '',
@@ -221,7 +241,7 @@ class AddressRepositoryTest extends \PHPUnit_Framework_TestCase
             ->method('getEntityId');
 
         $mapper = $this->getMockForAbstractClass(
-            \Magento\Framework\Model\ResourceModel\Db\AbstractDb::class,
+            'Magento\Framework\Model\ResourceModel\Db\AbstractDb',
             [],
             '',
             false,
@@ -243,7 +263,7 @@ class AddressRepositoryTest extends \PHPUnit_Framework_TestCase
     public function testSave()
     {
         $address = $this->getMock(
-            \Magento\Sales\Model\Order\Address::class,
+            'Magento\Sales\Model\Order\Address',
             ['getEntityId'],
             [],
             '',
@@ -254,7 +274,7 @@ class AddressRepositoryTest extends \PHPUnit_Framework_TestCase
             ->willReturn(1);
 
         $mapper = $this->getMockForAbstractClass(
-            \Magento\Framework\Model\ResourceModel\Db\AbstractDb::class,
+            'Magento\Framework\Model\ResourceModel\Db\AbstractDb',
             [],
             '',
             false,
@@ -280,7 +300,7 @@ class AddressRepositoryTest extends \PHPUnit_Framework_TestCase
     public function testSaveWithException()
     {
         $address = $this->getMock(
-            \Magento\Sales\Model\Order\Address::class,
+            'Magento\Sales\Model\Order\Address',
             ['getEntityId'],
             [],
             '',
@@ -290,7 +310,7 @@ class AddressRepositoryTest extends \PHPUnit_Framework_TestCase
             ->method('getEntityId');
 
         $mapper = $this->getMockForAbstractClass(
-            \Magento\Framework\Model\ResourceModel\Db\AbstractDb::class,
+            'Magento\Framework\Model\ResourceModel\Db\AbstractDb',
             [],
             '',
             false,
@@ -312,7 +332,7 @@ class AddressRepositoryTest extends \PHPUnit_Framework_TestCase
     public function testCreate()
     {
         $address = $this->getMock(
-            \Magento\Sales\Model\Order\Address::class,
+            'Magento\Sales\Model\Order\Address',
             ['getEntityId'],
             [],
             '',

@@ -47,7 +47,7 @@ class ShipmentFactory
     ) {
         $this->converter = $convertOrderFactory->create();
         $this->trackFactory = $trackFactory;
-        $this->instanceName = \Magento\Sales\Api\Data\ShipmentInterface::class;
+        $this->instanceName = '\Magento\Sales\Api\Data\ShipmentInterface';
     }
 
     /**

@@ -269,7 +269,7 @@ class StockIndex implements StockIndexInterface
     {
         if (empty($this->stockStatusResource)) {
             $this->stockStatusResource = \Magento\Framework\App\ObjectManager::getInstance()->get(
-                \Magento\CatalogInventory\Model\ResourceModel\Stock\Status::class
+                'Magento\CatalogInventory\Model\ResourceModel\Stock\Status'
             );
         }
         return $this->stockStatusResource;

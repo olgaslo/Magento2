@@ -6,6 +6,7 @@
 
 namespace Magento\Integration\Block\Adminhtml\Integration\Edit\Tab;
 
+use Magento\Integration\Block\Adminhtml\Integration\Edit\Tab\Info;
 use Magento\Integration\Controller\Adminhtml\Integration as IntegrationController;
 use Magento\Integration\Model\Integration as IntegrationModel;
 
@@ -174,24 +175,10 @@ class Webapi extends \Magento\Backend\Block\Widget\Form\Generic implements
      */
     public function getTree()
     {
-        return $this->integrationData->mapResources($this->getAclResources());
-    }
-
-    /**
-     * Get lit of all ACL resources declared in the system.
-     *
-     * @return array
-     */
-    private function getAclResources()
-    {
         $resources = $this->aclResourceProvider->getAclResources();
-        $configResource = array_filter(
-            $resources,
-            function ($node) {
-                return $node['id'] == 'Magento_Backend::admin';
-            }
+        $rootArray = $this->integrationData->mapResources(
+            isset($resources[1]['children']) ? $resources[1]['children'] : []
         );
-        $configResource = reset($configResource);
-        return isset($configResource['children']) ? $configResource['children'] : [];
+        return $rootArray;
     }
 }

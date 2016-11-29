@@ -67,7 +67,7 @@ class Comment extends AbstractModel implements ShipmentCommentInterface
      */
     protected function _construct()
     {
-        $this->_init(\Magento\Sales\Model\ResourceModel\Order\Shipment\Comment::class);
+        $this->_init('Magento\Sales\Model\ResourceModel\Order\Shipment\Comment');
     }
 
     /**
@@ -110,7 +110,6 @@ class Comment extends AbstractModel implements ShipmentCommentInterface
     }
 
     //@codeCoverageIgnoreStart
-
     /**
      * Returns comment
      *

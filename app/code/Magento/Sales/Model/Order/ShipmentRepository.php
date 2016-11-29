@@ -5,7 +5,6 @@
  */
 namespace Magento\Sales\Model\Order;
 
-use Magento\Framework\Api\SearchCriteria\CollectionProcessorInterface;
 use Magento\Sales\Model\ResourceModel\Metadata;
 use Magento\Sales\Api\Data\ShipmentSearchResultInterfaceFactory as SearchResultFactory;
 use Magento\Framework\Exception\CouldNotDeleteException;
@@ -35,22 +34,16 @@ class ShipmentRepository implements \Magento\Sales\Api\ShipmentRepositoryInterfa
      */
     protected $registry = [];
 
-    /** @var  CollectionProcessorInterface */
-    private $collectionProcessor;
-
     /**
      * @param Metadata $metadata
      * @param SearchResultFactory $searchResultFactory
-     * @param CollectionProcessorInterface $collectionProcessor
      */
     public function __construct(
         Metadata $metadata,
-        SearchResultFactory $searchResultFactory,
-        CollectionProcessorInterface $collectionProcessor = null
+        SearchResultFactory $searchResultFactory
     ) {
         $this->metadata = $metadata;
         $this->searchResultFactory = $searchResultFactory;
-        $this->collectionProcessor = $collectionProcessor ?: $this->getCollectionProcessor();
     }
 
     /**
@@ -88,10 +81,19 @@ class ShipmentRepository implements \Magento\Sales\Api\ShipmentRepositoryInterfa
      */
     public function getList(\Magento\Framework\Api\SearchCriteria $searchCriteria)
     {
-        /** @var \Magento\Sales\Model\ResourceModel\Order\Shipment\Collection $searchResult */
+        //@TODO: fix search logic
+        /** @var \Magento\Sales\Api\Data\ShipmentSearchResultInterface $searchResult */
         $searchResult = $this->searchResultFactory->create();
-        $this->collectionProcessor->process($searchCriteria, $searchResult);
+
+        foreach ($searchCriteria->getFilterGroups() as $filterGroup) {
+            foreach ($filterGroup->getFilters() as $filter) {
+                $condition = $filter->getConditionType() ? $filter->getConditionType() : 'eq';
+                $searchResult->addFieldToFilter($filter->getField(), [$condition => $filter->getValue()]);
+            }
+        }
         $searchResult->setSearchCriteria($searchCriteria);
+        $searchResult->setCurPage($searchCriteria->getCurrentPage());
+        $searchResult->setPageSize($searchCriteria->getPageSize());
 
         return $searchResult;
     }
@@ -156,21 +158,5 @@ class ShipmentRepository implements \Magento\Sales\Api\ShipmentRepositoryInterfa
     public function create()
     {
         return $this->metadata->getNewInstance();
-    }
-
-    /**
-     * Retrieve collection processor
-     *
-     * @deprecated
-     * @return CollectionProcessorInterface
-     */
-    private function getCollectionProcessor()
-    {
-        if (!$this->collectionProcessor) {
-            $this->collectionProcessor = \Magento\Framework\App\ObjectManager::getInstance()->get(
-                \Magento\Framework\Api\SearchCriteria\CollectionProcessorInterface::class
-            );
-        }
-        return $this->collectionProcessor;
     }
 }

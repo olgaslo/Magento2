@@ -24,7 +24,7 @@ class Stock extends AbstractExtensibleModel implements StockInterface
      *
      * @var string
      */
-    protected $_eventPrefix = 'cataloginventory_stock';
+    protected $eventPrefix = 'cataloginventory_stock';
 
     /**
      * Parameter name in event
@@ -56,11 +56,10 @@ class Stock extends AbstractExtensibleModel implements StockInterface
      */
     protected function _construct()
     {
-        $this->_init(\Magento\CatalogInventory\Model\ResourceModel\Stock::class);
+        $this->_init('Magento\CatalogInventory\Model\ResourceModel\Stock');
     }
 
     //@codeCoverageIgnoreStart
-
     /**
      * Retrieve stock identifier
      *

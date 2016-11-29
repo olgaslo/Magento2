@@ -90,32 +90,32 @@ class AddCommentTest extends \PHPUnit_Framework_TestCase
     {
         $objectManager = new ObjectManager($this);
 
-        $titleMock = $this->getMockBuilder(\Magento\Framework\App\Action\Title::class)
+        $titleMock = $this->getMockBuilder('Magento\Framework\App\Action\Title')
             ->disableOriginalConstructor()
             ->setMethods([])
             ->getMock();
-        $this->requestMock = $this->getMockBuilder(\Magento\Framework\App\Request\Http::class)
+        $this->requestMock = $this->getMockBuilder('Magento\Framework\App\Request\Http')
             ->disableOriginalConstructor()
             ->setMethods([])
             ->getMock();
-        $this->responseMock = $this->getMockBuilder(\Magento\Framework\App\Response\Http::class)
+        $this->responseMock = $this->getMockBuilder('Magento\Framework\App\Response\Http')
             ->disableOriginalConstructor()
             ->setMethods([])
             ->getMock();
-        $this->viewMock = $this->getMockBuilder(\Magento\Framework\App\View::class)
+        $this->viewMock = $this->getMockBuilder('Magento\Framework\App\View')
             ->disableOriginalConstructor()
             ->setMethods([])
             ->getMock();
-        $this->resultPageMock = $this->getMockBuilder(\Magento\Framework\View\Result\Page::class)
+        $this->resultPageMock = $this->getMockBuilder('Magento\Framework\View\Result\Page')
             ->disableOriginalConstructor()
             ->getMock();
-        $this->pageConfigMock = $this->getMockBuilder(\Magento\Framework\View\Page\Config::class)
+        $this->pageConfigMock = $this->getMockBuilder('Magento\Framework\View\Page\Config')
             ->disableOriginalConstructor()
             ->getMock();
-        $this->pageTitleMock = $this->getMockBuilder(\Magento\Framework\View\Page\Title::class)
+        $this->pageTitleMock = $this->getMockBuilder('Magento\Framework\View\Page\Title')
             ->disableOriginalConstructor()
             ->getMock();
-        $contextMock = $this->getMockBuilder(\Magento\Backend\App\Action\Context::class)
+        $contextMock = $this->getMockBuilder('Magento\Backend\App\Action\Context')
             ->disableOriginalConstructor()
             ->setMethods([])
             ->getMock();
@@ -141,25 +141,24 @@ class AddCommentTest extends \PHPUnit_Framework_TestCase
             ->method('getTitle')
             ->willReturn($this->pageTitleMock);
 
-        $this->resultPageFactoryMock = $this->getMockBuilder(\Magento\Framework\View\Result\PageFactory::class)
+        $this->resultPageFactoryMock = $this->getMockBuilder('Magento\Framework\View\Result\PageFactory')
             ->disableOriginalConstructor()
             ->setMethods(['create'])
             ->getMock();
-        $this->resultJsonMock = $this->getMockBuilder(\Magento\Framework\Controller\Result\Json::class)
+        $this->resultJsonMock = $this->getMockBuilder('Magento\Framework\Controller\Result\Json')
             ->disableOriginalConstructor()
             ->setMethods([])
             ->getMock();
-        $this->resultRawFactoryMock = $this->getMockBuilder(\Magento\Framework\Controller\Result\RawFactory::class)
+        $this->resultRawFactoryMock = $this->getMockBuilder('Magento\Framework\Controller\Result\RawFactory')
             ->disableOriginalConstructor()
             ->setMethods(['create'])
             ->getMock();
-        $this->resultJsonFactoryMock = $this->getMockBuilder(\Magento\Framework\Controller\Result\JsonFactory::class)
+        $this->resultJsonFactoryMock = $this->getMockBuilder('Magento\Framework\Controller\Result\JsonFactory')
             ->disableOriginalConstructor()
             ->setMethods(['create'])
             ->getMock();
-        $this->commentSenderMock = $this->getMockBuilder(
-            \Magento\Sales\Model\Order\Email\Sender\InvoiceCommentSender::class
-        )->disableOriginalConstructor()
+        $this->commentSenderMock = $this->getMockBuilder('Magento\Sales\Model\Order\Email\Sender\InvoiceCommentSender')
+            ->disableOriginalConstructor()
             ->setMethods([])
             ->getMock();
         $this->invoiceRepository = $this->getMockBuilder(InvoiceRepositoryInterface::class)
@@ -167,7 +166,7 @@ class AddCommentTest extends \PHPUnit_Framework_TestCase
             ->getMockForAbstractClass();
 
         $this->controller = $objectManager->getObject(
-            \Magento\Sales\Controller\Adminhtml\Order\Invoice\AddComment::class,
+            'Magento\Sales\Controller\Adminhtml\Order\Invoice\AddComment',
             [
                 'context' => $contextMock,
                 'invoiceCommentSender' => $this->commentSenderMock,
@@ -176,7 +175,7 @@ class AddCommentTest extends \PHPUnit_Framework_TestCase
                 'resultJsonFactory' => $this->resultJsonFactoryMock
             ]
         );
-
+        
         $objectManager->setBackwardCompatibleProperty(
             $this->controller,
             'invoiceRepository',
@@ -210,7 +209,7 @@ class AddCommentTest extends \PHPUnit_Framework_TestCase
             ->with('invoice_id')
             ->willReturn($invoiceId);
 
-        $invoiceMock = $this->getMockBuilder(\Magento\Sales\Model\Order\Invoice::class)
+        $invoiceMock = $this->getMockBuilder('Magento\Sales\Model\Order\Invoice')
             ->disableOriginalConstructor()
             ->setMethods([])
             ->getMock();
@@ -224,7 +223,7 @@ class AddCommentTest extends \PHPUnit_Framework_TestCase
             ->method('get')
             ->willReturn($invoiceMock);
 
-        $commentsBlockMock = $this->getMockBuilder(\Magento\Sales\Block\Adminhtml\Order\Invoice\View\Comments::class)
+        $commentsBlockMock = $this->getMockBuilder('Magento\Sales\Block\Adminhtml\Order\Invoice\View\Comments')
             ->disableOriginalConstructor()
             ->setMethods([])
             ->getMock();
@@ -232,7 +231,7 @@ class AddCommentTest extends \PHPUnit_Framework_TestCase
             ->method('toHtml')
             ->will($this->returnValue($response));
 
-        $layoutMock = $this->getMockBuilder(\Magento\Framework\View\Layout::class)
+        $layoutMock = $this->getMockBuilder('Magento\Framework\View\Layout')
             ->disableOriginalConstructor()
             ->setMethods([])
             ->getMock();
@@ -253,7 +252,7 @@ class AddCommentTest extends \PHPUnit_Framework_TestCase
             ->method('send')
             ->with($invoiceMock, false, $data['comment']);
 
-        $resultRaw = $this->getMockBuilder(\Magento\Framework\Controller\Result\Raw::class)
+        $resultRaw = $this->getMockBuilder('Magento\Framework\Controller\Result\Raw')
             ->disableOriginalConstructor()
             ->setMethods([])
             ->getMock();

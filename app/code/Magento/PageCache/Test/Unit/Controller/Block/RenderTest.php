@@ -47,30 +47,29 @@ class RenderTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->layoutMock = $this->getMockBuilder(
-            \Magento\Framework\View\Layout::class
+            'Magento\Framework\View\Layout'
         )->disableOriginalConstructor()->getMock();
 
-        $contextMock = $this->getMockBuilder(\Magento\Framework\App\Action\Context::class)
-            ->disableOriginalConstructor()->getMock();
+        $contextMock =
+            $this->getMockBuilder('Magento\Framework\App\Action\Context')->disableOriginalConstructor()->getMock();
 
         $this->requestMock = $this->getMockBuilder(
-            \Magento\Framework\App\Request\Http::class
+            'Magento\Framework\App\Request\Http'
         )->disableOriginalConstructor()->getMock();
         $this->responseMock = $this->getMockBuilder(
-            \Magento\Framework\App\Response\Http::class
+            'Magento\Framework\App\Response\Http'
         )->disableOriginalConstructor()->getMock();
-        $this->viewMock = $this->getMockBuilder(\Magento\Framework\App\View::class)
-            ->disableOriginalConstructor()->getMock();
+        $this->viewMock = $this->getMockBuilder('Magento\Framework\App\View')->disableOriginalConstructor()->getMock();
 
         $contextMock->expects($this->any())->method('getRequest')->will($this->returnValue($this->requestMock));
         $contextMock->expects($this->any())->method('getResponse')->will($this->returnValue($this->responseMock));
         $contextMock->expects($this->any())->method('getView')->will($this->returnValue($this->viewMock));
 
-        $this->translateInline = $this->getMock(\Magento\Framework\Translate\InlineInterface::class);
+        $this->translateInline = $this->getMock('Magento\Framework\Translate\InlineInterface');
 
         $helperObjectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
         $this->action = $helperObjectManager->getObject(
-            \Magento\PageCache\Controller\Block\Render::class,
+            'Magento\PageCache\Controller\Block\Render',
             ['context' => $contextMock, 'translateInline' => $this->translateInline]
         );
     }
@@ -108,7 +107,7 @@ class RenderTest extends \PHPUnit_Framework_TestCase
         $expectedData = ['block1' => 'data1', 'block2' => 'data2'];
 
         $blockInstance1 = $this->getMock(
-            \Magento\PageCache\Test\Unit\Block\Controller\StubBlock::class,
+            'Magento\PageCache\Test\Unit\Block\Controller\StubBlock',
             ['toHtml'],
             [],
             '',
@@ -117,7 +116,7 @@ class RenderTest extends \PHPUnit_Framework_TestCase
         $blockInstance1->expects($this->once())->method('toHtml')->will($this->returnValue($expectedData['block1']));
 
         $blockInstance2 = $this->getMock(
-            \Magento\PageCache\Test\Unit\Block\Controller\StubBlock::class,
+            'Magento\PageCache\Test\Unit\Block\Controller\StubBlock',
             ['toHtml'],
             [],
             '',

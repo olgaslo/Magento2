@@ -38,22 +38,22 @@ class ToOrderConverterTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->orderExtensionFactoryMock = $this->getMockBuilder(
-            \Magento\Sales\Api\Data\OrderExtensionFactory::class
+            '\Magento\Sales\Api\Data\OrderExtensionFactory'
         )->disableOriginalConstructor()
             ->setMethods(['create'])
             ->getMock();
 
-        $this->quoteAddressMock = $this->getMockBuilder(\Magento\Quote\Model\Quote\Address::class)
+        $this->quoteAddressMock = $this->getMockBuilder('\Magento\Quote\Model\Quote\Address')
             ->disableOriginalConstructor()
             ->setMethods(['getAppliedTaxes', 'getItemsAppliedTaxes'])
             ->getMock();
-        $this->subjectMock = $this->getMockBuilder(\Magento\Quote\Model\Quote\Address\ToOrder::class)
+        $this->subjectMock = $this->getMockBuilder('\Magento\Quote\Model\Quote\Address\ToOrder')
             ->disableOriginalConstructor()
             ->getMock();
 
         $this->objectManagerHelper = new ObjectManager($this);
         $this->model = $this->objectManagerHelper->getObject(
-            \Magento\Tax\Model\Quote\ToOrderConverter::class,
+            '\Magento\Tax\Model\Quote\ToOrderConverter',
             [
                 'orderExtensionFactory' => $this->orderExtensionFactoryMock,
             ]
@@ -62,7 +62,7 @@ class ToOrderConverterTest extends \PHPUnit_Framework_TestCase
 
     protected function setupOrderExtensionAttributeMock()
     {
-        $orderExtensionAttributeMock = $this->getMockBuilder(\Magento\Sales\Api\Data\OrderExtensionInterface::class)
+        $orderExtensionAttributeMock = $this->getMockBuilder('\Magento\Sales\Api\Data\OrderExtensionInterface')
             ->setMethods(
                 [
                     'setAppliedTaxes',
@@ -96,7 +96,7 @@ class ToOrderConverterTest extends \PHPUnit_Framework_TestCase
             ->method('getItemsAppliedTaxes')
             ->willReturn($itemsAppliedTaxes);
 
-        $orderMock = $this->getMockBuilder(\Magento\Sales\Model\Order::class)
+        $orderMock = $this->getMockBuilder('\Magento\Sales\Model\Order')
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -146,7 +146,7 @@ class ToOrderConverterTest extends \PHPUnit_Framework_TestCase
 
         $orderExtensionAttributeMock = $this->setupOrderExtensionAttributeMock();
         
-        $orderMock = $this->getMockBuilder(\Magento\Sales\Model\Order::class)
+        $orderMock = $this->getMockBuilder('\Magento\Sales\Model\Order')
             ->disableOriginalConstructor()
             ->getMock();
 

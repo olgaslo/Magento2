@@ -8,7 +8,6 @@
 
 namespace Magento\Sales\Model\Order;
 
-use Magento\Framework\App\ObjectManager;
 use Magento\Framework\Pricing\PriceCurrencyInterface;
 use Magento\Sales\Api\OrderRepositoryInterface;
 use Magento\Sales\Model\Order\Payment\Info;
@@ -107,11 +106,6 @@ class Payment extends Info implements OrderPaymentInterface
     protected $orderRepository;
 
     /**
-     * @var OrderStateResolverInterface
-     */
-    private $orderStateResolver;
-
-    /**
      * @param \Magento\Framework\Model\Context $context
      * @param \Magento\Framework\Registry $registry
      * @param \Magento\Framework\Api\ExtensionAttributesFactory $extensionFactory
@@ -175,7 +169,7 @@ class Payment extends Info implements OrderPaymentInterface
      */
     protected function _construct()
     {
-        $this->_init(\Magento\Sales\Model\ResourceModel\Order\Payment::class);
+        $this->_init('Magento\Sales\Model\ResourceModel\Order\Payment');
     }
 
     /**
@@ -632,48 +626,42 @@ class Payment extends Info implements OrderPaymentInterface
             $this->transactionManager->generateTransactionId($this, Transaction::TYPE_REFUND)
         );
 
+        // call refund from gateway if required
         $isOnline = false;
         $gateway = $this->getMethodInstance();
         $invoice = null;
-        if ($gateway->canRefund()) {
+        if ($gateway->canRefund() && $creditmemo->getDoTransaction()) {
             $this->setCreditmemo($creditmemo);
-            if ($creditmemo->getDoTransaction()) {
-                $invoice = $creditmemo->getInvoice();
-                if ($invoice) {
-                    $isOnline = true;
-                    $captureTxn = $this->transactionRepository->getByTransactionId(
-                        $invoice->getTransactionId(),
-                        $this->getId(),
-                        $this->getOrder()->getId()
-                    );
-                    if ($captureTxn) {
-                        $this->setTransactionIdsForRefund($captureTxn);
-                    }
-                    $this->setShouldCloseParentTransaction(true);
-                    // TODO: implement multiple refunds per capture
-                    try {
-                        $gateway->setStore(
-                            $this->getOrder()->getStoreId()
-                        );
-                        $this->setRefundTransactionId($invoice->getTransactionId());
-                        $gateway->refund($this, $baseAmountToRefund);
-
-                        $creditmemo->setTransactionId($this->getLastTransId());
-                    } catch (\Magento\Framework\Exception\LocalizedException $e) {
-                        if (!$captureTxn) {
-                            throw new \Magento\Framework\Exception\LocalizedException(
-                                __('If the invoice was created offline, try creating an offline credit memo.'),
-                                $e
-                            );
-                        }
-                        throw $e;
-                    }
-                }
-            } else if ($gateway->isOffline()) {
-                $gateway->setStore(
-                    $this->getOrder()->getStoreId()
+            $invoice = $creditmemo->getInvoice();
+            if ($invoice) {
+                $isOnline = true;
+                $captureTxn = $this->transactionRepository->getByTransactionId(
+                    $invoice->getTransactionId(),
+                    $this->getId(),
+                    $this->getOrder()->getId()
                 );
-                $gateway->refund($this, $baseAmountToRefund);
+                if ($captureTxn) {
+                    $this->setTransactionIdsForRefund($captureTxn);
+                }
+                $this->setShouldCloseParentTransaction(true);
+                // TODO: implement multiple refunds per capture
+                try {
+                    $gateway->setStore(
+                        $this->getOrder()->getStoreId()
+                    );
+                    $this->setRefundTransactionId($invoice->getTransactionId());
+                    $gateway->refund($this, $baseAmountToRefund);
+
+                    $creditmemo->setTransactionId($this->getLastTransId());
+                } catch (\Magento\Framework\Exception\LocalizedException $e) {
+                    if (!$captureTxn) {
+                        throw new \Magento\Framework\Exception\LocalizedException(
+                            __('If the invoice was created offline, try creating an offline credit memo.'),
+                            $e
+                        );
+                    }
+                    throw $e;
+                }
             }
         }
 
@@ -704,12 +692,7 @@ class Payment extends Info implements OrderPaymentInterface
         }
         $message = $message = $this->prependMessage($message);
         $message = $this->_appendTransactionToMessage($transaction, $message);
-        $orderState = $this->getOrderStateResolver()->getStateForOrder($this->getOrder());
-        $this->getOrder()
-            ->addStatusHistoryComment(
-                $message,
-                $this->getOrder()->getConfig()->getStateDefaultStatus($orderState)
-            )->setIsCustomerNotified($creditmemo->getOrder()->getCustomerNoteNotify());
+        $this->setOrderStateProcessing($message);
         $this->_eventManager->dispatch(
             'sales_order_payment_refund',
             ['payment' => $this, 'creditmemo' => $creditmemo]
@@ -1289,7 +1272,7 @@ class Payment extends Info implements OrderPaymentInterface
      */
     public function isCaptureFinal($amountToCapture)
     {
-        $total = $this->getOrder()->getBaseTotalDue();
+        $total = $this->getOrder()->getTotalDue();
         return $this->formatAmount($total, true) == $this->formatAmount($amountToCapture, true);
     }
 
@@ -1403,19 +1386,6 @@ class Payment extends Info implements OrderPaymentInterface
             }
         }
         return false;
-    }
-
-    /**
-     * @deprecated
-     * @return OrderStateResolverInterface
-     */
-    private function getOrderStateResolver()
-    {
-        if ($this->orderStateResolver === null) {
-            $this->orderStateResolver = ObjectManager::getInstance()->get(OrderStateResolverInterface::class);
-        }
-
-        return$this->orderStateResolver;
     }
 
     //@codeCoverageIgnoreStart

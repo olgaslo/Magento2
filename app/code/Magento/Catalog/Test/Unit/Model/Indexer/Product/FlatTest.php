@@ -36,27 +36,21 @@ class FlatTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->productFlatIndexerRow = $this->getMockBuilder(
-            \Magento\Catalog\Model\Indexer\Product\Flat\Action\Row::class
-        )
+        $this->productFlatIndexerRow = $this->getMockBuilder('Magento\Catalog\Model\Indexer\Product\Flat\Action\Row')
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->productFlatIndexerRows = $this->getMockBuilder(
-            \Magento\Catalog\Model\Indexer\Product\Flat\Action\Rows::class
-        )
+        $this->productFlatIndexerRows = $this->getMockBuilder('Magento\Catalog\Model\Indexer\Product\Flat\Action\Rows')
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->productFlatIndexerFull = $this->getMockBuilder(
-            \Magento\Catalog\Model\Indexer\Product\Flat\Action\Full::class
-        )
+        $this->productFlatIndexerFull = $this->getMockBuilder('Magento\Catalog\Model\Indexer\Product\Flat\Action\Full')
             ->disableOriginalConstructor()
             ->getMock();
 
         $helper = new ObjectManager($this);
         $this->model = $helper->getObject(
-            \Magento\Catalog\Model\Indexer\Product\Flat::class,
+            'Magento\Catalog\Model\Indexer\Product\Flat',
             [
                 'productFlatIndexerRow' => $this->productFlatIndexerRow,
                 'productFlatIndexerRows' => $this->productFlatIndexerRows,

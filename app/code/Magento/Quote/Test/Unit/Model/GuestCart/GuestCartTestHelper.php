@@ -39,13 +39,13 @@ class GuestCartTestHelper
     public function mockQuoteIdMask($maskedCartId, $cartId)
     {
         $quoteIdMaskMock = $this->testCase->getMock(
-            \Magento\Quote\Model\QuoteIdMask::class,
+            'Magento\Quote\Model\QuoteIdMask',
             ['load', 'getQuoteId', 'getMaskedId'],
             [],
             '',
             false
         );
-        $quoteIdMaskFactoryMock = $this->testCase->getMockBuilder(\Magento\Quote\Model\QuoteIdMaskFactory::class)
+        $quoteIdMaskFactoryMock = $this->testCase->getMockBuilder('Magento\Quote\Model\QuoteIdMaskFactory')
             ->setMethods(['create'])
             ->disableOriginalConstructor()
             ->getMock();

@@ -45,27 +45,27 @@ class ViewTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $helper = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
-        $objectManagerMock = $this->getMock(\Magento\Framework\ObjectManagerInterface::class);
-        $responseMock = $this->getMock(\Magento\Framework\App\Response\Http::class, [], [], '', false);
-        $this->resultPageMock = $this->getMockBuilder(\Magento\Framework\View\Result\Page::class)
+        $objectManagerMock = $this->getMock('Magento\Framework\ObjectManagerInterface');
+        $responseMock = $this->getMock('Magento\Framework\App\Response\Http', [], [], '', false);
+        $this->resultPageMock = $this->getMockBuilder('\Magento\Framework\View\Result\Page')
             ->disableOriginalConstructor()
             ->getMock();
-        $this->forwardFactoryMock = $this->getMockBuilder(\Magento\Framework\Controller\Result\ForwardFactory::class)
+        $this->forwardFactoryMock = $this->getMockBuilder('\Magento\Framework\Controller\Result\ForwardFactory')
             ->setMethods(['create'])
             ->disableOriginalConstructor()
             ->getMock();
-        $this->forwardMock = $this->getMockBuilder(\Magento\Framework\Controller\Result\Forward::class)
+        $this->forwardMock = $this->getMockBuilder('Magento\Framework\Controller\Result\Forward')
             ->disableOriginalConstructor()
             ->getMock();
         $this->forwardFactoryMock->expects($this->any())
             ->method('create')
             ->willReturn($this->forwardMock);
 
-        $this->requestMock = $this->getMock(\Magento\Framework\App\Request\Http::class, [], [], '', false);
-        $this->cmsHelperMock = $this->getMock(\Magento\Cms\Helper\Page::class, [], [], '', false);
+        $this->requestMock = $this->getMock('Magento\Framework\App\Request\Http', [], [], '', false);
+        $this->cmsHelperMock = $this->getMock('Magento\Cms\Helper\Page', [], [], '', false);
         $objectManagerMock->expects($this->once())->method('get')->willReturn($this->cmsHelperMock);
         $this->controller = $helper->getObject(
-            \Magento\Cms\Controller\Page\View::class,
+            'Magento\Cms\Controller\Page\View',
             [
                 'response' => $responseMock,
                 'objectManager' => $objectManagerMock,

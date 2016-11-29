@@ -26,11 +26,6 @@ class SearchCriteriaBuilder extends AbstractSimpleObjectBuilder
     protected $filterGroupBuilder;
 
     /**
-     * @var array
-     */
-    private $filters = [];
-
-    /**
      * @param ObjectFactory $objectFactory
      * @param FilterGroupBuilder $filterGroupBuilder
      * @param SortOrderBuilder $sortOrderBuilder
@@ -52,11 +47,7 @@ class SearchCriteriaBuilder extends AbstractSimpleObjectBuilder
      */
     public function create()
     {
-        foreach ($this->filters as $filter) {
-            $this->data[SearchCriteria::FILTER_GROUPS][] = $this->filterGroupBuilder->setFilters([])
-                ->addFilter($filter)
-                ->create();
-        }
+        $this->data[SearchCriteria::FILTER_GROUPS] = [$this->filterGroupBuilder->create()];
         $this->data[SearchCriteria::SORT_ORDERS] = [$this->sortOrderBuilder->create()];
         return parent::create();
     }
@@ -69,7 +60,7 @@ class SearchCriteriaBuilder extends AbstractSimpleObjectBuilder
      */
     public function addFilter(\Magento\Framework\Api\Filter $filter)
     {
-        $this->filters[] = $filter;
+        $this->filterGroupBuilder->addFilter($filter);
         return $this;
     }
 

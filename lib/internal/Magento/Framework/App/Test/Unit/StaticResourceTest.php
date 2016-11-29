@@ -11,9 +11,6 @@ namespace Magento\Framework\App\Test\Unit;
 use Magento\Framework\App\Bootstrap;
 use Magento\Framework\Filesystem;
 
-/**
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
- */
 class StaticResourceTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -61,23 +58,17 @@ class StaticResourceTest extends \PHPUnit_Framework_TestCase
      */
     private $object;
 
-    /**
-     * @var \Psr\Log\LoggerInterface|\PHPUnit_Framework_MockObject_MockObject
-     */
-    private $logger;
-
     protected function setUp()
     {
-        $this->state = $this->getMock(\Magento\Framework\App\State::class, [], [], '', false);
-        $this->response = $this->getMock(\Magento\MediaStorage\Model\File\Storage\Response::class, [], [], '', false);
-        $this->request = $this->getMock(\Magento\Framework\App\Request\Http::class, [], [], '', false);
-        $this->publisher = $this->getMock(\Magento\Framework\App\View\Asset\Publisher::class, [], [], '', false);
-        $this->assetRepo = $this->getMock(\Magento\Framework\View\Asset\Repository::class, [], [], '', false);
-        $this->moduleList = $this->getMock(\Magento\Framework\Module\ModuleList::class, [], [], '', false);
-        $this->objectManager = $this->getMockForAbstractClass(\Magento\Framework\ObjectManagerInterface::class);
-        $this->logger = $this->getMockForAbstractClass(\Psr\Log\LoggerInterface::class);
+        $this->state = $this->getMock('Magento\Framework\App\State', [], [], '', false);
+        $this->response = $this->getMock('Magento\MediaStorage\Model\File\Storage\Response', [], [], '', false);
+        $this->request = $this->getMock('Magento\Framework\App\Request\Http', [], [], '', false);
+        $this->publisher = $this->getMock('Magento\Framework\App\View\Asset\Publisher', [], [], '', false);
+        $this->assetRepo = $this->getMock('Magento\Framework\View\Asset\Repository', [], [], '', false);
+        $this->moduleList = $this->getMock('Magento\Framework\Module\ModuleList', [], [], '', false);
+        $this->objectManager = $this->getMockForAbstractClass('Magento\Framework\ObjectManagerInterface');
         $this->configLoader = $this->getMock(
-            \Magento\Framework\App\ObjectManager\ConfigLoader::class, [], [], '', false
+            'Magento\Framework\App\ObjectManager\ConfigLoader', [], [], '', false
         );
         $this->object = new \Magento\Framework\App\StaticResource(
             $this->state,
@@ -88,7 +79,7 @@ class StaticResourceTest extends \PHPUnit_Framework_TestCase
             $this->moduleList,
             $this->objectManager,
             $this->configLoader,
-            $this->getMockForAbstractClass(\Magento\Framework\View\DesignInterface::class)
+            $this->getMockForAbstractClass('\Magento\Framework\View\DesignInterface')
         );
     }
 
@@ -144,7 +135,7 @@ class StaticResourceTest extends \PHPUnit_Framework_TestCase
             ->method('has')
             ->with($requestedModule)
             ->will($this->returnValue($moduleExists));
-        $asset = $this->getMockForAbstractClass(\Magento\Framework\View\Asset\LocalInterface::class);
+        $asset = $this->getMockForAbstractClass('\Magento\Framework\View\Asset\LocalInterface');
         $asset->expects($this->once())->method('getSourceFile')->will($this->returnValue('resource/file.css'));
         $this->assetRepo->expects($this->once())
             ->method('createAsset')
@@ -202,12 +193,6 @@ class StaticResourceTest extends \PHPUnit_Framework_TestCase
 
     public function testCatchExceptionDeveloperMode()
     {
-        $this->objectManager->expects($this->once())
-            ->method('get')
-            ->with('Psr\Log\LoggerInterface')
-            ->willReturn($this->logger);
-        $this->logger->expects($this->once())
-            ->method('critical');
         $bootstrap = $this->getMockBuilder(Bootstrap::class)->disableOriginalConstructor()->getMock();
         $bootstrap->expects($this->once())->method('isDeveloperMode')->willReturn(true);
         $exception = new \Exception('Error: nothing works');

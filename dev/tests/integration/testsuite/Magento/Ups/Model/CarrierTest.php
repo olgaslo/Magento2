@@ -15,7 +15,7 @@ class CarrierTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->carrier = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create(
-            \Magento\Ups\Model\Carrier::class
+            'Magento\Ups\Model\Carrier'
         );
     }
 

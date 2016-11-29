@@ -19,7 +19,7 @@ class CustomerTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->_model = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create(
-            \Magento\CustomerImportExport\Model\Export\Customer::class
+            'Magento\CustomerImportExport\Model\Export\Customer'
         );
     }
 
@@ -33,7 +33,7 @@ class CustomerTest extends \PHPUnit_Framework_TestCase
         $expectedAttributes = [];
         /** @var $collection \Magento\Customer\Model\ResourceModel\Attribute\Collection */
         $collection = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create(
-            \Magento\Customer\Model\ResourceModel\Attribute\Collection::class
+            'Magento\Customer\Model\ResourceModel\Attribute\Collection'
         );
         /** @var $attribute \Magento\Customer\Model\Attribute */
         foreach ($collection as $attribute) {
@@ -43,7 +43,7 @@ class CustomerTest extends \PHPUnit_Framework_TestCase
 
         $this->_model->setWriter(
             \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create(
-                \Magento\ImportExport\Model\Export\Adapter\Csv::class
+                'Magento\ImportExport\Model\Export\Adapter\Csv'
             )
         );
         $data = $this->_model->export();
@@ -63,7 +63,7 @@ class CustomerTest extends \PHPUnit_Framework_TestCase
         $objectManager = \Magento\TestFramework\Helper\Bootstrap::getObjectManager();
         /** @var $customers \Magento\Customer\Model\Customer[] */
         $customers = $objectManager->get(
-            \Magento\Framework\Registry::class
+            'Magento\Framework\Registry'
         )->registry(
             '_fixture/Magento_ImportExport_Customer_Collection'
         );
@@ -94,7 +94,7 @@ class CustomerTest extends \PHPUnit_Framework_TestCase
     public function testGetAttributeCollection()
     {
         $this->assertInstanceOf(
-            \Magento\Customer\Model\ResourceModel\Attribute\Collection::class,
+            'Magento\Customer\Model\ResourceModel\Attribute\Collection',
             $this->_model->getAttributeCollection()
         );
     }
@@ -157,7 +157,7 @@ class CustomerTest extends \PHPUnit_Framework_TestCase
          * Change created_at date of first customer for future filter test.
          */
         $customers = $objectManager->get(
-            \Magento\Framework\Registry::class
+            'Magento\Framework\Registry'
         )->registry(
             '_fixture/Magento_ImportExport_Customer_Collection'
         );
@@ -167,7 +167,7 @@ class CustomerTest extends \PHPUnit_Framework_TestCase
          * Change type of created_at attribute. In this case we have possibility to test date rage filter
          */
         $attributeCollection = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create(
-            \Magento\Customer\Model\ResourceModel\Attribute\Collection::class
+            'Magento\Customer\Model\ResourceModel\Attribute\Collection'
         );
         $attributeCollection->addFieldToFilter('attribute_code', 'created_at');
         /** @var $createdAtAttribute \Magento\Customer\Model\Attribute */
@@ -182,7 +182,7 @@ class CustomerTest extends \PHPUnit_Framework_TestCase
                 'email' => 'example.com',
                 'created_at' => [$createdAtDate, ''],
                 'store_id' => \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->get(
-                    \Magento\Store\Model\StoreManagerInterface::class
+                    'Magento\Store\Model\StoreManagerInterface'
                 )->getStore()->getId()
             ]
         ];
@@ -190,7 +190,7 @@ class CustomerTest extends \PHPUnit_Framework_TestCase
         /** @var $customers \Magento\Customer\Model\ResourceModel\Customer\Collection */
         $collection = $this->_model->filterEntityCollection(
             \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create(
-                \Magento\Customer\Model\ResourceModel\Customer\Collection::class
+                'Magento\Customer\Model\ResourceModel\Customer\Collection'
             )
         );
         $collection->load();

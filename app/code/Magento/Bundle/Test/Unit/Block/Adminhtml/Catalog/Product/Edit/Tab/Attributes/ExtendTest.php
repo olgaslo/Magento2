@@ -23,15 +23,13 @@ class ExtendTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->registry = $this->getMockBuilder(\Magento\Framework\Registry::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-        $this->formFactory = $this->getMockBuilder(
-            \Magento\Framework\Data\FormFactory::class
-        )->disableOriginalConstructor()->getMock();
+        $this->registry = $this->getMockBuilder('Magento\\Framework\\Registry')->disableOriginalConstructor()->getMock(
+        );
+        $this->formFactory = $this->getMockBuilder('Magento\\Framework\\Data\\FormFactory')->disableOriginalConstructor(
+        )->getMock();
         $this->objectManagerHelper = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
         $this->object = $this->objectManagerHelper->getObject(
-            \Magento\Bundle\Block\Adminhtml\Catalog\Product\Edit\Tab\Attributes\Extend::class,
+            'Magento\\Bundle\\Block\\Adminhtml\\Catalog\\Product\\Edit\\Tab\\Attributes\\Extend',
             ['registry' => $this->registry, 'formFactory' => $this->formFactory]
         );
     }

@@ -47,7 +47,7 @@ class DataProviderTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->collectionFactoryMock = $this->getMock(
-            \Magento\SalesRule\Model\ResourceModel\Rule\CollectionFactory::class,
+            'Magento\SalesRule\Model\ResourceModel\Rule\CollectionFactory',
             ['create'],
             [],
             '',
@@ -55,25 +55,25 @@ class DataProviderTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->collectionMock = $this->getMock(
-            \Magento\SalesRule\Model\ResourceModel\Rule\Collection::class,
+            'Magento\SalesRule\Model\ResourceModel\Rule\Collection',
             [],
             [],
             '',
             false
         );
         $this->collectionFactoryMock->expects($this->once())->method('create')->willReturn($this->collectionMock);
-        $ruleMock = $this->getMock(\Magento\SalesRule\Model\Rule::class, [], [], '', false);
-        $metaDataValueProviderMock = $this->getMockBuilder(\Magento\SalesRule\Model\Rule\Metadata\ValueProvider::class)
+        $ruleMock = $this->getMock('Magento\SalesRule\Model\Rule', [], [], '', false);
+        $metaDataValueProviderMock = $this->getMockBuilder('Magento\SalesRule\Model\Rule\Metadata\ValueProvider')
             ->disableOriginalConstructor()
             ->setMethods([])
             ->getMock();
-        $registryMock = $this->getMock(\Magento\Framework\Registry::class, [], [], '', false);
+        $registryMock = $this->getMock('Magento\Framework\Registry', [], [], '', false);
         $registryMock->expects($this->once())
             ->method('registry')
             ->willReturn($ruleMock);
         $metaDataValueProviderMock->expects($this->once())->method('getMetadataValues')->willReturn(['data']);
         $this->model = (new ObjectManager($this))->getObject(
-            \Magento\SalesRule\Model\Rule\DataProvider::class,
+            'Magento\SalesRule\Model\Rule\DataProvider',
             [
                 'name' => 'Name',
                 'primaryFieldName' => 'Primary',
@@ -91,7 +91,7 @@ class DataProviderTest extends \PHPUnit_Framework_TestCase
         $ruleData = ['name' => 'Sales Price Rule'];
 
         $ruleMock = $this->getMock(
-            \Magento\SalesRule\Model\Rule::class,
+            'Magento\SalesRule\Model\Rule',
             [
                 'getDiscountAmount',
                 'setDiscountAmount',

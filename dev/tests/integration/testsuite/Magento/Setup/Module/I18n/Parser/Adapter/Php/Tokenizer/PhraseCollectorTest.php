@@ -5,7 +5,7 @@
  */
 namespace Magento\Setup\Module\I18n\Parser\Adapter\Php\Tokenizer;
 
-use Magento\Framework\ObjectManagerInterface;
+use Magento\Framework\ObjectManager;
 use Magento\TestFramework\Helper\Bootstrap;
 
 /**
@@ -19,7 +19,7 @@ class PhraseCollectorTest extends \PHPUnit_Framework_TestCase
     protected $phraseCollector;
 
     /**
-     * @var ObjectManagerInterface
+     * @var ObjectManager
      */
     protected $objectManager;
 
@@ -27,7 +27,7 @@ class PhraseCollectorTest extends \PHPUnit_Framework_TestCase
     {
         $this->objectManager = Bootstrap::getObjectManager();
         $this->phraseCollector = $this->objectManager->create(
-            \Magento\Setup\Module\I18n\Parser\Adapter\Php\Tokenizer\PhraseCollector::class
+            'Magento\Setup\Module\I18n\Parser\Adapter\Php\Tokenizer\PhraseCollector'
         );
     }
 

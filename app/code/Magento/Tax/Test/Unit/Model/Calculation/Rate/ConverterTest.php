@@ -32,14 +32,14 @@ class ConverterTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->taxRateDataObjectFactory = $this->getMockBuilder(
-            \Magento\Tax\Api\Data\TaxRateInterfaceFactory::class
+            '\Magento\Tax\Api\Data\TaxRateInterfaceFactory'
         )
             ->disableOriginalConstructor()
             ->setMethods(['create'])
             ->getMock();
 
         $this->taxRateTitleDataObjectFactory = $this->getMockBuilder(
-            \Magento\Tax\Api\Data\TaxRateTitleInterfaceFactory::class
+            '\Magento\Tax\Api\Data\TaxRateTitleInterfaceFactory'
         )
             ->disableOriginalConstructor()
             ->setMethods(['create'])
@@ -47,7 +47,7 @@ class ConverterTest extends \PHPUnit_Framework_TestCase
 
         $this->objectManager = new ObjectManager($this);
         $this->converter =  $this->objectManager->getObject(
-            \Magento\Tax\Model\Calculation\Rate\Converter::class,
+            'Magento\Tax\Model\Calculation\Rate\Converter',
             [
                 'taxRateDataObjectFactory' =>  $this->taxRateDataObjectFactory,
                 'taxRateTitleDataObjectFactory' => $this->taxRateTitleDataObjectFactory,
@@ -57,8 +57,8 @@ class ConverterTest extends \PHPUnit_Framework_TestCase
 
     public function testCreateTitlesFromServiceObject()
     {
-        $taxRateMock = $this->getMock(\Magento\Tax\Api\Data\TaxRateInterface::class);
-        $titlesMock = $this->getMock(\Magento\Tax\Api\Data\TaxRateTitleInterface::class);
+        $taxRateMock = $this->getMock('Magento\Tax\Api\Data\TaxRateInterface');
+        $titlesMock = $this->getMock('Magento\Tax\Api\Data\TaxRateTitleInterface');
 
         $taxRateMock->expects($this->once())->method('getTitles')->willReturn([$titlesMock]);
         $titlesMock->expects($this->once())->method('getStoreId')->willReturn(1);
@@ -69,7 +69,7 @@ class ConverterTest extends \PHPUnit_Framework_TestCase
 
     public function testCreateTitlesFromServiceObjectWhenTitlesAreNotProvided()
     {
-        $taxRateMock = $this->getMock(\Magento\Tax\Api\Data\TaxRateInterface::class);
+        $taxRateMock = $this->getMock('Magento\Tax\Api\Data\TaxRateInterface');
 
         $taxRateMock->expects($this->once())->method('getTitles')->willReturn([]);
 
@@ -78,8 +78,8 @@ class ConverterTest extends \PHPUnit_Framework_TestCase
 
     public function testCreateArrayFromServiceObject()
     {
-        $taxRateMock = $this->getMock(\Magento\Tax\Api\Data\TaxRateInterface::class);
-        $titlesMock = $this->getMock(\Magento\Tax\Api\Data\TaxRateTitleInterface::class);
+        $taxRateMock = $this->getMock('Magento\Tax\Api\Data\TaxRateInterface');
+        $titlesMock = $this->getMock('Magento\Tax\Api\Data\TaxRateTitleInterface');
 
         $taxRateMock->expects($this->atLeastOnce())->method('getTitles')->willReturn([$titlesMock]);
         $titlesMock->expects($this->atLeastOnce())->method('getStoreId')->willReturn(1);
@@ -93,7 +93,7 @@ class ConverterTest extends \PHPUnit_Framework_TestCase
     public function testPopulateTaxRateData()
     {
         $rateTitles = [$this->objectManager->getObject(
-            \Magento\Tax\Model\Calculation\Rate\Title::class,
+            '\Magento\Tax\Model\Calculation\Rate\Title',
             ['data' => ['store_id' => 1, 'value' => 'texas']]
         )
         ];
@@ -107,7 +107,7 @@ class ConverterTest extends \PHPUnit_Framework_TestCase
         ];
 
         $taxRate = $this->objectManager->getObject(
-            \Magento\Tax\Model\Calculation\Rate::class,
+            'Magento\Tax\Model\Calculation\Rate',
             [
                 'data' =>$dataArray,
             ]

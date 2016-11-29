@@ -100,7 +100,7 @@ class AdvancedPricing extends Section
     {
         $element = $element ?: $this->browser->find($this->advancedPricingRootElement);
         return $this->blockFactory->create(
-            \Magento\Catalog\Test\Block\Adminhtml\Product\Edit\Section\AdvancedPricing\OptionTier::class,
+            'Magento\Catalog\Test\Block\Adminhtml\Product\Edit\Section\AdvancedPricing\OptionTier',
             ['element' => $element]
         );
     }

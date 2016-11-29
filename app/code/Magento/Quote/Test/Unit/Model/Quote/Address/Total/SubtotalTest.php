@@ -9,8 +9,6 @@ namespace Magento\Quote\Test\Unit\Model\Quote\Address\Total;
  * Class SubtotalTest
  * @package Magento\Quote\Model\Quote\Address\Total
  * TODO refactor me
- *
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
 class SubtotalTest extends \PHPUnit_Framework_TestCase
 {
@@ -35,19 +33,17 @@ class SubtotalTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
-        $this->subtotalModel = $this->objectManager->getObject(
-            \Magento\Quote\Model\Quote\Address\Total\Subtotal::class
-        );
+        $this->subtotalModel = $this->objectManager->getObject('Magento\Quote\Model\Quote\Address\Total\Subtotal');
 
         $this->stockRegistry = $this->getMock(
-            \Magento\CatalogInventory\Model\StockRegistry::class,
+            'Magento\CatalogInventory\Model\StockRegistry',
             ['getStockItem', '__wakeup'],
             [],
             '',
             false
         );
         $this->stockItemMock = $this->getMock(
-            \Magento\CatalogInventory\Model\Stock\Item::class,
+            'Magento\CatalogInventory\Model\Stock\Item',
             ['getIsInStock', '__wakeup'],
             [],
             '',
@@ -81,14 +77,15 @@ class SubtotalTest extends \PHPUnit_Framework_TestCase
     {
         $this->stockRegistry->expects($this->any())->method('getStockItem')->willReturn($this->stockItemMock);
 
-        $priceCurrency = $this->getMockBuilder(\Magento\Framework\Pricing\PriceCurrencyInterface::class)->getMock();
+        $priceCurrency = $this->getMockBuilder('Magento\Framework\Pricing\PriceCurrencyInterface')->getMock();
         $convertedPrice = 1231313;
         // @TODO this is a wrong test and it does not check methods. Any digital value will be correct
         $priceCurrency->expects($this->any())->method('convert')->willReturn(1231313);
 
+
         /** @var \Magento\Quote\Model\Quote\Item|\PHPUnit_Framework_MockObject_MockObject $quoteItem */
         $quoteItem = $this->objectManager->getObject(
-            \Magento\Quote\Model\Quote\Item::class,
+            'Magento\Quote\Model\Quote\Item',
             [
                 'stockRegistry' => $this->stockRegistry,
                 'priceCurrency' => $priceCurrency,
@@ -96,23 +93,23 @@ class SubtotalTest extends \PHPUnit_Framework_TestCase
         );
         /** @var \Magento\Quote\Model\Quote\Address|\PHPUnit_Framework_MockObject_MockObject $address */
         $address = $this->getMock(
-            \Magento\Quote\Model\Quote\Address::class,
-            ['setTotalQty', 'getTotalQty', 'removeItem', 'getQuote'],
+            'Magento\Quote\Model\Quote\Address',
+            [],
             [],
             '',
             false
         );
 
         /** @var \Magento\Catalog\Model\Product|\PHPUnit_Framework_MockObject_MockObject $product */
-        $product = $this->getMock(\Magento\Catalog\Model\Product::class, [], [], '', false);
+        $product = $this->getMock('Magento\Catalog\Model\Product', [], [], '', false);
         $product->expects($this->any())->method('getPrice')->will($this->returnValue($originalPrice));
 
         /** @var \Magento\Quote\Model\Quote|\PHPUnit_Framework_MockObject_MockObject $quote */
-        $quote = $this->getMock(\Magento\Quote\Model\Quote::class, [], [], '', false);
-        $store = $this->objectManager->getObject(\Magento\Store\Model\Store::class);
+        $quote = $this->getMock('Magento\Quote\Model\Quote', [], [], '', false);
+        $store = $this->objectManager->getObject('Magento\Store\Model\Store');
         $store->setCurrentCurrency('');
 
-        $store = $this->getMock(\Magento\Store\Model\Store::class, ['getWebsiteId'], [], '', false);
+        $store = $this->getMock('Magento\Store\Model\Store', ['getWebsiteId'], [], '', false);
         $store->expects($this->any())->method('getWebsiteId')->willReturn(10);
         $product->expects($this->any())->method('getStore')->willReturn($store);
         $product->expects($this->any())->method('isVisibleInCatalog')->will($this->returnValue(true));
@@ -122,35 +119,34 @@ class SubtotalTest extends \PHPUnit_Framework_TestCase
 
         $parentQuoteItem = false;
         if ($itemHasParent) {
-            $parentQuoteItem = $this->getMock(\Magento\Quote\Model\Quote\Item::class, [], [], '', false);
+            $parentQuoteItem = $this->getMock('Magento\Quote\Model\Quote\Item', [], [], '', false);
             $parentQuoteItem->expects($this->any())->method('getProduct')->will($this->returnValue($product));
         }
         $quoteItem->setParentItem($parentQuoteItem);
         //This value will be overwritten
         $quoteItem->setConvertedPrice(10);
 
-        $priceModel = $this->getMock(\Magento\Catalog\Model\Product\Type\Price::class, [], [], '', false);
+        $priceModel = $this->getMock('\Magento\Catalog\Model\Product\Type\Price', [], [], '', false);
         $priceModel->expects($this->any())->method('getChildFinalPrice')->willReturn($price);
         $product->expects($this->any())->method('getPriceModel')->willReturn($priceModel);
         $product->expects($this->any())->method('getFinalPrice')->willReturn($price);
 
-        $shipping = $this->getMock(\Magento\Quote\Api\Data\ShippingInterface::class);
+        $shipping = $this->getMock('\Magento\Quote\Api\Data\ShippingInterface');
         $shipping->expects($this->exactly(2))->method('getAddress')->willReturn($address);
-        $address->expects($this->at(0))->method('setTotalQty')->with(0);
-        $address->expects($this->any())->method('getTotalQty')->willReturn(0);
-        $shippingAssignmentMock = $this->getMock(\Magento\Quote\Api\Data\ShippingAssignmentInterface::class);
+        $shippingAssignmentMock = $this->getMock('\Magento\Quote\Api\Data\ShippingAssignmentInterface');
         $shippingAssignmentMock->expects($this->exactly(2))->method('getShipping')->willReturn($shipping);
         $shippingAssignmentMock->expects($this->once())->method('getItems')->willReturn([$quoteItem]);
 
         $total = $this->getMock(
-            \Magento\Quote\Model\Quote\Address\Total::class,
-            ['setBaseVirtualAmount', 'setVirtualAmount'],
+            '\Magento\Quote\Model\Quote\Address\Total',
+            ['setBaseVirtualAmount', 'setVirtualAmount', 'setTotalQty'],
             [],
             '',
             false
         );
         $total->expects($this->once())->method('setBaseVirtualAmount')->willReturnSelf();
         $total->expects($this->once())->method('setVirtualAmount')->willReturnSelf();
+        $total->expects($this->once())->method('setTotalQty')->with(0)->willReturnSelf();
 
         $this->subtotalModel->collect($quote, $shippingAssignmentMock, $total);
 
@@ -168,8 +164,8 @@ class SubtotalTest extends \PHPUnit_Framework_TestCase
             'value' => 100
         ];
 
-        $quoteMock = $this->getMock(\Magento\Quote\Model\Quote::class, [], [], '', false);
-        $totalMock = $this->getMock(\Magento\Quote\Model\Quote\Address\Total::class, ['getSubtotal'], [], '', false);
+        $quoteMock = $this->getMock('\Magento\Quote\Model\Quote', [], [], '', false);
+        $totalMock = $this->getMock('\Magento\Quote\Model\Quote\Address\Total', ['getSubtotal'], [], '', false);
         $totalMock->expects($this->once())->method('getSubtotal')->willReturn(100);
 
         $this->assertEquals($expectedResult, $this->subtotalModel->fetch($quoteMock, $totalMock));

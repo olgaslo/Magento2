@@ -79,9 +79,6 @@ define([
             }.bind(this));
 
             this.element.on('blur', $.proxy(function () {
-                if (!this.searchLabel.hasClass('active')) {
-                    return;
-                }
 
                 setTimeout($.proxy(function () {
                     if (this.autoComplete.is(':hidden')) {

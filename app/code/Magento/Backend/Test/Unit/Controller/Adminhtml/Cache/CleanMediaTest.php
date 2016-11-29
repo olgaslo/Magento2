@@ -8,36 +8,33 @@
 
 namespace Magento\Backend\Test\Unit\Controller\Adminhtml\Cache;
 
-/**
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
- */
 class CleanMediaTest extends \PHPUnit_Framework_TestCase
 {
     public function testExecute()
     {
         // Wire object with mocks
-        $response = $this->getMock(\Magento\Framework\App\Response\Http::class, [], [], '', false);
-        $request = $this->getMock(\Magento\Framework\App\Request\Http::class, [], [], '', false);
+        $response = $this->getMock('Magento\Framework\App\Response\Http', [], [], '', false);
+        $request = $this->getMock('Magento\Framework\App\Request\Http', [], [], '', false);
 
-        $objectManager = $this->getMock(\Magento\Framework\ObjectManagerInterface::class);
-        $backendHelper = $this->getMock(\Magento\Backend\Helper\Data::class, [], [], '', false);
+        $objectManager = $this->getMock('Magento\Framework\ObjectManagerInterface');
+        $backendHelper = $this->getMock('Magento\Backend\Helper\Data', [], [], '', false);
         $helper = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
 
         $session = $this->getMock(
-            \Magento\Backend\Model\Session::class,
+            'Magento\Backend\Model\Session',
             ['setIsUrlNotice'],
-            $helper->getConstructArguments(\Magento\Backend\Model\Session::class)
+            $helper->getConstructArguments('Magento\Backend\Model\Session')
         );
         $messageManager = $this->getMock(
-            \Magento\Framework\Message\Manager::class,
+            'Magento\Framework\Message\Manager',
             ['addSuccess'],
-            $helper->getConstructArguments(\Magento\Framework\Message\Manager::class)
+            $helper->getConstructArguments('Magento\Framework\Message\Manager')
         );
         $context = $this->getMock(
-            \Magento\Backend\App\Action\Context::class,
+            'Magento\Backend\App\Action\Context',
             ['getRequest', 'getResponse', 'getMessageManager', 'getSession', 'getResultFactory'],
             $helper->getConstructArguments(
-                \Magento\Backend\App\Action\Context::class,
+                'Magento\Backend\App\Action\Context',
                 [
                     'session' => $session,
                     'response' => $response,
@@ -48,11 +45,11 @@ class CleanMediaTest extends \PHPUnit_Framework_TestCase
                 ]
             )
         );
-        $resultFactory = $this->getMockBuilder(\Magento\Framework\Controller\ResultFactory::class)
+        $resultFactory = $this->getMockBuilder('Magento\Framework\Controller\ResultFactory')
             ->disableOriginalConstructor()
             ->setMethods(['create'])
             ->getMock();
-        $resultRedirect = $this->getMockBuilder(\Magento\Backend\Model\View\Result\Redirect::class)
+        $resultRedirect = $this->getMockBuilder('Magento\Backend\Model\View\Result\Redirect')
             ->disableOriginalConstructor()
             ->getMock();
         $resultFactory->expects($this->atLeastOnce())
@@ -66,14 +63,14 @@ class CleanMediaTest extends \PHPUnit_Framework_TestCase
         $context->expects($this->once())->method('getResultFactory')->willReturn($resultFactory);
 
         $controller = $helper->getObject(
-            \Magento\Backend\Controller\Adminhtml\Cache\CleanMedia::class,
+            'Magento\Backend\Controller\Adminhtml\Cache\CleanMedia',
             [
                 'context' => $context
             ]
         );
 
         // Setup expectations
-        $mergeService = $this->getMock(\Magento\Framework\View\Asset\MergeService::class, [], [], '', false);
+        $mergeService = $this->getMock('Magento\Framework\View\Asset\MergeService', [], [], '', false);
         $mergeService->expects($this->once())->method('cleanMergedJsCss');
 
         $messageManager->expects($this->once())
@@ -82,8 +79,8 @@ class CleanMediaTest extends \PHPUnit_Framework_TestCase
         );
 
         $valueMap = [
-            [\Magento\Framework\View\Asset\MergeService::class, $mergeService],
-            [\Magento\Framework\Session\SessionManager::class, $session],
+            ['Magento\Framework\View\Asset\MergeService', $mergeService],
+            ['Magento\Framework\Session\SessionManager', $session],
         ];
         $objectManager->expects($this->any())->method('get')->will($this->returnValueMap($valueMap));
 

@@ -72,44 +72,44 @@ class DatabaseTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->contextMock = $this->getMock(\Magento\Framework\Model\Context::class, [], [], '', false);
-        $this->registryMock = $this->getMock(\Magento\Framework\Registry::class, [], [], '', false);
+        $this->contextMock = $this->getMock('Magento\Framework\Model\Context', [], [], '', false);
+        $this->registryMock = $this->getMock('Magento\Framework\Registry', [], [], '', false);
         $this->helperStorageDatabase = $this->getMock(
-            \Magento\MediaStorage\Helper\File\Storage\Database::class,
+            'Magento\MediaStorage\Helper\File\Storage\Database',
             [],
             [],
             '',
             false
         );
         $this->dateModelMock = $this->getMock(
-            \Magento\Framework\Stdlib\DateTime\DateTime::class,
+            'Magento\Framework\Stdlib\DateTime\DateTime',
             [],
             [],
             '',
             false
         );
         $this->directoryMock = $this->getMock(
-            \Magento\MediaStorage\Model\File\Storage\Directory\Database::class,
+            'Magento\MediaStorage\Model\File\Storage\Directory\Database',
             ['setPath', 'setName', '__wakeup', 'save', 'getParentId'],
             [],
             '',
             false
         );
         $this->directoryFactoryMock = $this->getMock(
-            \Magento\MediaStorage\Model\File\Storage\Directory\DatabaseFactory::class,
+            'Magento\MediaStorage\Model\File\Storage\Directory\DatabaseFactory',
             ['create'],
             [],
             '',
             false
         );
         $this->resourceDirectoryDatabaseMock = $this->getMock(
-            \Magento\MediaStorage\Model\ResourceModel\File\Storage\Directory\Database::class,
+            'Magento\MediaStorage\Model\ResourceModel\File\Storage\Directory\Database',
             [],
             [],
             '',
             false
         );
-        $this->loggerMock = $this->getMock(\Psr\Log\LoggerInterface::class);
+        $this->loggerMock = $this->getMock('Psr\Log\LoggerInterface');
 
         $this->directoryFactoryMock->expects(
             $this->any()
@@ -119,7 +119,7 @@ class DatabaseTest extends \PHPUnit_Framework_TestCase
             $this->returnValue($this->directoryMock)
         );
 
-        $this->configMock = $this->getMock(\Magento\Framework\App\Config\ScopeConfigInterface::class);
+        $this->configMock = $this->getMock('Magento\Framework\App\Config\ScopeConfigInterface');
         $this->configMock->expects(
             $this->any()
         )->method(

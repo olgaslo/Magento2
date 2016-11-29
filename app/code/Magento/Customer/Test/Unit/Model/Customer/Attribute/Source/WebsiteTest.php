@@ -25,14 +25,14 @@ class WebsiteTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->collectionFactoryMock =
-            $this->getMockBuilder(\Magento\Eav\Model\ResourceModel\Entity\Attribute\Option\CollectionFactory::class)
+            $this->getMockBuilder('Magento\Eav\Model\ResourceModel\Entity\Attribute\Option\CollectionFactory')
             ->disableOriginalConstructor()
             ->getMock();
         $this->optionFactoryMock =
-            $this->getMockBuilder(\Magento\Eav\Model\ResourceModel\Entity\Attribute\OptionFactory::class)
+            $this->getMockBuilder('Magento\Eav\Model\ResourceModel\Entity\Attribute\OptionFactory')
             ->disableOriginalConstructor()
             ->getMock();
-        $this->storeMock = $this->getMockBuilder(\Magento\Store\Model\System\Store::class)
+        $this->storeMock = $this->getMockBuilder('Magento\Store\Model\System\Store')
             ->disableOriginalConstructor()
             ->getMock();
 

@@ -61,28 +61,28 @@ class StockStateTest extends \PHPUnit_Framework_TestCase
         $this->objectManagerHelper = new ObjectManagerHelper($this);
 
         $this->stock = $this->getMock(
-            \Magento\CatalogInventory\Api\Data\StockInterface::class,
+            '\Magento\CatalogInventory\Api\Data\StockInterface',
             [],
             [],
             '',
             false
         );
         $this->stockItem = $this->getMock(
-            \Magento\CatalogInventory\Api\Data\StockItemInterface::class,
+            '\Magento\CatalogInventory\Api\Data\StockItemInterface',
             [],
             [],
             '',
             false
         );
         $this->stockStatus = $this->getMock(
-            \Magento\CatalogInventory\Api\Data\StockStatusInterface::class,
+            '\Magento\CatalogInventory\Api\Data\StockStatusInterface',
             [],
             [],
             '',
             false
         );
         $this->objectResult = $this->getMock(
-            \Magento\Framework\DataObject::class,
+            '\Magento\Framework\DataObject',
             [],
             [],
             '',
@@ -90,7 +90,7 @@ class StockStateTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->stockStateProvider = $this->getMock(
-            \Magento\CatalogInventory\Model\Spi\StockStateProviderInterface::class,
+            'Magento\CatalogInventory\Model\Spi\StockStateProviderInterface',
             [
                 'verifyStock',
                 'verifyNotification',
@@ -113,7 +113,7 @@ class StockStateTest extends \PHPUnit_Framework_TestCase
         $this->stockStateProvider->expects($this->any())->method('checkQuoteItemQty')->willReturn($this->objectResult);
 
         $this->stockRegistryProvider = $this->getMock(
-            \Magento\CatalogInventory\Model\Spi\StockRegistryProviderInterface::class,
+            'Magento\CatalogInventory\Model\Spi\StockRegistryProviderInterface',
             ['getStock', 'getStockItem', 'getStockStatus'],
             [],
             '',
@@ -130,7 +130,7 @@ class StockStateTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue($this->stockStatus));
 
         $this->stockState = $this->objectManagerHelper->getObject(
-            \Magento\CatalogInventory\Model\StockState::class,
+            '\Magento\CatalogInventory\Model\StockState',
             [
                 'stockStateProvider' => $this->stockStateProvider,
                 'stockRegistryProvider' => $this->stockRegistryProvider

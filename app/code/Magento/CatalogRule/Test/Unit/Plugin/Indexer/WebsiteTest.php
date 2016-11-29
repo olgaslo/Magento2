@@ -34,16 +34,16 @@ class WebsiteTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->ruleProductProcessor = $this->getMock(
-            \Magento\CatalogRule\Model\Indexer\Rule\RuleProductProcessor::class,
+            'Magento\CatalogRule\Model\Indexer\Rule\RuleProductProcessor',
             [],
             [],
             '',
             false
         );
-        $this->subject = $this->getMock(\Magento\Store\Model\Website::class, [], [], '', false);
+        $this->subject = $this->getMock('Magento\Store\Model\Website', [], [], '', false);
 
         $this->plugin = (new ObjectManager($this))->getObject(
-            \Magento\CatalogRule\Plugin\Indexer\Website::class,
+            'Magento\CatalogRule\Plugin\Indexer\Website',
             [
                 'ruleProductProcessor' => $this->ruleProductProcessor,
             ]

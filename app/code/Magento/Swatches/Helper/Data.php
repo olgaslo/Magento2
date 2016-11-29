@@ -64,13 +64,6 @@ class Data
     protected $imageHelper;
 
     /**
-     * Product metadata pool
-     *
-     * @var \Magento\Framework\EntityManager\MetadataPool
-     */
-    private $metadataPool;
-
-    /**
      * Data key which should populated to Attribute entity from "additional_data" field
      *
      * @var array
@@ -203,13 +196,7 @@ class Data
         }
 
         $productCollection = $this->productCollectionFactory->create();
-
-        $productLinkedFiled = $this->getMetadataPool()
-            ->getMetadata(\Magento\Catalog\Api\Data\ProductInterface::class)
-            ->getLinkField();
-        $parentId = $parentProduct->getData($productLinkedFiled);
-
-        $this->addFilterByParent($productCollection, $parentId);
+        $this->addFilterByParent($productCollection, $parentProduct->getId());
 
         $configurableAttributes = $this->getAttributesFromConfigurable($parentProduct);
         $allAttributesArray = [];
@@ -503,20 +490,5 @@ class Data
             $this->populateAdditionalDataEavAttribute($attribute);
         }
         return $attribute->getData(Swatch::SWATCH_INPUT_TYPE_KEY) == Swatch::SWATCH_INPUT_TYPE_TEXT;
-    }
-
-    /**
-     * Get product metadata pool.
-     *
-     * @return \Magento\Framework\EntityManager\MetadataPool
-     * @deprecared
-     */
-    protected function getMetadataPool()
-    {
-        if (!$this->metadataPool) {
-            $this->metadataPool = \Magento\Framework\App\ObjectManager::getInstance()
-                ->get(\Magento\Framework\EntityManager\MetadataPool::class);
-        }
-        return $this->metadataPool;
     }
 }

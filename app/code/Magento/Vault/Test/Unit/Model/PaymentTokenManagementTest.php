@@ -474,7 +474,7 @@ class PaymentTokenManagementTest extends \PHPUnit_Framework_TestCase
             ->with('gt')
             ->willReturnSelf();
 
-        $date = $this->getMockBuilder(\DateTime::class)
+        $date = $this->getMockBuilder('DateTime')
             ->disableOriginalConstructor()
             ->getMock();
         $this->dateTimeFactory->expects(static::once())
@@ -486,9 +486,9 @@ class PaymentTokenManagementTest extends \PHPUnit_Framework_TestCase
             ->with('Y-m-d 00:00:00')
             ->willReturn('2015-01-01 00:00:00');
 
-        $this->searchCriteriaBuilder->expects(self::exactly(4))
+        $this->searchCriteriaBuilder->expects(self::once())
             ->method('addFilters')
-            ->withConsecutive($customerFilter, $visibilityFilter, $isActiveFilter, $expiresAtFilter)
+            ->with([$customerFilter, $visibilityFilter, $isActiveFilter, $expiresAtFilter])
             ->willReturnSelf();
 
         $this->searchCriteriaBuilder->expects(self::once())

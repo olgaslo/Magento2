@@ -38,7 +38,7 @@ class ExportPost extends \Magento\TaxImportExport\Controller\Adminhtml\Rate
         $taxCalculationRateTitleDict = [];
 
         foreach ($this->_objectManager->create(
-            \Magento\Store\Model\Store::class
+            'Magento\Store\Model\Store'
         )->getCollection()->setLoadDefault(
             false
         ) as $store) {
@@ -52,7 +52,7 @@ class ExportPost extends \Magento\TaxImportExport\Controller\Adminhtml\Rate
         $content .= "\n";
 
         foreach ($this->_objectManager->create(
-            \Magento\Tax\Model\Calculation\Rate\Title::class
+            'Magento\Tax\Model\Calculation\Rate\Title'
         )->getCollection() as $title) {
             $rateId = $title->getTaxCalculationRateId();
 
@@ -65,7 +65,7 @@ class ExportPost extends \Magento\TaxImportExport\Controller\Adminhtml\Rate
         unset($title);
 
         $collection = $this->_objectManager->create(
-            \Magento\Tax\Model\ResourceModel\Calculation\Rate\Collection::class
+            'Magento\Tax\Model\ResourceModel\Calculation\Rate\Collection'
         )->joinCountryTable()->joinRegionTable();
 
         while ($rate = $collection->fetchItem()) {
@@ -81,7 +81,7 @@ class ExportPost extends \Magento\TaxImportExport\Controller\Adminhtml\Rate
 
             $content .= $rate->toString($template) . "\n";
         }
-        return $this->fileFactory->create(\tax_rates.csv::class, $content, DirectoryList::VAR_DIR);
+        return $this->fileFactory->create('tax_rates.csv', $content, DirectoryList::VAR_DIR);
     }
 
     /**

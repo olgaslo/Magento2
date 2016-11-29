@@ -24,9 +24,9 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->_objectManager = $this->getMock(\Magento\Framework\ObjectManagerInterface::class);
+        $this->_objectManager = $this->getMock('Magento\Framework\ObjectManagerInterface');
         $this->_importConfig = $this->getMock(
-            \Magento\Directory\Model\Currency\Import\Config::class,
+            'Magento\Directory\Model\Currency\Import\Config',
             [],
             [],
             '',
@@ -40,7 +40,7 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
 
     public function testCreate()
     {
-        $expectedResult = $this->getMock(\Magento\Directory\Model\Currency\Import\ImportInterface::class);
+        $expectedResult = $this->getMock('Magento\Directory\Model\Currency\Import\ImportInterface');
         $this->_importConfig->expects(
             $this->once()
         )->method(

@@ -38,14 +38,14 @@ class AttributeTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->appResourceMock = $this->getMock(
-            \Magento\Framework\App\ResourceConnection::class,
+            'Magento\Framework\App\ResourceConnection',
             [],
             [],
             '',
             false
         );
         $this->eventManagerMock = $this->getMockForAbstractClass(
-            \Magento\Framework\Event\ManagerInterface::class,
+            'Magento\Framework\Event\ManagerInterface',
             [],
             '',
             false,
@@ -54,7 +54,7 @@ class AttributeTest extends \PHPUnit_Framework_TestCase
             []
         );
         $this->modelMock = $this->getMockForAbstractClass(
-            \Magento\Sales\Model\AbstractModel::class,
+            'Magento\Sales\Model\AbstractModel',
             [],
             '',
             false,
@@ -63,7 +63,7 @@ class AttributeTest extends \PHPUnit_Framework_TestCase
             ['__wakeup', 'getId', 'getEventPrefix', 'getEventObject']
         );
         $this->connectionMock = $this->getMock(
-            \Magento\Framework\DB\Adapter\Pdo\Mysql::class,
+            'Magento\Framework\DB\Adapter\Pdo\Mysql',
             ['describeTable', 'insert', 'lastInsertId', 'beginTransaction', 'rollback', 'commit'],
             [],
             '',

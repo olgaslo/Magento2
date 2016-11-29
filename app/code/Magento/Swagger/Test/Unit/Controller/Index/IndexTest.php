@@ -12,10 +12,10 @@ class IndexTest extends \PHPUnit_Framework_TestCase
     {
         $objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
 
-        $pageConfigMock = $this->getMockBuilder(\Magento\Framework\View\Page\Config::class)
+        $pageConfigMock = $this->getMockBuilder('Magento\Framework\View\Page\Config')
             ->disableOriginalConstructor()
             ->getMock();
-        $resultPageFactory = $this->getMockBuilder(\Magento\Framework\View\Result\PageFactory::class)
+        $resultPageFactory = $this->getMockBuilder('Magento\Framework\View\Result\PageFactory')
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -23,7 +23,7 @@ class IndexTest extends \PHPUnit_Framework_TestCase
         $resultPageFactory->expects($this->once())->method('create');
 
         $model = $objectManager->getObject(
-            \Magento\Swagger\Controller\Index\Index::class,
+            'Magento\Swagger\Controller\Index\Index',
             [
                 'pageConfig' => $pageConfigMock,
                 'pageFactory' => $resultPageFactory

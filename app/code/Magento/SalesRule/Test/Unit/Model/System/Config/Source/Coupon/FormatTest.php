@@ -23,7 +23,7 @@ class FormatTest extends \PHPUnit_Framework_TestCase
         $objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
 
         $this->salesRuleCoupon = $this->getMock(
-            \Magento\SalesRule\Helper\Coupon::class,
+            'Magento\SalesRule\Helper\Coupon',
             [],
             [],
             '',
@@ -31,7 +31,7 @@ class FormatTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->model = $objectManager->getObject(
-            \Magento\SalesRule\Model\System\Config\Source\Coupon\Format::class,
+            'Magento\SalesRule\Model\System\Config\Source\Coupon\Format',
             [
                 'salesRuleCoupon' => $this->salesRuleCoupon
             ]

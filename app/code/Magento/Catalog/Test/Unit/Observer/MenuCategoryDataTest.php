@@ -40,27 +40,28 @@ class MenuCategoryDataTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->_catalogCategory = $this->getMock(
-            \Magento\Catalog\Helper\Category::class,
+            '\Magento\Catalog\Helper\Category',
             ['getStoreCategories', 'getCategoryUrl'],
             [],
             '',
             false
         );
 
-        $layerResolver = $this->getMock(\Magento\Catalog\Model\Layer\Resolver::class, [], [], '', false);
+        $layerResolver = $this->getMock('Magento\Catalog\Model\Layer\Resolver', [], [], '', false);
         $layerResolver->expects($this->once())->method('get')->willReturn(null);
-        $this->_observer = (new ObjectManager($this))->getObject(\Magento\Catalog\Observer\MenuCategoryData::class,
+        $this->_observer = (new ObjectManager($this))->getObject(
+            'Magento\Catalog\Observer\MenuCategoryData',
             [
                 'layerResolver' => $layerResolver,
                 'catalogCategory' => $this->_catalogCategory,
-                'catalogData' => $this->getMock(\Magento\Catalog\Helper\Data::class, [], [], '', false),
+                'catalogData' => $this->getMock('\Magento\Catalog\Helper\Data', [], [], '', false),
             ]
         );
     }
 
     public function testGetMenuCategoryData()
     {
-        $category = $this->getMock(\Magento\Catalog\Model\Category::class, ['getId', 'getName'], [], '', false);
+        $category = $this->getMock('Magento\Catalog\Model\Category', ['getId', 'getName'], [], '', false);
         $category->expects($this->once())->method('getId')->willReturn('id');
         $category->expects($this->once())->method('getName')->willReturn('name');
         $this->_catalogCategory->expects($this->once())->method('getCategoryUrl')->willReturn('url');

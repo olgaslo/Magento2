@@ -23,10 +23,10 @@ class RowTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->_product = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create(
-            \Magento\Catalog\Model\Product::class
+            'Magento\Catalog\Model\Product'
         );
         $this->_processor = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create(
-            \Magento\Catalog\Model\Indexer\Product\Price\Processor::class
+            'Magento\Catalog\Model\Indexer\Product\Price\Processor'
         );
     }
 
@@ -38,10 +38,10 @@ class RowTest extends \PHPUnit_Framework_TestCase
     public function testProductUpdate()
     {
         $categoryFactory = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create(
-            \Magento\Catalog\Model\CategoryFactory::class
+            'Magento\Catalog\Model\CategoryFactory'
         );
         $listProduct = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create(
-            \Magento\Catalog\Block\Product\ListProduct::class
+            'Magento\Catalog\Block\Product\ListProduct'
         );
 
         $this->_processor->getIndexer()->setScheduled(false);

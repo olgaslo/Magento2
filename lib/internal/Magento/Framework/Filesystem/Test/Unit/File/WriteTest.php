@@ -41,7 +41,7 @@ class WriteTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->driver = $this->getMockForAbstractClass(\Magento\Framework\Filesystem\DriverInterface::class);
+        $this->driver = $this->getMockForAbstractClass('Magento\Framework\Filesystem\DriverInterface');
         $this->resource = $this->getMock('resource');
         $this->driver->expects($this->any())
             ->method('isExists')
@@ -65,13 +65,13 @@ class WriteTest extends \PHPUnit_Framework_TestCase
      */
     public function testInstanceFileNotExists()
     {
-        $driver = $this->getMockForAbstractClass(\Magento\Framework\Filesystem\DriverInterface::class);
+        $driver = $this->getMockForAbstractClass('Magento\Framework\Filesystem\DriverInterface');
         $driver->expects($this->once())
             ->method('isExists')
             ->with($this->path)
             ->will($this->returnValue(false));
         $file = new Write($this->path, $driver, 'r');
-        $this->assertInstanceOf(\Magento\Framework\Filesystem\File\Read::class, $file);
+        $this->assertInstanceOf('Magento\Framework\Filesystem\File\Read', $file);
     }
 
     /**
@@ -79,13 +79,13 @@ class WriteTest extends \PHPUnit_Framework_TestCase
      */
     public function testInstanceFileAlreadyExists()
     {
-        $driver = $this->getMockForAbstractClass(\Magento\Framework\Filesystem\DriverInterface::class);
+        $driver = $this->getMockForAbstractClass('Magento\Framework\Filesystem\DriverInterface');
         $driver->expects($this->once())
             ->method('isExists')
             ->with($this->path)
             ->will($this->returnValue(true));
         $file = new Write($this->path, $driver, 'x');
-        $this->assertInstanceOf(\Magento\Framework\Filesystem\File\Read::class, $file);
+        $this->assertInstanceOf('Magento\Framework\Filesystem\File\Read', $file);
     }
 
     public function testWrite()

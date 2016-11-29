@@ -35,16 +35,16 @@ class TitleTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->objectManagerHelper = new ObjectManagerHelper($this);
-        $this->pageConfigMock = $this->getMock(\Magento\Framework\View\Page\Config::class, [], [], '', false);
-        $this->pageTitleMock = $this->getMock(\Magento\Framework\View\Page\Title::class, [], [], '', false);
+        $this->pageConfigMock = $this->getMock('Magento\Framework\View\Page\Config', [], [], '', false);
+        $this->pageTitleMock = $this->getMock('Magento\Framework\View\Page\Title', [], [], '', false);
 
         $context = $this->objectManagerHelper->getObject(
-            \Magento\Framework\View\Element\Template\Context::class,
+            'Magento\Framework\View\Element\Template\Context',
             ['pageConfig' => $this->pageConfigMock]
         );
 
         $this->htmlTitle = $this->objectManagerHelper->getObject(
-            \Magento\Theme\Block\Html\Title::class,
+            'Magento\Theme\Block\Html\Title',
             ['context' => $context]
         );
     }

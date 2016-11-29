@@ -52,21 +52,19 @@ class ValidationTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->agreementsValidatorMock = $this->getMock(\Magento\Checkout\Api\AgreementsValidatorInterface::class);
-        $this->subjectMock = $this->getMock(\Magento\Checkout\Api\PaymentInformationManagementInterface::class);
-        $this->paymentMock = $this->getMock(\Magento\Quote\Api\Data\PaymentInterface::class);
-        $this->addressMock = $this->getMock(\Magento\Quote\Api\Data\AddressInterface::class);
+        $this->agreementsValidatorMock = $this->getMock('\Magento\Checkout\Api\AgreementsValidatorInterface');
+        $this->subjectMock = $this->getMock('\Magento\Checkout\Api\PaymentInformationManagementInterface');
+        $this->paymentMock = $this->getMock('\Magento\Quote\Api\Data\PaymentInterface');
+        $this->addressMock = $this->getMock('\Magento\Quote\Api\Data\AddressInterface');
         $this->extensionAttributesMock = $this->getMock(
-            \Magento\Quote\Api\Data\PaymentExtension::class,
+            '\Magento\Quote\Api\Data\PaymentExtension',
             ['getAgreementIds'],
             [],
             '',
             false
         );
-        $this->scopeConfigMock = $this->getMock(\Magento\Framework\App\Config\ScopeConfigInterface::class);
-        $this->repositoryMock = $this->getMock(
-            \Magento\CheckoutAgreements\Api\CheckoutAgreementsRepositoryInterface::class
-        );
+        $this->scopeConfigMock = $this->getMock('Magento\Framework\App\Config\ScopeConfigInterface');
+        $this->repositoryMock = $this->getMock('Magento\CheckoutAgreements\Api\CheckoutAgreementsRepositoryInterface');
 
         $this->model = new \Magento\CheckoutAgreements\Model\Checkout\Plugin\Validation(
             $this->agreementsValidatorMock,

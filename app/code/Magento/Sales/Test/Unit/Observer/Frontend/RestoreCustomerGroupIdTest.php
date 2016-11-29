@@ -24,7 +24,7 @@ class RestoreCustomerGroupIdTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->customerAddressHelperMock = $this->getMock(\Magento\Customer\Helper\Address::class, [], [], '', false);
+        $this->customerAddressHelperMock = $this->getMock('\Magento\Customer\Helper\Address', [], [], '', false);
         $this->quote = new RestoreCustomerGroupId($this->customerAddressHelperMock);
     }
 
@@ -34,27 +34,21 @@ class RestoreCustomerGroupIdTest extends \PHPUnit_Framework_TestCase
      */
     public function testExecute($configAddressType)
     {
-        $eventMock = $this->getMock(
-            \Magento\Framework\Event::class,
-            ['getShippingAssignment', 'getQuote'],
-            [],
-            '',
-            false
-        );
-        $observer = $this->getMock(\Magento\Framework\Event\Observer::class, ['getEvent'], [], '', false);
+        $eventMock = $this->getMock('\Magento\Framework\Event', ['getShippingAssignment', 'getQuote'], [], '', false);
+        $observer = $this->getMock('Magento\Framework\Event\Observer', ['getEvent'], [], '', false);
         $observer->expects($this->exactly(2))->method('getEvent')->willReturn($eventMock);
 
-        $shippingAssignmentMock = $this->getMock(\Magento\Quote\Api\Data\ShippingAssignmentInterface::class);
-        $quoteMock = $this->getMock(\Magento\Quote\Model\Quote::class, [], [], '', false);
+        $shippingAssignmentMock = $this->getMock('\Magento\Quote\Api\Data\ShippingAssignmentInterface');
+        $quoteMock = $this->getMock('\Magento\Quote\Model\Quote', [], [], '', false);
 
         $eventMock->expects($this->once())->method('getShippingAssignment')->willReturn($shippingAssignmentMock);
         $eventMock->expects($this->once())->method('getQuote')->willReturn($quoteMock);
 
-        $shippingMock = $this->getMock(\Magento\Quote\Api\Data\ShippingInterface::class);
+        $shippingMock = $this->getMock('\Magento\Quote\Api\Data\ShippingInterface');
         $shippingAssignmentMock->expects($this->once())->method('getShipping')->willReturn($shippingMock);
 
         $quoteAddress = $this->getMock(
-            \Magento\Quote\Model\Quote\Address::class,
+            '\Magento\Quote\Model\Quote\Address',
             ['getPrevQuoteCustomerGroupId', 'unsPrevQuoteCustomerGroupId', 'hasPrevQuoteCustomerGroupId'],
             [],
             '',

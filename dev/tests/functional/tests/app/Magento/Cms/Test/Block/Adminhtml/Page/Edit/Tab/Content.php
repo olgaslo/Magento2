@@ -109,7 +109,7 @@ class Content extends Tab
     public function getWysiwygConfig()
     {
         return $this->blockFactory->create(
-            \Magento\Cms\Test\Block\Adminhtml\Wysiwyg\Config::class,
+            'Magento\Cms\Test\Block\Adminhtml\Wysiwyg\Config',
             ['element' => $this->_rootElement->find($this->systemVariableBlock, Locator::SELECTOR_XPATH)]
         );
     }
@@ -122,7 +122,7 @@ class Content extends Tab
     public function getWidgetBlock()
     {
         return $this->blockFactory->create(
-            \Magento\Widget\Test\Block\Adminhtml\WidgetForm::class,
+            'Magento\Widget\Test\Block\Adminhtml\WidgetForm',
             ['element' => $this->_rootElement->find($this->widgetBlock, Locator::SELECTOR_XPATH)]
         );
     }

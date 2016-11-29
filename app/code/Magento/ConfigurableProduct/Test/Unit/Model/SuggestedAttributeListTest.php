@@ -43,21 +43,21 @@ class SuggestedAttributeListTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->configurableAttributeHandler = $this->getMock(
-            \Magento\ConfigurableProduct\Model\ConfigurableAttributeHandler::class,
+            'Magento\ConfigurableProduct\Model\ConfigurableAttributeHandler',
             [],
             [],
             '',
             false
         );
         $this->resourceHelperMock = $this->getMock(
-            \Magento\Catalog\Model\ResourceModel\Helper::class,
+            'Magento\Catalog\Model\ResourceModel\Helper',
             [],
             [],
             '',
             false
         );
         $this->collectionMock = $this->getMock(
-            \Magento\Catalog\Model\ResourceModel\Product\Attribute\Collection::class,
+            'Magento\Catalog\Model\ResourceModel\Product\Attribute\Collection',
             [],
             [],
             '',
@@ -92,7 +92,7 @@ class SuggestedAttributeListTest extends \PHPUnit_Framework_TestCase
         );
         $methods = ['getId', 'getFrontendLabel', 'getAttributeCode', 'getSource'];
         $this->attributeMock = $this->getMock(
-            \Magento\Catalog\Model\ResourceModel\Eav\Attribute::class,
+            'Magento\Catalog\Model\ResourceModel\Eav\Attribute',
             $methods,
             [],
             '',
@@ -114,7 +114,7 @@ class SuggestedAttributeListTest extends \PHPUnit_Framework_TestCase
     public function testGetSuggestedAttributesIfTheyApplicable()
     {
         $source = $this->getMock(
-            \Magento\Eav\Model\Entity\Attribute\Source\AbstractSource::class,
+            'Magento\Eav\Model\Entity\Attribute\Source\AbstractSource',
             [],
             [],
             '',

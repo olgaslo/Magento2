@@ -19,21 +19,21 @@ class InlineParserTest extends \PHPUnit_Framework_TestCase
     {
         /** @var $inline \Magento\Framework\Translate\Inline */
         $inline = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()
-            ->create(\Magento\Framework\Translate\Inline::class);
+            ->create('Magento\Framework\Translate\Inline');
         $this->_inlineParser = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create(
-            \Magento\Translation\Model\Inline\Parser::class,
+            'Magento\Translation\Model\Inline\Parser',
             ['translateInline' => $inline]
         );
         /* Called getConfig as workaround for setConfig bug */
         \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->get(
-            \Magento\Store\Model\StoreManagerInterface::class
+            'Magento\Store\Model\StoreManagerInterface'
         )->getStore(
             $this->_storeId
         )->getConfig(
             'dev/translate_inline/active'
         );
         \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->get(
-            \Magento\Framework\App\Config\MutableScopeConfigInterface::class
+            'Magento\Framework\App\Config\MutableScopeConfigInterface'
         )->setValue(
             'dev/translate_inline/active',
             true,
@@ -54,7 +54,7 @@ class InlineParserTest extends \PHPUnit_Framework_TestCase
         $this->_inlineParser->processAjaxPost($inputArray);
 
         $model = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create(
-            \Magento\Translation\Model\StringUtils::class
+            'Magento\Translation\Model\StringUtils'
         );
         $model->load($originalText);
         try {
@@ -63,7 +63,7 @@ class InlineParserTest extends \PHPUnit_Framework_TestCase
         } catch (\Exception $e) {
             $model->delete();
             \Magento\TestFramework\Helper\Bootstrap::getObjectManager()
-                ->get(\Psr\Log\LoggerInterface::class)
+                ->get('Psr\Log\LoggerInterface')
                 ->critical($e);
         }
     }

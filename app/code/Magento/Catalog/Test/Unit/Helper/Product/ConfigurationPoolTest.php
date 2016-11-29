@@ -21,7 +21,7 @@ class ConfigurationPoolTest extends \PHPUnit_Framework_TestCase
     {
         $this->instancesType = ['simple' => 'simple', 'default' => 'default'];
 
-        $objectManagerMock = $this->getMock(\Magento\Framework\ObjectManagerInterface::class);
+        $objectManagerMock = $this->getMock('Magento\Framework\ObjectManagerInterface');
         $this->model = new \Magento\Catalog\Helper\Product\ConfigurationPool($objectManagerMock, $this->instancesType);
     }
 

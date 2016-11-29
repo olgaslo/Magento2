@@ -45,15 +45,15 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->_vbFactoryMock = $this->getMock(
-            \Magento\Framework\Validator\UniversalFactory::class,
+            'Magento\Framework\Validator\UniversalFactory',
             ['create'],
             [],
             '',
             false
         );
-        $this->_vbMock = $this->getMock(\Magento\Framework\Validator\Builder::class, [], [], '', false);
+        $this->_vbMock = $this->getMock('Magento\Framework\Validator\Builder', [], [], '', false);
         $this->_validatorMock = $this->getMock(
-            \Magento\Framework\Validator\ValidatorInterface::class,
+            'Magento\Framework\Validator\ValidatorInterface',
             [],
             [],
             '',
@@ -62,7 +62,7 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
 
         $objectManager = new ObjectManager($this);
         $this->_factory = $objectManager->getObject(
-            \Magento\GoogleAdwords\Model\Validator\Factory::class,
+            'Magento\GoogleAdwords\Model\Validator\Factory',
             ['validatorBuilderFactory' => $this->_vbFactoryMock]
         );
     }
@@ -80,13 +80,13 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
         )->method(
             'create'
         )->with(
-            \Magento\Framework\Validator\Builder::class,
+            'Magento\Framework\Validator\Builder',
             [
                 'constraints' => [
                     [
                         'alias' => 'Regex',
                         'type' => '',
-                        'class' => \Magento\Framework\Validator\Regex::class,
+                        'class' => 'Magento\Framework\Validator\Regex',
                         'options' => [
                             'arguments' => ['pattern' => '/^[0-9a-f]{6}$/i'],
                             'methods' => [
@@ -129,13 +129,13 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
         )->method(
             'create'
         )->with(
-            \Magento\Framework\Validator\Builder::class,
+            'Magento\Framework\Validator\Builder',
             [
                 'constraints' => [
                     [
                         'alias' => 'Int',
                         'type' => '',
-                        'class' => \Magento\Framework\Validator\IntUtils::class,
+                        'class' => 'Magento\Framework\Validator\IntUtils',
                         'options' => [
                             'methods' => [
                                 [

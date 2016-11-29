@@ -364,7 +364,7 @@ class Order extends AbstractModel implements EntityInterface, OrderInterface
      */
     protected function _construct()
     {
-        $this->_init(\Magento\Sales\Model\ResourceModel\Order::class);
+        $this->_init('Magento\Sales\Model\ResourceModel\Order');
     }
 
     /**
@@ -769,7 +769,7 @@ class Order extends AbstractModel implements EntityInterface, OrderInterface
      */
     protected function _canReorder($ignoreSalable = false)
     {
-        if ($this->canUnhold() || $this->isPaymentReview()) {
+        if ($this->canUnhold() || $this->isPaymentReview() || !$this->getCustomerId()) {
             return false;
         }
 
@@ -1442,18 +1442,15 @@ class Order extends AbstractModel implements EntityInterface, OrderInterface
      */
     public function setPayment(\Magento\Sales\Api\Data\OrderPaymentInterface $payment = null)
     {
-        $this->setData(OrderInterface::PAYMENT, $payment);
-        if ($payment !== null) {
-            $payment->setOrder($this)->setParentId($this->getId());
-            if (!$payment->getId()) {
-                $this->setDataChanges(true);
-            }
+        $payment->setOrder($this)->setParentId($this->getId());
+        if (!$payment->getId()) {
+            $this->setData(OrderInterface::PAYMENT, $payment);
+            $this->setDataChanges(true);
         }
         return $payment;
     }
 
     /*********************** STATUSES ***************************/
-
     /**
      * Return collection of order status history items.
      *
@@ -2007,7 +2004,6 @@ class Order extends AbstractModel implements EntityInterface, OrderInterface
     }
 
     //@codeCoverageIgnoreStart
-
     /**
      * Returns adjustment_negative
      *

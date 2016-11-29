@@ -21,12 +21,13 @@ class ListSortTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->catalogConfig = $this->getMockBuilder(\Magento\Catalog\Model\Config::class)
-            ->disableOriginalConstructor()->getMock();
+        $this->catalogConfig = $this->getMockBuilder('Magento\Catalog\Model\Config')->
+            disableOriginalConstructor()->
+            getMock();
 
         $helper = new ObjectManager($this);
         $this->model = $helper->getObject(
-            \Magento\Catalog\Model\Config\Source\ListSort::class,
+            'Magento\Catalog\Model\Config\Source\ListSort',
             ['catalogConfig' => $this->catalogConfig]
         );
     }

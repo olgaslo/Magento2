@@ -14,11 +14,9 @@ class RoleTest extends \PHPUnit_Framework_TestCase
 {
     public function testGetRoleUsers()
     {
-        $role = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create(
-            \Magento\Authorization\Model\Role::class
-        );
+        $role = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create('Magento\Authorization\Model\Role');
         $roleResource = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create(
-            \Magento\Authorization\Model\ResourceModel\Role::class
+            'Magento\Authorization\Model\ResourceModel\Role'
         );
 
         $this->assertEmpty($roleResource->getRoleUsers($role));

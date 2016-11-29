@@ -125,7 +125,7 @@ class View extends \Magento\Framework\App\Action\Action
         } catch (NoSuchEntityException $e) {
             return false;
         }
-        if (!$this->_objectManager->get(\Magento\Catalog\Helper\Category::class)->canShow($category)) {
+        if (!$this->_objectManager->get('Magento\Catalog\Helper\Category')->canShow($category)) {
             return false;
         }
         $this->_catalogSession->setLastVisitedCategoryId($category->getId());
@@ -136,7 +136,7 @@ class View extends \Magento\Framework\App\Action\Action
                 ['category' => $category, 'controller_action' => $this]
             );
         } catch (\Magento\Framework\Exception\LocalizedException $e) {
-            $this->_objectManager->get(\Psr\Log\LoggerInterface::class)->critical($e);
+            $this->_objectManager->get('Psr\Log\LoggerInterface')->critical($e);
             return false;
         }
 

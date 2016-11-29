@@ -24,7 +24,7 @@ class SortbyTest extends \PHPUnit_Framework_TestCase
     {
         $helper = new ObjectManager($this);
         $this->model = $helper->getObject(
-            \Magento\Catalog\Model\Category\Attribute\Source\Sortby::class,
+            '\Magento\Catalog\Model\Category\Attribute\Source\Sortby',
             [
                 'catalogConfig' => $this->getMockedConfig()
             ]
@@ -36,7 +36,7 @@ class SortbyTest extends \PHPUnit_Framework_TestCase
      */
     private function getMockedConfig()
     {
-        $mockBuilder = $this->getMockBuilder(\Magento\Catalog\Model\Config::class);
+        $mockBuilder = $this->getMockBuilder('\Magento\Catalog\Model\Config');
         $mockBuilder->disableOriginalConstructor();
         $mock = $mockBuilder->getMock();
 

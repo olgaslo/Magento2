@@ -3,6 +3,7 @@
  * Copyright © 2016 Magento. All rights reserved.
  * See COPYING.txt for license details.
  */
+
 namespace Magento\Deploy\Console\Command;
 
 use Magento\Framework\App\Utility\Files;
@@ -14,12 +15,10 @@ use Symfony\Component\Console\Input\InputArgument;
 use Magento\Framework\App\ObjectManagerFactory;
 use Magento\Framework\ObjectManagerInterface;
 use Magento\Framework\Validator\Locale;
-use Magento\Framework\Exception\LocalizedException;
-use Magento\Framework\App\State;
+use Magento\Framework\Console\Cli;
+use Magento\Deploy\Model\ProcessManager;
+use Magento\Deploy\Model\Process;
 use Magento\Deploy\Console\Command\DeployStaticOptionsInterface as Options;
-use Magento\Deploy\Model\DeployManager;
-use Magento\Framework\App\Cache;
-use Magento\Framework\App\Cache\Type\Dummy as DummyCache;
 
 /**
  * Deploy static content command
@@ -30,7 +29,7 @@ class DeployStaticContentCommand extends Command
     /**
      * Key for dry-run option
      * @deprecated
-     * @see \Magento\Deploy\Console\Command\DeployStaticOptionsInterface::DRY_RUN
+     * @see Magento\Deploy\Console\Command\DeployStaticOptionsInterface::DRY_RUN
      */
     const DRY_RUN_OPTION = 'dry-run';
 
@@ -79,16 +78,12 @@ class DeployStaticContentCommand extends Command
      */
     private $objectManager;
 
-    /** @var \Magento\Framework\App\State */
-    private $appState;
-
     /**
      * Inject dependencies
      *
      * @param ObjectManagerFactory $objectManagerFactory
      * @param Locale $validator
      * @param ObjectManagerInterface $objectManager
-     * @throws \LogicException When the command name is empty
      */
     public function __construct(
         ObjectManagerFactory $objectManagerFactory,
@@ -98,7 +93,6 @@ class DeployStaticContentCommand extends Command
         $this->objectManagerFactory = $objectManagerFactory;
         $this->validator = $validator;
         $this->objectManager = $objectManager;
-
         parent::__construct();
     }
 
@@ -119,135 +113,110 @@ class DeployStaticContentCommand extends Command
                     'If specified, then no files will be actually deployed.'
                 ),
                 new InputOption(
-                    Options::FORCE_RUN,
-                    '-f',
-                    InputOption::VALUE_NONE,
-                    'Deploy files in any mode.'
-                ),
-                new InputOption(
                     Options::NO_JAVASCRIPT,
                     null,
                     InputOption::VALUE_NONE,
-                    'Do not deploy JavaScript files'
+                    'If specified, no JavaScript will be deployed.'
                 ),
                 new InputOption(
                     Options::NO_CSS,
                     null,
                     InputOption::VALUE_NONE,
-                    'Do not deploy CSS files.'
+                    'If specified, no CSS will be deployed.'
                 ),
                 new InputOption(
                     Options::NO_LESS,
                     null,
                     InputOption::VALUE_NONE,
-                    'Do not deploy LESS files.'
+                    'If specified, no LESS will be deployed.'
                 ),
                 new InputOption(
                     Options::NO_IMAGES,
                     null,
                     InputOption::VALUE_NONE,
-                    'Do not deploy images.'
+                    'If specified, no images will be deployed.'
                 ),
                 new InputOption(
                     Options::NO_FONTS,
                     null,
                     InputOption::VALUE_NONE,
-                    'Do not deploy font files.'
+                    'If specified, no font files will be deployed.'
                 ),
                 new InputOption(
                     Options::NO_HTML,
                     null,
                     InputOption::VALUE_NONE,
-                    'Do not deploy HTML files.'
+                    'If specified, no html files will be deployed.'
                 ),
                 new InputOption(
                     Options::NO_MISC,
                     null,
                     InputOption::VALUE_NONE,
-                    'Do not deploy other types of files (.md, .jbf, .csv, etc...).'
+                    'If specified, no miscellaneous files will be deployed.'
                 ),
                 new InputOption(
                     Options::NO_HTML_MINIFY,
                     null,
                     InputOption::VALUE_NONE,
-                    'Do not minify HTML files.'
+                    'If specified, html will not be minified.'
                 ),
                 new InputOption(
                     Options::THEME,
                     '-t',
                     InputOption::VALUE_IS_ARRAY | InputOption::VALUE_OPTIONAL,
-                    'Generate static view files for only the specified themes.',
+                    'If specified, just specific theme(s) will be actually deployed.',
                     ['all']
                 ),
                 new InputOption(
                     Options::EXCLUDE_THEME,
                     null,
                     InputOption::VALUE_IS_ARRAY | InputOption::VALUE_OPTIONAL,
-                    'Do not generate files for the specified themes.',
+                    'If specified, exclude specific theme(s) from deployment.',
                     ['none']
                 ),
                 new InputOption(
                     Options::LANGUAGE,
                     '-l',
                     InputOption::VALUE_IS_ARRAY | InputOption::VALUE_OPTIONAL,
-                    'Generate files only for the specified languages.',
+                    'List of languages you want the tool populate files for.',
                     ['all']
                 ),
                 new InputOption(
                     Options::EXCLUDE_LANGUAGE,
                     null,
                     InputOption::VALUE_IS_ARRAY | InputOption::VALUE_OPTIONAL,
-                    'Do not generate files for the specified languages.',
+                    'List of langiages you do not want the tool populate files for.',
                     ['none']
                 ),
                 new InputOption(
                     Options::AREA,
                     '-a',
                     InputOption::VALUE_IS_ARRAY | InputOption::VALUE_OPTIONAL,
-                    'Generate files only for the specified areas.',
+                    'List of areas you want the tool populate files for.',
                     ['all']
                 ),
                 new InputOption(
                     Options::EXCLUDE_AREA,
                     null,
                     InputOption::VALUE_IS_ARRAY | InputOption::VALUE_OPTIONAL,
-                    'Do not generate files for the specified areas.',
+                    'List of areas you do not want the tool populate files for.',
                     ['none']
                 ),
                 new InputOption(
                     Options::JOBS_AMOUNT,
                     '-j',
                     InputOption::VALUE_OPTIONAL,
-                    'Enable parallel processing using the specified number of jobs.',
+                    'Amount of jobs to which script can be paralleled.',
                     self::DEFAULT_JOBS_AMOUNT
-                ),
-                new InputOption(
-                    Options::SYMLINK_LOCALE,
-                    null,
-                    InputOption::VALUE_NONE,
-                    'Create symlinks for the files of those locales, which are passed for deployment, '
-                    . 'but have no customizations'
                 ),
                 new InputArgument(
                     self::LANGUAGES_ARGUMENT,
                     InputArgument::IS_ARRAY,
-                    'Space-separated list of ISO-636 language codes for which to output static view files.'
+                    'List of languages you want the tool populate files for.'
                 ),
             ]);
 
         parent::configure();
-    }
-
-    /**
-     * @return \Magento\Framework\App\State
-     * @deprecated
-     */
-    private function getAppState()
-    {
-        if (null === $this->appState) {
-            $this->appState = $this->objectManager->get(State::class);
-        }
-        return $this->appState;
     }
 
     /**
@@ -376,56 +345,37 @@ class DeployStaticContentCommand extends Command
     /**
      * {@inheritdoc}
      * @throws \InvalidArgumentException
-     * @throws LocalizedException
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        if (!$input->getOption(Options::FORCE_RUN) && $this->getAppState()->getMode() !== State::MODE_PRODUCTION) {
-            throw new LocalizedException(
-                __(
-                    'NOTE: Manual static content deployment is not required in "default" and "developer" modes.'
-                    . PHP_EOL . 'In "default" and "developer" modes static contents are being deployed '
-                    . 'automatically on demand.'
-                    . PHP_EOL . 'If you still want to deploy in these modes, use -f option: '
-                    . "'bin/magento setup:static-content:deploy -f'"
-                )
-            );
-        }
-
         $this->input = $input;
         $filesUtil = $this->objectManager->create(Files::class);
 
         list ($deployableLanguages, $deployableAreaThemeMap, $requestedThemes)
             = $this->prepareDeployableEntities($filesUtil);
 
-        $output->writeln('Requested languages: ' . implode(', ', $deployableLanguages));
-        $output->writeln('Requested areas: ' . implode(', ', array_keys($deployableAreaThemeMap)));
-        $output->writeln('Requested themes: ' . implode(', ', $requestedThemes));
+        $output->writeln("Requested languages: " . implode(', ', $deployableLanguages));
+        $output->writeln("Requested areas: " . implode(', ', array_keys($deployableAreaThemeMap)));
+        $output->writeln("Requested themes: " . implode(', ', $requestedThemes));
 
-        /** @var $deployManager DeployManager */
-        $deployManager = $this->objectManager->create(
-            DeployManager::class,
+        $deployer = $this->objectManager->create(
+            \Magento\Deploy\Model\Deployer::class,
             [
+                'filesUtil' => $filesUtil,
                 'output' => $output,
                 'options' => $this->input->getOptions(),
             ]
         );
 
-        foreach ($deployableAreaThemeMap as $area => $themes) {
-            foreach ($deployableLanguages as $locale) {
-                foreach ($themes as $themePath) {
-                    $deployManager->addPack($area, $themePath, $locale);
-                }
-            }
+        if ($this->isCanBeParalleled()) {
+            return $this->runProcessesInParallel($deployer, $deployableAreaThemeMap, $deployableLanguages);
+        } else {
+            return $this->deploy($deployer, $deployableLanguages, $deployableAreaThemeMap);
         }
-
-        $this->mockCache();
-        return $deployManager->deploy();
     }
 
     /**
      * @param Files $filesUtil
-     * @throws \InvalidArgumentException
      * @return array
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      * @SuppressWarnings(PHPMD.NPathComplexity)
@@ -484,16 +434,87 @@ class DeployStaticContentCommand extends Command
     }
 
     /**
-     * Mock Cache class with dummy implementation
-     *
-     * @return void
+     * @param \Magento\Deploy\Model\Deployer $deployer
+     * @param array $deployableLanguages
+     * @param array $deployableAreaThemeMap
+     * @return int
      */
-    private function mockCache()
+    private function deploy($deployer, $deployableLanguages, $deployableAreaThemeMap)
     {
-        $this->objectManager->configure([
-            'preferences' => [
-                Cache::class => DummyCache::class
-            ]
-        ]);
+        return $deployer->deploy(
+            $this->objectManagerFactory,
+            $deployableLanguages,
+            $deployableAreaThemeMap
+        );
+    }
+
+    /**
+     * @param \Magento\Deploy\Model\Deployer $deployer
+     * @param array $deployableAreaThemeMap
+     * @param array $deployableLanguages
+     * @return int
+     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
+     */
+    private function runProcessesInParallel($deployer, $deployableAreaThemeMap, $deployableLanguages)
+    {
+        /** @var ProcessManager $processManager */
+        $processManager = $this->objectManager->create(ProcessManager::class);
+        $processNumber = 0;
+        $processQueue = [];
+        foreach ($deployableAreaThemeMap as $area => &$themes) {
+            foreach ($themes as $theme) {
+                foreach ($deployableLanguages as $lang) {
+                    $deployerFunc = function (Process $process) use ($area, $theme, $lang, $deployer) {
+                        return $this->deploy($deployer, [$lang], [$area => [$theme]]);
+                    };
+                    if ($processNumber >= $this->getProcessesAmount()) {
+                        $processQueue[] = $deployerFunc;
+                    } else {
+                        $processManager->fork($deployerFunc);
+                    }
+                    $processNumber++;
+                }
+            }
+        }
+        $returnStatus = null;
+        while (count($processManager->getProcesses()) > 0) {
+            foreach ($processManager->getProcesses() as $process) {
+                if ($process->isCompleted()) {
+                    $processManager->delete($process);
+                    $returnStatus |= $process->getStatus();
+                    if ($queuedProcess = array_shift($processQueue)) {
+                        $processManager->fork($queuedProcess);
+                    }
+                    if (count($processManager->getProcesses()) >= $this->getProcessesAmount()) {
+                        break 1;
+                    }
+                }
+            }
+            usleep(5000);
+        }
+
+        return $returnStatus === Cli::RETURN_SUCCESS ?: Cli::RETURN_FAILURE;
+    }
+
+    /**
+     * @return bool
+     */
+    private function isCanBeParalleled()
+    {
+        return function_exists('pcntl_fork') && $this->getProcessesAmount() > 1;
+    }
+
+    /**
+     * @return int
+     */
+    private function getProcessesAmount()
+    {
+        $jobs = (int)$this->input->getOption(Options::JOBS_AMOUNT);
+        if ($jobs < 1) {
+            throw new \InvalidArgumentException(
+                Options::JOBS_AMOUNT . ' argument has invalid value. It must be greater than 0'
+            );
+        }
+        return $jobs;
     }
 }

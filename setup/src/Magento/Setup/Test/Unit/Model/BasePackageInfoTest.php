@@ -32,14 +32,14 @@ class BasePackageInfoTest extends \PHPUnit_Framework_TestCase
     public function setup()
     {
         $this->readFactoryMock = $this->getMock(
-            \Magento\Framework\Filesystem\Directory\ReadFactory::class,
+            'Magento\Framework\Filesystem\Directory\ReadFactory',
             [],
             [],
             '',
             false
         );
         $this->readerMock = $this->getMockForAbstractClass(
-            \Magento\Framework\Filesystem\Directory\ReadInterface::class,
+            'Magento\Framework\Filesystem\Directory\ReadInterface',
             [],
             '',
             false
@@ -55,7 +55,7 @@ class BasePackageInfoTest extends \PHPUnit_Framework_TestCase
         $this->readerMock->expects($this->never())->method('isReadable');
         $this->readerMock->expects($this->never())->method('readFile');
         $this->setExpectedException(
-            \Magento\Setup\Exception::class,
+            'Magento\Setup\Exception',
             sprintf('Could not locate %s file.', BasePackageInfo::MAGENTO_BASE_PACKAGE_COMPOSER_JSON_FILE)
         );
         $this->basePackageInfo->getPaths();
@@ -68,7 +68,7 @@ class BasePackageInfoTest extends \PHPUnit_Framework_TestCase
         $this->readerMock->expects($this->once())->method('isReadable')->willReturn(false);
         $this->readerMock->expects($this->never())->method('readFile');
         $this->setExpectedException(
-            \Magento\Setup\Exception::class,
+            'Magento\Setup\Exception',
             sprintf('Could not read %s file.', BasePackageInfo::MAGENTO_BASE_PACKAGE_COMPOSER_JSON_FILE)
         );
         $this->basePackageInfo->getPaths();

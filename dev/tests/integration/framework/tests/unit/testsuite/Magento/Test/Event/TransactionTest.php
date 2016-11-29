@@ -29,19 +29,19 @@ class TransactionTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->_eventManager = $this->getMock(
-            \Magento\TestFramework\EventManager::class,
+            'Magento\TestFramework\EventManager',
             ['fireEvent'],
             [[]]
         );
         $this->_adapter = $this->getMock(
-            \Magento\TestFramework\Db\Adapter\Mysql::class,
+            '\Magento\TestFramework\Db\Adapter\Mysql',
             ['beginTransaction', 'rollBack'],
             [],
             '',
             false
         );
         $this->_object = $this->getMock(
-            \Magento\TestFramework\Event\Transaction::class,
+            'Magento\TestFramework\Event\Transaction',
             ['_getConnection'],
             [$this->_eventManager]
         );

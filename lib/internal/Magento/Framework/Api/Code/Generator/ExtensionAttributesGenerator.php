@@ -164,7 +164,7 @@ class ExtensionAttributesGenerator extends \Magento\Framework\Code\Generator\Ent
      */
     protected function getExtendedClass()
     {
-        return '\\' . \Magento\Framework\Api\AbstractSimpleObject::class;
+        return '\Magento\Framework\Api\AbstractSimpleObject';
     }
 
     /**

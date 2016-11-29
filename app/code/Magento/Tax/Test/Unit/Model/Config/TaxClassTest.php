@@ -19,7 +19,7 @@ class TaxClassTest extends \PHPUnit_Framework_TestCase
      */
     public function testAfterSave()
     {
-        $attributeMock = $this->getMockBuilder(\Magento\Eav\Model\Entity\Attribute::class)
+        $attributeMock = $this->getMockBuilder('\Magento\Eav\Model\Entity\Attribute')
             ->disableOriginalConstructor()
             ->setMethods(['loadByCode', 'getId', 'setData', 'save', '__wakeup'])
             ->getMock();
@@ -28,7 +28,7 @@ class TaxClassTest extends \PHPUnit_Framework_TestCase
             ->method('getId')
             ->will($this->returnValue(1));
 
-        $attributeFactoryMock = $this->getMockBuilder(\Magento\Eav\Model\Entity\AttributeFactory::class)
+        $attributeFactoryMock = $this->getMockBuilder('\Magento\Eav\Model\Entity\AttributeFactory')
             ->disableOriginalConstructor()
             ->setMethods(['create', '__wakeup'])
             ->getMock();
@@ -37,7 +37,7 @@ class TaxClassTest extends \PHPUnit_Framework_TestCase
             ->method('create')
             ->will($this->returnValue($attributeMock));
 
-        $resourceMock = $this->getMockBuilder(\Magento\Framework\Model\ResourceModel\Db\AbstractDb::class)
+        $resourceMock = $this->getMockBuilder('\Magento\Framework\Model\ResourceModel\Db\AbstractDb')
             ->disableOriginalConstructor()
             ->setMethods(['beginTransaction', '_construct', 'getIdFieldName', 'addCommitCallback', 'commit',
                           'save', '__wakeup', ])
@@ -57,7 +57,7 @@ class TaxClassTest extends \PHPUnit_Framework_TestCase
 
         $objectManager = new ObjectManager($this);
         $taxClass = $objectManager->getObject(
-            \Magento\Tax\Model\Config\TaxClass::class,
+            'Magento\Tax\Model\Config\TaxClass',
             [
                 'resource' => $resourceMock,
                 'attributeFactory' => $attributeFactoryMock

@@ -12,18 +12,17 @@ class AdminAccountFactoryTest extends \PHPUnit_Framework_TestCase
 {
     public function testCreate()
     {
-        $serviceLocatorMock =
-            $this->getMockForAbstractClass(\Zend\ServiceManager\ServiceLocatorInterface::class, ['get']);
+        $serviceLocatorMock = $this->getMockForAbstractClass('Zend\ServiceManager\ServiceLocatorInterface', ['get']);
         $serviceLocatorMock
             ->expects($this->once())
             ->method('get')
-            ->with(\Magento\Framework\Encryption\Encryptor::class)
-            ->willReturn($this->getMockForAbstractClass(\Magento\Framework\Encryption\EncryptorInterface::class));
+            ->with('Magento\Framework\Encryption\Encryptor')
+            ->willReturn($this->getMockForAbstractClass('Magento\Framework\Encryption\EncryptorInterface'));
         $adminAccountFactory = new AdminAccountFactory($serviceLocatorMock);
         $adminAccount = $adminAccountFactory->create(
-            $this->getMock(\Magento\Setup\Module\Setup::class, [], [], '', false),
+            $this->getMock('Magento\Setup\Module\Setup', [], [], '', false),
             []
         );
-        $this->assertInstanceOf(\Magento\Setup\Model\AdminAccount::class, $adminAccount);
+        $this->assertInstanceOf('Magento\Setup\Model\AdminAccount', $adminAccount);
     }
 }

@@ -27,14 +27,14 @@ class VariableTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->objectManager = new ObjectManager($this);
-        $this->escaperMock = $this->getMockBuilder(\Magento\Framework\Escaper::class)
+        $this->escaperMock = $this->getMockBuilder('Magento\Framework\Escaper')
             ->disableOriginalConstructor()
             ->getMock();
-        $this->resourceMock = $this->getMockBuilder(\Magento\Variable\Model\ResourceModel\Variable::class)
+        $this->resourceMock = $this->getMockBuilder('Magento\Variable\Model\ResourceModel\Variable')
             ->disableOriginalConstructor()
             ->getMock();
         $this->model = $this->objectManager->getObject(
-            \Magento\Variable\Model\Variable::class,
+            'Magento\Variable\Model\Variable',
             [
                 'escaper' => $this->escaperMock,
                 'resource' => $this->resourceMock
@@ -109,16 +109,16 @@ class VariableTest extends \PHPUnit_Framework_TestCase
             ['value' => '{{customVar code=VAL}}', 'label' => __('%1', 'LBL')]
         ];
 
-        $collectionMock = $this->getMockBuilder(\Magento\Variable\Model\ResourceModel\Variable\Collection::class)
+        $collectionMock = $this->getMockBuilder('\Magento\Variable\Model\ResourceModel\Variable\Collection')
             ->disableOriginalConstructor()
             ->getMock();
         $collectionMock->expects($this->any())
             ->method('toOptionArray')
             ->willReturn($origOptions);
         $mockVariable = $this->getMock(
-            \Magento\Variable\Model\Variable::class,
+            'Magento\Variable\Model\Variable',
             ['getCollection'],
-            $this->objectManager->getConstructArguments(\Magento\Variable\Model\Variable::class)
+            $this->objectManager->getConstructArguments('Magento\Variable\Model\Variable')
         );
         $mockVariable->expects($this->any())
             ->method('getCollection')
@@ -139,16 +139,16 @@ class VariableTest extends \PHPUnit_Framework_TestCase
             ]
         ];
 
-        $collectionMock = $this->getMockBuilder(\Magento\Variable\Model\ResourceModel\Variable\Collection::class)
+        $collectionMock = $this->getMockBuilder('\Magento\Variable\Model\ResourceModel\Variable\Collection')
             ->disableOriginalConstructor()
             ->getMock();
         $collectionMock->expects($this->any())
             ->method('toOptionArray')
             ->willReturn($origOptions);
         $mockVariable = $this->getMock(
-            \Magento\Variable\Model\Variable::class,
+            'Magento\Variable\Model\Variable',
             ['getCollection'],
-            $this->objectManager->getConstructArguments(\Magento\Variable\Model\Variable::class)
+            $this->objectManager->getConstructArguments('Magento\Variable\Model\Variable')
         );
         $mockVariable->expects($this->any())
             ->method('getCollection')

@@ -28,14 +28,14 @@ class GroupTest extends \PHPUnit_Framework_TestCase
     {
         $objectManager = new ObjectManager($this);
         $this->_cloneFactoryMock = $this->getMock(
-            \Magento\Config\Model\Config\BackendClone\Factory::class,
+            'Magento\Config\Model\Config\BackendClone\Factory',
             [],
             [],
             '',
             false
         );
         $this->_depMapperMock = $this->getMock(
-            \Magento\Config\Model\Config\Structure\Element\Dependency\Mapper::class,
+            'Magento\Config\Model\Config\Structure\Element\Dependency\Mapper',
             [],
             [],
             '',
@@ -43,7 +43,7 @@ class GroupTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->_model = $objectManager->getObject(
-            \Magento\Config\Model\Config\Structure\Element\Group::class,
+            'Magento\Config\Model\Config\Structure\Element\Group',
             [
                 'cloneModelFactory' => $this->_cloneFactoryMock,
                 'dependencyMapper' => $this->_depMapperMock,
@@ -79,9 +79,9 @@ class GroupTest extends \PHPUnit_Framework_TestCase
 
     public function testGetCloneModelCreatesCloneModel()
     {
-        $cloneModel = $this->getMock(\Magento\Framework\App\Config\ValueInterface::class, [], [], '', false);
+        $cloneModel = $this->getMock('Magento\Framework\App\Config\ValueInterface', [], [], '', false);
         $this->_depMapperMock = $this->getMock(
-            \Magento\Config\Model\Config\Structure\Element\Dependency\Mapper::class,
+            'Magento\Config\Model\Config\Structure\Element\Dependency\Mapper',
             [],
             [],
             '',
@@ -103,7 +103,7 @@ class GroupTest extends \PHPUnit_Framework_TestCase
     public function testGetFieldsetSetsOnlyNonArrayValuesToFieldset()
     {
         $fieldsetMock = $this->getMock(
-            \Magento\Framework\Data\Form\Element\Fieldset::class,
+            'Magento\Framework\Data\Form\Element\Fieldset',
             ['setOriginalData'],
             [],
             '',

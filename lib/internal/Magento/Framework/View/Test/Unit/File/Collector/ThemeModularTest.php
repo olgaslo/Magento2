@@ -45,28 +45,22 @@ class ThemeModularTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->themeDirectory = $this->getMock(
-            \Magento\Framework\Filesystem\Directory\Read::class,
+            'Magento\Framework\Filesystem\Directory\Read',
             ['getAbsolutePath', 'search'],
             [],
             '',
             false
         );
-        $this->pathPatternHelperMock = $this->getMockBuilder(\Magento\Framework\View\Helper\PathPattern::class)
+        $this->pathPatternHelperMock = $this->getMockBuilder('Magento\Framework\View\Helper\PathPattern')
             ->disableOriginalConstructor()
             ->getMock();
-        $this->fileFactory = $this->getMock(\Magento\Framework\View\File\Factory::class, [], [], '', false);
-        $this->readDirFactory = $this->getMock(
-            \Magento\Framework\Filesystem\Directory\ReadFactory::class,
-            [],
-            [],
-            '',
-            false
-        );
+        $this->fileFactory = $this->getMock('Magento\Framework\View\File\Factory', [], [], '', false);
+        $this->readDirFactory = $this->getMock('Magento\Framework\Filesystem\Directory\ReadFactory', [], [], '', false);
         $this->readDirFactory->expects($this->any())
             ->method('create')
             ->will($this->returnValue($this->themeDirectory));
         $this->componentRegistrar = $this->getMockForAbstractClass(
-            \Magento\Framework\Component\ComponentRegistrarInterface::class
+            'Magento\Framework\Component\ComponentRegistrarInterface'
         );
         $this->model = new \Magento\Framework\View\File\Collector\ThemeModular(
             $this->fileFactory,
@@ -82,7 +76,7 @@ class ThemeModularTest extends \PHPUnit_Framework_TestCase
         $this->componentRegistrar->expects($this->once())
             ->method('getPath')
             ->will($this->returnValue(''));
-        $theme = $this->getMockForAbstractClass(\Magento\Framework\View\Design\ThemeInterface::class);
+        $theme = $this->getMockForAbstractClass('Magento\Framework\View\Design\ThemeInterface');
         $theme->expects($this->once())
             ->method('getFullPath')
             ->will($this->returnValue('area/Vendor/theme'));
@@ -98,7 +92,7 @@ class ThemeModularTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetFiles($files, $filePath, $pathPattern)
     {
-        $theme = $this->getMockForAbstractClass(\Magento\Framework\View\Design\ThemeInterface::class);
+        $theme = $this->getMockForAbstractClass('Magento\Framework\View\Design\ThemeInterface');
         $themePath = 'area/theme/path';
         $theme->expects($this->once())->method('getFullPath')->willReturn($themePath);
 
@@ -126,7 +120,7 @@ class ThemeModularTest extends \PHPUnit_Framework_TestCase
         $checkResult = [];
         foreach ($files as $key => $file) {
             $checkResult[$key] = new \Magento\Framework\View\File($file['handle'], $file['module'], $theme);
-            $checkResult[$key] = $this->getMock(\Magento\Framework\View\File::class, [], [], '', false);
+            $checkResult[$key] = $this->getMock('Magento\Framework\View\File', [], [], '', false);
             $this->fileFactory
                 ->expects($this->at($key))
                 ->method('create')

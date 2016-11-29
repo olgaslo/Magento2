@@ -35,7 +35,7 @@ class FormFactory
      */
     public function __construct(
         \Magento\Framework\ObjectManagerInterface $objectManager,
-        $instanceName = \Magento\Framework\Data\Form::class
+        $instanceName = 'Magento\Framework\Data\Form'
     ) {
         $this->_objectManager = $objectManager;
         $this->_instanceName = $instanceName;

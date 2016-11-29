@@ -31,7 +31,7 @@ class StoresFixture extends Fixture
         $this->fixtureModel->resetObjectManager();
 
         /** @var \Magento\Store\Model\StoreManager $storeManager */
-        $storeManager = $this->fixtureModel->getObjectManager()->create(\Magento\Store\Model\StoreManager::class);
+        $storeManager = $this->fixtureModel->getObjectManager()->create('Magento\Store\Model\StoreManager');
         /** @var $category \Magento\Catalog\Model\Category */
 
         /** @var $defaultWebsite \Magento\Store\Model\Website */
@@ -75,7 +75,7 @@ class StoresFixture extends Fixture
         //Create $storeGroupsCount websites
         $websiteNumber = 0;
         for ($i = 0; $i < $storeGroupsCount; $i++) {
-            $category = $this->fixtureModel->getObjectManager()->create(\Magento\Catalog\Model\Category::class);
+            $category = $this->fixtureModel->getObjectManager()->create('Magento\Catalog\Model\Category');
             $websiteId = $websitesId[$websiteNumber];
             $groupId = null;
             $categoryPath = '1';

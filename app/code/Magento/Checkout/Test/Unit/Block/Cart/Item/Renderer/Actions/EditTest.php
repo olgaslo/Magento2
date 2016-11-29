@@ -23,12 +23,12 @@ class EditTest extends \PHPUnit_Framework_TestCase
     {
         $objectManagerHelper = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
 
-        $this->urlBuilderMock = $this->getMockBuilder(\Magento\Framework\UrlInterface::class)
+        $this->urlBuilderMock = $this->getMockBuilder('Magento\Framework\UrlInterface')
             ->disableOriginalConstructor()
             ->getMock();
 
         $this->model = $objectManagerHelper->getObject(
-            \Magento\Checkout\Block\Cart\Item\Renderer\Actions\Edit::class,
+            'Magento\Checkout\Block\Cart\Item\Renderer\Actions\Edit',
             [
                 'urlBuilder' => $this->urlBuilderMock,
             ]
@@ -44,14 +44,14 @@ class EditTest extends \PHPUnit_Framework_TestCase
         /**
          * @var Item|\PHPUnit_Framework_MockObject_MockObject $itemMock
          */
-        $itemMock = $this->getMockBuilder(\Magento\Quote\Model\Quote\Item::class)
+        $itemMock = $this->getMockBuilder('Magento\Quote\Model\Quote\Item')
             ->disableOriginalConstructor()
             ->getMock();
 
         /**
          * @var Product|\PHPUnit_Framework_MockObject_MockObject $itemMock
          */
-        $productMock = $this->getMockBuilder(\Magento\Catalog\Model\Product::class)
+        $productMock = $this->getMockBuilder('Magento\Catalog\Model\Product')
             ->disableOriginalConstructor()
             ->getMock();
 

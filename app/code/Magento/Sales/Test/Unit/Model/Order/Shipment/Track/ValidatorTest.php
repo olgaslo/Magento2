@@ -26,7 +26,7 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->trackModelMock = $this->getMock(
-            \Magento\Sales\Model\Order\Shipment\Track::class,
+            'Magento\Sales\Model\Order\Shipment\Track',
             ['hasData', 'getData', '__wakeup'],
             [],
             '',

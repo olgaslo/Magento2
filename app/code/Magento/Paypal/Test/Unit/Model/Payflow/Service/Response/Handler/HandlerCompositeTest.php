@@ -12,7 +12,7 @@ class HandlerCompositeTest extends \PHPUnit_Framework_TestCase
     public function testConstructorSuccess()
     {
         $handler = $this->getMockBuilder(
-            \Magento\Paypal\Model\Payflow\Service\Response\Handler\HandlerInterface::class
+            'Magento\Paypal\Model\Payflow\Service\Response\Handler\HandlerInterface'
         )->getMock();
 
         new HandlerComposite(
@@ -34,14 +34,14 @@ class HandlerCompositeTest extends \PHPUnit_Framework_TestCase
 
     public function testHandle()
     {
-        $paymentMock = $this->getMockBuilder(\Magento\Payment\Model\InfoInterface::class)
+        $paymentMock = $this->getMockBuilder('Magento\Payment\Model\InfoInterface')
             ->getMock();
-        $responseMock = $this->getMockBuilder(\Magento\Framework\DataObject::class)
+        $responseMock = $this->getMockBuilder('Magento\Framework\DataObject')
             ->disableOriginalConstructor()
             ->getMock();
 
         $handler = $this->getMockBuilder(
-            \Magento\Paypal\Model\Payflow\Service\Response\Handler\HandlerInterface::class
+            'Magento\Paypal\Model\Payflow\Service\Response\Handler\HandlerInterface'
         )->getMock();
         $handler->expects($this->once())
             ->method('handle')

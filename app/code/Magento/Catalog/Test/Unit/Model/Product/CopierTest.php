@@ -41,29 +41,29 @@ class CopierTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->copyConstructorMock = $this->getMock(\Magento\Catalog\Model\Product\CopyConstructorInterface::class);
+        $this->copyConstructorMock = $this->getMock('\Magento\Catalog\Model\Product\CopyConstructorInterface');
         $this->productFactoryMock = $this->getMock(
-            \Magento\Catalog\Model\ProductFactory::class,
+            '\Magento\Catalog\Model\ProductFactory',
             ['create'],
             [],
             '',
             false
         );
         $this->optionRepositoryMock = $this->getMock(
-            \Magento\Catalog\Model\Product\Option\Repository::class,
+            'Magento\Catalog\Model\Product\Option\Repository',
             [],
             [],
             '',
             false
         );
         $this->optionRepositoryMock;
-        $this->productMock = $this->getMock(\Magento\Catalog\Model\Product::class, [], [], '', false);
+        $this->productMock = $this->getMock('\Magento\Catalog\Model\Product', [], [], '', false);
         $this->productMock->expects($this->any())->method('getEntityId')->willReturn(1);
 
-        $this->metadata = $this->getMockBuilder(\Magento\Framework\EntityManager\EntityMetadata::class)
+        $this->metadata = $this->getMockBuilder('Magento\Framework\EntityManager\EntityMetadata')
             ->disableOriginalConstructor()
             ->getMock();
-        $metadataPool = $this->getMockBuilder(\Magento\Framework\EntityManager\MetadataPool::class)
+        $metadataPool = $this->getMockBuilder('Magento\Framework\EntityManager\MetadataPool')
             ->disableOriginalConstructor()
             ->getMock();
         $metadataPool->expects($this->any())->method('getMetadata')->willReturn($this->metadata);
@@ -87,11 +87,11 @@ class CopierTest extends \PHPUnit_Framework_TestCase
             ['linkField', null, '1'],
         ]);
 
-        $resourceMock = $this->getMock(\Magento\Catalog\Model\ResourceModel\Product::class, [], [], '', false);
+        $resourceMock = $this->getMock('\Magento\Catalog\Model\ResourceModel\Product', [], [], '', false);
         $this->productMock->expects($this->once())->method('getResource')->will($this->returnValue($resourceMock));
 
         $duplicateMock = $this->getMock(
-            \Magento\Catalog\Model\Product::class,
+            '\Magento\Catalog\Model\Product',
             [
                 '__wakeup',
                 'setData',

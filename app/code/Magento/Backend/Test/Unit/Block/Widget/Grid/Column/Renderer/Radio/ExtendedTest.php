@@ -26,16 +26,16 @@ class ExtendedTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $context = $this->getMock(\Magento\Backend\Block\Context::class, [], [], '', false);
+        $context = $this->getMock('\Magento\Backend\Block\Context', [], [], '', false);
         $this->_converter = $this->getMock(
-            \Magento\Backend\Block\Widget\Grid\Column\Renderer\Options\Converter::class,
+            '\Magento\Backend\Block\Widget\Grid\Column\Renderer\Options\Converter',
             ['toFlatArray'],
             [],
             '',
             false
         );
         $this->_column = $this->getMock(
-            \Magento\Backend\Block\Widget\Grid\Column::class,
+            'Magento\Backend\Block\Widget\Grid\Column',
             ['getValues', 'getIndex', 'getHtmlName'],
             [],
             '',

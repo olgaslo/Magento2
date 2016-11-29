@@ -7,9 +7,6 @@ namespace Magento\Downloadable\Test\Unit\Model;
 
 use Magento\Downloadable\Model\SampleRepository;
 
-/**
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
- */
 class SampleRepositoryTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -75,40 +72,43 @@ class SampleRepositoryTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->productMock = $this->getMock(
-            \Magento\Catalog\Model\Product::class,
+            '\Magento\Catalog\Model\Product',
             ['__wakeup', 'getTypeId', 'setDownloadableData', 'save', 'getId', 'getStoreId', 'getData'],
             [],
             '',
             false
         );
-        $this->repositoryMock = $this->getMock(\Magento\Catalog\Model\ProductRepository::class, [], [], '', false);
-        $this->productTypeMock = $this->getMock(\Magento\Downloadable\Model\Product\Type::class, [], [], '', false);
+        $this->repositoryMock = $this->getMock('\Magento\Catalog\Model\ProductRepository', [], [], '', false);
+        $this->productTypeMock = $this->getMock('\Magento\Downloadable\Model\Product\Type', [], [], '', false);
         $this->contentValidatorMock = $this->getMock(
-            \Magento\Downloadable\Model\Sample\ContentValidator::class,
+            'Magento\Downloadable\Model\Sample\ContentValidator',
             [],
             [],
             '',
             false
         );
         $this->contentUploaderMock = $this->getMock(
-            \Magento\Downloadable\Api\Data\File\ContentUploaderInterface::class
+            'Magento\Downloadable\Api\Data\File\ContentUploaderInterface'
         );
         $this->jsonEncoderMock = $this->getMock(
-            \Magento\Framework\Json\EncoderInterface::class
+            '\Magento\Framework\Json\EncoderInterface'
         );
         $this->sampleFactoryMock = $this->getMock(
-            \Magento\Downloadable\Model\SampleFactory::class,
+            '\Magento\Downloadable\Model\SampleFactory',
             ['create'],
             [],
             '',
             false
         );
-        $this->productTypeMock = $this->getMockBuilder(\Magento\Downloadable\Model\Product\Type::class)
+        $this->productTypeMock = $this->getMockBuilder('\Magento\Downloadable\Model\Product\Type')
             ->disableOriginalConstructor()
             ->getMock();
-        $this->sampleDataObjectFactory = $this->getMockBuilder(
-            \Magento\Downloadable\Api\Data\SampleInterfaceFactory::class
-        )->setMethods(['create'])
+        $this->sampleDataObjectFactory = $this->getMockBuilder('\Magento\Downloadable\Api\Data\SampleInterfaceFactory')
+            ->setMethods(
+                [
+                    'create',
+                ]
+            )
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -154,7 +154,7 @@ class SampleRepositoryTest extends \PHPUnit_Framework_TestCase
      */
     protected function getSampleMock(array $sampleData)
     {
-        $sampleMock = $this->getMock(\Magento\Downloadable\Api\Data\SampleInterface::class);
+        $sampleMock = $this->getMock('\Magento\Downloadable\Api\Data\SampleInterface');
 
         if (isset($sampleData['id'])) {
             $sampleMock->expects($this->any())->method('getId')->willReturn($sampleData['id']);
@@ -258,7 +258,7 @@ class SampleRepositoryTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue($this->productMock));
         $this->productMock->expects($this->any())->method('getData')->will($this->returnValue($productId));
         $existingSampleMock = $this->getMock(
-            \Magento\Downloadable\Model\Sample::class,
+            '\Magento\Downloadable\Model\Sample',
             ['__wakeup', 'getId', 'load', 'getProductId'],
             [],
             '',
@@ -311,7 +311,7 @@ class SampleRepositoryTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue($this->productMock));
         $this->productMock->expects($this->any())->method('getData')->will($this->returnValue($productId));
         $existingSampleMock = $this->getMock(
-            \Magento\Downloadable\Model\Sample::class,
+            '\Magento\Downloadable\Model\Sample',
             ['__wakeup', 'getId', 'load', 'getProductId'],
             [],
             '',
@@ -375,7 +375,7 @@ class SampleRepositoryTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue($this->productMock));
         $this->productMock->expects($this->any())->method('getData')->will($this->returnValue($productId));
         $existingSampleMock = $this->getMock(
-            \Magento\Downloadable\Model\Sample::class,
+            '\Magento\Downloadable\Model\Sample',
             ['__wakeup', 'getId', 'load', 'save', 'getProductId'],
             [],
             '',
@@ -399,7 +399,7 @@ class SampleRepositoryTest extends \PHPUnit_Framework_TestCase
     {
         $sampleId = 1;
         $sampleMock = $this->getMock(
-            \Magento\Downloadable\Model\Sample::class,
+            '\Magento\Downloadable\Model\Sample',
             [],
             [],
             '',
@@ -421,7 +421,7 @@ class SampleRepositoryTest extends \PHPUnit_Framework_TestCase
     {
         $sampleId = 1;
         $sampleMock = $this->getMock(
-            \Magento\Downloadable\Model\Sample::class,
+            '\Magento\Downloadable\Model\Sample',
             [],
             [],
             '',
@@ -450,7 +450,7 @@ class SampleRepositoryTest extends \PHPUnit_Framework_TestCase
         ];
 
         $sampleMock = $this->getMock(
-            \Magento\Downloadable\Model\Sample::class,
+            '\Magento\Downloadable\Model\Sample',
             [
                 'getId',
                 'getStoreTitle',
@@ -467,7 +467,7 @@ class SampleRepositoryTest extends \PHPUnit_Framework_TestCase
             false
         );
 
-        $sampleInterfaceMock = $this->getMock(\Magento\Downloadable\Api\Data\SampleInterface::class);
+        $sampleInterfaceMock = $this->getMock('\Magento\Downloadable\Api\Data\SampleInterface');
 
         $this->repositoryMock->expects($this->once())
             ->method('get')

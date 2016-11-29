@@ -64,7 +64,6 @@ class Result extends Template
      */
     protected function _prepareLayout()
     {
-        $this->pageConfig->getTitle()->set($this->getPageTitle());
         $breadcrumbs = $this->getLayout()->getBlock('breadcrumbs');
         if ($breadcrumbs) {
             $breadcrumbs->addCrumb(
@@ -83,16 +82,6 @@ class Result extends Template
             );
         }
         return parent::_prepareLayout();
-    }
-
-    /**
-     * Get page title
-     *
-     * @return \Magento\Framework\Phrase
-     */
-    private function getPageTitle()
-    {
-        return __('Advanced Search Results');
     }
 
     /**

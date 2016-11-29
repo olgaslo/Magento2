@@ -70,16 +70,16 @@ class IndexTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->contextMock = $this->getMock(
-            \Magento\Framework\App\Action\Context::class,
+            'Magento\Framework\App\Action\Context',
             ['getRequest', 'getResponse', 'getResultRedirectFactory'],
             [],
             '',
             false
         );
-        $this->request = $this->getMock(\Magento\Framework\App\RequestInterface::class, [], [], '', false);
-        $this->response = $this->getMock(\Magento\Framework\App\ResponseInterface::class, [], [], '', false);
+        $this->request = $this->getMock('Magento\Framework\App\RequestInterface', [], [], '', false);
+        $this->response = $this->getMock('Magento\Framework\App\ResponseInterface', [], [], '', false);
         $this->redirectFactoryMock = $this->getMock(
-            \Magento\Framework\Controller\Result\RedirectFactory::class,
+            'Magento\Framework\Controller\Result\RedirectFactory',
             ['create'],
             [],
             '',
@@ -92,42 +92,30 @@ class IndexTest extends \PHPUnit_Framework_TestCase
             ->willReturn($this->redirectFactoryMock);
 
         $this->itemFactoryMock = $this->getMock(
-            \Magento\Catalog\Model\Product\Compare\ItemFactory::class,
+            'Magento\Catalog\Model\Product\Compare\ItemFactory',
             ['create'],
             [],
             '',
             false
         );
         $this->collectionFactoryMock = $this->getMock(
-            \Magento\Catalog\Model\ResourceModel\Product\Compare\Item\CollectionFactory::class,
+            'Magento\Catalog\Model\ResourceModel\Product\Compare\Item\CollectionFactory',
             ['create'],
             [],
             '',
             false
         );
-        $this->sessionMock = $this->getMock(\Magento\Customer\Model\Session::class, [], [], '', false);
-        $this->visitorMock = $this->getMock(\Magento\Customer\Model\Visitor::class, [], [], '', false);
-        $this->listCompareMock = $this->getMock(
-            \Magento\Catalog\Model\Product\Compare\ListCompare::class,
-            [],
-            [],
-            '',
-            false
-        );
-        $this->catalogSession = $this->getMock(
-            \Magento\Catalog\Model\Session::class,
-            ['setBeforeCompareUrl'],
-            [],
-            '',
-            false
-        );
-        $this->storeManagerMock = $this->getMock(\Magento\Store\Model\StoreManagerInterface::class);
-        $this->formKeyValidatorMock = $this->getMockBuilder(\Magento\Framework\Data\Form\FormKey\Validator::class)
+        $this->sessionMock = $this->getMock('Magento\Customer\Model\Session', [], [], '', false);
+        $this->visitorMock = $this->getMock('Magento\Customer\Model\Visitor', [], [], '', false);
+        $this->listCompareMock = $this->getMock('Magento\Catalog\Model\Product\Compare\ListCompare', [], [], '', false);
+        $this->catalogSession = $this->getMock('Magento\Catalog\Model\Session', ['setBeforeCompareUrl'], [], '', false);
+        $this->storeManagerMock = $this->getMock('Magento\Store\Model\StoreManagerInterface');
+        $this->formKeyValidatorMock = $this->getMockBuilder('Magento\Framework\Data\Form\FormKey\Validator')
             ->disableOriginalConstructor()
             ->getMock();
-        $this->pageFactoryMock = $this->getMock(\Magento\Framework\View\Result\PageFactory::class, [], [], '', false);
-        $this->productRepositoryMock = $this->getMock(\Magento\Catalog\Api\ProductRepositoryInterface::class);
-        $this->decoderMock = $this->getMock(\Magento\Framework\Url\DecoderInterface::class);
+        $this->pageFactoryMock = $this->getMock('Magento\Framework\View\Result\PageFactory', [], [], '', false);
+        $this->productRepositoryMock = $this->getMock('Magento\Catalog\Api\ProductRepositoryInterface');
+        $this->decoderMock = $this->getMock('Magento\Framework\Url\DecoderInterface');
 
         $this->index = new Index(
             $this->contextMock,
@@ -185,7 +173,7 @@ class IndexTest extends \PHPUnit_Framework_TestCase
         $this->listCompareMock->expects($this->once())
             ->method('addProducts')
             ->with([1, 2, 3]);
-        $redirect = $this->getMock(\Magento\Framework\Controller\Result\Redirect::class, ['setPath'], [], '', false);
+        $redirect = $this->getMock('Magento\Framework\Controller\Result\Redirect', ['setPath'], [], '', false);
         $redirect->expects($this->once())
             ->method('setPath')
             ->with('*/*/*');

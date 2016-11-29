@@ -25,14 +25,14 @@ class AdditionalTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->urlBuilderMock = $this->getMock(\Magento\Framework\UrlInterface::class);
-        $this->appStateMock = $this->getMockBuilder(\Magento\Framework\App\State::class)
+        $this->urlBuilderMock = $this->getMock('Magento\Framework\UrlInterface');
+        $this->appStateMock = $this->getMockBuilder('Magento\Framework\App\State')
             ->disableOriginalConstructor()
             ->getMock();
 
         $objectHelper = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
         $context = $objectHelper->getObject(
-            \Magento\Backend\Block\Template\Context::class,
+            'Magento\Backend\Block\Template\Context',
             [
                 'urlBuilder' => $this->urlBuilderMock,
                 'appState' => $this->appStateMock,
@@ -40,7 +40,7 @@ class AdditionalTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->additonalBlock = $objectHelper->getObject(
-            \Magento\Backend\Block\Cache\Additional::class,
+            'Magento\Backend\Block\Cache\Additional',
             ['context' => $context]
         );
     }

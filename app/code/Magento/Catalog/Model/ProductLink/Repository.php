@@ -110,7 +110,7 @@ class Repository implements \Magento\Catalog\Api\ProductLinkRepositoryInterface
         $links = [];
         $extensions = $this->dataObjectProcessor->buildOutputDataArray(
             $entity->getExtensionAttributes(),
-            \Magento\Catalog\Api\Data\ProductLinkExtensionInterface::class
+            'Magento\Catalog\Api\Data\ProductLinkExtensionInterface'
         );
         $extensions = is_array($extensions) ? $extensions : [];
         $data = $entity->__toArray();
@@ -241,7 +241,7 @@ class Repository implements \Magento\Catalog\Api\ProductLinkRepositoryInterface
     {
         if (null === $this->linkResource) {
             $this->linkResource = \Magento\Framework\App\ObjectManager::getInstance()
-                ->get(\Magento\Catalog\Model\ResourceModel\Product\Link::class);
+                ->get('Magento\Catalog\Model\ResourceModel\Product\Link');
         }
         return $this->linkResource;
     }
@@ -253,7 +253,7 @@ class Repository implements \Magento\Catalog\Api\ProductLinkRepositoryInterface
     {
         if (null === $this->linkTypeProvider) {
             $this->linkTypeProvider = \Magento\Framework\App\ObjectManager::getInstance()
-                ->get(\Magento\Catalog\Model\Product\LinkTypeProvider::class);
+                ->get('Magento\Catalog\Model\Product\LinkTypeProvider');
         }
         return $this->linkTypeProvider;
     }
@@ -265,7 +265,7 @@ class Repository implements \Magento\Catalog\Api\ProductLinkRepositoryInterface
     {
         if (null === $this->productLinkFactory) {
             $this->productLinkFactory = \Magento\Framework\App\ObjectManager::getInstance()
-                ->get(\Magento\Catalog\Api\Data\ProductLinkInterfaceFactory::class);
+                ->get('Magento\Catalog\Api\Data\ProductLinkInterfaceFactory');
         }
         return $this->productLinkFactory;
     }
@@ -277,7 +277,7 @@ class Repository implements \Magento\Catalog\Api\ProductLinkRepositoryInterface
     {
         if (null === $this->productLinkExtensionFactory) {
             $this->productLinkExtensionFactory = \Magento\Framework\App\ObjectManager::getInstance()
-                ->get(\Magento\Catalog\Api\Data\ProductLinkExtensionFactory::class);
+                ->get('Magento\Catalog\Api\Data\ProductLinkExtensionFactory');
         }
         return $this->productLinkExtensionFactory;
     }
@@ -289,7 +289,7 @@ class Repository implements \Magento\Catalog\Api\ProductLinkRepositoryInterface
     {
         if (null === $this->metadataPool) {
             $this->metadataPool = \Magento\Framework\App\ObjectManager::getInstance()
-                ->get(\Magento\Framework\EntityManager\MetadataPool::class);
+                ->get('Magento\Framework\EntityManager\MetadataPool');
         }
         return $this->metadataPool;
     }

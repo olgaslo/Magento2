@@ -41,7 +41,7 @@ class TierPrice extends DataSource
     private $fixtureFactory;
 
     /**
-     * Rough fixture field data.
+     * Rought fixture field data.
      *
      * @var array
      */

@@ -74,24 +74,24 @@ class FulltextTest extends \PHPUnit_Framework_TestCase
     {
         /** @var \Magento\Framework\Indexer\IndexerInterface indexer */
         $this->indexer = Bootstrap::getObjectManager()->create(
-            \Magento\Indexer\Model\Indexer::class
+            'Magento\Indexer\Model\Indexer'
         );
         $this->indexer->load('catalogsearch_fulltext');
 
         $this->engine = Bootstrap::getObjectManager()->get(
-            \Magento\CatalogSearch\Model\ResourceModel\Engine::class
+            'Magento\CatalogSearch\Model\ResourceModel\Engine'
         );
 
         $this->resourceFulltext = Bootstrap::getObjectManager()->get(
-            \Magento\CatalogSearch\Model\ResourceModel\Fulltext::class
+            'Magento\CatalogSearch\Model\ResourceModel\Fulltext'
         );
 
         $this->queryFactory = Bootstrap::getObjectManager()->get(
-            \Magento\Search\Model\QueryFactory::class
+            'Magento\Search\Model\QueryFactory'
         );
 
         $this->dimension = Bootstrap::getObjectManager()->create(
-            \Magento\Framework\Search\Request\Dimension::class,
+            '\Magento\Framework\Search\Request\Dimension',
             ['name' => 'scope', 'value' => '1']
         );
 
@@ -152,7 +152,7 @@ class FulltextTest extends \PHPUnit_Framework_TestCase
 
         /** @var \Magento\Catalog\Model\Product\Action $action */
         $action = Bootstrap::getObjectManager()->get(
-            \Magento\Catalog\Model\Product\Action::class
+            'Magento\Catalog\Model\Product\Action'
         );
         $action->updateAttributes($productIds, $attrData, 1);
 
@@ -223,7 +223,7 @@ class FulltextTest extends \PHPUnit_Framework_TestCase
     {
         /** @var Product $product */
         $product = Bootstrap::getObjectManager()->get(
-            \Magento\Catalog\Model\Product::class
+            'Magento\Catalog\Model\Product'
         );
         return $product->loadByAttribute('sku', $sku);
     }

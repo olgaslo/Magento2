@@ -44,28 +44,28 @@ class HistoryTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->appResourceMock = $this->getMock(
-            \Magento\Framework\App\ResourceConnection::class,
+            'Magento\Framework\App\ResourceConnection',
             [],
             [],
             '',
             false
         );
         $this->connectionMock = $this->getMock(
-            \Magento\Framework\DB\Adapter\Pdo\Mysql::class,
+            'Magento\Framework\DB\Adapter\Pdo\Mysql',
             [],
             [],
             '',
             false
         );
         $this->validatorMock = $this->getMock(
-            \Magento\Sales\Model\Order\Status\History\Validator::class,
+            'Magento\Sales\Model\Order\Status\History\Validator',
             [],
             [],
             '',
             false
         );
         $this->entitySnapshotMock = $this->getMock(
-            \Magento\Framework\Model\ResourceModel\Db\VersionControl\Snapshot::class,
+            'Magento\Framework\Model\ResourceModel\Db\VersionControl\Snapshot',
             [],
             [],
             '',
@@ -84,19 +84,19 @@ class HistoryTest extends \PHPUnit_Framework_TestCase
             ->method('lastInsertId');
 
         $relationProcessorMock = $this->getMock(
-            \Magento\Framework\Model\ResourceModel\Db\ObjectRelationProcessor::class,
+            '\Magento\Framework\Model\ResourceModel\Db\ObjectRelationProcessor',
             [],
             [],
             '',
             false
         );
 
-        $contextMock = $this->getMock(\Magento\Framework\Model\ResourceModel\Db\Context::class, [], [], '', false);
+        $contextMock = $this->getMock('\Magento\Framework\Model\ResourceModel\Db\Context', [], [], '', false);
         $contextMock->expects($this->once())->method('getResources')->willReturn($this->appResourceMock);
         $contextMock->expects($this->once())->method('getObjectRelationProcessor')->willReturn($relationProcessorMock);
 
         $this->historyResource = $objectManager->getObject(
-            \Magento\Sales\Model\ResourceModel\Order\Status\History::class,
+            'Magento\Sales\Model\ResourceModel\Order\Status\History',
             [
                 'context' => $contextMock,
                 'validator' => $this->validatorMock,
@@ -111,7 +111,7 @@ class HistoryTest extends \PHPUnit_Framework_TestCase
     public function testSave()
     {
         $historyMock = $this->getMock(
-            \Magento\Sales\Model\Order\Status\History::class,
+            'Magento\Sales\Model\Order\Status\History',
             [],
             [],
             '',
@@ -135,7 +135,7 @@ class HistoryTest extends \PHPUnit_Framework_TestCase
     public function testValidate()
     {
         $historyMock = $this->getMock(
-            \Magento\Sales\Model\Order\Status\History::class,
+            'Magento\Sales\Model\Order\Status\History',
             [],
             [],
             '',

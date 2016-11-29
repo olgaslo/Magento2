@@ -23,12 +23,12 @@ class MoveToWishlistTest extends \PHPUnit_Framework_TestCase
     {
         $objectManagerHelper = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
 
-        $this->wishlistHelperMock = $this->getMockBuilder(\Magento\Wishlist\Helper\Data::class)
+        $this->wishlistHelperMock = $this->getMockBuilder('Magento\Wishlist\Helper\Data')
             ->disableOriginalConstructor()
             ->getMock();
 
         $this->model = $objectManagerHelper->getObject(
-            \Magento\Wishlist\Block\Cart\Item\Renderer\Actions\MoveToWishlist::class,
+            'Magento\Wishlist\Block\Cart\Item\Renderer\Actions\MoveToWishlist',
             [
                 'wishlistHelper' => $this->wishlistHelperMock,
             ]
@@ -52,7 +52,7 @@ class MoveToWishlistTest extends \PHPUnit_Framework_TestCase
         /**
          * @var Item|\PHPUnit_Framework_MockObject_MockObject $itemMock
          */
-        $itemMock = $this->getMockBuilder(\Magento\Quote\Model\Quote\Item::class)
+        $itemMock = $this->getMockBuilder('Magento\Quote\Model\Quote\Item')
             ->disableOriginalConstructor()
             ->getMock();
 

@@ -34,18 +34,18 @@ class DataTest extends \PHPUnit_Framework_TestCase
     {
         $helper = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
 
-        $this->urlBuilderMock = $this->getMock(\Magento\Backend\Model\Url::class, ['getUrl'], [], '', false);
+        $this->urlBuilderMock = $this->getMock('Magento\Backend\Model\Url', ['getUrl'], [], '', false);
 
-        $contextMock = $this->getMock(\Magento\Framework\App\Helper\Context::class, [], [], '', false);
+        $contextMock = $this->getMock('Magento\Framework\App\Helper\Context', [], [], '', false);
         $contextMock->expects($this->any())
             ->method('getUrlBuilder')
             ->willReturn($this->urlBuilderMock);
 
-        $this->orderFactoryMock = $this->getMock(\Magento\Sales\Model\OrderFactory::class, ['create'], [], '', false);
-        $this->storeManagerMock = $this->getMock(\Magento\Store\Model\StoreManager::class, [], [], '', false);
+        $this->orderFactoryMock = $this->getMock('Magento\Sales\Model\OrderFactory', ['create'], [], '', false);
+        $this->storeManagerMock = $this->getMock('Magento\Store\Model\StoreManager', [], [], '', false);
 
         $this->dataHelper = $helper->getObject(
-            \Magento\Authorizenet\Helper\Backend\Data::class,
+            'Magento\Authorizenet\Helper\Backend\Data',
             [
                 'context' => $contextMock,
                 'storeManager' =>$this->storeManagerMock,
@@ -68,7 +68,7 @@ class DataTest extends \PHPUnit_Framework_TestCase
     public function testGetSuccessOrderUrl()
     {
         $orderMock = $this->getMock(
-            \Magento\Sales\Model\Order::class,
+            'Magento\Sales\Model\Order',
             ['loadByIncrementId', 'getId', '__wakeup'],
             [],
             '',
@@ -113,7 +113,7 @@ class DataTest extends \PHPUnit_Framework_TestCase
     {
         $baseUrl = 'http://base.url/';
 
-        $defaultStoreMock = $this->getMockBuilder(\Magento\Store\Model\Store::class)
+        $defaultStoreMock = $this->getMockBuilder('Magento\Store\Model\Store')
             ->disableOriginalConstructor()
             ->getMock();
 

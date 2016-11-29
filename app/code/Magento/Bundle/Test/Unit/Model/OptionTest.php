@@ -32,21 +32,21 @@ class OptionTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->selectionFirst = $this->getMock(
-            \Magento\Catalog\Model\Product::class,
+            'Magento\Catalog\Model\Product',
             ['__wakeup', 'isSaleable', 'getIsDefault', 'getSelectionId'],
             [],
             '',
             false
         );
         $this->selectionSecond = $this->getMock(
-            \Magento\Catalog\Model\Product::class,
+            'Magento\Catalog\Model\Product',
             ['__wakeup', 'isSaleable', 'getIsDefault', 'getSelectionId'],
             [],
             '',
             false
         );
         $this->resource = $this->getMock(
-            \Magento\Framework\Model\ResourceModel\AbstractResource::class,
+            'Magento\Framework\Model\ResourceModel\AbstractResource',
             [
                 '_construct',
                 'getConnection',
@@ -57,7 +57,7 @@ class OptionTest extends \PHPUnit_Framework_TestCase
             '',
             false
         );
-        $this->model = (new ObjectManager($this))->getObject(\Magento\Bundle\Model\Option::class, [
+        $this->model = (new ObjectManager($this))->getObject('Magento\Bundle\Model\Option', [
             'resource' => $this->resource,
         ]);
     }

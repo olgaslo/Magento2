@@ -26,21 +26,21 @@ class FilesystemTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->_dirReadFactoryMock = $this->getMock(
-            \Magento\Framework\Filesystem\Directory\ReadFactory::class,
+            'Magento\Framework\Filesystem\Directory\ReadFactory',
             [],
             [],
             '',
             false
         );
         $this->_directoryListMock = $this->getMock(
-            \Magento\Framework\App\Filesystem\DirectoryList::class,
+            'Magento\Framework\App\Filesystem\DirectoryList',
             [],
             [],
             '',
             false
         );
         $this->_dirWriteFactoryMock = $this->getMock(
-            \Magento\Framework\Filesystem\Directory\WriteFactory::class,
+            'Magento\Framework\Filesystem\Directory\WriteFactory',
             [],
             [],
             '',
@@ -56,7 +56,7 @@ class FilesystemTest extends \PHPUnit_Framework_TestCase
     public function testGetDirectoryRead()
     {
         /** @var \Magento\Framework\Filesystem\Directory\ReadInterface $dirReadMock */
-        $dirReadMock = $this->getMock(\Magento\Framework\Filesystem\Directory\ReadInterface::class);
+        $dirReadMock = $this->getMock('Magento\Framework\Filesystem\Directory\ReadInterface');
         $this->_dirReadFactoryMock->expects($this->once())->method('create')->will($this->returnValue($dirReadMock));
         $this->assertEquals($dirReadMock, $this->_filesystem->getDirectoryRead(DirectoryList::ROOT));
     }
@@ -64,7 +64,7 @@ class FilesystemTest extends \PHPUnit_Framework_TestCase
     public function testGetDirectoryWrite()
     {
         /** @var \Magento\Framework\Filesystem\Directory\WriteInterface $dirWriteMock */
-        $dirWriteMock = $this->getMock(\Magento\Framework\Filesystem\Directory\WriteInterface::class);
+        $dirWriteMock = $this->getMock('Magento\Framework\Filesystem\Directory\WriteInterface');
         $this->_dirWriteFactoryMock->expects($this->once())->method('create')->will($this->returnValue($dirWriteMock));
         $this->assertEquals($dirWriteMock, $this->_filesystem->getDirectoryWrite(DirectoryList::ROOT));
     }

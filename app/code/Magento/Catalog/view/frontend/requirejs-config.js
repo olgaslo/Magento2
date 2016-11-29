@@ -6,6 +6,7 @@
 var config = {
     map: {
         '*': {
+            compareItems:           'Magento_Catalog/js/compare',
             compareList:            'Magento_Catalog/js/list',
             relatedProducts:        'Magento_Catalog/js/related-products',
             upsellProducts:         'Magento_Catalog/js/upsell-products',

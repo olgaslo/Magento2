@@ -296,65 +296,65 @@ class Application
             ? $overriddenParams[\Magento\Framework\App\Bootstrap::INIT_PARAM_FILESYSTEM_DIR_PATHS]
             : [];
         $directoryList = new DirectoryList(BP, $directories);
+
         /** @var \Magento\TestFramework\ObjectManager $objectManager */
         $objectManager = Helper\Bootstrap::getObjectManager();
         if (!$objectManager) {
             $objectManager = $this->_factory->create($overriddenParams);
-            $objectManager->addSharedInstance($directoryList, \Magento\Framework\App\Filesystem\DirectoryList::class);
-            $objectManager->addSharedInstance($directoryList, \Magento\Framework\Filesystem\DirectoryList::class);
+            $objectManager->addSharedInstance($directoryList, 'Magento\Framework\App\Filesystem\DirectoryList');
+            $objectManager->addSharedInstance($directoryList, 'Magento\Framework\Filesystem\DirectoryList');
         } else {
             $objectManager = $this->_factory->restore($objectManager, $directoryList, $overriddenParams);
         }
+
         /** @var \Magento\TestFramework\App\Filesystem $filesystem */
-        $filesystem = $objectManager->get(\Magento\TestFramework\App\Filesystem::class);
-        $objectManager->removeSharedInstance(\Magento\Framework\Filesystem::class);
-        $objectManager->addSharedInstance($filesystem, \Magento\Framework\Filesystem::class);
+        $filesystem = $objectManager->get('Magento\TestFramework\App\Filesystem');
+        $objectManager->removeSharedInstance('Magento\Framework\Filesystem');
+        $objectManager->addSharedInstance($filesystem, 'Magento\Framework\Filesystem');
+
         /** @var \Psr\Log\LoggerInterface $logger */
         $logger = $objectManager->create(
-            \Magento\TestFramework\ErrorLog\Logger::class,
+            'Magento\TestFramework\ErrorLog\Logger',
             [
                 'name' => 'integration-tests',
                 'handlers' => [
                     'system' => $objectManager->create(
-                        \Magento\Framework\Logger\Handler\System::class,
+                        'Magento\Framework\Logger\Handler\System',
                         [
                             'exceptionHandler' => $objectManager->create(
-                                \Magento\Framework\Logger\Handler\Exception::class,
+                                'Magento\Framework\Logger\Handler\Exception',
                                 ['filePath' => $this->installDir]
                             ),
                             'filePath' => $this->installDir
                         ]
                     ),
                     'debug'  => $objectManager->create(
-                        \Magento\Framework\Logger\Handler\Debug::class,
+                        'Magento\Framework\Logger\Handler\Debug',
                         ['filePath' => $this->installDir]
                     ),
                 ]
             ]
         );
-        $objectManager->removeSharedInstance(\Magento\Framework\Logger\Monolog::class);
-        $objectManager->addSharedInstance($logger, \Magento\Framework\Logger\Monolog::class);
-        $sequenceBuilder = $objectManager->get(\Magento\TestFramework\Db\Sequence\Builder::class);
-        $objectManager->addSharedInstance($sequenceBuilder, \Magento\SalesSequence\Model\Builder::class);
+        $objectManager->removeSharedInstance('Magento\Framework\Logger\Monolog');
+        $objectManager->addSharedInstance($logger, 'Magento\Framework\Logger\Monolog');
+        $sequenceBuilder = $objectManager->get('\Magento\TestFramework\Db\Sequence\Builder');
+        $objectManager->addSharedInstance($sequenceBuilder, 'Magento\SalesSequence\Model\Builder');
         Helper\Bootstrap::setObjectManager($objectManager);
         $objectManagerConfiguration = [
             'preferences' => [
-                \Magento\Framework\App\State::class => \Magento\TestFramework\App\State::class,
-                \Magento\Framework\Mail\TransportInterface::class =>
-                    \Magento\TestFramework\Mail\TransportInterfaceMock::class,
-                \Magento\Framework\Mail\Template\TransportBuilder::class
-                    => \Magento\TestFramework\Mail\Template\TransportBuilderMock::class,
+                'Magento\Framework\App\State' => 'Magento\TestFramework\App\State',
+                'Magento\Framework\Mail\TransportInterface' => 'Magento\TestFramework\Mail\TransportInterfaceMock',
+                'Magento\Framework\Mail\Template\TransportBuilder'
+                    => 'Magento\TestFramework\Mail\Template\TransportBuilderMock',
             ]
         ];
         if ($this->loadTestExtensionAttributes) {
             $objectManagerConfiguration = array_merge(
                 $objectManagerConfiguration,
                 [
-                    \Magento\Framework\Api\ExtensionAttribute\Config\Reader::class => [
+                    'Magento\Framework\Api\ExtensionAttribute\Config\Reader' => [
                         'arguments' => [
-                            'fileResolver' => [
-                                'instance' => \Magento\TestFramework\Api\Config\Reader\FileResolver::class
-                            ],
+                            'fileResolver' => ['instance' => 'Magento\TestFramework\Api\Config\Reader\FileResolver'],
                         ],
                     ],
                 ]
@@ -363,12 +363,12 @@ class Application
         $objectManager->configure($objectManagerConfiguration);
         /** Register event observer of Integration Framework */
         /** @var \Magento\Framework\Event\Config\Data $eventConfigData */
-        $eventConfigData = $objectManager->get(\Magento\Framework\Event\Config\Data::class);
+        $eventConfigData = $objectManager->get('Magento\Framework\Event\Config\Data');
         $eventConfigData->merge(
             [
                 'core_app_init_current_store_after' => [
                     'integration_tests' => [
-                        'instance' => \Magento\TestFramework\Event\Magento::class,
+                        'instance' => 'Magento\TestFramework\Event\Magento',
                         'name' => 'integration_tests'
                     ]
                 ]
@@ -376,15 +376,13 @@ class Application
         );
         $this->loadArea(\Magento\TestFramework\Application::DEFAULT_APP_AREA);
         \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->configure(
-            $objectManager->get(\Magento\Framework\ObjectManager\DynamicConfigInterface::class)->getConfiguration()
+            $objectManager->get('Magento\Framework\ObjectManager\DynamicConfigInterface')->getConfiguration()
         );
-        \Magento\Framework\Phrase::setRenderer(
-            $objectManager->get(\Magento\Framework\Phrase\Renderer\Placeholder::class)
-        );
+        \Magento\Framework\Phrase::setRenderer($objectManager->get('Magento\Framework\Phrase\Renderer\Placeholder'));
         /** @var \Magento\TestFramework\Db\Sequence $sequence */
-        $sequence = $objectManager->get(\Magento\TestFramework\Db\Sequence::class);
+        $sequence = $objectManager->get('Magento\TestFramework\Db\Sequence');
         $sequence->generateSequences();
-        $objectManager->create(\Magento\TestFramework\Config::class, ['configPath' => $this->globalConfigFile])
+        $objectManager->create('Magento\TestFramework\Config', ['configPath' => $this->globalConfigFile])
             ->rewriteAdditionalConfig();
     }
 
@@ -409,7 +407,7 @@ class Application
     {
         $objectManager = \Magento\TestFramework\Helper\Bootstrap::getObjectManager();
         /** @var \Magento\Framework\App\Http $app */
-        $app = $objectManager->get(\Magento\Framework\App\Http::class);
+        $app = $objectManager->get('Magento\Framework\App\Http');
         $response = $app->launch();
         $response->sendResponse();
     }
@@ -605,18 +603,16 @@ class Application
     public function loadArea($areaCode)
     {
         $this->_appArea = $areaCode;
-        $scope = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->get(
-            \Magento\Framework\Config\Scope::class
-        );
+        $scope = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->get('Magento\Framework\Config\Scope');
         $scope->setCurrentScope($areaCode);
         \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->configure(
             \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->get(
-                \Magento\Framework\App\ObjectManager\ConfigLoader::class
+                'Magento\Framework\App\ObjectManager\ConfigLoader'
             )->load(
                 $areaCode
             )
         );
-        $app = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->get(\Magento\Framework\App\AreaList::class);
+        $app = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->get('Magento\Framework\App\AreaList');
         if ($areaCode == \Magento\TestFramework\Application::DEFAULT_APP_AREA) {
             $app->getArea($areaCode)->load(\Magento\Framework\App\Area::PART_CONFIG);
         } else {

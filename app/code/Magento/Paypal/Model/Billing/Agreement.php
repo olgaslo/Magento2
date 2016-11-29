@@ -28,8 +28,6 @@ use Magento\Sales\Model\Order\Payment;
  * @method \Magento\Paypal\Model\Billing\Agreement setStoreId(int $value)
  * @method string getAgreementLabel()
  * @method \Magento\Paypal\Model\Billing\Agreement setAgreementLabel(string $value)
- *
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
 class Agreement extends \Magento\Paypal\Model\Billing\AbstractAgreement
 {
@@ -86,7 +84,7 @@ class Agreement extends \Magento\Paypal\Model\Billing\AbstractAgreement
      */
     protected function _construct()
     {
-        $this->_init(\Magento\Paypal\Model\ResourceModel\Billing\Agreement::class);
+        $this->_init('Magento\Paypal\Model\ResourceModel\Billing\Agreement');
     }
 
     /**

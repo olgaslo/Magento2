@@ -8,7 +8,6 @@ namespace Magento\Sales\Test\Block\Adminhtml\Order;
 
 use Magento\Mtf\Block\Block;
 use Magento\Mtf\Client\Locator;
-use Magento\Ui\Test\Block\Adminhtml\Modal;
 
 /**
  * Order actions block.
@@ -178,7 +177,10 @@ class Actions extends Block
     public function cancel()
     {
         $this->_rootElement->find($this->cancel)->click();
-        $this->acceptAlert();
+        $element = $this->browser->find($this->confirmModal);
+        /** @var \Magento\Ui\Test\Block\Adminhtml\Modal $modal */
+        $modal = $this->blockFactory->create('Magento\Ui\Test\Block\Adminhtml\Modal', ['element' => $element]);
+        $modal->acceptAlert();
     }
 
     /**
@@ -199,7 +201,6 @@ class Actions extends Block
     public function void()
     {
         $this->_rootElement->find($this->void)->click();
-        $this->acceptAlert();
     }
 
     /**
@@ -261,42 +262,5 @@ class Actions extends Block
     public function isActionButtonVisible($buttonName)
     {
         return $this->_rootElement->find(sprintf($this->button, $buttonName), Locator::SELECTOR_XPATH)->isVisible();
-    }
-
-    /**
-     * Accept order.
-     *
-     * @return void
-     */
-    public function accept()
-    {
-        $acceptPayment = '#accept_payment';
-        $this->_rootElement->find($acceptPayment)->click();
-        $this->acceptAlert();
-    }
-
-    /**
-     * Deny order.
-     *
-     * @return void
-     */
-    public function deny()
-    {
-        $denyPayment = '#deny_payment';
-        $this->_rootElement->find($denyPayment)->click();
-        $this->acceptAlert();
-    }
-
-    /**
-     * Accept alert.
-     *
-     * @return void
-     */
-    private function acceptAlert()
-    {
-        $element = $this->browser->find($this->confirmModal);
-        /** @var Modal $modal */
-        $modal = $this->blockFactory->create(Modal::class, ['element' => $element]);
-        $modal->acceptAlert();
     }
 }

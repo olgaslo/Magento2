@@ -18,12 +18,12 @@ class EscapeRendererTest extends \PHPUnit_Framework_TestCase
 
         /** @var Escaper | \PHPUnit_Framework_MockObject_MockObject $escaper */
         $escaper = $this->getMockBuilder(
-            \Magento\Framework\Escaper::class
+            'Magento\Framework\Escaper'
         )
             ->disableOriginalConstructor()
             ->getMock();
         /** @var MessageInterface | \PHPUnit_Framework_MockObject_MockObject $message */
-        $message = $this->getMock(\Magento\Framework\Message\MessageInterface::class);
+        $message = $this->getMock('Magento\Framework\Message\MessageInterface');
 
         $message->expects(static::once())
             ->method('getText')

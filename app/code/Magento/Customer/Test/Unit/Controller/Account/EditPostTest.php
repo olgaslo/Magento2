@@ -94,32 +94,27 @@ class EditPostTest extends \PHPUnit_Framework_TestCase
      */
     protected $authenticationMock;
 
-    /**
-     * @var \Magento\Customer\Model\Customer\Mapper|\PHPUnit_Framework_MockObject_MockObject
-     */
-    private $customerMapperMock;
-
     protected function setUp()
     {
         $this->prepareContext();
 
-        $this->customerSession = $this->getMockBuilder(\Magento\Customer\Model\Session::class)
+        $this->customerSession = $this->getMockBuilder('Magento\Customer\Model\Session')
             ->disableOriginalConstructor()
             ->setMethods(['getCustomerId', 'setCustomerFormData', 'logout', 'start'])
             ->getMock();
 
-        $this->customerAccountManagement = $this->getMockBuilder(\Magento\Customer\Model\AccountManagement::class)
+        $this->customerAccountManagement = $this->getMockBuilder('Magento\Customer\Model\AccountManagement')
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->customerRepository = $this->getMockBuilder(\Magento\Customer\Api\CustomerRepositoryInterface::class)
+        $this->customerRepository = $this->getMockBuilder('Magento\Customer\Api\CustomerRepositoryInterface')
             ->getMockForAbstractClass();
 
-        $this->validator = $this->getMockBuilder(\Magento\Framework\Data\Form\FormKey\Validator::class)
+        $this->validator = $this->getMockBuilder('Magento\Framework\Data\Form\FormKey\Validator')
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->customerExtractor = $this->getMockBuilder(\Magento\Customer\Model\CustomerExtractor::class)
+        $this->customerExtractor = $this->getMockBuilder('Magento\Customer\Model\CustomerExtractor')
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -138,10 +133,6 @@ class EditPostTest extends \PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->customerMapperMock = $this->getMockBuilder(\Magento\Customer\Model\Customer\Mapper::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
         $this->model = new EditPost(
             $this->context,
             $this->customerSession,
@@ -150,28 +141,16 @@ class EditPostTest extends \PHPUnit_Framework_TestCase
             $this->validator,
             $this->customerExtractor
         );
-
-        $objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
-        $objectManager->setBackwardCompatibleProperty(
-            $this->model,
-            'emailNotification',
-            $this->emailNotification
-        );
-        $objectManager->setBackwardCompatibleProperty(
-            $this->model,
-            'scopeConfig',
-            $scopeConfigMock
-        );
-        $objectManager->setBackwardCompatibleProperty(
-            $this->model,
-            'authentication',
-            $this->authenticationMock
-        );
-        $objectManager->setBackwardCompatibleProperty(
-            $this->model,
-            'customerMapper',
-            $this->customerMapperMock
-        );
+        $reflection = new \ReflectionClass(get_class($this->model));
+        $reflectionProperty = $reflection->getProperty('emailNotification');
+        $reflectionProperty->setAccessible(true);
+        $reflectionProperty->setValue($this->model, $this->emailNotification);
+        $reflectionProperty2 = $reflection->getProperty('scopeConfig');
+        $reflectionProperty2->setAccessible(true);
+        $reflectionProperty2->setValue($this->model, $scopeConfigMock);
+        $reflectionProperty3 = $reflection->getProperty('authentication');
+        $reflectionProperty3->setAccessible(true);
+        $reflectionProperty3->setValue($this->model, $this->authenticationMock);
     }
 
     public function testInvalidFormKey()
@@ -214,7 +193,7 @@ class EditPostTest extends \PHPUnit_Framework_TestCase
         $currentPassword = '1234567';
         $customerEmail = 'customer@example.com';
 
-        $address = $this->getMockBuilder(\Magento\Customer\Api\Data\AddressInterface::class)
+        $address = $this->getMockBuilder('Magento\Customer\Api\Data\AddressInterface')
             ->getMockForAbstractClass();
 
         $currentCustomerMock = $this->getCurrentCustomerMock($customerId, $address);
@@ -223,11 +202,6 @@ class EditPostTest extends \PHPUnit_Framework_TestCase
         $currentCustomerMock->expects($this->any())
             ->method('getEmail')
             ->willReturn($customerEmail);
-
-        $this->customerMapperMock->expects($this->once())
-            ->method('toFlatArray')
-            ->with($currentCustomerMock)
-            ->willReturn([]);
 
         $this->customerSession->expects($this->once())
             ->method('getCustomerId')
@@ -321,16 +295,11 @@ class EditPostTest extends \PHPUnit_Framework_TestCase
         $customerId = 1;
         $password = '1234567';
 
-        $address = $this->getMockBuilder(\Magento\Customer\Api\Data\AddressInterface::class)
+        $address = $this->getMockBuilder('Magento\Customer\Api\Data\AddressInterface')
             ->getMockForAbstractClass();
 
         $currentCustomerMock = $this->getCurrentCustomerMock($customerId, $address);
         $newCustomerMock = $this->getNewCustomerMock($customerId, $address);
-
-        $this->customerMapperMock->expects($this->once())
-            ->method('toFlatArray')
-            ->with($currentCustomerMock)
-            ->willReturn([]);
 
         $this->customerExtractor->expects($this->once())
             ->method('extract')
@@ -406,12 +375,12 @@ class EditPostTest extends \PHPUnit_Framework_TestCase
         return [
             [
                 'testNumber' => 1,
-                'exceptionClass' => \Magento\Framework\Exception\InvalidEmailOrPasswordException::class,
+                'exceptionClass' => '\Magento\Framework\Exception\InvalidEmailOrPasswordException',
                 'errorMessage' => __('The password doesn\'t match this account.')
             ],
             [
                 'testNumber' => 2,
-                'exceptionClass' => \Magento\Framework\Exception\State\UserLockedException::class,
+                'exceptionClass' => '\Magento\Framework\Exception\State\UserLockedException',
                 'errorMessage' => __('The account is locked. Please wait and try again or contact %1.', 'test@host.com')
             ]
         ];
@@ -434,16 +403,11 @@ class EditPostTest extends \PHPUnit_Framework_TestCase
         $customerId = 1;
         $customerEmail = 'user1@example.com';
 
-        $address = $this->getMockBuilder(\Magento\Customer\Api\Data\AddressInterface::class)
+        $address = $this->getMockBuilder('Magento\Customer\Api\Data\AddressInterface')
             ->getMockForAbstractClass();
 
         $currentCustomerMock = $this->getCurrentCustomerMock($customerId, $address);
         $newCustomerMock = $this->getNewCustomerMock($customerId, $address);
-
-        $this->customerMapperMock->expects($this->once())
-            ->method('toFlatArray')
-            ->with($currentCustomerMock)
-            ->willReturn([]);
 
         $this->customerSession->expects($this->once())
             ->method('getCustomerId')
@@ -561,7 +525,7 @@ class EditPostTest extends \PHPUnit_Framework_TestCase
                 'errors' => [
                     'counter' => 1,
                     'message' => 'AuthenticationException',
-                    'exception' => \Magento\Framework\Exception\AuthenticationException::class,
+                    'exception' => '\Magento\Framework\Exception\AuthenticationException',
                 ]
             ],
             [
@@ -589,16 +553,11 @@ class EditPostTest extends \PHPUnit_Framework_TestCase
     ) {
         $customerId = 1;
 
-        $address = $this->getMockBuilder(\Magento\Customer\Api\Data\AddressInterface::class)
+        $address = $this->getMockBuilder('Magento\Customer\Api\Data\AddressInterface')
             ->getMockForAbstractClass();
 
         $currentCustomerMock = $this->getCurrentCustomerMock($customerId, $address);
         $newCustomerMock = $this->getNewCustomerMock($customerId, $address);
-
-        $this->customerMapperMock->expects($this->once())
-            ->method('toFlatArray')
-            ->with($currentCustomerMock)
-            ->willReturn([]);
 
         $exception = new $exception(__($message));
 
@@ -662,7 +621,7 @@ class EditPostTest extends \PHPUnit_Framework_TestCase
         return [
             [
                 'message' => 'LocalizedException',
-                'exception' => \Magento\Framework\Exception\LocalizedException::class,
+                'exception' => '\Magento\Framework\Exception\LocalizedException',
             ],
             [
                 'message' => 'Exception',
@@ -673,26 +632,24 @@ class EditPostTest extends \PHPUnit_Framework_TestCase
 
     protected function prepareContext()
     {
-        $this->context = $this->getMockBuilder(\Magento\Framework\App\Action\Context::class)
+        $this->context = $this->getMockBuilder('Magento\Framework\App\Action\Context')
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->resultRedirectFactory = $this->getMockBuilder(
-            \Magento\Framework\Controller\Result\RedirectFactory::class
-        )
+        $this->resultRedirectFactory = $this->getMockBuilder('Magento\Framework\Controller\Result\RedirectFactory')
             ->disableOriginalConstructor()
             ->setMethods(['create'])
             ->getMock();
 
-        $this->resultRedirect = $this->getMockBuilder(\Magento\Framework\Controller\Result\Redirect::class)
+        $this->resultRedirect = $this->getMockBuilder('Magento\Framework\Controller\Result\Redirect')
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->request = $this->getMockBuilder(\Magento\Framework\App\Request\Http::class)
+        $this->request = $this->getMockBuilder('Magento\Framework\App\Request\Http')
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->messageManager = $this->getMockBuilder(\Magento\Framework\Message\ManagerInterface::class)
+        $this->messageManager = $this->getMockBuilder('Magento\Framework\Message\ManagerInterface')
             ->getMockForAbstractClass();
 
         $this->context->expects($this->any())
@@ -707,7 +664,7 @@ class EditPostTest extends \PHPUnit_Framework_TestCase
             ->method('getMessageManager')
             ->willReturn($this->messageManager);
 
-        $this->eventManager = $this->getMockBuilder(\Magento\Framework\Event\ManagerInterface::class)
+        $this->eventManager = $this->getMockBuilder('Magento\Framework\Event\ManagerInterface')
             ->getMockForAbstractClass();
 
         $this->context->expects($this->any())
@@ -726,7 +683,7 @@ class EditPostTest extends \PHPUnit_Framework_TestCase
      */
     protected function getNewCustomerMock($customerId, $address)
     {
-        $newCustomerMock = $this->getMockBuilder(\Magento\Customer\Api\Data\CustomerInterface::class)
+        $newCustomerMock = $this->getMockBuilder('Magento\Customer\Api\Data\CustomerInterface')
             ->getMockForAbstractClass();
 
         $newCustomerMock->expects($this->once())
@@ -751,7 +708,7 @@ class EditPostTest extends \PHPUnit_Framework_TestCase
      */
     protected function getCurrentCustomerMock($customerId, $address)
     {
-        $currentCustomerMock = $this->getMockBuilder(\Magento\Customer\Api\Data\CustomerInterface::class)
+        $currentCustomerMock = $this->getMockBuilder('Magento\Customer\Api\Data\CustomerInterface')
             ->getMockForAbstractClass();
 
         $currentCustomerMock->expects($this->once())

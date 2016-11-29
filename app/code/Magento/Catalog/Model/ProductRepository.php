@@ -13,10 +13,7 @@ use Magento\Framework\Api\Data\ImageContentInterface;
 use Magento\Framework\Api\Data\ImageContentInterfaceFactory;
 use Magento\Framework\Api\ImageContentValidatorInterface;
 use Magento\Framework\Api\ImageProcessorInterface;
-use Magento\Framework\Api\SearchCriteria\CollectionProcessorInterface;
-use Magento\Framework\DB\Adapter\ConnectionException;
-use Magento\Framework\DB\Adapter\DeadlockException;
-use Magento\Framework\DB\Adapter\LockWaitException;
+use Magento\Framework\Api\SortOrder;
 use Magento\Framework\Exception\InputException;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\NoSuchEntityException;
@@ -136,11 +133,6 @@ class ProductRepository implements \Magento\Catalog\Api\ProductRepositoryInterfa
     protected $mediaGalleryProcessor;
 
     /**
-     * @var CollectionProcessorInterface
-     */
-    private $collectionProcessor;
-
-    /**
      * ProductRepository constructor.
      * @param ProductFactory $productFactory
      * @param \Magento\Catalog\Controller\Adminhtml\Product\Initialization\Helper $initializationHelper
@@ -162,7 +154,6 @@ class ProductRepository implements \Magento\Catalog\Api\ProductRepositoryInterfa
      * @param MimeTypeExtensionMap $mimeTypeExtensionMap
      * @param ImageProcessorInterface $imageProcessor
      * @param \Magento\Framework\Api\ExtensionAttribute\JoinProcessorInterface $extensionAttributesJoinProcessor
-     * @param CollectionProcessorInterface $collectionProcessor
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
@@ -186,8 +177,7 @@ class ProductRepository implements \Magento\Catalog\Api\ProductRepositoryInterfa
         ImageContentInterfaceFactory $contentFactory,
         MimeTypeExtensionMap $mimeTypeExtensionMap,
         ImageProcessorInterface $imageProcessor,
-        \Magento\Framework\Api\ExtensionAttribute\JoinProcessorInterface $extensionAttributesJoinProcessor,
-        CollectionProcessorInterface $collectionProcessor = null
+        \Magento\Framework\Api\ExtensionAttribute\JoinProcessorInterface $extensionAttributesJoinProcessor
     ) {
         $this->productFactory = $productFactory;
         $this->collectionFactory = $collectionFactory;
@@ -206,7 +196,6 @@ class ProductRepository implements \Magento\Catalog\Api\ProductRepositoryInterfa
         $this->contentFactory = $contentFactory;
         $this->imageProcessor = $imageProcessor;
         $this->extensionAttributesJoinProcessor = $extensionAttributesJoinProcessor;
-        $this->collectionProcessor = $collectionProcessor ?: $this->getCollectionProcessor();
     }
 
     /**
@@ -313,22 +302,16 @@ class ProductRepository implements \Magento\Catalog\Api\ProductRepositoryInterfa
      */
     private function assignProductToWebsites(\Magento\Catalog\Model\Product $product)
     {
-        $websiteIds = $product->getWebsiteIds();
-
         if (!$this->storeManager->hasSingleStore()) {
-            $websiteIds = array_unique(
-                array_merge(
-                    $websiteIds,
-                    [$this->storeManager->getStore()->getWebsiteId()]
-                )
-            );
-        }
 
-        if ($this->storeManager->getStore(true)->getCode() == \Magento\Store\Model\Store::ADMIN_CODE) {
-            $websiteIds = array_keys($this->storeManager->getWebsites());
-        }
+            if ($this->storeManager->getStore()->getCode() == \Magento\Store\Model\Store::ADMIN_CODE) {
+                $websiteIds = array_keys($this->storeManager->getWebsites());
+            } else {
+                $websiteIds = [$this->storeManager->getStore()->getWebsiteId()];
+            }
 
-        $product->setWebsiteIds($websiteIds);
+            $product->setWebsiteIds(array_unique(array_merge($product->getWebsiteIds(), $websiteIds)));
+        }
     }
 
     /**
@@ -417,7 +400,7 @@ class ProductRepository implements \Magento\Catalog\Api\ProductRepositoryInterfa
                 $linksToInitialize = [];
                 foreach ($linksByType as $link) {
                     $linkDataArray = $this->extensibleDataObjectConverter
-                        ->toNestedArray($link, [], \Magento\Catalog\Api\Data\ProductLinkInterface::class);
+                        ->toNestedArray($link, [], 'Magento\Catalog\Api\Data\ProductLinkInterface');
                     $linkedSku = $link->getLinkedProductSku();
                     if (!isset($linkedProductIds[$linkedSku])) {
                         throw new NoSuchEntityException(
@@ -518,7 +501,7 @@ class ProductRepository implements \Magento\Catalog\Api\ProductRepositoryInterfa
         }
 
         $productDataArray = $this->extensibleDataObjectConverter
-            ->toNestedArray($product, [], \Magento\Catalog\Api\Data\ProductInterface::class);
+            ->toNestedArray($product, [], 'Magento\Catalog\Api\Data\ProductInterface');
         $productDataArray = array_replace($productDataArray, $product->getData());
         unset($productDataArray['media_gallery']);
 
@@ -553,24 +536,6 @@ class ProductRepository implements \Magento\Catalog\Api\ProductRepositoryInterfa
             unset($this->instances[$product->getSku()]);
             unset($this->instancesById[$product->getId()]);
             $this->resourceModel->save($product);
-        } catch (ConnectionException $exception) {
-            throw new \Magento\Framework\Exception\TemporaryState\CouldNotSaveException(
-                __('Database connection error'),
-                $exception,
-                $exception->getCode()
-            );
-        } catch (DeadlockException $exception) {
-            throw new \Magento\Framework\Exception\TemporaryState\CouldNotSaveException(
-                __('Database deadlock found when trying to get lock'),
-                $exception,
-                $exception->getCode()
-            );
-        } catch (LockWaitException $exception) {
-            throw new \Magento\Framework\Exception\TemporaryState\CouldNotSaveException(
-                __('Database lock wait timeout exceeded'),
-                $exception,
-                $exception->getCode()
-            );
         } catch (\Magento\Eav\Model\Entity\Attribute\Exception $exception) {
             throw \Magento\Framework\Exception\InputException::invalidFieldValue(
                 $exception->getAttributeCode(),
@@ -636,11 +601,22 @@ class ProductRepository implements \Magento\Catalog\Api\ProductRepositoryInterfa
         $collection->joinAttribute('status', 'catalog_product/status', 'entity_id', null, 'inner');
         $collection->joinAttribute('visibility', 'catalog_product/visibility', 'entity_id', null, 'inner');
 
-        $this->collectionProcessor->process($searchCriteria, $collection);
-
+        //Add filters from root filter group to the collection
+        foreach ($searchCriteria->getFilterGroups() as $group) {
+            $this->addFilterGroupToCollection($group, $collection);
+        }
+        /** @var SortOrder $sortOrder */
+        foreach ((array)$searchCriteria->getSortOrders() as $sortOrder) {
+            $field = $sortOrder->getField();
+            $collection->addOrder(
+                $field,
+                ($sortOrder->getDirection() == SortOrder::SORT_ASC) ? 'ASC' : 'DESC'
+            );
+        }
+        $collection->setCurPage($searchCriteria->getCurrentPage());
+        $collection->setPageSize($searchCriteria->getPageSize());
         $collection->load();
 
-        $collection->addCategoryIds();
         $searchResult = $this->searchResultsFactory->create();
         $searchResult->setSearchCriteria($searchCriteria);
         $searchResult->setItems($collection->getItems());
@@ -651,7 +627,6 @@ class ProductRepository implements \Magento\Catalog\Api\ProductRepositoryInterfa
     /**
      * Helper function that adds a FilterGroup to the collection.
      *
-     * @deprecated
      * @param \Magento\Framework\Api\Search\FilterGroup $filterGroup
      * @param Collection $collection
      * @return void
@@ -699,24 +674,8 @@ class ProductRepository implements \Magento\Catalog\Api\ProductRepositoryInterfa
     {
         if (null === $this->mediaGalleryProcessor) {
             $this->mediaGalleryProcessor = \Magento\Framework\App\ObjectManager::getInstance()
-                ->get(\Magento\Catalog\Model\Product\Gallery\Processor::class);
+                ->get('Magento\Catalog\Model\Product\Gallery\Processor');
         }
         return $this->mediaGalleryProcessor;
-    }
-
-    /**
-     * Retrieve collection processor
-     *
-     * @deprecated
-     * @return CollectionProcessorInterface
-     */
-    private function getCollectionProcessor()
-    {
-        if (!$this->collectionProcessor) {
-            $this->collectionProcessor = \Magento\Framework\App\ObjectManager::getInstance()->get(
-                'Magento\Catalog\Model\Api\SearchCriteria\ProductCollectionProcessor'
-            );
-        }
-        return $this->collectionProcessor;
     }
 }

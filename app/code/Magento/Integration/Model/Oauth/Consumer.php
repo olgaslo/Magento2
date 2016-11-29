@@ -82,7 +82,7 @@ class Consumer extends \Magento\Framework\Model\AbstractModel implements Consume
     protected function _construct()
     {
         parent::_construct();
-        $this->_init(\Magento\Integration\Model\ResourceModel\Oauth\Consumer::class);
+        $this->_init('Magento\Integration\Model\ResourceModel\Oauth\Consumer');
     }
 
     /**

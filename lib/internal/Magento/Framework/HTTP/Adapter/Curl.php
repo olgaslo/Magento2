@@ -20,15 +20,7 @@ class Curl implements \Zend_Http_Client_Adapter_Interface
      *
      * @var array
      */
-    protected $_config = [
-        'protocols' => (CURLPROTO_HTTP
-            | CURLPROTO_HTTPS
-            | CURLPROTO_FTP
-            | CURLPROTO_FTPS
-        ),
-        'verifypeer' => true,
-        'verifyhost' => 2,
-    ];
+    protected $_config = [];
 
     /**
      * Curl handle
@@ -61,6 +53,14 @@ class Curl implements \Zend_Http_Client_Adapter_Interface
      * @var array
      */
     protected $_options = [];
+
+    public function __construct()
+    {
+        // as we support PHP 5.5.x in Magento 2.0.x we can't do this in declaration
+        $this->_config['protocols'] = (CURLPROTO_HTTP | CURLPROTO_HTTPS |  CURLPROTO_FTP | CURLPROTO_FTPS);
+        $this->_config['verifypeer'] = true;
+        $this->_config['verifyhost'] = 2;
+    }
 
     /**
      * Apply current configuration array to transport resource

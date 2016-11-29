@@ -47,7 +47,7 @@ class Collection extends BlockCollection implements SearchResultInterface
         $eventPrefix,
         $eventObject,
         $resourceModel,
-        $model = \Magento\Framework\View\Element\UiComponent\DataProvider\Document::class,
+        $model = 'Magento\Framework\View\Element\UiComponent\DataProvider\Document',
         $connection = null,
         \Magento\Framework\Model\ResourceModel\Db\AbstractDb $resource = null
     ) {

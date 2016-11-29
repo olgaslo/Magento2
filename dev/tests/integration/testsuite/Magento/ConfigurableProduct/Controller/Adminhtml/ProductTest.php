@@ -24,7 +24,7 @@ class ProductTest extends \Magento\TestFramework\TestCase\AbstractBackendControl
         $this->getRequest()->setPostValue(
             [
                 'attributes' => [$this->_getConfigurableAttribute()->getId()],
-                'associated_product_ids_serialized' => $associatedProductIdsJSON,
+                'product' => ['associated_product_ids_serialized' => $associatedProductIdsJSON]
             ]
         );
 
@@ -47,10 +47,10 @@ class ProductTest extends \Magento\TestFramework\TestCase\AbstractBackendControl
     protected function _getConfigurableAttribute()
     {
         return \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create(
-            \Magento\Catalog\Model\Entity\Attribute::class
+            'Magento\Catalog\Model\Entity\Attribute'
         )->loadByCode(
             \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->get(
-                \Magento\Eav\Model\Config::class
+                'Magento\Eav\Model\Config'
             )->getEntityType(
                 'catalog_product'
             )->getId(),

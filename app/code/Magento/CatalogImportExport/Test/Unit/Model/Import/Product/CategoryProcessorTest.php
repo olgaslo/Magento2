@@ -40,7 +40,7 @@ class CategoryProcessorTest extends \PHPUnit_Framework_TestCase
         $this->objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
         $this->objectManagerHelper = new ObjectManagerHelper($this);
 
-        $childCategory = $this->getMockBuilder(\Magento\Catalog\Model\Category::class)
+        $childCategory = $this->getMockBuilder('Magento\Catalog\Model\Category')
             ->disableOriginalConstructor()
             ->getMock();
         $childCategory->method('getId')->will($this->returnValue(self::CHILD_CATEGORY_ID));
@@ -50,7 +50,7 @@ class CategoryProcessorTest extends \PHPUnit_Framework_TestCase
             . self::CHILD_CATEGORY_ID
         ));
 
-        $parentCategory = $this->getMockBuilder(\Magento\Catalog\Model\Category::class)
+        $parentCategory = $this->getMockBuilder('Magento\Catalog\Model\Category')
             ->disableOriginalConstructor()
             ->getMock();
         $parentCategory->method('getId')->will($this->returnValue(self::PARENT_CATEGORY_ID));
@@ -59,7 +59,7 @@ class CategoryProcessorTest extends \PHPUnit_Framework_TestCase
 
         $categoryCollection =
             $this->objectManagerHelper->getCollectionMock(
-                \Magento\Catalog\Model\ResourceModel\Category\Collection::class,
+                'Magento\Catalog\Model\ResourceModel\Category\Collection',
                 [
                     self::PARENT_CATEGORY_ID => $parentCategory,
                     self::CHILD_CATEGORY_ID => $childCategory,
@@ -82,7 +82,7 @@ class CategoryProcessorTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnSelf());
 
         $categoryColFactory = $this->getMock(
-            \Magento\Catalog\Model\ResourceModel\Category\CollectionFactory::class,
+            'Magento\Catalog\Model\ResourceModel\Category\CollectionFactory',
             ['create'],
             [],
             '',
@@ -92,7 +92,7 @@ class CategoryProcessorTest extends \PHPUnit_Framework_TestCase
         $categoryColFactory->method('create')->will($this->returnValue($categoryCollection));
 
         $categoryFactory = $this->getMock(
-            \Magento\Catalog\Model\CategoryFactory::class,
+            'Magento\Catalog\Model\CategoryFactory',
             ['create'],
             [],
             '',

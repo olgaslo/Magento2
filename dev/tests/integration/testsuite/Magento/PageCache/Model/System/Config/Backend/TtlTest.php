@@ -20,9 +20,9 @@ class TtlTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->_config = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()
-            ->create(\Magento\Framework\App\Config\ScopeConfigInterface::class);
+            ->create('Magento\Framework\App\Config\ScopeConfigInterface');
         $this->_model = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()
-            ->create(\Magento\PageCache\Model\System\Config\Backend\Ttl::class);
+            ->create('Magento\PageCache\Model\System\Config\Backend\Ttl');
     }
 
     /**
@@ -52,7 +52,7 @@ class TtlTest extends \PHPUnit_Framework_TestCase
      */
     public function testBeforeSaveWithException($value, $path)
     {
-        $this->setExpectedException(\Magento\Framework\Exception\LocalizedException::class);
+        $this->setExpectedException('\Magento\Framework\Exception\LocalizedException');
         $this->_prepareData($value, $path);
     }
 

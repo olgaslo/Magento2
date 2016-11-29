@@ -27,15 +27,15 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
     {
         /** Mock all objects required for SUT. */
         $this->rendererMock = $this->getMockBuilder(
-            \Magento\Framework\Webapi\Rest\Response\Renderer\Json::class
+            'Magento\Framework\Webapi\Rest\Response\Renderer\Json'
         )->disableOriginalConstructor()->getMock();
         $rendererFactoryMock = $this->getMockBuilder(
-            \Magento\Framework\Webapi\Rest\Response\RendererFactory::class
+            'Magento\Framework\Webapi\Rest\Response\RendererFactory'
         )->disableOriginalConstructor()->getMock();
         $rendererFactoryMock->expects($this->any())->method('get')->will($this->returnValue($this->rendererMock));
-        $this->errorProcessorMock = $this->getMockBuilder(\Magento\Framework\Webapi\ErrorProcessor::class)
+        $this->errorProcessorMock = $this->getMockBuilder('Magento\Framework\Webapi\ErrorProcessor')
             ->disableOriginalConstructor()->getMock();
-        $this->appStateMock = $this->getMock(\Magento\Framework\App\State::class, [], [], '', false);
+        $this->appStateMock = $this->getMock('Magento\Framework\App\State', [], [], '', false);
 
         /** Init SUP. */
         $this->responseRest = new \Magento\Framework\Webapi\Rest\Response(
@@ -70,7 +70,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
         $this->responseRest->setException($apiException);
         /** Assert that \Magento\Framework\Webapi\Exception was set and presented in the list. */
         $this->assertTrue(
-            $this->responseRest->hasExceptionOfType(\Magento\Framework\Webapi\Exception::class),
+            $this->responseRest->hasExceptionOfType('Magento\Framework\Webapi\Exception'),
             'Magento\Framework\Webapi\Exception was not set.'
         );
     }

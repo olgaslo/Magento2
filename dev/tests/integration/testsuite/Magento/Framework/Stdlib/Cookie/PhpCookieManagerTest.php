@@ -30,7 +30,7 @@ class PhpCookieManagerTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->objectManager = Bootstrap::getObjectManager();
-        $this->cookieManager = $this->objectManager->create(\Magento\Framework\Stdlib\Cookie\PhpCookieManager::class);
+        $this->cookieManager = $this->objectManager->create('Magento\Framework\Stdlib\Cookie\PhpCookieManager');
     }
 
     public function testGetCookie()

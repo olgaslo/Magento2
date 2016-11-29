@@ -14,12 +14,12 @@ class InterceptableValidatorTest extends \PHPUnit_Framework_TestCase
         $interceptableValidator = new \Magento\Framework\ObjectManager\InterceptableValidator();
         $this->assertFalse(
             $interceptableValidator->validate(
-                \Magento\Catalog\Controller\Adminhtml\Product\Initialization\Helper\Interceptor::class
+                'Magento\Catalog\Controller\Adminhtml\Product\Initialization\Helper\Interceptor'
             )
         );
         $this->assertFalse(
             $interceptableValidator->validate(
-                \Magento\Test\Di\Proxy::class
+                'Magento\Test\Di\Proxy'
             )
         );
     }

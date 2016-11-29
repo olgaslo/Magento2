@@ -15,27 +15,27 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->ioObjectMock = $this->getMock(\Magento\Framework\Code\Generator\Io::class, [], [], '', false);
+        $this->ioObjectMock = $this->getMock('\Magento\Framework\Code\Generator\Io', [], [], '', false);
     }
 
     public function testGenerate()
     {
         require_once __DIR__ . '/_files/Sample.php';
         $model = $this->getMock(
-            \Magento\Framework\ObjectManager\Code\Generator\Factory::class,
+            '\Magento\Framework\ObjectManager\Code\Generator\Factory',
             ['_validateData'],
             [
-                \Magento\Framework\ObjectManager\Code\Generator\Sample::class,
+                '\Magento\Framework\ObjectManager\Code\Generator\Sample',
                 null,
                 $this->ioObjectMock,
                 null,
                 null,
-                $this->getMock(\Magento\Framework\Filesystem\FileResolver::class)
+                $this->getMock('Magento\Framework\Filesystem\FileResolver')
             ]
         );
 
         $this->ioObjectMock->expects($this->once())->method('generateResultFileName')
-            ->with('\\' . \Magento\Framework\ObjectManager\Code\Generator\SampleFactory::class)
+            ->with('\Magento\Framework\ObjectManager\Code\Generator\SampleFactory')
             ->will($this->returnValue('sample_file.php'));
         $factoryCode = file_get_contents(__DIR__ . '/_files/SampleFactory.txt');
         $this->ioObjectMock->expects($this->once())->method('writeResultFile')

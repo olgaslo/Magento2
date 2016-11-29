@@ -12,9 +12,6 @@ use Magento\Framework\View\Element\Template\Context;
 use Magento\Framework\Data\TreeFactory;
 use Magento\Framework\Data\Tree\NodeFactory;
 
-/**
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
- */
 class TopmenuTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -75,7 +72,7 @@ HTML;
 
         $this->urlBuilder = $this->getMockBuilder(\Magento\Framework\UrlInterface::class)->getMockForAbstractClass();
         $this->context = $objectManager->getObject(
-            \Magento\Framework\View\Element\Template\Context::class,
+            'Magento\Framework\View\Element\Template\Context',
             ['urlBuilder' => $this->urlBuilder, 'storeManager' => $this->storeManager]
         );
 
@@ -100,13 +97,13 @@ HTML;
 
     public function testGetCacheKeyInfo()
     {
-        $nodeFactory = $this->getMock(\Magento\Framework\Data\Tree\NodeFactory::class, [], [], '', false);
-        $treeFactory = $this->getMock(\Magento\Framework\Data\TreeFactory::class, [], [], '', false);
+        $nodeFactory = $this->getMock('Magento\Framework\Data\Tree\NodeFactory', [], [], '', false);
+        $treeFactory = $this->getMock('Magento\Framework\Data\TreeFactory', [], [], '', false);
 
         $topmenu =  new Topmenu($this->context, $nodeFactory, $treeFactory);
         $this->urlBuilder->expects($this->once())->method('getUrl')->with('*/*/*')->willReturn('123');
         $this->urlBuilder->expects($this->once())->method('getBaseUrl')->willReturn('baseUrl');
-        $store = $this->getMockBuilder(\Magento\Store\Model\Store::class)
+        $store = $this->getMockBuilder('Magento\Store\Model\Store')
             ->disableOriginalConstructor()
             ->setMethods(['getCode'])
             ->getMock();
@@ -125,28 +122,22 @@ HTML;
      */
     private function buildTree($isCurrentItem)
     {
-        $this->nodeFactory = $this->getMock(\Magento\Framework\Data\Tree\NodeFactory::class, [], [], '', false);
-        $this->treeFactory = $this->getMock(\Magento\Framework\Data\TreeFactory::class, [], [], '', false);
+        $this->nodeFactory = $this->getMock('Magento\Framework\Data\Tree\NodeFactory', [], [], '', false);
+        $this->treeFactory = $this->getMock('Magento\Framework\Data\TreeFactory', [], [], '', false);
 
-        $tree = $this->getMock(\Magento\Framework\Data\Tree::class, [], [], '', false);
+        $tree = $this->getMock('Magento\Framework\Data\Tree', [], [], '', false);
 
-        $container = $this->getMock(\Magento\Catalog\Model\ResourceModel\Category\Tree::class, [], [], '', false);
+        $container = $this->getMock('Magento\Catalog\Model\ResourceModel\Category\Tree', [], [], '', false);
 
         $children = $this->getMock(
-            \Magento\Framework\Data\Tree\Node\Collection::class,
+            'Magento\Framework\Data\Tree\Node\Collection',
             ['count'],
             ['container' => $container]
         );
 
         for ($i = 0; $i < 10; $i++) {
             $id = "category-node-$i";
-            $categoryNode = $this->getMock(
-                \Magento\Framework\Data\Tree\Node::class,
-                ['getId', 'hasChildren'],
-                [],
-                '',
-                false
-            );
+            $categoryNode = $this->getMock('Magento\Framework\Data\Tree\Node', ['getId', 'hasChildren'], [], '', false);
             $categoryNode->expects($this->once())->method('getId')->willReturn($id);
             $categoryNode->expects($this->atLeastOnce())->method('hasChildren')->willReturn(false);
             $categoryNode->setData(
@@ -164,7 +155,7 @@ HTML;
 
         $children->expects($this->once())->method('count')->willReturn(10);
 
-        $node = $this->getMock(\Magento\Framework\Data\Tree\Node::class, ['getChildren'], [], '', false);
+        $node = $this->getMock('Magento\Framework\Data\Tree\Node', ['getChildren'], [], '', false);
         $node->expects($this->once())->method('getChildren')->willReturn($children);
         $node->expects($this->any())->method('__call')->with('getLevel', [])->willReturn(null);
 

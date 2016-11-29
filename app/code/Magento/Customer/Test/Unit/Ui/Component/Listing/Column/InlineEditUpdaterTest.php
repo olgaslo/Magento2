@@ -25,15 +25,15 @@ class InlineEditUpdaterTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->validationRules = $this->getMockBuilder(
-            \Magento\Customer\Ui\Component\Listing\Column\ValidationRules::class
-        )->disableOriginalConstructor()->getMock();
-
-        $this->validationRule = $this->getMockBuilder(\Magento\Customer\Api\Data\ValidationRuleInterface::class)
+        $this->validationRules = $this->getMockBuilder('Magento\Customer\Ui\Component\Listing\Column\ValidationRules')
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->column = $this->getMockBuilder(\Magento\Framework\View\Element\UiComponentInterface::class)
+        $this->validationRule = $this->getMockBuilder('Magento\Customer\Api\Data\ValidationRuleInterface')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->column = $this->getMockBuilder('Magento\Framework\View\Element\UiComponentInterface')
             ->disableOriginalConstructor()
             ->getMock();
 

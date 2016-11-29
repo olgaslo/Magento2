@@ -46,9 +46,9 @@ class CartTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->_salesModel = $this->getMockForAbstractClass(
-            \Magento\Payment\Model\Cart\SalesModel\SalesModelInterface::class
+            'Magento\Payment\Model\Cart\SalesModel\SalesModelInterface'
         );
-        $factoryMock = $this->getMock(\Magento\Payment\Model\Cart\SalesModel\Factory::class, ['create'], [], '', false);
+        $factoryMock = $this->getMock('Magento\Payment\Model\Cart\SalesModel\Factory', ['create'], [], '', false);
         $factoryMock->expects(
             $this->once()
         )->method(
@@ -58,7 +58,7 @@ class CartTest extends \PHPUnit_Framework_TestCase
         )->will(
             $this->returnValue($this->_salesModel)
         );
-        $eventManagerMock = $this->getMockForAbstractClass(\Magento\Framework\Event\ManagerInterface::class);
+        $eventManagerMock = $this->getMockForAbstractClass('Magento\Framework\Event\ManagerInterface');
 
         $this->_model = new \Magento\Paypal\Model\Cart($factoryMock, $eventManagerMock, 'sales model');
     }

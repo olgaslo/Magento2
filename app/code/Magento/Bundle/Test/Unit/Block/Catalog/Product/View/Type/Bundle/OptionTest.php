@@ -27,12 +27,12 @@ class OptionTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->product = $this->getMockBuilder(\Magento\Catalog\Model\Product::class)
+        $this->product = $this->getMockBuilder('Magento\Catalog\Model\Product')
             ->disableOriginalConstructor()
             ->setMethods(['getPriceInfo', 'hasPreconfiguredValues', 'getPreconfiguredValues', '__wakeup'])
             ->getMock();
 
-        $registry = $this->getMockBuilder(\Magento\Framework\Registry::class)
+        $registry = $this->getMockBuilder('Magento\Framework\Registry')
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -41,9 +41,9 @@ class OptionTest extends \PHPUnit_Framework_TestCase
             ->with('current_product')
             ->will($this->returnValue($this->product));
 
-        $this->layout = $this->getMock(\Magento\Framework\View\LayoutInterface::class);
+        $this->layout = $this->getMock('Magento\Framework\View\LayoutInterface');
 
-        $context = $this->getMockBuilder(\Magento\Framework\View\Element\Template\Context::class)
+        $context = $this->getMockBuilder('Magento\Framework\View\Element\Template\Context')
             ->disableOriginalConstructor()
             ->getMock();
         $context->expects($this->atLeastOnce())
@@ -52,7 +52,7 @@ class OptionTest extends \PHPUnit_Framework_TestCase
 
         $objectManagerHelper = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
         $this->block = $objectManagerHelper->getObject(
-            \Magento\Bundle\Block\Catalog\Product\View\Type\Bundle\Option::class,
+            '\Magento\Bundle\Block\Catalog\Product\View\Type\Bundle\Option',
             ['registry' => $registry, 'context' => $context]
         );
     }
@@ -68,14 +68,14 @@ class OptionTest extends \PHPUnit_Framework_TestCase
                 new \Magento\Framework\DataObject(['bundle_option' => [15 => 315, 16 => 316]]))
             );
 
-        $option = $this->getMock(\Magento\Bundle\Model\Option::class, [], [], '', false);
+        $option = $this->getMock('\Magento\Bundle\Model\Option', [], [], '', false);
         $option->expects($this->any())->method('getId')->will($this->returnValue(15));
 
-        $otherOption = $this->getMock(\Magento\Bundle\Model\Option::class, [], [], '', false);
+        $otherOption = $this->getMock('\Magento\Bundle\Model\Option', [], [], '', false);
         $otherOption->expects($this->any())->method('getId')->will($this->returnValue(16));
 
         $selection = $this->getMock(
-            \Magento\Catalog\Model\Product::class,
+            '\Magento\Catalog\Model\Product',
             ['getSelectionId', '__wakeup'],
             [],
             '',
@@ -98,17 +98,17 @@ class OptionTest extends \PHPUnit_Framework_TestCase
         $includeContainer = false;
         $priceHtml = 'price-html';
 
-        $selection = $this->getMockBuilder(\Magento\Catalog\Model\Product::class)
+        $selection = $this->getMockBuilder('Magento\Catalog\Model\Product')
             ->disableOriginalConstructor()
             ->getMock();
-        $bundlePrice = $this->getMockBuilder(\Magento\Bundle\Pricing\Price\BundleOptionPrice::class)
+        $bundlePrice = $this->getMockBuilder('Magento\Bundle\Pricing\Price\BundleOptionPrice')
             ->disableOriginalConstructor()
             ->getMock();
 
-        $priceInfo = $this->getMock(\Magento\Framework\Pricing\PriceInfo\Base::class, [], [], '', false);
-        $amount = $this->getMock(\Magento\Framework\Pricing\Amount\AmountInterface::class);
+        $priceInfo = $this->getMock('Magento\Framework\Pricing\PriceInfo\Base', [], [], '', false);
+        $amount = $this->getMock('Magento\Framework\Pricing\Amount\AmountInterface');
 
-        $priceRenderBlock = $this->getMockBuilder(\Magento\Framework\Pricing\Render::class)
+        $priceRenderBlock = $this->getMockBuilder('Magento\Framework\Pricing\Render')
             ->disableOriginalConstructor()
             ->setMethods(['renderAmount'])
             ->getMock();

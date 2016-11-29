@@ -5,9 +5,6 @@
  */
 namespace Magento\Downloadable\Test\Unit\Model\Sales\Order\Pdf\Items;
 
-/**
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
- */
 class CreditmemoTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -29,45 +26,45 @@ class CreditmemoTest extends \PHPUnit_Framework_TestCase
     {
         $objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
         $arguments = [
-            'productFactory' => $this->getMock(\Magento\Catalog\Model\ProductFactory::class, [], [], '', false),
+            'productFactory' => $this->getMock('Magento\Catalog\Model\ProductFactory', [], [], '', false),
             'orderItemCollectionFactory' => $this->getMock(
-                \Magento\Sales\Model\ResourceModel\Order\Item\CollectionFactory::class,
+                'Magento\Sales\Model\ResourceModel\Order\Item\CollectionFactory',
                 [],
                 [],
                 '',
                 false
             ),
             'serviceOrderFactory' => $this->getMock(
-                \Magento\Sales\Model\Service\OrderFactory::class,
+                'Magento\Sales\Model\Service\OrderFactory',
                 [],
                 [],
                 '',
                 false
             ),
             'currencyFactory' => $this->getMock(
-                \Magento\Directory\Model\CurrencyFactory::class,
+                'Magento\Directory\Model\CurrencyFactory',
                 [],
                 [],
                 '',
                 false
             ),
             'orderHistoryFactory' => $this->getMock(
-                \Magento\Sales\Model\Order\Status\HistoryFactory::class,
+                'Magento\Sales\Model\Order\Status\HistoryFactory',
                 [],
                 [],
                 '',
                 false
             ),
             'orderTaxCollectionFactory' => $this->getMock(
-                \Magento\Tax\Model\ResourceModel\Sales\Order\Tax\CollectionFactory::class,
+                'Magento\Tax\Model\ResourceModel\Sales\Order\Tax\CollectionFactory',
                 [],
                 [],
                 '',
                 false
             ),
         ];
-        $orderConstructorArgs = $objectManager->getConstructArguments(\Magento\Sales\Model\Order::class, $arguments);
-        $this->_order = $this->getMock(\Magento\Sales\Model\Order::class, ['formatPriceTxt'], $orderConstructorArgs);
+        $orderConstructorArgs = $objectManager->getConstructArguments('Magento\Sales\Model\Order', $arguments);
+        $this->_order = $this->getMock('Magento\Sales\Model\Order', ['formatPriceTxt'], $orderConstructorArgs);
         $this->_order->expects(
             $this->any()
         )->method(
@@ -77,7 +74,7 @@ class CreditmemoTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->_pdf = $this->getMock(
-            \Magento\Sales\Model\Order\Pdf\AbstractPdf::class,
+            'Magento\Sales\Model\Order\Pdf\AbstractPdf',
             ['drawLineBlocks', 'getPdf'],
             [],
             '',
@@ -86,7 +83,7 @@ class CreditmemoTest extends \PHPUnit_Framework_TestCase
         );
 
         $filterManager = $this->getMock(
-            \Magento\Framework\Filter\FilterManager::class,
+            'Magento\Framework\Filter\FilterManager',
             ['stripTags'],
             [],
             '',
@@ -95,12 +92,12 @@ class CreditmemoTest extends \PHPUnit_Framework_TestCase
         $filterManager->expects($this->any())->method('stripTags')->will($this->returnArgument(0));
 
         $modelConstructorArgs = $objectManager->getConstructArguments(
-            \Magento\Downloadable\Model\Sales\Order\Pdf\Items\Creditmemo::class,
+            'Magento\Downloadable\Model\Sales\Order\Pdf\Items\Creditmemo',
             ['string' => new \Magento\Framework\Stdlib\StringUtils(), 'filterManager' => $filterManager]
         );
 
         $this->_model = $this->getMock(
-            \Magento\Downloadable\Model\Sales\Order\Pdf\Items\Creditmemo::class,
+            'Magento\Downloadable\Model\Sales\Order\Pdf\Items\Creditmemo',
             ['getLinks', 'getLinksTitle'],
             $modelConstructorArgs
         );

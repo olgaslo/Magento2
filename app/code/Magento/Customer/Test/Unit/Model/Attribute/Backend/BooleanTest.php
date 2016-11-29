@@ -27,11 +27,11 @@ class BooleanTest extends \PHPUnit_Framework_TestCase
      */
     public function testBeforeSave($value, $defaultValue, $result)
     {
-        $attributeMock = $this->getMockBuilder(\Magento\Eav\Model\Entity\Attribute\AbstractAttribute::class)
+        $attributeMock = $this->getMockBuilder('Magento\Eav\Model\Entity\Attribute\AbstractAttribute')
             ->setMethods(['getName', 'getDefaultValue'])
             ->disableOriginalConstructor()
             ->getMockForAbstractClass();
-        $customerMock = $this->getMockBuilder(\Magento\Customer\Model\Customer::class)
+        $customerMock = $this->getMockBuilder('Magento\Customer\Model\Customer')
             ->disableOriginalConstructor()
             ->getMock();
 

@@ -19,7 +19,7 @@ class RuleTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $resourceMock = $this->getMock(
-            \Magento\CatalogRule\Model\ResourceModel\Rule::class,
+            'Magento\CatalogRule\Model\ResourceModel\Rule',
             ['getIdFieldName', 'getRulesFromProduct'],
             [],
             '',
@@ -35,7 +35,7 @@ class RuleTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->_object = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create(
-            \Magento\CatalogRule\Model\Rule::class,
+            'Magento\CatalogRule\Model\Rule',
             ['resource' => $resourceMock]
         );
     }
@@ -47,7 +47,7 @@ class RuleTest extends \PHPUnit_Framework_TestCase
     public function testCalcProductPriceRule()
     {
         $product = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create(
-            \Magento\Catalog\Model\Product::class
+            'Magento\Catalog\Model\Product'
         );
         $this->assertEquals($this->_object->calcProductPriceRule($product, 100), 45);
         $product->setParentId(true);

@@ -25,7 +25,7 @@ class State1 extends AbstractState
      *
      * @var string
      */
-    protected $config ='admin_session_lifetime_1_hour, wysiwyg_disabled, admin_account_sharing_enable, log_to_file';
+    protected $config ='admin_session_lifetime_1_hour, wysiwyg_disabled, admin_account_sharing_enable';
 
     /**
      * @construct
@@ -46,7 +46,7 @@ class State1 extends AbstractState
         parent::apply();
         if (file_exists(dirname(dirname(dirname(MTF_BP))) . '/app/etc/config.php')) {
             $this->objectManager->create(
-                \Magento\Config\Test\TestStep\SetupConfigurationStep::class,
+                '\Magento\Config\Test\TestStep\SetupConfigurationStep',
                 ['configData' => $this->config]
             )->run();
         }

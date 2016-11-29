@@ -28,18 +28,16 @@ class VariationHandlerTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->_product = Bootstrap::getObjectManager()->create(
-            \Magento\Catalog\Model\Product::class
+            'Magento\Catalog\Model\Product'
         );
         $this->_product->load(1);
 
         $this->_model = Bootstrap::getObjectManager()->create(
-            \Magento\ConfigurableProduct\Model\Product\VariationHandler::class
+            'Magento\ConfigurableProduct\Model\Product\VariationHandler'
         );
         // prevent fatal errors by assigning proper "singleton" of type instance to the product
         $this->_product->setTypeInstance($this->_model);
-        $this->stockRegistry = Bootstrap::getObjectManager()->get(
-            \Magento\CatalogInventory\Api\StockRegistryInterface::class
-        );
+        $this->stockRegistry = Bootstrap::getObjectManager()->get('Magento\CatalogInventory\Api\StockRegistryInterface');
     }
 
     /**
@@ -56,7 +54,7 @@ class VariationHandlerTest extends \PHPUnit_Framework_TestCase
             $stockItem = $this->stockRegistry->getStockItem($productId);
             /** @var $product \Magento\Catalog\Model\Product */
             $product = Bootstrap::getObjectManager()->create(
-                \Magento\Catalog\Model\Product::class
+                'Magento\Catalog\Model\Product'
             );
             $product->load($productId);
             $this->assertNotNull($product->getName());

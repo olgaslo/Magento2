@@ -49,11 +49,6 @@ class Bundle extends \Magento\Catalog\Block\Product\View\AbstractView
     private $selectedOptions = [];
 
     /**
-     * @var \Magento\CatalogRule\Model\ResourceModel\Product\CollectionProcessor
-     */
-    private $catalogRuleProcessor;
-
-    /**
      * @param \Magento\Catalog\Block\Product\Context $context
      * @param \Magento\Framework\Stdlib\ArrayUtils $arrayUtils
      * @param \Magento\Catalog\Helper\Product $catalogProduct
@@ -83,32 +78,12 @@ class Bundle extends \Magento\Catalog\Block\Product\View\AbstractView
     }
 
     /**
-     * @deprecated
-     * @return \Magento\CatalogRule\Model\ResourceModel\Product\CollectionProcessor
-     */
-    private function getCatalogRuleProcessor()
-    {
-        if ($this->catalogRuleProcessor === null) {
-            $this->catalogRuleProcessor = \Magento\Framework\App\ObjectManager::getInstance()
-                ->get(\Magento\CatalogRule\Model\ResourceModel\Product\CollectionProcessor::class);
-        }
-
-        return $this->catalogRuleProcessor;
-    }
-
-    /**
-     * Returns the bundle product options
-     * Will return cached options data if the product options are already initialized
-     * In a case when $stripSelection parameter is true will reload stored bundle selections collection from DB
-     *
-     * @param bool $stripSelection
      * @return array
      */
-    public function getOptions($stripSelection = false)
+    public function getOptions()
     {
         if (!$this->options) {
             $product = $this->getProduct();
-            /** @var \Magento\Bundle\Model\Product\Type $typeInstance */
             $typeInstance = $product->getTypeInstance();
             $typeInstance->setStoreFilter($product->getStoreId(), $product);
 
@@ -118,12 +93,10 @@ class Bundle extends \Magento\Catalog\Block\Product\View\AbstractView
                 $typeInstance->getOptionsIds($product),
                 $product
             );
-            $this->getCatalogRuleProcessor()->addPriceData($selectionCollection);
-            $selectionCollection->addTierPriceData();
 
             $this->options = $optionCollection->appendSelections(
                 $selectionCollection,
-                $stripSelection,
+                false,
                 $this->catalogProduct->getSkipSaleableCheck()
             );
         }

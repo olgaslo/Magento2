@@ -33,7 +33,7 @@ class AdminSessionInfoTest extends \PHPUnit_Framework_TestCase
         $objectManager = new ObjectManager($this);
 
         $this->dateTimeMock = $this->getMock(
-            \Magento\Framework\Stdlib\DateTime::class,
+            '\Magento\Framework\Stdlib\DateTime',
             [],
             [],
             '',
@@ -41,7 +41,7 @@ class AdminSessionInfoTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->resourceMock = $this->getMock(
-            \Magento\Framework\App\ResourceConnection::class,
+            '\Magento\Framework\App\ResourceConnection',
             [],
             [],
             '',
@@ -49,7 +49,7 @@ class AdminSessionInfoTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->dbAdapterMock = $this->getMock(
-            \Magento\Framework\DB\Adapter\AdapterInterface::class,
+            '\Magento\Framework\DB\Adapter\AdapterInterface',
             [],
             [],
             '',
@@ -57,7 +57,7 @@ class AdminSessionInfoTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->model = $objectManager->getObject(
-            \Magento\Security\Model\ResourceModel\AdminSessionInfo::class,
+            '\Magento\Security\Model\ResourceModel\AdminSessionInfo',
             [
                 'resource' => $this->resourceMock,
                 'dateTime' => $this->dateTimeMock

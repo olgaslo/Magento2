@@ -36,25 +36,18 @@ class Method extends Block
     protected $billingAddressSelector = '.payment-method-billing-address';
 
     /**
+     * Save credit card check box.
+     *
+     * @var string
+     */
+    protected $vaultCheckbox = '#%s_vault_enabler';
+
+    /**
      * PayPal load spinner.
      *
      * @var string
      */
     protected $preloaderSpinner = '#preloaderSpinner';
-
-    /**
-     * Continue to PayPal button for Braintree.
-     *
-     * @var string
-     */
-    protected $continueToBraintreePaypalButton = '#braintree_paypal_continue_to';
-
-    /**
-     * Pay with Paypal button for Braintree.
-     *
-     * @var string
-     */
-    protected $payWithBraintreePaypalButton = '#braintree_paypal_pay_with';
 
     /**
      * Wait for PayPal page is loaded.
@@ -85,22 +78,7 @@ class Method extends Block
     public function clickContinueToPaypal()
     {
         $currentWindow = $this->browser->getCurrentWindow();
-        $this->waitForElementNotVisible($this->waitElement);
-        $this->_rootElement->find($this->continueToBraintreePaypalButton)->click();
-        $this->waitForElementNotVisible($this->waitElement);
-        return $currentWindow;
-    }
-
-    /**
-     * Click Pay with Paypal button.
-     *
-     * @return string
-     */
-    public function clickPayWithPaypal()
-    {
-        $currentWindow = $this->browser->getCurrentWindow();
-        $this->waitForElementNotVisible($this->waitElement);
-        $this->_rootElement->find($this->payWithBraintreePaypalButton)->click();
+        $this->_rootElement->find($this->placeOrderButton)->click();
         $this->waitForElementNotVisible($this->waitElement);
         return $currentWindow;
     }
@@ -126,8 +104,21 @@ class Method extends Block
         $element = $this->_rootElement->find($this->billingAddressSelector);
 
         return $this->blockFactory->create(
-            \Magento\Checkout\Test\Block\Onepage\Payment\Method\Billing::class,
+            '\Magento\Checkout\Test\Block\Onepage\Payment\Method\Billing',
             ['element' => $element]
         );
+    }
+
+    /**
+     * Save credit card.
+     *
+     * @param string $paymentMethod
+     * @param string $creditCardSave
+     * @return void
+     */
+    public function saveCreditCard($paymentMethod, $creditCardSave)
+    {
+        $saveCard = sprintf($this->vaultCheckbox, $paymentMethod);
+        $this->_rootElement->find($saveCard, Locator::SELECTOR_CSS, 'checkbox')->setValue($creditCardSave);
     }
 }

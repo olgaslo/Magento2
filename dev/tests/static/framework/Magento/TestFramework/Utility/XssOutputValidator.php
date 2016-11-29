@@ -17,24 +17,15 @@ class XssOutputValidator
 
     /**
      * Store origin for replacements
-     *
      * @var array
      */
     private $origins = [];
 
     /**
      * Store replacements
-     *
      * @var array
      */
     private $replacements = [];
-
-    /**
-     * Array of escape functions
-     *
-     * @var string[]
-     */
-    private $escapeFunctions = ['escapeHtml', 'escapeHtmlAttr', 'escapeUrl', 'escapeJs', 'escapeCss'];
 
     /**
      *
@@ -131,13 +122,8 @@ class XssOutputValidator
         foreach ($echoCommands as $echoCommand) {
             if ($this->isNotEscapeMarkedCommand($echoCommand)) {
                 $echoCommand = preg_replace('/^(.*?)echo/sim', 'echo', $echoCommand);
-                $preparedEchoCommand = $this->prepareEchoCommand($echoCommand);
-                $isEscapeFunctionArgument = preg_match(
-                    '/->(' . implode('|', $this->escapeFunctions) . ')\(.*?\)$/sim',
-                    $preparedEchoCommand
-                );
                 $xssUnsafeCommands = array_filter(
-                    $isEscapeFunctionArgument ? [$preparedEchoCommand] : explode('.', $preparedEchoCommand),
+                    explode('.', $this->prepareEchoCommand($echoCommand)),
                     [$this, 'isXssUnsafeCommand']
                 );
                 if (count($xssUnsafeCommands)) {
@@ -160,7 +146,7 @@ class XssOutputValidator
     private function prepareEchoCommand($command)
     {
         $command = preg_replace('/<[?]=(.*?)[?]>/sim', '\1', $command);
-        return trim(ltrim(explode(';', $command)[0], 'echo'));
+        return ltrim(explode(';', $command)[0], 'echo');
     }
 
     /**
@@ -216,7 +202,7 @@ class XssOutputValidator
         switch (true)
         {
             case preg_match(
-                '/->(' . implode('|', $this->escapeFunctions) . '|.*html.*)\(/simU',
+                '/->(escapeUrl|escapeQuote|escapeXssInUrl|.*html.*)\(/simU',
                 $this->getLastMethod($command)
             ):
                 return false;
@@ -309,18 +295,7 @@ class XssOutputValidator
                     $phpBlock
                 );
 
-                $this->addQuoteOriginsReplacements(
-                    $phpBlockQuoteReplaced,
-                    [
-                        '/([^\\\\])([\'])(.*?)([^\\\\])([\'])/sim'
-                    ]
-                );
-                $this->addQuoteOriginsReplacements(
-                    $phpBlockQuoteReplaced,
-                    [
-                        '/([^\\\\])(["])(.*?)([^\\\\])(["])/sim',
-                    ]
-                );
+                $this->addQuoteOriginsReplacements($phpBlockQuoteReplaced);
 
                 $origins[] = $phpBlock;
                 $replacements[]  = str_replace(
@@ -365,11 +340,15 @@ class XssOutputValidator
      * Add replacements for expressions in single and double quotes
      *
      * @param string $phpBlock
-     * @param array $patterns
      * @return void
      */
-    private function addQuoteOriginsReplacements($phpBlock, array $patterns)
+    private function addQuoteOriginsReplacements($phpBlock)
     {
+        $patterns = [
+            '/([^\\\\])(["])(.*?)([^\\\\])(["])/sim',
+            '/([^\\\\])([\'])(.*?)([^\\\\])([\'])/sim'
+        ];
+
         foreach ($patterns as $pattern) {
             if (preg_match_all($pattern, $phpBlock, $quoteMatches, PREG_SET_ORDER)) {
                 foreach ($quoteMatches as $quoteMatch) {

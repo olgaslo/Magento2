@@ -94,9 +94,8 @@ class Cart extends \Magento\Framework\DataObject implements SectionSourceInterfa
                 : 0,
             'possible_onepage_checkout' => $this->isPossibleOnepageCheckout(),
             'items' => $this->getRecentItems(),
-            'extra_actions' => $this->layout->createBlock(\Magento\Catalog\Block\ShortcutButtons::class)->toHtml(),
+            'extra_actions' => $this->layout->createBlock('Magento\Catalog\Block\ShortcutButtons')->toHtml(),
             'isGuestCheckoutAllowed' => $this->isGuestCheckoutAllowed(),
-            'website_id' => $this->getQuote()->getStore()->getWebsiteId()
         ];
     }
 

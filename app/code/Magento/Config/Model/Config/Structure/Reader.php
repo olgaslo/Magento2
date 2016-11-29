@@ -57,7 +57,7 @@ class Reader extends \Magento\Framework\Config\Reader\Filesystem
         CompilerInterface $compiler,
         $fileName = 'system.xml',
         $idAttributes = [],
-        $domDocumentClass = \Magento\Framework\Config\Dom::class,
+        $domDocumentClass = 'Magento\Framework\Config\Dom',
         $defaultScope = 'global'
     ) {
         $this->compiler = $compiler;

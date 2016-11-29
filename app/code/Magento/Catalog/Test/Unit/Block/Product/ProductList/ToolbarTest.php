@@ -32,7 +32,6 @@ class ToolbarTest extends \PHPUnit_Framework_TestCase
      * @var \Magento\Framework\App\Config\ScopeConfigInterface | \PHPUnit_Framework_MockObject_MockObject
      */
     protected $scopeConfig;
-
     /**
      * @var \Magento\Catalog\Model\Config | \PHPUnit_Framework_MockObject_MockObject
      */
@@ -56,7 +55,7 @@ class ToolbarTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->model = $this->getMock(
-            \Magento\Catalog\Model\Product\ProductList\Toolbar::class,
+            'Magento\Catalog\Model\Product\ProductList\Toolbar',
             [
                 'getDirection',
                 'getOrder',
@@ -68,15 +67,9 @@ class ToolbarTest extends \PHPUnit_Framework_TestCase
             '',
             false
         );
-        $this->layout = $this->getMock(
-            \Magento\Framework\View\Layout::class,
-            ['getChildName', 'getBlock'],
-            [],
-            '',
-            false
-        );
+        $this->layout = $this->getMock('Magento\Framework\View\Layout', ['getChildName', 'getBlock'], [], '', false);
         $this->pagerBlock = $this->getMock(
-            \Magento\Theme\Block\Html\Pager::class,
+            'Magento\Theme\Block\Html\Pager',
             [
                 'setUseContainer',
                 'setShowPerPage',
@@ -91,8 +84,8 @@ class ToolbarTest extends \PHPUnit_Framework_TestCase
             '',
             false
         );
-        $this->urlBuilder = $this->getMock(\Magento\Framework\Url::class, ['getUrl'], [], '', false);
-        $this->scopeConfig = $this->getMock(\Magento\Framework\App\Config\ScopeConfigInterface::class);
+        $this->urlBuilder = $this->getMock('Magento\Framework\Url', ['getUrl'], [], '', false);
+        $this->scopeConfig = $this->getMock('Magento\Framework\App\Config\ScopeConfigInterface');
 
         $scopeConfig = [
             [\Magento\Catalog\Model\Config::XML_PATH_LIST_DEFAULT_SORT_BY, null, 'name'],
@@ -107,7 +100,7 @@ class ToolbarTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValueMap($scopeConfig));
 
         $this->catalogConfig = $this->getMock(
-            \Magento\Catalog\Model\Config::class,
+            'Magento\Catalog\Model\Config',
             ['getAttributeUsedForSortByArray'],
             [],
             '',
@@ -115,7 +108,7 @@ class ToolbarTest extends \PHPUnit_Framework_TestCase
         );
 
         $context = $this->getMock(
-            \Magento\Framework\View\Element\Template\Context::class,
+            'Magento\Framework\View\Element\Template\Context',
             ['getUrlBuilder', 'getScopeConfig', 'getLayout'],
             [],
             '',
@@ -131,17 +124,17 @@ class ToolbarTest extends \PHPUnit_Framework_TestCase
             ->method('getlayout')
             ->will($this->returnValue($this->layout));
         $this->productListHelper = $this->getMock(
-            \Magento\Catalog\Helper\Product\ProductList::class,
+            'Magento\Catalog\Helper\Product\ProductList',
             [],
             [],
             '',
             false
         );
 
-        $this->urlEncoder = $this->getMock(\Magento\Framework\Url\EncoderInterface::class, ['encode'], [], '', false);
+        $this->urlEncoder = $this->getMock('Magento\Framework\Url\EncoderInterface', ['encode'], [], '', false);
         $objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
         $this->block = $objectManager->getObject(
-            \Magento\Catalog\Block\Product\ProductList\Toolbar::class,
+            'Magento\Catalog\Block\Product\ProductList\Toolbar',
             [
                 'context' => $context,
                 'catalogConfig' => $this->catalogConfig,

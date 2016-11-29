@@ -9,11 +9,11 @@ class WidgetTest extends \PHPUnit_Framework_TestCase
 {
     public function testNewProductsWidget()
     {
-        $type = \Magento\Catalog\Block\Product\Widget\NewWidget::class;
+        $type = 'Magento\Catalog\Block\Product\Widget\NewWidget';
 
         /** @var $model \Magento\Widget\Model\Widget\Instance */
         $model = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create(
-            \Magento\Widget\Model\Widget\Instance::class
+            'Magento\Widget\Model\Widget\Instance'
         );
         $config = $model->setType($type)->getWidgetConfigAsArray();
         $templates = $config['parameters']['template']['values'];

@@ -208,7 +208,7 @@ class TierPrice extends AbstractPrice implements TierPriceInterface, BasePricePr
      */
     public function getSavePercent(AmountInterface $amount)
     {
-        return round(
+        return ceil(
             100 - ((100 / $this->priceInfo->getPrice(FinalPrice::PRICE_CODE)->getValue())
                 * $amount->getBaseAmount())
         );

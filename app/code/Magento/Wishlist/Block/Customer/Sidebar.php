@@ -64,7 +64,7 @@ class Sidebar extends \Magento\Wishlist\Block\AbstractBlock
         $priceRender = $this->getLayout()->getBlock('product.price.render.default');
         if (!$priceRender) {
             $priceRender = $this->getLayout()->createBlock(
-                \Magento\Framework\Pricing\Render::class,
+                'Magento\Framework\Pricing\Render',
                 'product.price.render.default',
                 [
                     'data' => [

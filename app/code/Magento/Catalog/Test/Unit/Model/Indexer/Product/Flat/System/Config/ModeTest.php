@@ -29,16 +29,16 @@ class ModeTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->configMock = $this->getMock(\Magento\Framework\App\Config\ScopeConfigInterface::class);
+        $this->configMock = $this->getMock('Magento\Framework\App\Config\ScopeConfigInterface');
         $this->indexerStateMock = $this->getMock(
-            \Magento\Indexer\Model\Indexer\State::class,
+            'Magento\Indexer\Model\Indexer\State',
             ['loadByIndexer', 'setStatus', 'save', '__wakeup'],
             [],
             '',
             false
         );
         $this->indexerProcessorMock = $this->getMock(
-            \Magento\Catalog\Model\Indexer\Product\Flat\Processor::class,
+            'Magento\Catalog\Model\Indexer\Product\Flat\Processor',
             ['getIndexer'],
             [],
             '',
@@ -47,7 +47,7 @@ class ModeTest extends \PHPUnit_Framework_TestCase
 
         $objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
         $this->model = $objectManager->getObject(
-            \Magento\Catalog\Model\Indexer\Product\Flat\System\Config\Mode::class,
+            'Magento\Catalog\Model\Indexer\Product\Flat\System\Config\Mode',
             [
                 'config' => $this->configMock,
                 'indexerState' => $this->indexerStateMock,
@@ -170,7 +170,7 @@ class ModeTest extends \PHPUnit_Framework_TestCase
         $this->indexerStateMock->expects($this->never())->method('save');
 
         $indexerMock = $this->getMockForAbstractClass(
-            \Magento\Framework\Indexer\IndexerInterface::class,
+            'Magento\Framework\Indexer\IndexerInterface',
             [],
             '',
             false,

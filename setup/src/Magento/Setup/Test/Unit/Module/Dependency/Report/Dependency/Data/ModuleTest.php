@@ -27,14 +27,14 @@ class ModuleTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->dependencyFirst = $this->getMock(
-            \Magento\Setup\Module\Dependency\Report\Dependency\Data\Dependency::class,
+            'Magento\Setup\Module\Dependency\Report\Dependency\Data\Dependency',
             [],
             [],
             '',
             false
         );
         $this->dependencySecond = $this->getMock(
-            \Magento\Setup\Module\Dependency\Report\Dependency\Data\Dependency::class,
+            'Magento\Setup\Module\Dependency\Report\Dependency\Data\Dependency',
             [],
             [],
             '',
@@ -43,7 +43,7 @@ class ModuleTest extends \PHPUnit_Framework_TestCase
 
         $objectManagerHelper = new ObjectManager($this);
         $this->module = $objectManagerHelper->getObject(
-            \Magento\Setup\Module\Dependency\Report\Dependency\Data\Module::class,
+            'Magento\Setup\Module\Dependency\Report\Dependency\Data\Module',
             ['name' => 'name', 'dependencies' => [$this->dependencyFirst, $this->dependencySecond]]
         );
     }

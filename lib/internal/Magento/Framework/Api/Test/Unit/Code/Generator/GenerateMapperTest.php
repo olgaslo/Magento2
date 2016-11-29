@@ -21,7 +21,7 @@ class GenerateMapperTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->ioObjectMock = $this->getMock(
-            \Magento\Framework\Code\Generator\Io::class,
+            '\Magento\Framework\Code\Generator\Io',
             [],
             [],
             '',
@@ -36,22 +36,23 @@ class GenerateMapperTest extends \PHPUnit_Framework_TestCase
     {
         require_once __DIR__ . '/Sample.php';
         $model = $this->getMock(
-            \Magento\Framework\Api\Code\Generator\Mapper::class,
+            'Magento\Framework\Api\Code\Generator\Mapper',
             [
                 '_validateData'
             ],
-            [\Magento\Framework\Api\Code\Generator\Sample::class,
+            [
+                '\Magento\Framework\Api\Code\Generator\Sample',
                 null,
                 $this->ioObjectMock,
                 null,
                 null,
-                $this->getMock(\Magento\Framework\Filesystem\FileResolver::class)
+                $this->getMock('Magento\Framework\Filesystem\FileResolver')
             ]
         );
         $sampleMapperCode = file_get_contents(__DIR__ . '/_files/SampleMapper.txt');
         $this->ioObjectMock->expects($this->once())
             ->method('generateResultFileName')
-            ->with('\\' . \Magento\Framework\Api\Code\Generator\SampleMapper::class)
+            ->with('\Magento\Framework\Api\Code\Generator\SampleMapper')
             ->will($this->returnValue('SampleMapper.php'));
         $this->ioObjectMock->expects($this->once())
             ->method('writeResultFile')

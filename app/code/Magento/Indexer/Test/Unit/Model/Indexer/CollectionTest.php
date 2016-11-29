@@ -13,25 +13,25 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
         $indexerIdSecond = 'second_indexer_id';
 
         $entityFactory = $this->getMockBuilder(
-            \Magento\Framework\Data\Collection\EntityFactoryInterface::class
+            'Magento\Framework\Data\Collection\EntityFactoryInterface'
         )->disableOriginalConstructor()->setMethods(
             ['create']
         )->getMock();
 
-        $config = $this->getMockBuilder(\Magento\Framework\Indexer\ConfigInterface::class)->getMock();
+        $config = $this->getMockBuilder('Magento\Framework\Indexer\ConfigInterface')->getMock();
 
         $statesFactory = $this->getMockBuilder(
-            \Magento\Indexer\Model\ResourceModel\Indexer\State\CollectionFactory::class
+            'Magento\Indexer\Model\ResourceModel\Indexer\State\CollectionFactory'
         )->disableOriginalConstructor()->setMethods(
             ['create']
         )->getMock();
 
         $states = $this->getMockBuilder(
-            \Magento\Indexer\Model\ResourceModel\Indexer\State\Collection::class
+            'Magento\Indexer\Model\ResourceModel\Indexer\State\Collection'
         )->disableOriginalConstructor()->getMock();
 
         $state = $this->getMockBuilder(
-            \Magento\Indexer\Model\Indexer\State::class
+            'Magento\Indexer\Model\Indexer\State'
         )->setMethods(
             ['getIndexerId', '__wakeup']
         )->disableOriginalConstructor()->getMock();
@@ -39,7 +39,7 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
         $state->expects($this->any())->method('getIndexerId')->will($this->returnValue('second_indexer_id'));
 
         $indexer = $this->getMockBuilder(
-            \Magento\Indexer\Model\Indexer\Collection::class
+            'Magento\Indexer\Model\Indexer\Collection'
         )->setMethods(
             ['load', 'setState']
         )->disableOriginalConstructor()->getMock();
@@ -53,7 +53,7 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
         )->method(
             'create'
         )->with(
-            \Magento\Framework\Indexer\IndexerInterface::class
+            'Magento\Framework\Indexer\IndexerInterface'
         )->will(
             $this->returnValue($indexer)
         );
@@ -71,6 +71,6 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
         $states->expects($this->any())->method('getItems')->will($this->returnValue([$state]));
 
         $collection = new \Magento\Indexer\Model\Indexer\Collection($entityFactory, $config, $statesFactory);
-        $this->assertInstanceOf(\Magento\Indexer\Model\Indexer\Collection::class, $collection->loadData());
+        $this->assertInstanceOf('Magento\Indexer\Model\Indexer\Collection', $collection->loadData());
     }
 }

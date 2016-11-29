@@ -29,10 +29,10 @@ class TaxTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->storeManagerMock = $this->getMock(\Magento\Store\Model\StoreManagerInterface::class);
-        $this->connectionMock = $this->getMock(\Magento\Framework\DB\Adapter\AdapterInterface::class);
+        $this->storeManagerMock = $this->getMock('\Magento\Store\Model\StoreManagerInterface');
+        $this->connectionMock = $this->getMock('\Magento\Framework\DB\Adapter\AdapterInterface');
 
-        $this->resourceMock = $this->getMock(\Magento\Framework\App\ResourceConnection::class, [], [], '', false);
+        $this->resourceMock = $this->getMock('\Magento\Framework\App\ResourceConnection', [], [], '', false);
         $this->resourceMock->expects($this->once())
             ->method('getConnection')
             ->willReturn($this->connectionMock);
@@ -41,7 +41,7 @@ class TaxTest extends \PHPUnit_Framework_TestCase
             ->method('getTableName')
             ->willReturn('table_name');
 
-        $contextMock = $this->getMock(\Magento\Framework\Model\ResourceModel\Db\Context::class, [], [], '', false);
+        $contextMock = $this->getMock('\Magento\Framework\Model\ResourceModel\Db\Context', [], [], '', false);
         $contextMock->expects($this->once())->method('getResources')->willReturn($this->resourceMock);
 
         $this->model = new \Magento\Weee\Model\ResourceModel\Attribute\Backend\Weee\Tax(
@@ -53,7 +53,7 @@ class TaxTest extends \PHPUnit_Framework_TestCase
     public function testInsertProductData()
     {
         $productId = 100;
-        $productMock = $this->getMock(\Magento\Catalog\Model\Product::class, ['getId'], [], '', false);
+        $productMock = $this->getMock('\Magento\Catalog\Model\Product', ['getId'], [], '', false);
         $productMock->expects($this->once())->method('getId')->willReturn($productId);
 
         $this->connectionMock->expects($this->once())

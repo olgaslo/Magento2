@@ -24,20 +24,14 @@ class SynonymGroupRepositoryTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->factory = $this->getMock(\Magento\Search\Model\SynonymGroupFactory::class, ['create'], [], '', false);
-        $this->resourceModel = $this->getMock(
-            \Magento\Search\Model\ResourceModel\SynonymGroup::class,
-            [],
-            [],
-            '',
-            false
-        );
+        $this->factory = $this->getMock('Magento\Search\Model\SynonymGroupFactory', ['create'], [], '', false);
+        $this->resourceModel = $this->getMock('Magento\Search\Model\ResourceModel\SynonymGroup', [], [], '', false);
         $this->object = new \Magento\Search\Model\SynonymGroupRepository($this->factory, $this->resourceModel);
     }
 
     public function testSaveCreate()
     {
-        $synonymGroupModel = $this->getMock(\Magento\Search\Model\SynonymGroup::class, [], [], '', false);
+        $synonymGroupModel = $this->getMock('Magento\Search\Model\SynonymGroup', [], [], '', false);
         $synonymGroupModel->expects($this->once())->method('load')->with(null);
         $synonymGroupModel->expects($this->once())->method('getSynonymGroup')->willReturn(null);
         $this->factory->expects($this->exactly(2))->method('create')->willReturn($synonymGroupModel);
@@ -48,7 +42,7 @@ class SynonymGroupRepositoryTest extends \PHPUnit_Framework_TestCase
         $synonymGroupModel->expects($this->once())->method('setSynonymGroup');
         $this->resourceModel->expects($this->once())->method('save')->with($synonymGroupModel);
 
-        $data = $this->getMockForAbstractClass(\Magento\Search\Api\Data\SynonymGroupInterface::class, [], '', false);
+        $data = $this->getMockForAbstractClass('Magento\Search\Api\Data\SynonymGroupInterface', [], '', false);
         $data->expects($this->once())->method('getGroupId')->willReturn(null);
         $data->expects($this->exactly(2))->method('getStoreId');
         $data->expects($this->exactly(2))->method('getWebsiteId');
@@ -63,7 +57,7 @@ class SynonymGroupRepositoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testSaveCreateMergeConflict()
     {
-        $synonymGroupModel = $this->getMock(\Magento\Search\Model\SynonymGroup::class, [], [], '', false);
+        $synonymGroupModel = $this->getMock('Magento\Search\Model\SynonymGroup', [], [], '', false);
         $synonymGroupModel->expects($this->once())->method('load')->with(null);
         $synonymGroupModel->expects($this->once())->method('getSynonymGroup')->willReturn(null);
         $this->factory->expects($this->once())->method('create')->willReturn($synonymGroupModel);
@@ -72,7 +66,7 @@ class SynonymGroupRepositoryTest extends \PHPUnit_Framework_TestCase
             ->willReturn([['group_id' => 1, 'synonyms' => 'a,b,c']]);
         $this->resourceModel->expects($this->never())->method('save');
 
-        $data = $this->getMockForAbstractClass(\Magento\Search\Api\Data\SynonymGroupInterface::class, [], '', false);
+        $data = $this->getMockForAbstractClass('Magento\Search\Api\Data\SynonymGroupInterface', [], '', false);
         $data->expects($this->once())->method('getGroupId')->willReturn(null);
         $data->expects($this->once())->method('getStoreId');
         $data->expects($this->once())->method('getWebsiteId');
@@ -83,16 +77,16 @@ class SynonymGroupRepositoryTest extends \PHPUnit_Framework_TestCase
 
     public function testSaveCreateMerge()
     {
-        $synonymGroupModel = $this->getMock(\Magento\Search\Model\SynonymGroup::class, [], [], '', false);
+        $synonymGroupModel = $this->getMock('Magento\Search\Model\SynonymGroup', [], [], '', false);
         $synonymGroupModel->expects($this->once())->method('load')->with(null);
         $synonymGroupModel->expects($this->once())->method('getSynonymGroup')->willReturn(null);
 
-        $existingSynonymGroupModel = $this->getMock(\Magento\Search\Model\SynonymGroup::class, [], [], '', false);
+        $existingSynonymGroupModel = $this->getMock('Magento\Search\Model\SynonymGroup', [], [], '', false);
         $existingSynonymGroupModel->expects($this->once())->method('load')->with(1);
         $existingSynonymGroupModel->expects($this->once())->method('delete');
         $existingSynonymGroupModel->expects($this->once())->method('getSynonymGroup')->willReturn('a,b,c');
 
-        $newSynonymGroupModel = $this->getMock(\Magento\Search\Model\SynonymGroup::class, [], [], '', false);
+        $newSynonymGroupModel = $this->getMock('Magento\Search\Model\SynonymGroup', [], [], '', false);
         $newSynonymGroupModel->expects($this->once())->method('setStoreId');
         $newSynonymGroupModel->expects($this->once())->method('setWebsiteId');
         // merged result
@@ -106,9 +100,10 @@ class SynonymGroupRepositoryTest extends \PHPUnit_Framework_TestCase
             ->method('getByScope')
             ->willReturn([['group_id' => 1, 'synonyms' => 'a,b,c']]);
 
+
         $this->resourceModel->expects($this->once())->method('save')->with($newSynonymGroupModel);
 
-        $data = $this->getMockForAbstractClass(\Magento\Search\Api\Data\SynonymGroupInterface::class, [], '', false);
+        $data = $this->getMockForAbstractClass('Magento\Search\Api\Data\SynonymGroupInterface', [], '', false);
         $data->expects($this->once())->method('getGroupId')->willReturn(null);
         $data->expects($this->exactly(2))->method('getStoreId');
         $data->expects($this->exactly(2))->method('getWebsiteId');
@@ -119,7 +114,7 @@ class SynonymGroupRepositoryTest extends \PHPUnit_Framework_TestCase
 
     public function testSaveUpdate()
     {
-        $synonymGroupModel = $this->getMock(\Magento\Search\Model\SynonymGroup::class, [], [], '', false);
+        $synonymGroupModel = $this->getMock('Magento\Search\Model\SynonymGroup', [], [], '', false);
         $synonymGroupModel->expects($this->once())->method('load')->with(1);
         $synonymGroupModel->expects($this->exactly(2))->method('getSynonymGroup')->willReturn('a,b,c');
         $synonymGroupModel->expects($this->once())->method('getGroupId')->willReturn(1);
@@ -133,7 +128,7 @@ class SynonymGroupRepositoryTest extends \PHPUnit_Framework_TestCase
         $synonymGroupModel->expects($this->once())->method('setSynonymGroup')->with('d,e,f');
         $this->resourceModel->expects($this->once())->method('save')->with($synonymGroupModel);
 
-        $data = $this->getMockForAbstractClass(\Magento\Search\Api\Data\SynonymGroupInterface::class, [], '', false);
+        $data = $this->getMockForAbstractClass('Magento\Search\Api\Data\SynonymGroupInterface', [], '', false);
         $data->expects($this->once())->method('getGroupId')->willReturn(1);
         $data->expects($this->exactly(2))->method('getStoreId');
         $data->expects($this->exactly(2))->method('getWebsiteId');
@@ -148,7 +143,7 @@ class SynonymGroupRepositoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testSaveUpdateMergeConflict()
     {
-        $synonymGroupModel = $this->getMock(\Magento\Search\Model\SynonymGroup::class, [], [], '', false);
+        $synonymGroupModel = $this->getMock('Magento\Search\Model\SynonymGroup', [], [], '', false);
         $synonymGroupModel->expects($this->once())->method('load')->with(1);
         $synonymGroupModel->expects($this->exactly(2))->method('getSynonymGroup')->willReturn('a,b,c');
         $synonymGroupModel->expects($this->once())->method('getGroupId')->willReturn(1);
@@ -159,7 +154,7 @@ class SynonymGroupRepositoryTest extends \PHPUnit_Framework_TestCase
             ->willReturn([['group_id' => 2, 'synonyms' => 'd,h,i']]);
         $this->resourceModel->expects($this->never())->method('save');
 
-        $data = $this->getMockForAbstractClass(\Magento\Search\Api\Data\SynonymGroupInterface::class, [], '', false);
+        $data = $this->getMockForAbstractClass('Magento\Search\Api\Data\SynonymGroupInterface', [], '', false);
         $data->expects($this->once())->method('getGroupId')->willReturn(1);
         $data->expects($this->once())->method('getStoreId');
         $data->expects($this->once())->method('getWebsiteId');
@@ -170,12 +165,12 @@ class SynonymGroupRepositoryTest extends \PHPUnit_Framework_TestCase
 
     public function testSaveUpdateMerge()
     {
-        $synonymGroupModel = $this->getMock(\Magento\Search\Model\SynonymGroup::class, [], [], '', false);
+        $synonymGroupModel = $this->getMock('Magento\Search\Model\SynonymGroup', [], [], '', false);
         $synonymGroupModel->expects($this->once())->method('load')->with(1);
         $synonymGroupModel->expects($this->exactly(2))->method('getSynonymGroup')->willReturn('a,b,c');
         $synonymGroupModel->expects($this->once())->method('getGroupId')->willReturn(1);
 
-        $existingSynonymGroupModel = $this->getMock(\Magento\Search\Model\SynonymGroup::class, [], [], '', false);
+        $existingSynonymGroupModel = $this->getMock('Magento\Search\Model\SynonymGroup', [], [], '', false);
         $existingSynonymGroupModel->expects($this->once())->method('load')->with(2);
         $existingSynonymGroupModel->expects($this->once())->method('delete');
         $existingSynonymGroupModel->expects($this->once())->method('getSynonymGroup')->willReturn('d,e,f');
@@ -192,9 +187,10 @@ class SynonymGroupRepositoryTest extends \PHPUnit_Framework_TestCase
             ->method('getByScope')
             ->willReturn([['group_id' => 1, 'synonyms' => 'a,b,c'], ['group_id' => 2, 'synonyms' => 'd,e,f']]);
 
+
         $this->resourceModel->expects($this->once())->method('save')->with($synonymGroupModel);
 
-        $data = $this->getMockForAbstractClass(\Magento\Search\Api\Data\SynonymGroupInterface::class, [], '', false);
+        $data = $this->getMockForAbstractClass('Magento\Search\Api\Data\SynonymGroupInterface', [], '', false);
         $data->expects($this->once())->method('getGroupId')->willReturn(1);
         $data->expects($this->exactly(2))->method('getStoreId');
         $data->expects($this->exactly(2))->method('getWebsiteId');

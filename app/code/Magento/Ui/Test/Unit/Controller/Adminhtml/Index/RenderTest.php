@@ -34,13 +34,13 @@ class RenderTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->requestMock = $this->getMockBuilder(\Magento\Framework\App\Request\Http::class)
+        $this->requestMock = $this->getMockBuilder('Magento\Framework\App\Request\Http')
             ->disableOriginalConstructor()
             ->getMock();
-        $this->responseMock = $this->getMockBuilder(\Magento\Framework\App\Response\Http::class)
+        $this->responseMock = $this->getMockBuilder('Magento\Framework\App\Response\Http')
             ->disableOriginalConstructor()
             ->getMock();
-        $contextMock = $this->getMockBuilder(\Magento\Backend\App\Action\Context::class)
+        $contextMock = $this->getMockBuilder('Magento\Backend\App\Action\Context')
             ->disableOriginalConstructor()
             ->getMock();
         $contextMock->expects($this->any())
@@ -50,7 +50,7 @@ class RenderTest extends \PHPUnit_Framework_TestCase
             ->method('getResponse')
             ->willReturn($this->responseMock);
 
-        $this->uiFactoryMock = $this->getMockBuilder(\Magento\Framework\View\Element\UiComponentFactory::class)
+        $this->uiFactoryMock = $this->getMockBuilder('Magento\Framework\View\Element\UiComponentFactory')
             ->disableOriginalConstructor()
             ->getMock();
         $this->render = new Render($contextMock, $this->uiFactoryMock);
@@ -76,7 +76,7 @@ class RenderTest extends \PHPUnit_Framework_TestCase
          * @var \Magento\Framework\View\Element\UiComponentInterface|\PHPUnit_Framework_MockObject_MockObject $viewMock
          */
         $viewMock = $this->getMockForAbstractClass(
-            \Magento\Framework\View\Element\UiComponentInterface::class,
+            'Magento\Framework\View\Element\UiComponentInterface',
             [],
             '',
             false,

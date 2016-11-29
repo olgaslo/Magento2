@@ -22,7 +22,7 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
 
     public function testCreate()
     {
-        $adjustmentInterface = \Magento\Framework\Pricing\Adjustment\AdjustmentInterface::class;
+        $adjustmentInterface = 'Magento\Framework\Pricing\Adjustment\AdjustmentInterface';
         $adjustmentFactory = $this->prepareAdjustmentFactory($adjustmentInterface);
 
         $this->assertInstanceOf(
@@ -38,7 +38,7 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
     protected function prepareAdjustmentFactory($adjustmentInterface)
     {
         return $this->objectManager->getObject(
-            \Magento\Framework\Pricing\Adjustment\Factory::class,
+            'Magento\Framework\Pricing\Adjustment\Factory',
             ['objectManager' => $this->prepareObjectManager($adjustmentInterface)]
         );
     }
@@ -50,7 +50,7 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
     protected function prepareObjectManager($adjustmentInterface)
     {
         $objectManager = $this->getMock(
-            \Magento\Framework\ObjectManager\ObjectManager::class,
+            'Magento\Framework\ObjectManager\ObjectManager',
             ['create'],
             [],
             '',
@@ -67,7 +67,7 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testCreateWithException()
     {
-        $invalidAdjustmentInterface = \Magento\Framework\DataObject::class;
+        $invalidAdjustmentInterface = 'Magento\Framework\DataObject';
         $adjustmentFactory = $this->prepareAdjustmentFactory($invalidAdjustmentInterface);
         $adjustmentFactory->create($invalidAdjustmentInterface);
     }

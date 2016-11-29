@@ -27,13 +27,13 @@ class NotifierPoolTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->objectManagerHelper = new ObjectManagerHelper($this);
-        $notifier1 = $this->getMock(\Magento\Framework\Notification\NotifierPool::class, [], [], '', false);
-        $notifier2 = $this->getMock(\Magento\Framework\Notification\NotifierPool::class, [], [], '', false);
+        $notifier1 = $this->getMock('Magento\Framework\Notification\NotifierPool', [], [], '', false);
+        $notifier2 = $this->getMock('Magento\Framework\Notification\NotifierPool', [], [], '', false);
         $this->notifiers = [$notifier1, $notifier2];
-        $this->notifierList = $this->getMock(\Magento\Framework\Notification\NotifierList::class, [], [], '', false);
+        $this->notifierList = $this->getMock('Magento\Framework\Notification\NotifierList', [], [], '', false);
         $this->notifierList->expects($this->any())->method('asArray')->will($this->returnValue($this->notifiers));
         $this->notifierPool = $this->objectManagerHelper->getObject(
-            \Magento\Framework\Notification\NotifierPool::class,
+            'Magento\Framework\Notification\NotifierPool',
             [
                 'notifierList' => $this->notifierList
             ]

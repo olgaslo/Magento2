@@ -31,7 +31,7 @@ class IsActiveTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->objectManagerHelper = new ObjectManager($this);
-        $this->cmsPageMock = $this->getMockBuilder(\Magento\Cms\Model\Page::class)
+        $this->cmsPageMock = $this->getMockBuilder('Magento\Cms\Model\Page')
             ->disableOriginalConstructor()
             ->setMethods(['getAvailableStatuses'])
             ->getMock();
@@ -46,7 +46,7 @@ class IsActiveTest extends \PHPUnit_Framework_TestCase
      */
     protected function getSourceClassName()
     {
-        return \Magento\Cms\Model\Page\Source\IsActive::class;
+        return 'Magento\Cms\Model\Page\Source\IsActive';
     }
 
     /**

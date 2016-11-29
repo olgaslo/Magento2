@@ -11,7 +11,7 @@ class OptionTest extends \PHPUnit_Framework_TestCase
     {
         $button = new \Magento\Framework\DataObject();
 
-        $itemsBlock = $this->getMock(\Magento\Framework\DataObject::class, ['getChildBlock']);
+        $itemsBlock = $this->getMock('Magento\Framework\DataObject', ['getChildBlock']);
         $itemsBlock->expects(
             $this->atLeastOnce()
         )->method(
@@ -22,7 +22,7 @@ class OptionTest extends \PHPUnit_Framework_TestCase
             $this->returnValue($button)
         );
 
-        $layout = $this->getMock(\Magento\Framework\DataObject::class, ['getBlock']);
+        $layout = $this->getMock('Magento\Framework\DataObject', ['getBlock']);
         $layout->expects(
             $this->atLeastOnce()
         )->method(
@@ -34,7 +34,7 @@ class OptionTest extends \PHPUnit_Framework_TestCase
         );
 
         $block = $this->getMock(
-            \Magento\Bundle\Block\Adminhtml\Catalog\Product\Edit\Tab\Bundle\Option::class,
+            'Magento\Bundle\Block\Adminhtml\Catalog\Product\Edit\Tab\Bundle\Option',
             ['getLayout'],
             [],
             '',

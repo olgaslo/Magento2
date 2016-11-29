@@ -34,7 +34,7 @@ class AdminConfigFixture
     protected function _getConfigValue($configPath)
     {
         return \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->get(
-            \Magento\Backend\App\ConfigInterface::class
+            'Magento\Backend\App\ConfigInterface'
         )->getValue(
             $configPath
         );
@@ -49,7 +49,7 @@ class AdminConfigFixture
     protected function _setConfigValue($configPath, $value)
     {
         \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->get(
-            \Magento\Backend\App\ConfigInterface::class
+            'Magento\Backend\App\ConfigInterface'
         )->setValue(
             $configPath,
             $value

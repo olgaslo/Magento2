@@ -21,7 +21,7 @@ class ShippingTest extends \PHPUnit_Framework_TestCase
     {
         $helper = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
 
-        $this->scopeConfigMock = $this->getMockBuilder(\Magento\Framework\App\Config\ScopeConfigInterface::class)
+        $this->scopeConfigMock = $this->getMockBuilder('\Magento\Framework\App\Config\ScopeConfigInterface')
             ->disableOriginalConstructor()
             ->setMethods([
                 'getValue',
@@ -29,10 +29,9 @@ class ShippingTest extends \PHPUnit_Framework_TestCase
             ])
             ->getMock();
 
-        $this->model = $helper->getObject(
-            \Magento\OfflineShipping\Model\Plugin\Checkout\Block\Cart\Shipping::class,
-            ['scopeConfig' => $this->scopeConfigMock]
-        );
+        $this->model = $helper->getObject('\Magento\OfflineShipping\Model\Plugin\Checkout\Block\Cart\Shipping', [
+            'scopeConfig' => $this->scopeConfigMock
+        ]);
     }
 
     /**
@@ -41,7 +40,7 @@ class ShippingTest extends \PHPUnit_Framework_TestCase
     public function testAfterGetStateActive($scopeConfigMockReturnValue, $result, $assertResult)
     {
         /** @var \Magento\Checkout\Block\Cart\LayoutProcessor $subjectMock */
-        $subjectMock = $this->getMockBuilder(\Magento\Checkout\Block\Cart\LayoutProcessor::class)
+        $subjectMock = $this->getMockBuilder('\Magento\Checkout\Block\Cart\LayoutProcessor')
             ->disableOriginalConstructor()
             ->getMock();
 

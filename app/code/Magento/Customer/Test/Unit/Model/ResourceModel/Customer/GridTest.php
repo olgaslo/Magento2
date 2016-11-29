@@ -35,30 +35,30 @@ class GridTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->resource = $this->getMock(\Magento\Framework\App\ResourceConnection::class, [], [], '', false);
-        $this->indexerRegistry = $this->getMock(\Magento\Framework\Indexer\IndexerRegistry::class, [], [], '', false);
+        $this->resource = $this->getMock('Magento\Framework\App\ResourceConnection', [], [], '', false);
+        $this->indexerRegistry = $this->getMock('Magento\Framework\Indexer\IndexerRegistry', [], [], '', false);
         $this->flatScopeResolver = $this->getMock(
-            \Magento\Framework\Indexer\ScopeResolver\FlatScopeResolver::class,
+            'Magento\Framework\Indexer\ScopeResolver\FlatScopeResolver',
             [],
             [],
             '',
             false
         );
         $this->indexer = $this->getMockForAbstractClass(
-            \Magento\Framework\Indexer\IndexerInterface::class,
+            'Magento\Framework\Indexer\IndexerInterface',
             [],
             '',
             false
         );
         $this->connection = $this->getMockForAbstractClass(
-            \Magento\Framework\DB\Adapter\AdapterInterface::class,
+            'Magento\Framework\DB\Adapter\AdapterInterface',
             [],
             '',
             false
         );
-        $this->select = $this->getMock(\Magento\Framework\DB\Select::class, [], [], '', false);
+        $this->select = $this->getMock('Magento\Framework\DB\Select', [], [], '', false);
         $this->queryResult = $this->getMockForAbstractClass(
-            \Zend_Db_Statement_Interface::class,
+            'Zend_Db_Statement_Interface',
             [],
             '',
             false

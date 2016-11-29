@@ -29,7 +29,7 @@ class MassEnableTest extends AbstractMassActionTest
         parent::setUp();
 
         $this->collectionFactoryMock = $this->getMock(
-            \Magento\Cms\Model\ResourceModel\Page\CollectionFactory::class,
+            'Magento\Cms\Model\ResourceModel\Page\CollectionFactory',
             ['create'],
             [],
             '',
@@ -37,7 +37,7 @@ class MassEnableTest extends AbstractMassActionTest
         );
 
         $this->pageCollectionMock = $this->getMock(
-            \Magento\Cms\Model\ResourceModel\Page\Collection::class,
+            'Magento\Cms\Model\ResourceModel\Page\Collection',
             [],
             [],
             '',
@@ -45,7 +45,7 @@ class MassEnableTest extends AbstractMassActionTest
         );
 
         $this->massEnableController = $this->objectManager->getObject(
-            \Magento\Cms\Controller\Adminhtml\Page\MassEnable::class,
+            'Magento\Cms\Controller\Adminhtml\Page\MassEnable',
             [
                 'context' => $this->contextMock,
                 'filter' => $this->filterMock,
@@ -96,7 +96,7 @@ class MassEnableTest extends AbstractMassActionTest
     protected function getPageMock()
     {
         $pageMock = $this->getMock(
-            \Magento\Cms\Model\ResourceModel\Page\Collection::class,
+            'Magento\Cms\Model\ResourceModel\Page\Collection',
             ['setIsActive', 'save'],
             [],
             '',

@@ -6,7 +6,6 @@
 namespace Magento\Braintree\Helper;
 
 use Magento\Directory\Model\ResourceModel\Country\CollectionFactory;
-use Magento\Braintree\Model\Adminhtml\System\Config\Country as CountryConfig;
 
 /**
  * Class Country
@@ -14,12 +13,12 @@ use Magento\Braintree\Model\Adminhtml\System\Config\Country as CountryConfig;
 class Country
 {
     /**
-     * @var CollectionFactory
+     * @var \Magento\Directory\Model\ResourceModel\Country\CollectionFactory
      */
     private $collectionFactory;
 
     /**
-     * @var CountryConfig
+     * @var \Magento\Braintree\Model\Adminhtml\System\Config\Country
      */
     private $countryConfig;
 
@@ -29,11 +28,13 @@ class Country
     private $countries;
 
     /**
-     * @param CollectionFactory $factory
-     * @param CountryConfig $countryConfig
+     * @param \Magento\Directory\Model\ResourceModel\Country\CollectionFactory $factory
+     * @param \Magento\Braintree\Model\Adminhtml\System\Config\Country $countryConfig
      */
-    public function __construct(CollectionFactory $factory, CountryConfig $countryConfig)
-    {
+    public function __construct(
+        \Magento\Directory\Model\ResourceModel\Country\CollectionFactory $factory,
+        \Magento\Braintree\Model\Adminhtml\System\Config\Country $countryConfig
+    ) {
         $this->collectionFactory = $factory;
         $this->countryConfig = $countryConfig;
     }

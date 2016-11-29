@@ -38,14 +38,14 @@ class AddressTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->attributeMock = $this->getMock(
-            \Magento\Sales\Model\ResourceModel\Attribute::class,
+            'Magento\Sales\Model\ResourceModel\Attribute',
             [],
             [],
             '',
             false
         );
         $this->orderMock = $this->getMock(
-            \Magento\Sales\Model\Order::class,
+            'Magento\Sales\Model\Order',
             [
                 '__wakeup',
                 'getAddresses',
@@ -66,14 +66,14 @@ class AddressTest extends \PHPUnit_Framework_TestCase
             false
         );
         $this->addressMock = $this->getMock(
-            \Magento\Sales\Model\Order\Address::class,
+            'Magento\Sales\Model\Order\Address',
             [],
             [],
             '',
             false
         );
         $this->addressCollectionMock = $this->getMock(
-            \Magento\Sales\Model\ResourceModel\Order\Address\Collection::class,
+            'Magento\Sales\Model\ResourceModel\Order\Address\Collection',
             [],
             [],
             '',

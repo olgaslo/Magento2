@@ -20,28 +20,28 @@ class AddressTest extends \PHPUnit_Framework_TestCase
     protected $_customerSession;
 
     /**
-     * @var \Magento\Framework\ObjectManagerInterface
+     * @var \Magento\Framework\ObjectManager
      */
     protected $objectManager;
 
     protected function setUp()
     {
         $this->objectManager = \Magento\TestFramework\Helper\Bootstrap::getObjectManager();
-        $this->_customerSession = $this->objectManager->get(\Magento\Customer\Model\Session::class);
-        $this->_block = $this->objectManager->get(\Magento\Framework\View\LayoutInterface::class)
+        $this->_customerSession = $this->objectManager->get('Magento\Customer\Model\Session');
+        $this->_block = $this->objectManager->get('Magento\Framework\View\LayoutInterface')
             ->createBlock(
-                \Magento\Customer\Block\Account\Dashboard\Address::class,
+                'Magento\Customer\Block\Account\Dashboard\Address',
                 '',
                 ['customerSession' => $this->_customerSession]
             );
-        $this->objectManager->get(\Magento\Framework\App\ViewInterface::class)->setIsLayoutLoaded(true);
+        $this->objectManager->get('Magento\Framework\App\ViewInterface')->setIsLayoutLoaded(true);
     }
 
     protected function tearDown()
     {
         $this->_customerSession->unsCustomerId();
         /** @var \Magento\Customer\Model\CustomerRegistry $customerRegistry */
-        $customerRegistry = $this->objectManager->get(\Magento\Customer\Model\CustomerRegistry::class);
+        $customerRegistry = $this->objectManager->get('Magento\Customer\Model\CustomerRegistry');
         //Cleanup customer from registry
         $customerRegistry->remove(1);
     }
@@ -52,11 +52,11 @@ class AddressTest extends \PHPUnit_Framework_TestCase
     public function testGetCustomer()
     {
         $objectManager = Bootstrap::getObjectManager();
-        $layout = $objectManager->get(\Magento\Framework\View\LayoutInterface::class);
+        $layout = $objectManager->get('Magento\Framework\View\LayoutInterface');
         $layout->setIsCacheable(false);
         /** @var CustomerRepositoryInterface $customerRepository */
         $customerRepository = $objectManager
-            ->get(\Magento\Customer\Api\CustomerRepositoryInterface::class);
+            ->get('Magento\Customer\Api\CustomerRepositoryInterface');
         $customer = $customerRepository->getById(1);
         $this->_customerSession->setCustomerId(1);
         $object = $this->_block->getCustomer();
@@ -66,11 +66,9 @@ class AddressTest extends \PHPUnit_Framework_TestCase
 
     public function testGetCustomerMissingCustomer()
     {
-        $moduleManager = $this->objectManager->get(\Magento\Framework\Module\Manager::class);
+        $moduleManager = $this->objectManager->get('Magento\Framework\Module\Manager');
         if ($moduleManager->isEnabled('Magento_PageCache')) {
-            $customerDataFactory = $this->objectManager->create(
-                \Magento\Customer\Api\Data\CustomerInterfaceFactory::class
-            );
+            $customerDataFactory = $this->objectManager->create('Magento\Customer\Api\Data\CustomerInterfaceFactory');
             $customerData = $customerDataFactory->create()->setGroupId($this->_customerSession->getCustomerGroupId());
             $this->assertEquals($customerData, $this->_block->getCustomer());
         } else {
@@ -98,7 +96,7 @@ class AddressTest extends \PHPUnit_Framework_TestCase
     public function getPrimaryShippingAddressHtmlDataProvider()
     {
         $expected = "John Smith<br/>\nCompanyName<br />\nGreen str, 67<br />\n\n\n\nCityM,  Alabama, 75477<br/>"
-            . "\nUnited States<br/>\nT: <a href=\"tel:3468676\">3468676</a>\n\n";
+            . "\nUnited States<br/>\nT: 3468676\n\n";
 
         return [
             '0' => [0, 'You have not set a default shipping address.'],
@@ -125,7 +123,7 @@ class AddressTest extends \PHPUnit_Framework_TestCase
     public function getPrimaryBillingAddressHtmlDataProvider()
     {
         $expected = "John Smith<br/>\nCompanyName<br />\nGreen str, 67<br />\n\n\n\nCityM,  Alabama, 75477<br/>"
-            . "\nUnited States<br/>\nT: <a href=\"tel:3468676\">3468676</a>\n\n";
+            . "\nUnited States<br/>\nT: 3468676\n\n";
         return [
             '0' => [0, 'You have not set a default billing address.'],
             '1' => [1, $expected],

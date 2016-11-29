@@ -41,21 +41,21 @@ class ObjectManagerFactory
      *
      * @var string
      */
-    protected $_locatorClassName = \Magento\Framework\ObjectManager\ObjectManager::class;
+    protected $_locatorClassName = 'Magento\Framework\ObjectManager\ObjectManager';
 
     /**
      * Config class name
      *
      * @var string
      */
-    protected $_configClassName = \Magento\Framework\Interception\ObjectManager\ConfigInterface::class;
+    protected $_configClassName = 'Magento\Framework\Interception\ObjectManager\ConfigInterface';
 
     /**
      * Environment factory class name
      *
      * @var string
      */
-    protected $envFactoryClassName = \Magento\Framework\App\EnvironmentFactory::class;
+    protected $envFactoryClassName = 'Magento\Framework\App\EnvironmentFactory';
 
     /**
      * Filesystem directory list
@@ -147,30 +147,30 @@ class ObjectManagerFactory
 
         // set cache profiler decorator if enabled
         if (\Magento\Framework\Profiler::isEnabled()) {
-            $cacheFactoryArguments = $diConfig->getArguments(\Magento\Framework\App\Cache\Frontend\Factory::class);
+            $cacheFactoryArguments = $diConfig->getArguments('Magento\Framework\App\Cache\Frontend\Factory');
             $cacheFactoryArguments['decorators'][] = [
-                'class' => \Magento\Framework\Cache\Frontend\Decorator\Profiler::class,
+                'class' => 'Magento\Framework\Cache\Frontend\Decorator\Profiler',
                 'parameters' => ['backendPrefixes' => ['Zend_Cache_Backend_', 'Cm_Cache_Backend_']],
             ];
             $cacheFactoryConfig = [
-                \Magento\Framework\App\Cache\Frontend\Factory::class => ['arguments' => $cacheFactoryArguments]
+                'Magento\Framework\App\Cache\Frontend\Factory' => ['arguments' => $cacheFactoryArguments]
             ];
             $diConfig->extend($cacheFactoryConfig);
         }
 
         $sharedInstances = [
-            \Magento\Framework\App\DeploymentConfig::class => $deploymentConfig,
-            \Magento\Framework\App\Filesystem\DirectoryList::class => $this->directoryList,
-            \Magento\Framework\Filesystem\DirectoryList::class => $this->directoryList,
-            \Magento\Framework\Filesystem\DriverPool::class => $this->driverPool,
-            \Magento\Framework\ObjectManager\RelationsInterface::class => $relations,
-            \Magento\Framework\Interception\DefinitionInterface::class => $definitionFactory->createPluginDefinition(),
-            \Magento\Framework\ObjectManager\ConfigInterface::class => $diConfig,
-            \Magento\Framework\Interception\ObjectManager\ConfigInterface::class => $diConfig,
-            \Magento\Framework\ObjectManager\DefinitionInterface::class => $definitions,
-            \Magento\Framework\Stdlib\BooleanUtils::class => $booleanUtils,
-            \Magento\Framework\ObjectManager\Config\Mapper\Dom::class => $argumentMapper,
-            \Magento\Framework\ObjectManager\ConfigLoaderInterface::class => $env->getObjectManagerConfigLoader(),
+            'Magento\Framework\App\DeploymentConfig' => $deploymentConfig,
+            'Magento\Framework\App\Filesystem\DirectoryList' => $this->directoryList,
+            'Magento\Framework\Filesystem\DirectoryList' => $this->directoryList,
+            'Magento\Framework\Filesystem\DriverPool' => $this->driverPool,
+            'Magento\Framework\ObjectManager\RelationsInterface' => $relations,
+            'Magento\Framework\Interception\DefinitionInterface' => $definitionFactory->createPluginDefinition(),
+            'Magento\Framework\ObjectManager\ConfigInterface' => $diConfig,
+            'Magento\Framework\Interception\ObjectManager\ConfigInterface' => $diConfig,
+            'Magento\Framework\ObjectManager\DefinitionInterface' => $definitions,
+            'Magento\Framework\Stdlib\BooleanUtils' => $booleanUtils,
+            'Magento\Framework\ObjectManager\Config\Mapper\Dom' => $argumentMapper,
+            'Magento\Framework\ObjectManager\ConfigLoaderInterface' => $env->getObjectManagerConfigLoader(),
             $this->_configClassName => $diConfig,
         ];
         $arguments['shared_instances'] = &$sharedInstances;
@@ -182,7 +182,7 @@ class ObjectManagerFactory
         $this->factory->setObjectManager($objectManager);
         ObjectManager::setInstance($objectManager);
 
-        $generatorParams = $diConfig->getArguments(\Magento\Framework\Code\Generator::class);
+        $generatorParams = $diConfig->getArguments('Magento\Framework\Code\Generator');
         /** Arguments are stored in different format when DI config is compiled, thus require custom processing */
         $generatedEntities = isset($generatorParams['generatedEntities']['_v_'])
             ? $generatorParams['generatedEntities']['_v_']
@@ -307,7 +307,7 @@ class ObjectManagerFactory
         \Magento\Framework\ObjectManager\DefinitionInterface $definitions
     ) {
         return $objectManager->create(
-            \Magento\Framework\Interception\PluginList\PluginList::class,
+            'Magento\Framework\Interception\PluginList\PluginList',
             [
                 'relations' => $relations,
                 'definitions' => $definitionFactory->createPluginDefinition(),

@@ -28,6 +28,6 @@ class Debug extends \Magento\Framework\Model\AbstractModel
      */
     protected function _construct()
     {
-        $this->_init(\Magento\Authorizenet\Model\ResourceModel\Debug::class);
+        $this->_init('Magento\Authorizenet\Model\ResourceModel\Debug');
     }
 }

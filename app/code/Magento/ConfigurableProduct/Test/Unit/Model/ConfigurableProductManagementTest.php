@@ -43,24 +43,24 @@ class ConfigurableProductManagementTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->attributeRepository = $this->getMock(\Magento\Catalog\Api\ProductAttributeRepositoryInterface::class);
-        $this->product = $this->getMock(\Magento\Catalog\Api\Data\ProductInterface::class);
+        $this->attributeRepository = $this->getMock('\Magento\Catalog\Api\ProductAttributeRepositoryInterface');
+        $this->product = $this->getMock('\Magento\Catalog\Api\Data\ProductInterface');
         $this->option = $this->getMock(
-            \Magento\ConfigurableProduct\Model\Product\Type\Configurable\Attribute::class,
+            '\Magento\ConfigurableProduct\Model\Product\Type\Configurable\Attribute',
             [],
             [],
             '',
             false
         );
         $this->productVariationBuilder = $this->getMock(
-            \Magento\ConfigurableProduct\Model\ProductVariationsBuilder::class,
+            '\Magento\ConfigurableProduct\Model\ProductVariationsBuilder',
             [],
             [],
             '',
             false
         );
         $this->productsFactoryMock = $this->getMock(
-            \Magento\ConfigurableProduct\Model\ResourceModel\Product\Type\Configurable\Product\CollectionFactory::class,
+            '\Magento\ConfigurableProduct\Model\ResourceModel\Product\Type\Configurable\Product\CollectionFactory',
             ['create'],
             [],
             '',
@@ -77,10 +77,10 @@ class ConfigurableProductManagementTest extends \PHPUnit_Framework_TestCase
     public function testGenerateVariation()
     {
         $data = ['someKey' => 'someValue'];
-        $attributeOption = $this->getMock(\Magento\Eav\Model\Entity\Attribute\Option::class, [], [], '', false);
+        $attributeOption = $this->getMock('\Magento\Eav\Model\Entity\Attribute\Option', [], [], '', false);
         $attributeOption->expects($this->once())->method('getData')->willReturn(['key' => 'value']);
 
-        $attribute = $this->getMock(\Magento\Catalog\Model\ResourceModel\Eav\Attribute::class, [], [], '', false);
+        $attribute = $this->getMock('\Magento\Catalog\Model\ResourceModel\Eav\Attribute', [], [], '', false);
         $attribute->expects($this->any())->method('getOptions')->willReturn([$attributeOption]);
         $attribute->expects($this->once())->method('getAttributeCode')->willReturn(10);
 
@@ -110,7 +110,7 @@ class ConfigurableProductManagementTest extends \PHPUnit_Framework_TestCase
     {
         $statusEnabled = 1;
         $productsMock = $this->getMock(
-            \Magento\ConfigurableProduct\Model\ResourceModel\Product\Type\Configurable\Product\Collection::class,
+            'Magento\ConfigurableProduct\Model\ResourceModel\Product\Type\Configurable\Product\Collection',
             [],
             [],
             '',
@@ -141,7 +141,7 @@ class ConfigurableProductManagementTest extends \PHPUnit_Framework_TestCase
     {
         $statusDisabled = 2;
         $productsMock = $this->getMock(
-            \Magento\ConfigurableProduct\Model\ResourceModel\Product\Type\Configurable\Product\Collection::class,
+            'Magento\ConfigurableProduct\Model\ResourceModel\Product\Type\Configurable\Product\Collection',
             [],
             [],
             '',

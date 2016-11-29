@@ -23,12 +23,12 @@ class LayoutTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->pageLayoutBuilder = $this->getMockBuilder(
-            \Magento\Framework\View\Model\PageLayout\Config\BuilderInterface::class
+            'Magento\Framework\View\Model\PageLayout\Config\BuilderInterface'
         )->disableOriginalConstructor()->getMock();
 
         $this->objectManagerHelper = new ObjectManagerHelper($this);
         $this->layoutModel = $this->objectManagerHelper->getObject(
-            \Magento\Catalog\Model\Product\Attribute\Source\Layout::class,
+            'Magento\Catalog\Model\Product\Attribute\Source\Layout',
             [
                 'pageLayoutBuilder' => $this->pageLayoutBuilder
             ]
@@ -41,7 +41,7 @@ class LayoutTest extends \PHPUnit_Framework_TestCase
             '0' => ['value' => '', 'label' => 'No layout updates'],
             '1' => ['value' => 'option_value', 'label' => 'option_label'],
         ];
-        $mockPageLayoutConfig = $this->getMockBuilder(\Magento\Framework\View\PageLayout\Config::class)
+        $mockPageLayoutConfig = $this->getMockBuilder('Magento\Framework\View\PageLayout\Config')
             ->disableOriginalConstructor()
             ->getMock();
         $mockPageLayoutConfig->expects($this->any())

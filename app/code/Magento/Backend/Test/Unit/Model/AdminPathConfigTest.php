@@ -33,19 +33,14 @@ class AdminPathConfigTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->coreConfig = $this->getMockForAbstractClass(
-            \Magento\Framework\App\Config\ScopeConfigInterface::class,
+            'Magento\Framework\App\Config\ScopeConfigInterface',
             [],
             '',
             false
         );
-        $this->backendConfig = $this->getMockForAbstractClass(
-            \Magento\Backend\App\ConfigInterface::class,
-            [],
-            '',
-            false
-        );
+        $this->backendConfig = $this->getMockForAbstractClass('Magento\Backend\App\ConfigInterface', [], '', false);
         $this->url = $this->getMockForAbstractClass(
-            \Magento\Framework\UrlInterface::class,
+            'Magento\Framework\UrlInterface',
             [],
             '',
             false,
@@ -59,7 +54,7 @@ class AdminPathConfigTest extends \PHPUnit_Framework_TestCase
     public function testGetCurrentSecureUrl()
     {
         $request = $this->getMockForAbstractClass(
-            \Magento\Framework\App\RequestInterface::class,
+            'Magento\Framework\App\RequestInterface',
             [],
             '',
             false,

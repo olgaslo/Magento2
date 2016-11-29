@@ -24,7 +24,7 @@ class FormTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->_paypalConfig = $this->getMock(
-            \Magento\Paypal\Model\Config::class,
+            'Magento\Paypal\Model\Config',
             [],
             [],
             '',
@@ -36,7 +36,7 @@ class FormTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnSelf());
 
         $paypalConfigFactory = $this->getMock(
-            \Magento\Paypal\Model\ConfigFactory::class,
+            'Magento\Paypal\Model\ConfigFactory',
             ['create'],
             [],
             '',
@@ -47,7 +47,7 @@ class FormTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue($this->_paypalConfig));
 
         $mark = $this->getMock(
-            \Magento\Framework\View\Element\Template::class,
+            'Magento\Framework\View\Element\Template',
             [],
             [],
             '',
@@ -60,15 +60,15 @@ class FormTest extends \PHPUnit_Framework_TestCase
             ->method('__call')
             ->will($this->returnSelf());
         $layout = $this->getMockForAbstractClass(
-            \Magento\Framework\View\LayoutInterface::class
+            'Magento\Framework\View\LayoutInterface'
         );
         $layout->expects($this->once())
             ->method('createBlock')
-            ->with(\Magento\Framework\View\Element\Template::class)
+            ->with('Magento\Framework\View\Element\Template')
             ->will($this->returnValue($mark));
 
         $localeResolver = $this->getMock(
-            \Magento\Framework\Locale\ResolverInterface::class,
+            'Magento\Framework\Locale\ResolverInterface',
             [],
             [],
             '',
@@ -78,7 +78,7 @@ class FormTest extends \PHPUnit_Framework_TestCase
 
         $helper = new ObjectManager($this);
         $this->_model = $helper->getObject(
-            \Magento\Paypal\Block\PayflowExpress\Form::class,
+            'Magento\Paypal\Block\PayflowExpress\Form',
             [
                 'paypalConfigFactory' => $paypalConfigFactory,
                 'layout' => $layout,

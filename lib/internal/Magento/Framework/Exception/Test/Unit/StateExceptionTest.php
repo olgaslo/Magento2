@@ -19,7 +19,7 @@ class StateExceptionTest extends \PHPUnit_Framework_TestCase
      */
     public function testStateExceptionInstance()
     {
-        $instanceClass = \Magento\Framework\Exception\StateException::class;
+        $instanceClass = 'Magento\Framework\Exception\StateException';
         $message = 'message %1 %2';
         $params = [
             'parameter1',

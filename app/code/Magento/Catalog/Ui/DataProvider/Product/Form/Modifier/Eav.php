@@ -314,7 +314,9 @@ class Eav extends AbstractModifier
             ltrim(static::META_CONFIG_PATH, ArrayManager::DEFAULT_PATH_DELIMITER),
             $attributeContainer,
             [
-                'sortOrder' => $sortOrder * self::SORT_ORDER_MULTIPLIER
+                'sortOrder' => $sortOrder * self::SORT_ORDER_MULTIPLIER,
+                // TODO: Eliminate this in scope of MAGETWO-51364
+                'scopeLabel' => $this->getScopeLabel($attribute),
             ]
         );
 
@@ -523,16 +525,6 @@ class Eav extends AbstractModifier
     }
 
     /**
-     * Check is product already new or we trying to create one
-     *
-     * @return bool
-     */
-    private function isProductExists()
-    {
-        return (bool) $this->locator->getProduct()->getId();
-    }
-
-    /**
      * Initial meta setup
      *
      * @param ProductAttributeInterface $attribute
@@ -541,7 +533,6 @@ class Eav extends AbstractModifier
      * @return array
      * @throws \Magento\Framework\Exception\LocalizedException
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
-     * @SuppressWarnings(PHPMD.NPathComplexity)
      * @api
      */
     public function setupAttributeMeta(ProductAttributeInterface $attribute, $groupCode, $sortOrder)
@@ -554,7 +545,7 @@ class Eav extends AbstractModifier
             'visible' => $attribute->getIsVisible(),
             'required' => $attribute->getIsRequired(),
             'notice' => $attribute->getNote(),
-            'default' => (!$this->isProductExists()) ? $attribute->getDefaultValue() : null,
+            'default' => $attribute->getDefaultValue(),
             'label' => $attribute->getDefaultFrontendLabel(),
             'code' => $attribute->getAttributeCode(),
             'source' => $groupCode,
@@ -754,10 +745,7 @@ class Eav extends AbstractModifier
         $meta['arguments']['data']['config']['wysiwyg'] = true;
         $meta['arguments']['data']['config']['wysiwygConfigData'] = [
             'add_variables' => false,
-            'add_widgets' => false,
-            'add_directives' => true,
-            'use_container' => true,
-            'container_class' => 'hor-scroll',
+            'add_widgets' => false
         ];
 
         return $meta;

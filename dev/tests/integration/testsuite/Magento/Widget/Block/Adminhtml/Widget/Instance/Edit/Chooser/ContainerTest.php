@@ -20,9 +20,9 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
         parent::setUp();
 
         $this->block = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->get(
-            \Magento\Framework\View\LayoutInterface::class
+            'Magento\Framework\View\LayoutInterface'
         )->createBlock(
-            \Magento\Widget\Block\Adminhtml\Widget\Instance\Edit\Chooser\Container::class
+            'Magento\Widget\Block\Adminhtml\Widget\Instance\Edit\Chooser\Container'
         );
     }
 
@@ -40,7 +40,7 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
     public function testAvailableContainers()
     {
         $themeToTest = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->get(
-            \Magento\Theme\Model\Theme::class
+            '\Magento\Theme\Model\Theme'
         );
         $themeId = $themeToTest->load('Magento/blank', 'code')
             ->getId();

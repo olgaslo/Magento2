@@ -186,7 +186,7 @@ class Attribute extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
          */
         if (!$object->getId()) {
             if ($object->getFrontendInput() == 'select') {
-                $object->setSourceModel(\Magento\Eav\Model\Entity\Attribute\Source\Table::class);
+                $object->setSourceModel('Magento\Eav\Model\Entity\Attribute\Source\Table');
             }
         }
 
@@ -464,8 +464,7 @@ class Attribute extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
     {
         $connection = $this->getConnection();
         $table = $this->getTable('eav_attribute_option');
-        // ignore strings that start with a number
-        $intOptionId = is_numeric($optionId) ? (int)$optionId : 0;
+        $intOptionId = (int)$optionId;
 
         if (!empty($option['delete'][$optionId])) {
             if ($intOptionId) {

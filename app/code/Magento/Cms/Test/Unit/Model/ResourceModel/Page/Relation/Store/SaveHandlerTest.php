@@ -29,11 +29,11 @@ class SaveHandlerTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->metadataPool = $this->getMockBuilder(\Magento\Framework\EntityManager\MetadataPool::class)
+        $this->metadataPool = $this->getMockBuilder('Magento\Framework\EntityManager\MetadataPool')
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->resourcePage = $this->getMockBuilder(\Magento\Cms\Model\ResourceModel\Page::class)
+        $this->resourcePage = $this->getMockBuilder('Magento\Cms\Model\ResourceModel\Page')
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -51,7 +51,7 @@ class SaveHandlerTest extends \PHPUnit_Framework_TestCase
         $newStore = 2;
         $linkField = 'link_id';
 
-        $adapter = $this->getMockBuilder(\Magento\Framework\DB\Adapter\AdapterInterface::class)
+        $adapter = $this->getMockBuilder('Magento\Framework\DB\Adapter\AdapterInterface')
             ->getMockForAbstractClass();
 
         $whereForDelete = [
@@ -72,7 +72,7 @@ class SaveHandlerTest extends \PHPUnit_Framework_TestCase
             ->with('cms_page_store', [$whereForInsert])
             ->willReturnSelf();
 
-        $entityMetadata = $this->getMockBuilder(\Magento\Framework\EntityManager\EntityMetadata::class)
+        $entityMetadata = $this->getMockBuilder('Magento\Framework\EntityManager\EntityMetadata')
             ->disableOriginalConstructor()
             ->getMock();
         $entityMetadata->expects($this->once())
@@ -95,7 +95,7 @@ class SaveHandlerTest extends \PHPUnit_Framework_TestCase
             ->with('cms_page_store')
             ->willReturn('cms_page_store');
 
-        $page = $this->getMockBuilder(\Magento\Cms\Model\Page::class)
+        $page = $this->getMockBuilder('Magento\Cms\Model\Page')
             ->disableOriginalConstructor()
             ->setMethods([
                 'getStores',

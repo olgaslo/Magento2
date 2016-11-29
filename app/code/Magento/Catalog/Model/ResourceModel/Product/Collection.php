@@ -447,9 +447,9 @@ class Collection extends \Magento\Catalog\Model\ResourceModel\Collection\Abstrac
     protected function _construct()
     {
         if ($this->isEnabledFlat()) {
-            $this->_init(\Magento\Catalog\Model\Product::class, \Magento\Catalog\Model\ResourceModel\Product\Flat::class);
+            $this->_init('Magento\Catalog\Model\Product', 'Magento\Catalog\Model\ResourceModel\Product\Flat');
         } else {
-            $this->_init(\Magento\Catalog\Model\Product::class, \Magento\Catalog\Model\ResourceModel\Product::class);
+            $this->_init('Magento\Catalog\Model\Product', 'Magento\Catalog\Model\ResourceModel\Product');
         }
         $this->_initTables();
     }
@@ -465,7 +465,7 @@ class Collection extends \Magento\Catalog\Model\ResourceModel\Collection\Abstrac
     protected function _init($model, $entityModel)
     {
         if ($this->isEnabledFlat()) {
-            $entityModel = \Magento\Catalog\Model\ResourceModel\Product\Flat::class;
+            $entityModel = 'Magento\Catalog\Model\ResourceModel\Product\Flat';
         }
         return parent::_init($model, $entityModel);
     }
@@ -2090,13 +2090,12 @@ class Collection extends \Magento\Catalog\Model\ResourceModel\Collection\Abstrac
         if ($this->getFlag('tier_price_added')) {
             return $this;
         }
-        $linkField = $this->getConnection()->getAutoIncrementField($this->getTable('catalog_product_entity'));
 
         $tierPrices = [];
         $productIds = [];
         foreach ($this->getItems() as $item) {
-            $productIds[] = $item->getData($linkField);
-            $tierPrices[$item->getData($linkField)] = [];
+            $productIds[] = $item->getId();
+            $tierPrices[$item->getId()] = [];
         }
         if (!$productIds) {
             return $this;
@@ -2104,27 +2103,57 @@ class Collection extends \Magento\Catalog\Model\ResourceModel\Collection\Abstrac
 
         /** @var $attribute \Magento\Catalog\Model\ResourceModel\Eav\Attribute */
         $attribute = $this->getAttribute('tier_price');
-        /* @var $backend \Magento\Catalog\Model\Product\Attribute\Backend\Tierprice */
-        $backend = $attribute->getBackend();
         $websiteId = 0;
         if (!$attribute->isScopeGlobal() && null !== $this->getStoreId()) {
             $websiteId = $this->_storeManager->getStore($this->getStoreId())->getWebsiteId();
         }
 
-        $select = $backend->getResource()->getSelect($websiteId);
-        $select->columns(['product_id' => $linkField])->where(
+        $linkField = $this->getConnection()->getAutoIncrementField($this->getTable('catalog_product_entity'));
+        $connection = $this->getConnection();
+        $columns = [
+            'price_id' => 'value_id',
+            'website_id' => 'website_id',
+            'all_groups' => 'all_groups',
+            'cust_group' => 'customer_group_id',
+            'price_qty' => 'qty',
+            'price' => 'value',
+            'product_id' => $linkField,
+        ];
+        $select = $connection->select()->from(
+            $this->getTable('catalog_product_entity_tier_price'),
+            $columns
+        )->where(
             $linkField .' IN(?)',
             $productIds
         )->order(
-            $linkField
+            [$linkField, 'qty']
         );
 
-        foreach ($this->getConnection()->fetchAll($select) as $row) {
-            $tierPrices[$row['product_id']][] = $row;
+        if ($websiteId == 0) {
+            $select->where('website_id = ?', $websiteId);
+        } else {
+            $select->where('website_id IN(?)', [0, $websiteId]);
         }
 
+        foreach ($connection->fetchAll($select) as $row) {
+            $tierPrices[$row['product_id']][] = [
+                'website_id' => $row['website_id'],
+                'cust_group' => $row['all_groups'] ? $this->_groupManagement->getAllCustomersGroup()->getId() : $row['cust_group'],
+                'price_qty' => $row['price_qty'],
+                'price' => $row['price'],
+                'website_price' => $row['price'],
+            ];
+        }
+
+        /* @var $backend \Magento\Catalog\Model\Product\Attribute\Backend\Tierprice */
+        $backend = $attribute->getBackend();
+
         foreach ($this->getItems() as $item) {
-            $backend->setPriceData($item, $tierPrices[$item->getData($linkField)]);
+            $data = $tierPrices[$item->getId()];
+            if (!empty($data) && $websiteId) {
+                $data = $backend->preparePriceData($data, $item->getTypeId(), $websiteId);
+            }
+            $item->setData('tier_price', $data);
         }
 
         $this->setFlag('tier_price_added', true);
@@ -2182,17 +2211,12 @@ class Collection extends \Magento\Catalog\Model\ResourceModel\Collection\Abstrac
 
         $mediaGalleries = [];
         $linkField = $this->getMetadataPool()->getMetadata(ProductInterface::class)->getLinkField();
-        $items = $this->getItems();
-
-        $select->where('entity.' . $linkField . ' IN (?)', array_map(function ($item) {
-            return $item->getId();
-        }, $items));
 
         foreach ($this->getConnection()->fetchAll($select) as $row) {
             $mediaGalleries[$row[$linkField]][] = $row;
         }
 
-        foreach ($items as $item) {
+        foreach ($this->getItems() as $item) {
             $mediaEntries = isset($mediaGalleries[$item->getId()]) ? $mediaGalleries[$item->getId()] : [];
             $this->getGalleryReadHandler()->addMediaDataToProduct($item, $mediaEntries);
         }
@@ -2219,7 +2243,7 @@ class Collection extends \Magento\Catalog\Model\ResourceModel\Collection\Abstrac
      * @return GalleryReadHandler
      * @deprecated
      */
-    private function getGalleryReadHandler()
+    protected function getGalleryReadHandler()
     {
         if ($this->productGalleryReadHandler === null) {
             $this->productGalleryReadHandler = ObjectManager::getInstance()->get(GalleryReadHandler::class);
@@ -2341,6 +2365,6 @@ class Collection extends \Magento\Catalog\Model\ResourceModel\Collection\Abstrac
     private function createLimitationFilters()
     {
         return \Magento\Framework\App\ObjectManager::getInstance()
-                ->create(\Magento\Catalog\Model\ResourceModel\Product\Collection\ProductLimitation::class);
+                ->create('Magento\Catalog\Model\ResourceModel\Product\Collection\ProductLimitation');
     }
 }

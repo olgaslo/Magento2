@@ -34,17 +34,17 @@ class ImportExportTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->ruleProductProcessor = $this->getMock(
-            \Magento\CatalogRule\Model\Indexer\Rule\RuleProductProcessor::class,
+            'Magento\CatalogRule\Model\Indexer\Rule\RuleProductProcessor',
             ['isIndexerScheduled', 'markIndexerAsInvalid'],
             [],
             '',
             false
         );
         $this->ruleProductProcessor->expects($this->once())->method('isIndexerScheduled')->willReturn(false);
-        $this->subject = $this->getMock(\Magento\ImportExport\Model\Import::class, [], [], '', false);
+        $this->subject = $this->getMock('Magento\ImportExport\Model\Import', [], [], '', false);
 
         $this->plugin = (new ObjectManager($this))->getObject(
-            \Magento\CatalogRule\Plugin\Indexer\ImportExport::class,
+            'Magento\CatalogRule\Plugin\Indexer\ImportExport',
             [
                 'ruleProductProcessor' => $this->ruleProductProcessor,
             ]

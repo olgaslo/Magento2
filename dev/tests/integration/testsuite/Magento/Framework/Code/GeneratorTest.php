@@ -16,7 +16,11 @@ require_once __DIR__ . '/GeneratorTest/ParentClassWithNamespace.php';
  */
 class GeneratorTest extends \PHPUnit_Framework_TestCase
 {
-    const CLASS_NAME_WITH_NAMESPACE = \Magento\Framework\Code\GeneratorTest\SourceClassWithNamespace::class;
+    const CLASS_NAME_WITHOUT_NAMESPACE = 'Magento\Framework\Code\GeneratorTest\SourceClassWithoutNamespace';
+
+    const CLASS_NAME_WITH_NAMESPACE = 'Magento\Framework\Code\GeneratorTest\SourceClassWithNamespace';
+
+    const INTERFACE_NAME_WITHOUT_NAMESPACE = 'Magento\Framework\Code\GeneratorTest\SourceInterfaceWithoutNamespace';
 
     /**
      * @var \Magento\Framework\Code\Generator
@@ -37,7 +41,7 @@ class GeneratorTest extends \PHPUnit_Framework_TestCase
     {
         $objectManager = \Magento\TestFramework\Helper\Bootstrap::getObjectManager();
         $this->varDirectory = $objectManager->get(
-            \Magento\Framework\Filesystem::class
+            'Magento\Framework\Filesystem'
         )->getDirectoryWrite(
             DirectoryList::VAR_DIR
         );
@@ -47,14 +51,14 @@ class GeneratorTest extends \PHPUnit_Framework_TestCase
             $generationDirectory
         );
         $this->_generator = $objectManager->create(
-            \Magento\Framework\Code\Generator::class,
+            'Magento\Framework\Code\Generator',
             [
                 'ioObject' => $this->_ioObject,
                 'generatedEntities' => [
-                    DIGenerator\Factory::ENTITY_TYPE => \Magento\Framework\ObjectManager\Code\Generator\Factory::class,
-                    DIGenerator\Proxy::ENTITY_TYPE => \Magento\Framework\ObjectManager\Code\Generator\Proxy::class,
+                    DIGenerator\Factory::ENTITY_TYPE => '\Magento\Framework\ObjectManager\Code\Generator\Factory',
+                    DIGenerator\Proxy::ENTITY_TYPE => '\Magento\Framework\ObjectManager\Code\Generator\Proxy',
                     InterceptionGenerator\Interceptor::ENTITY_TYPE =>
-                        \Magento\Framework\Interception\Code\Generator\Interceptor::class,
+                        '\Magento\Framework\Interception\Code\Generator\Interceptor',
                 ]
             ]
         );
@@ -64,7 +68,7 @@ class GeneratorTest extends \PHPUnit_Framework_TestCase
     protected function tearDown()
     {
         $this->varDirectory->delete('generation');
-        $this->_generator = null;
+        unset($this->_generator);
     }
 
     protected function _clearDocBlock($classBody)
@@ -82,6 +86,7 @@ class GeneratorTest extends \PHPUnit_Framework_TestCase
         }
         $this->assertTrue($result, 'Failed asserting that \'' . (string)$generatorResult . '\' equals \'success\'.');
 
+        /** @var $factory \Magento\Framework\ObjectManager\FactoryInterface */
         $factory = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create($factoryClassName);
 
         $object = $factory->create();

@@ -35,10 +35,10 @@ class NavigationTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->catalogLayerMock = $this->getMock(\Magento\Catalog\Model\Layer::class, [], [], '', false);
-        $this->filterListMock = $this->getMock(\Magento\Catalog\Model\Layer\FilterList::class, [], [], '', false);
+        $this->catalogLayerMock = $this->getMock('\Magento\Catalog\Model\Layer', [], [], '', false);
+        $this->filterListMock = $this->getMock('\Magento\Catalog\Model\Layer\FilterList', [], [], '', false);
         $this->visibilityFlagMock = $this->getMock(
-            \Magento\Catalog\Model\Layer\AvailabilityFlagInterface::class,
+            '\Magento\Catalog\Model\Layer\AvailabilityFlagInterface',
             [],
             [],
             '',
@@ -46,7 +46,7 @@ class NavigationTest extends \PHPUnit_Framework_TestCase
         );
 
         /** @var \PHPUnit_Framework_MockObject_MockObject|\Magento\Catalog\Model\Layer\Resolver $layerResolver */
-        $layerResolver = $this->getMockBuilder(\Magento\Catalog\Model\Layer\Resolver::class)
+        $layerResolver = $this->getMockBuilder('\Magento\Catalog\Model\Layer\Resolver')
             ->disableOriginalConstructor()
             ->setMethods(['get', 'create'])
             ->getMock();
@@ -56,14 +56,14 @@ class NavigationTest extends \PHPUnit_Framework_TestCase
 
         $objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
         $this->model = $objectManager->getObject(
-            \Magento\LayeredNavigation\Block\Navigation::class,
+            'Magento\LayeredNavigation\Block\Navigation',
             [
                 'layerResolver' => $layerResolver,
                 'filterList' => $this->filterListMock,
                 'visibilityFlag' => $this->visibilityFlagMock
             ]
         );
-        $this->layoutMock = $this->getMock(\Magento\Framework\View\LayoutInterface::class, [], [], '', false);
+        $this->layoutMock = $this->getMock('\Magento\Framework\View\LayoutInterface', [], [], '', false);
     }
 
     public function testGetStateHtml()
@@ -71,6 +71,8 @@ class NavigationTest extends \PHPUnit_Framework_TestCase
         $stateHtml = 'I feel good';
         $this->filterListMock->expects($this->any())->method('getFilters')->will($this->returnValue([]));
         $this->layoutMock->expects($this->at(0))->method('getChildName')
+            ->with(null, 'renderer');
+        $this->layoutMock->expects($this->at(1))->method('getChildName')
             ->with(null, 'state')
             ->will($this->returnValue('state block'));
 
@@ -114,7 +116,7 @@ class NavigationTest extends \PHPUnit_Framework_TestCase
         $this->layoutMock->expects($this->once())->method('getChildName')->will($this->returnValue('sample block'));
 
         $blockMock = $this->getMockForAbstractClass(
-            \Magento\Framework\View\Element\AbstractBlock::class,
+            '\Magento\Framework\View\Element\AbstractBlock',
             [],
             '',
             false

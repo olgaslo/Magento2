@@ -52,18 +52,18 @@ class UpdateCustomerCookiesObserverTest extends \PHPUnit_Framework_TestCase
     {
         $eventMethods = ['getCustomerCookies', '__wakeUp'];
         $sessionMethods = ['getId', 'getGroupId', 'getCustomerId', '__wakeUp'];
-        $this->sessionHelperMock = $this->getMock(\Magento\Persistent\Helper\Session::class, [], [], '', false);
+        $this->sessionHelperMock = $this->getMock('Magento\Persistent\Helper\Session', [], [], '', false);
         $this->customerRepository = $this->getMockForAbstractClass(
-            \Magento\Customer\Api\CustomerRepositoryInterface::class,
+            '\Magento\Customer\Api\CustomerRepositoryInterface',
             [],
             '',
             false
         );
-        $this->observerMock = $this->getMock(\Magento\Framework\Event\Observer::class, [], [], '', false);
-        $this->eventManagerMock = $this->getMock(\Magento\Framework\Event::class, $eventMethods, [], '', false);
-        $this->sessionMock = $this->getMock(\Magento\Persistent\Model\Session::class, $sessionMethods, [], '', false);
+        $this->observerMock = $this->getMock('Magento\Framework\Event\Observer', [], [], '', false);
+        $this->eventManagerMock = $this->getMock('\Magento\Framework\Event', $eventMethods, [], '', false);
+        $this->sessionMock = $this->getMock('Magento\Persistent\Model\Session', $sessionMethods, [], '', false);
         $this->customerMock = $this->getMockForAbstractClass(
-            \Magento\Customer\Api\Data\CustomerInterface::class,
+            'Magento\Customer\Api\Data\CustomerInterface',
             [],
             '',
             false
@@ -86,8 +86,7 @@ class UpdateCustomerCookiesObserverTest extends \PHPUnit_Framework_TestCase
         $customerId = 1;
         $customerGroupId = 2;
         $cookieMock =
-            $this->getMock(
-                \Magento\Framework\DataObject::class,
+            $this->getMock('Magento\Framework\DataObject',
                 ['setCustomerId', 'setCustomerGroupId', '__wakeUp'],
                 [], '', false);
         $this->sessionHelperMock->expects($this->once())->method('isPersistent')->will($this->returnValue(true));

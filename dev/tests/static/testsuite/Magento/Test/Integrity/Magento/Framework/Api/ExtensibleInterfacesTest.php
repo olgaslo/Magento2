@@ -15,7 +15,7 @@ use Magento\Framework\App\Utility\Files;
  */
 class ExtensibleInterfacesTest extends \PHPUnit_Framework_TestCase
 {
-    const EXTENSIBLE_DATA_INTERFACE = \Magento\Framework\Api\ExtensibleDataInterface::class;
+    const EXTENSIBLE_DATA_INTERFACE = 'Magento\\Framework\\Api\\ExtensibleDataInterface';
 
     /**
      * Check return types of getExtensionAttributes() methods.

@@ -54,7 +54,7 @@ class DateTimeProvider
     {
         if (!$this->dateTime) {
             $this->dateTime = $this->objectManagerProvider->get()->create(
-                \Magento\Framework\Stdlib\DateTime\DateTime::class,
+                'Magento\Framework\Stdlib\DateTime\DateTime',
                 ['localeDate' => $this->tzProvider->get()]
             );
         }

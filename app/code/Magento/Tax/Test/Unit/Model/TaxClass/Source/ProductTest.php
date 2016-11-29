@@ -7,9 +7,6 @@ namespace Magento\Tax\Test\Unit\Model\TaxClass\Source;
 
 use Magento\Framework\TestFramework\Unit\Helper\ObjectManager;
 
-/**
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
- */
 class ProductTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -42,7 +39,7 @@ class ProductTest extends \PHPUnit_Framework_TestCase
         $this->objectManager = new ObjectManager($this);
 
         $this->taxClassRepositoryMock = $this->getMockForAbstractClass(
-            \Magento\Tax\Api\TaxClassRepositoryInterface::class,
+            'Magento\Tax\Api\TaxClassRepositoryInterface',
             ['getList'],
             '',
             false,
@@ -51,14 +48,14 @@ class ProductTest extends \PHPUnit_Framework_TestCase
             []
         );
         $this->searchCriteriaBuilderMock = $this->getMock(
-            \Magento\Framework\Api\SearchCriteriaBuilder::class,
+            'Magento\Framework\Api\SearchCriteriaBuilder',
             ['addFilters', 'create'],
             [],
             '',
             false
         );
         $this->filterBuilderMock = $this->getMock(
-            \Magento\Framework\Api\FilterBuilder::class,
+            'Magento\Framework\Api\FilterBuilder',
             ['setField', 'setValue', 'create'],
             [],
             '',
@@ -66,7 +63,7 @@ class ProductTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->product = $this->objectManager->getObject(
-            \Magento\Tax\Model\TaxClass\Source\Product::class,
+            'Magento\Tax\Model\TaxClass\Source\Product',
             [
                 'taxClassRepository' => $this->taxClassRepositoryMock,
                 'searchCriteriaBuilder' => $this->searchCriteriaBuilderMock,
@@ -78,7 +75,7 @@ class ProductTest extends \PHPUnit_Framework_TestCase
     public function testGetFlatColumns()
     {
         $abstractAttrMock = $this->getMock(
-            \Magento\Eav\Model\Entity\Attribute\AbstractAttribute::class,
+            '\Magento\Eav\Model\Entity\Attribute\AbstractAttribute',
             ['getAttributeCode', '__wakeup'],
             [],
             '',
@@ -112,21 +109,21 @@ class ProductTest extends \PHPUnit_Framework_TestCase
     public function testGetAllOptionsNameIntegrity(array $value)
     {
         $filterMock = $this->getMock(
-            \Magento\Framework\Api\Filter::class,
+            'Magento\Framework\Api\Filter',
             [],
             [],
             '',
             false
         );
         $searchCriteriaMock = $this->getMock(
-            \Magento\Framework\Api\SearchCriteria::class,
+            'Magento\Framework\Api\SearchCriteria',
             [],
             [],
             '',
             false
         );
         $searchResultsMock = $this->getMockForAbstractClass(
-            \Magento\Tax\Api\Data\TaxClassSearchResultsInterface::class,
+            'Magento\Tax\Api\Data\TaxClassSearchResultsInterface',
             [],
             '',
             false,
@@ -135,7 +132,7 @@ class ProductTest extends \PHPUnit_Framework_TestCase
             ['getItems']
         );
         $taxClassMock = $this->getMockForAbstractClass(
-            \Magento\Tax\Api\Data\TaxClassInterface::class,
+            'Magento\Tax\Api\Data\TaxClassInterface',
             ['getClassId', 'getClassName'],
             '',
             false,

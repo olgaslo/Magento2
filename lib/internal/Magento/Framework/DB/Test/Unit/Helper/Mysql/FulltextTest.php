@@ -15,7 +15,7 @@ class FulltextTest extends \PHPUnit_Framework_TestCase
     {
         /** @var Fulltext $select */
         $select = (new ObjectManager($this))->getObject(
-            \Magento\Framework\DB\Helper\Mysql\Fulltext::class,
+            'Magento\Framework\DB\Helper\Mysql\Fulltext',
             ['resource' => $this->getResourceMock()]
         );
 
@@ -40,7 +40,7 @@ class FulltextTest extends \PHPUnit_Framework_TestCase
         $resource = $this->getResourceMock();
 
         /** @var \Magento\Framework\DB\Select|\PHPUnit_Framework_MockObject_MockObject $select */
-        $select = $this->getMockBuilder(\Magento\Framework\DB\Select::class)
+        $select = $this->getMockBuilder('Magento\Framework\DB\Select')
             ->disableOriginalConstructor()
             ->getMock();
         $select->expects($this->once())
@@ -49,7 +49,7 @@ class FulltextTest extends \PHPUnit_Framework_TestCase
 
         /** @var Fulltext $fulltext */
         $fulltext = (new ObjectManager($this))->getObject(
-            \Magento\Framework\DB\Helper\Mysql\Fulltext::class,
+            'Magento\Framework\DB\Helper\Mysql\Fulltext',
             ['resource' => $resource]
         );
 
@@ -74,7 +74,7 @@ class FulltextTest extends \PHPUnit_Framework_TestCase
      */
     protected function getResourceMock()
     {
-        $connection = $this->getMockBuilder(\Magento\Framework\DB\Adapter\AdapterInterface::class)
+        $connection = $this->getMockBuilder('Magento\Framework\DB\Adapter\AdapterInterface')
             ->disableOriginalConstructor()
             ->getMockForAbstractClass();
         $connection->expects($this->at(0))
@@ -82,7 +82,7 @@ class FulltextTest extends \PHPUnit_Framework_TestCase
             ->with($this->equalTo('some searchable text'))
             ->will($this->returnValue("'some searchable text'"));
 
-        $resource = $this->getMockBuilder(\Magento\Framework\App\ResourceConnection::class)
+        $resource = $this->getMockBuilder('Magento\Framework\App\ResourceConnection')
             ->disableOriginalConstructor()
             ->getMock();
         $resource->expects($this->any())

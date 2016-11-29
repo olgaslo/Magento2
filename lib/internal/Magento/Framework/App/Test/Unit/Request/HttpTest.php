@@ -55,16 +55,16 @@ class HttpTest extends \PHPUnit_Framework_TestCase
     {
 
         $this->_routerListMock = $this->getMock(
-            \Magento\Framework\App\Route\ConfigInterface\Proxy::class,
+            'Magento\Framework\App\Route\ConfigInterface\Proxy',
             ['getRouteFrontName', 'getRouteByFrontName', '__wakeup'],
             [],
             '',
             false
         );
-        $this->_infoProcessorMock = $this->getMock(\Magento\Framework\App\Request\PathInfoProcessorInterface::class);
+        $this->_infoProcessorMock = $this->getMock('Magento\Framework\App\Request\PathInfoProcessorInterface');
         $this->_infoProcessorMock->expects($this->any())->method('process')->will($this->returnArgument(1));
-        $this->objectManagerMock = $this->getMock(\Magento\Framework\ObjectManagerInterface::class);
-        $this->converterMock = $this->getMockBuilder(\Magento\Framework\Stdlib\StringUtils::class)
+        $this->objectManagerMock = $this->getMock('Magento\Framework\ObjectManagerInterface');
+        $this->converterMock = $this->getMockBuilder('Magento\Framework\Stdlib\StringUtils')
             ->disableOriginalConstructor()
             ->setMethods(['cleanString'])
             ->getMock();
@@ -88,7 +88,7 @@ class HttpTest extends \PHPUnit_Framework_TestCase
     {
 
         $model = $this->objectManager->getObject(
-            \Magento\Framework\App\Request\Http::class,
+            'Magento\Framework\App\Request\Http',
             [
                 'routeConfig' => $this->_routerListMock,
                 'pathInfoProcessor' => $this->_infoProcessorMock,
@@ -135,7 +135,7 @@ class HttpTest extends \PHPUnit_Framework_TestCase
 
     public function testSetRouteNameWithRouter()
     {
-        $router = $this->getMock(\Magento\Framework\App\Route\ConfigInterface::class, [], [], '', false);
+        $router = $this->getMock('Magento\Framework\App\Router\AbstractRouter', [], [], '', false);
         $this->_routerListMock->expects($this->any())->method('getRouteFrontName')->will($this->returnValue($router));
         $this->_model = $this->getModel();
         $this->_model->setRouteName('RouterName');
@@ -345,7 +345,7 @@ class HttpTest extends \PHPUnit_Framework_TestCase
     {
         $this->_model = $this->getModel(null, false);
         $configOffloadHeader = 'Header-From-Proxy';
-        $configMock = $this->getMockBuilder(\Magento\Framework\App\Config::class)
+        $configMock = $this->getMockBuilder('Magento\Framework\App\Config')
             ->disableOriginalConstructor()
             ->setMethods(['getValue'])
             ->getMock();

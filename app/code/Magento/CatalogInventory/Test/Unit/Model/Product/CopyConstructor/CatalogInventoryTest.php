@@ -40,14 +40,14 @@ class CatalogInventoryTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->productMock = $this->getMock(
-            \Magento\Catalog\Model\Product::class,
+            '\Magento\Catalog\Model\Product',
             ['__wakeup', 'getStore'],
             [],
             '',
             false
         );
         $store = $this->getMock(
-            \Magento\Store\Model\Store::class,
+            '\Magento\Store\Model\Store',
             ['getWebsiteId', '__wakeup'],
             [],
             '',
@@ -57,7 +57,7 @@ class CatalogInventoryTest extends \PHPUnit_Framework_TestCase
         $this->productMock->expects($this->any())->method('getStore')->willReturn($store);
 
         $this->duplicateMock = $this->getMock(
-            \Magento\Catalog\Model\Product::class,
+            '\Magento\Catalog\Model\Product',
             ['setStockData', '__wakeup'],
             [],
             '',
@@ -65,7 +65,7 @@ class CatalogInventoryTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->stockItemDoMock = $this->getMockForAbstractClass(
-            \Magento\CatalogInventory\Api\Data\StockItemInterface::class,
+            'Magento\CatalogInventory\Api\Data\StockItemInterface',
             [
                 'getItemId',
                 'getUseConfigEnableQtyInc',
@@ -76,13 +76,13 @@ class CatalogInventoryTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->stockRegistry = $this->getMockForAbstractClass(
-            \Magento\CatalogInventory\Api\StockRegistryInterface::class,
+            'Magento\CatalogInventory\Api\StockRegistryInterface',
             ['getStockItem']
         );
 
         $this->objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
         $this->model = $this->objectManager->getObject(
-            \Magento\CatalogInventory\Model\Product\CopyConstructor\CatalogInventory::class,
+            'Magento\CatalogInventory\Model\Product\CopyConstructor\CatalogInventory',
             ['stockRegistry' => $this->stockRegistry]
         );
     }

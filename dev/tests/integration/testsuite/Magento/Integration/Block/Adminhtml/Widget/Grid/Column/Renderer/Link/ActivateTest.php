@@ -24,9 +24,9 @@ class ActivateTest extends \PHPUnit_Framework_TestCase
         parent::setUp();
         $objectManager = \Magento\TestFramework\Helper\Bootstrap::getObjectManager();
         $this->activateLinkBlock = $objectManager->create(
-            \Magento\Integration\Block\Adminhtml\Widget\Grid\Column\Renderer\Link\Activate::class
+            'Magento\Integration\Block\Adminhtml\Widget\Grid\Column\Renderer\Link\Activate'
         );
-        $column = $objectManager->create(\Magento\Backend\Block\Widget\Grid\Column::class);
+        $column = $objectManager->create('Magento\Backend\Block\Widget\Grid\Column');
         $this->activateLinkBlock->setColumn($column);
     }
 
@@ -99,7 +99,7 @@ class ActivateTest extends \PHPUnit_Framework_TestCase
     {
         /** @var $integration Integration */
         $objectManager = \Magento\TestFramework\Helper\Bootstrap::getObjectManager();
-        $integration = $objectManager->create(\Magento\Integration\Model\Integration::class);
+        $integration = $objectManager->create('Magento\Integration\Model\Integration');
         return $integration->load('Fixture Integration', 'name');
     }
 }

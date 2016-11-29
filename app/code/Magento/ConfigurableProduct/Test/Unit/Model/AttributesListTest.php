@@ -23,10 +23,11 @@ class AttributesListTest extends \PHPUnit_Framework_TestCase
      */
     protected $attributeMock;
 
+
     protected function setUp()
     {
         $this->collectionMock = $this->getMock(
-            \Magento\Catalog\Model\ResourceModel\Product\Attribute\Collection::class,
+            'Magento\Catalog\Model\ResourceModel\Product\Attribute\Collection',
             [],
             [],
             '',
@@ -35,7 +36,7 @@ class AttributesListTest extends \PHPUnit_Framework_TestCase
 
         /** @var  \Magento\Catalog\Model\ResourceModel\Product\Attribute\CollectionFactory $collectionFactoryMock */
         $collectionFactoryMock = $this->getMock(
-            \Magento\Catalog\Model\ResourceModel\Product\Attribute\CollectionFactory::class,
+            'Magento\Catalog\Model\ResourceModel\Product\Attribute\CollectionFactory',
             ['create'],
             [],
             '',
@@ -45,7 +46,7 @@ class AttributesListTest extends \PHPUnit_Framework_TestCase
 
         $methods = ['getId', 'getFrontendLabel', 'getAttributeCode', 'getSource'];
         $this->attributeMock = $this->getMock(
-            \Magento\Catalog\Model\ResourceModel\Eav\Attribute::class,
+            'Magento\Catalog\Model\ResourceModel\Eav\Attribute',
             $methods,
             [],
             '',
@@ -82,7 +83,7 @@ class AttributesListTest extends \PHPUnit_Framework_TestCase
         $this->attributeMock->expects($this->once())->method('getFrontendLabel')->will($this->returnValue('label'));
         $this->attributeMock->expects($this->once())->method('getAttributeCode')->will($this->returnValue('code'));
 
-        $source = $this->getMock(\Magento\Eav\Model\Entity\Attribute\Source\AbstractSource::class, [], [], '', false);
+        $source = $this->getMock('Magento\Eav\Model\Entity\Attribute\Source\AbstractSource', [], [], '', false);
         $source->expects($this->once())->method('getAllOptions')->with(false)->will($this->returnValue(['options']));
         $this->attributeMock->expects($this->once())->method('getSource')->will($this->returnValue($source));
 

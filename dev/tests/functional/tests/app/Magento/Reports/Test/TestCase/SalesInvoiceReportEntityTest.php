@@ -30,14 +30,14 @@ use Magento\Mtf\TestCase\Injectable;
  * 4. Click "Show Report"
  * 5. Perform all assertions
  *
- * @group Reports
+ * @group Reports_(MX)
  * @ZephyrId MAGETWO-29216
  */
 class SalesInvoiceReportEntityTest extends Injectable
 {
     /* tags */
     const MVP = 'no';
-    const STABLE = 'no';
+    const DOMAIN = 'MX';
     /* end tags */
 
     /**
@@ -58,10 +58,7 @@ class SalesInvoiceReportEntityTest extends Injectable
         $initialInvoiceResult = $salesInvoiceReport->getGridBlock()->getLastResult();
         $initialInvoiceTotalResult = $salesInvoiceReport->getGridBlock()->getTotalResult();
         $order->persist();
-        $invoice = $this->objectManager->create(
-            \Magento\Sales\Test\TestStep\CreateInvoiceStep::class,
-            ['order' => $order]
-        );
+        $invoice = $this->objectManager->create('Magento\Sales\Test\TestStep\CreateInvoiceStep', ['order' => $order]);
         $invoice->run();
 
         return [

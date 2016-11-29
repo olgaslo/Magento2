@@ -60,7 +60,7 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
             \Magento\Framework\Api\DataObjectHelper::class
         )->disableOriginalConstructor()->getMock();
 
-        $this->mockComponentFactory = $this->getMockBuilder(\Magento\Downloadable\Model\LinkFactory::class)
+        $this->mockComponentFactory = $this->getMockBuilder('\Magento\Downloadable\Model\LinkFactory')
             ->disableOriginalConstructor()
             ->setMethods(['create'])
             ->getMock();

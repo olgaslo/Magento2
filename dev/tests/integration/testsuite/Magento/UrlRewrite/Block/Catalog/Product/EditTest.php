@@ -25,12 +25,12 @@ class EditTest extends \PHPUnit_Framework_TestCase
     {
         /** @var $layout \Magento\Framework\View\LayoutInterface */
         $layout = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->get(
-            \Magento\Framework\View\LayoutInterface::class
+            'Magento\Framework\View\LayoutInterface'
         );
 
         /** @var $block \Magento\UrlRewrite\Block\Catalog\Product\Edit */
         $block = $layout->createBlock(
-            \Magento\UrlRewrite\Block\Catalog\Product\Edit::class,
+            'Magento\UrlRewrite\Block\Catalog\Product\Edit',
             '',
             ['data' => $blockAttributes]
         );
@@ -59,7 +59,7 @@ class EditTest extends \PHPUnit_Framework_TestCase
 
         if ($expected['selector']) {
             $this->assertInstanceOf(
-                \Magento\UrlRewrite\Block\Selector::class,
+                'Magento\UrlRewrite\Block\Selector',
                 $selectorBlock,
                 'Child block with entity selector is invalid'
             );
@@ -84,7 +84,7 @@ class EditTest extends \PHPUnit_Framework_TestCase
 
         if ($expected['product_link']) {
             $this->assertInstanceOf(
-                \Magento\UrlRewrite\Block\Link::class,
+                'Magento\UrlRewrite\Block\Link',
                 $productLinkBlock,
                 'Child block with product link is invalid'
             );
@@ -115,7 +115,7 @@ class EditTest extends \PHPUnit_Framework_TestCase
 
         if ($expected['category_link']) {
             $this->assertInstanceOf(
-                \Magento\UrlRewrite\Block\Link::class,
+                'Magento\UrlRewrite\Block\Link',
                 $categoryLinkBlock,
                 'Child block with category link is invalid'
             );
@@ -244,7 +244,7 @@ class EditTest extends \PHPUnit_Framework_TestCase
 
         if ($expected['form']) {
             $this->assertInstanceOf(
-                \Magento\UrlRewrite\Block\Catalog\Edit\Form::class,
+                'Magento\UrlRewrite\Block\Catalog\Edit\Form',
                 $formBlock,
                 'Child block with form is invalid'
             );
@@ -289,7 +289,7 @@ class EditTest extends \PHPUnit_Framework_TestCase
 
         if ($expected['products_grid']) {
             $this->assertInstanceOf(
-                \Magento\UrlRewrite\Block\Catalog\Product\Grid::class,
+                'Magento\UrlRewrite\Block\Catalog\Product\Grid',
                 $gridBlock,
                 'Child block with product grid is invalid'
             );
@@ -314,7 +314,7 @@ class EditTest extends \PHPUnit_Framework_TestCase
 
         if ($expected['categories_tree']) {
             $this->assertInstanceOf(
-                \Magento\UrlRewrite\Block\Catalog\Category\Tree::class,
+                'Magento\UrlRewrite\Block\Catalog\Category\Tree',
                 $categoriesTreeBlock,
                 'Child block with categories tree is invalid'
             );
@@ -327,7 +327,7 @@ class EditTest extends \PHPUnit_Framework_TestCase
 
         if ($expected['skip_categories']) {
             $this->assertInstanceOf(
-                \Magento\Backend\Block\Widget\Button::class,
+                'Magento\Backend\Block\Widget\Button',
                 $skipCategoriesBlock,
                 'Child block with skip categories is invalid'
             );
@@ -346,21 +346,21 @@ class EditTest extends \PHPUnit_Framework_TestCase
     {
         /** @var $urlRewrite \Magento\UrlRewrite\Model\UrlRewrite */
         $urlRewrite = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create(
-            \Magento\UrlRewrite\Model\UrlRewrite::class
+            'Magento\UrlRewrite\Model\UrlRewrite'
         );
         /** @var $product \Magento\Catalog\Model\Product */
         $product = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create(
-            \Magento\Catalog\Model\Product::class,
+            'Magento\Catalog\Model\Product',
             ['data' => ['entity_id' => 1, 'name' => 'Test product']]
         );
         /** @var $category \Magento\Catalog\Model\Category */
         $category = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create(
-            \Magento\Catalog\Model\Category::class,
+            'Magento\Catalog\Model\Category',
             ['data' => ['entity_id' => 1, 'name' => 'Test category']]
         );
         /** @var $existingUrlRewrite \Magento\UrlRewrite\Model\UrlRewrite */
         $existingUrlRewrite = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create(
-            \Magento\UrlRewrite\Model\UrlRewrite::class,
+            'Magento\UrlRewrite\Model\UrlRewrite',
             ['data' => ['url_rewrite_id' => 1]]
         );
         return [

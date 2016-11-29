@@ -39,10 +39,10 @@ class PluginTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->itemMock = $this->getMock(\Magento\Catalog\Model\Product\Configuration\Item\ItemInterface::class);
-        $this->productMock = $this->getMock(\Magento\Catalog\Model\Product::class, [], [], '', false);
+        $this->itemMock = $this->getMock('Magento\Catalog\Model\Product\Configuration\Item\ItemInterface');
+        $this->productMock = $this->getMock('Magento\Catalog\Model\Product', [], [], '', false);
         $this->typeInstanceMock = $this->getMock(
-            \Magento\ConfigurableProduct\Model\Product\Type\Configurable::class,
+            'Magento\ConfigurableProduct\Model\Product\Type\Configurable',
             ['getSelectedAttributesInfo', '__wakeup'],
             [],
             '',
@@ -53,7 +53,7 @@ class PluginTest extends \PHPUnit_Framework_TestCase
             return ['options'];
         };
         $this->subjectMock = $this->getMock(
-            \Magento\Catalog\Helper\Product\Configuration::class,
+            'Magento\Catalog\Helper\Product\Configuration',
             [],
             [],
             '',

@@ -60,7 +60,7 @@ class Persistor extends \Magento\Framework\Code\Generator\EntityAbstract
                     'tags' => [
                         [
                             'name' => 'var',
-                            'description' => '\\' . \Magento\Framework\App\ResourceConnection::class,
+                            'description' => '\Magento\Framework\App\ResourceConnection',
                         ],
                     ],
                 ]
@@ -73,7 +73,7 @@ class Persistor extends \Magento\Framework\Code\Generator\EntityAbstract
                     'tags' => [
                         [
                             'name' => 'var',
-                            'description' => '\\' . \Magento\Framework\DB\Adapter\AdapterInterface::class,
+                            'description' => '\Magento\Framework\DB\Adapter\AdapterInterface',
                         ],
                     ],
                 ]
@@ -182,7 +182,7 @@ class Persistor extends \Magento\Framework\Code\Generator\EntityAbstract
                 ],
                 [
                     'name' => 'resource',
-                    'type' => '\\' . \Magento\Framework\App\ResourceConnection::class
+                    'type' => '\Magento\Framework\App\ResourceConnection'
                 ],
             ],
             'body' => "\$this->"

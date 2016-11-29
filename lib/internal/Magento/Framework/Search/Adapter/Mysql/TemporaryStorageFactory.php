@@ -36,7 +36,7 @@ class TemporaryStorageFactory
      */
     public function __construct(
         ObjectManagerInterface $objectManager,
-        $instanceName = \Magento\Framework\Search\Adapter\Mysql\TemporaryStorage::class
+        $instanceName = 'Magento\Framework\Search\Adapter\Mysql\TemporaryStorage'
     ) {
         $this->objectManager = $objectManager;
         $this->instanceName = $instanceName;

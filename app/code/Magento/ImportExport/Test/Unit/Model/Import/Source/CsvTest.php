@@ -22,9 +22,9 @@ class CsvTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->_filesystem = $this->getMock(\Magento\Framework\Filesystem::class, [], [], '', false);
+        $this->_filesystem = $this->getMock('Magento\Framework\Filesystem', [], [], '', false);
         $this->_directoryMock = $this->getMock(
-            \Magento\Framework\Filesystem\Directory\Write::class,
+            'Magento\Framework\Filesystem\Directory\Write',
             [],
             [],
             '',

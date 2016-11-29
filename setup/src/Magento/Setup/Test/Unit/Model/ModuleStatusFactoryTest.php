@@ -27,15 +27,9 @@ class ModuleStatusFactoryTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->objectManagerProvider = $this->getMock(
-            \Magento\Setup\Model\ObjectManagerProvider::class,
-            [],
-            [],
-            '',
-            false
-        );
+        $this->objectManagerProvider = $this->getMock('Magento\Setup\Model\ObjectManagerProvider', [], [], '', false);
         $this->objectManager = $this->getMockForAbstractClass(
-            \Magento\Framework\ObjectManagerInterface::class,
+            'Magento\Framework\ObjectManagerInterface',
             [],
             '',
             false
@@ -47,7 +41,7 @@ class ModuleStatusFactoryTest extends \PHPUnit_Framework_TestCase
         $this->objectManagerProvider->expects($this->once())->method('get')->willReturn($this->objectManager);
         $this->objectManager->expects($this->once())
             ->method('get')
-            ->with(\Magento\Framework\Module\Status::class);
+            ->with('Magento\Framework\Module\Status');
         $this->moduleStatusFactory = new ModuleStatusFactory($this->objectManagerProvider);
         $this->moduleStatusFactory->create();
     }

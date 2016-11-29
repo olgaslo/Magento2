@@ -59,36 +59,36 @@ class RefreshStatisticsTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $reportTypes = [
-            'sales' => \Magento\Sales\Model\ResourceModel\Report\Order::class
+            'sales' => 'Magento\Sales\Model\ResourceModel\Report\Order'
         ];
 
         $objectManagerHelper = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
 
         $this->resultRedirectFactory = $this->getMock(
-            \Magento\Backend\Model\View\Result\RedirectFactory::class,
+            'Magento\Backend\Model\View\Result\RedirectFactory',
             ['create'],
             [],
             '',
             false
         );
-        $this->resultRedirect = $this->getMock(\Magento\Backend\Model\View\Result\Redirect::class, [], [], '', false);
+        $this->resultRedirect = $this->getMock('Magento\Backend\Model\View\Result\Redirect', [], [], '', false);
 
-        $this->request = $this->getMock(\Magento\Framework\App\RequestInterface::class, [], [], '', false);
+        $this->request = $this->getMock('Magento\Framework\App\RequestInterface', [], [], '', false);
         $this->response = $this->getMock(
-            \Magento\Framework\App\ResponseInterface::class,
+            'Magento\Framework\App\ResponseInterface',
             ['setRedirect', 'sendResponse'],
             [],
             '',
             false
         );
 
-        $this->messageManager = $this->getMock(\Magento\Framework\Message\Manager::class, [], [], '', false);
+        $this->messageManager = $this->getMock('\Magento\Framework\Message\Manager', [], [], '', false);
 
-        $this->order = $this->getMock(\Magento\Sales\Model\ResourceModel\Report\Order::class, [], [], '', false);
+        $this->order = $this->getMock('Magento\Sales\Model\ResourceModel\Report\Order', [], [], '', false);
 
-        $this->objectManager = $this->getMock(\Magento\Framework\ObjectManagerInterface::class, [], [], '', false);
+        $this->objectManager = $this->getMock('Magento\Framework\ObjectManagerInterface', [], [], '', false);
 
-        $this->context = $this->getMock(\Magento\Backend\App\Action\Context::class, [], [], '', false);
+        $this->context = $this->getMock('Magento\Backend\App\Action\Context', [], [], '', false);
         $this->context->expects($this->once())->method('getRequest')->willReturn($this->request);
         $this->context->expects($this->once())->method('getResponse')->willReturn($this->response);
         $this->context->expects($this->once())->method('getMessageManager')->willReturn($this->messageManager);
@@ -98,7 +98,7 @@ class RefreshStatisticsTest extends \PHPUnit_Framework_TestCase
             ->willReturn($this->resultRedirectFactory);
 
         $this->refreshStatisticsController = $objectManagerHelper->getObject(
-            \Magento\Backend\Controller\Adminhtml\Dashboard\RefreshStatistics::class,
+            'Magento\Backend\Controller\Adminhtml\Dashboard\RefreshStatistics',
             [
                 'context' => $this->context,
                 'reportTypes' => $reportTypes
@@ -118,7 +118,7 @@ class RefreshStatisticsTest extends \PHPUnit_Framework_TestCase
 
         $this->objectManager->expects($this->any())
             ->method('create')
-            ->with(\Magento\Sales\Model\ResourceModel\Report\Order::class)
+            ->with('Magento\Sales\Model\ResourceModel\Report\Order')
             ->willReturn($this->order);
 
         $this->resultRedirect->expects($this->once())
@@ -127,7 +127,7 @@ class RefreshStatisticsTest extends \PHPUnit_Framework_TestCase
             ->willReturnSelf();
 
         $this->assertInstanceOf(
-            \Magento\Backend\Model\View\Result\Redirect::class,
+            'Magento\Backend\Model\View\Result\Redirect',
             $this->refreshStatisticsController->execute()
         );
     }

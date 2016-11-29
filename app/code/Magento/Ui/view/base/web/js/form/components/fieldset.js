@@ -19,9 +19,6 @@ define([
             level: 0,
             visible: true,
             disabled: false,
-            listens: {
-                'opened': 'onVisibilityChange'
-            },
             additionalClasses: {}
         },
 
@@ -33,19 +30,7 @@ define([
             _.bindAll(this, 'onChildrenUpdate', 'onChildrenError', 'onContentLoading');
 
             return this._super()
-                ._setClasses();
-        },
-
-        /**
-         * Initializes components' configuration.
-         *
-         * @returns {Fieldset} Chainable.
-         */
-        initConfig: function () {
-            this._super();
-            this._wasOpened = this.opened || !this.collapsible;
-
-            return this;
+                       ._setClasses();
         },
 
         /**
@@ -100,7 +85,6 @@ define([
                 hasChanged = _.some(this.delegate('hasChanged'));
             }
 
-            this.bubble('update', hasChanged);
             this.changed(hasChanged);
         },
 
@@ -130,17 +114,6 @@ define([
             });
 
             return this;
-        },
-
-        /**
-         * Handler of the "opened" property changes.
-         *
-         * @param {Boolean} isOpened
-         */
-        onVisibilityChange: function (isOpened) {
-            if (!this._wasOpened) {
-                this._wasOpened = isOpened;
-            }
         },
 
         /**

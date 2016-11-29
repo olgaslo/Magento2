@@ -15,8 +15,6 @@ use Magento\Framework\Phrase\Renderer\Translate;
 
 /**
  * Class DataProviderTest
- *
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
 class DataProviderTest extends \PHPUnit_Framework_TestCase
 {
@@ -55,19 +53,19 @@ class DataProviderTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->appStateMock = $this->getMock(\Magento\Framework\App\State::class, [], [], '', false);
-        $this->configMock = $this->getMock(\Magento\Translation\Model\Js\Config::class, [], [], '', false);
-        $this->filesUtilityMock = $this->getMock(\Magento\Framework\App\Utility\Files::class, [], [], '', false);
-        $fileReadFactory = $this->getMock(\Magento\Framework\Filesystem\File\ReadFactory::class, [], [], '', false);
-        $this->fileReadMock = $this->getMock(\Magento\Framework\Filesystem\File\Read::class, [], [], '', false);
-        $this->translateMock = $this->getMock(\Magento\Framework\Phrase\Renderer\Translate::class, [], [], '', false);
+        $this->appStateMock = $this->getMock('Magento\Framework\App\State', [], [], '', false);
+        $this->configMock = $this->getMock('Magento\Translation\Model\Js\Config', [], [], '', false);
+        $this->filesUtilityMock = $this->getMock('Magento\Framework\App\Utility\Files', [], [], '', false);
+        $fileReadFactory = $this->getMock('Magento\Framework\Filesystem\File\ReadFactory', [], [], '', false);
+        $this->fileReadMock = $this->getMock('Magento\Framework\Filesystem\File\Read', [], [], '', false);
+        $this->translateMock = $this->getMock('Magento\Framework\Phrase\Renderer\Translate', [], [], '', false);
         $fileReadFactory->expects($this->atLeastOnce())
             ->method('create')
             ->willReturn($this->fileReadMock);
-        $dirSearch = $this->getMock(\Magento\Framework\Component\DirSearch::class, [], [], '', false);
+        $dirSearch = $this->getMock('\Magento\Framework\Component\DirSearch', [], [], '', false);
         $objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
         $this->model = $objectManager->getObject(
-            \Magento\Translation\Model\Js\DataProvider::class,
+            'Magento\Translation\Model\Js\DataProvider',
             [
                 'appState' => $this->appStateMock,
                 'config' => $this->configMock,
@@ -76,7 +74,7 @@ class DataProviderTest extends \PHPUnit_Framework_TestCase
                 'dirSearch' => $dirSearch,
                 'filesUtility' => $this->filesUtilityMock,
                 'componentRegistrar' =>
-                    $this->getMock(\Magento\Framework\Component\ComponentRegistrar::class, [], [], '', false)
+                    $this->getMock('Magento\Framework\Component\ComponentRegistrar', [], [], '', false)
             ]
         );
     }

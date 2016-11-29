@@ -42,7 +42,7 @@ class Download extends \Magento\ImportExport\Controller\Adminhtml\History
         $fileName = $this->getRequest()->getParam('filename');
 
         /** @var \Magento\ImportExport\Helper\Report $reportHelper */
-        $reportHelper = $this->_objectManager->get(\Magento\ImportExport\Helper\Report::class);
+        $reportHelper = $this->_objectManager->get('Magento\ImportExport\Helper\Report');
 
         if (!$reportHelper->importFileExists($fileName)) {
             /** @var \Magento\Backend\Model\View\Result\Redirect $resultRedirect */

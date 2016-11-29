@@ -7,7 +7,7 @@
 // @codingStandardsIgnoreFile
 
 $billingAddress = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create(
-    \Magento\Sales\Model\Order\Address::class,
+    'Magento\Sales\Model\Order\Address',
     [
         'data' => [
             'firstname' => 'guest',
@@ -24,12 +24,10 @@ $billingAddress = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->c
 );
 $billingAddress->setAddressType('billing');
 
-$payment = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create(
-    \Magento\Sales\Model\Order\Payment::class);
+$payment = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create('Magento\Sales\Model\Order\Payment');
 $payment->setMethod('checkmo');
 
-$orderItem = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create(
-    \Magento\Sales\Model\Order\Item::class);
+$orderItem = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create('Magento\Sales\Model\Order\Item');
 $orderItem->setProductId(
     1
 )->setProductType(
@@ -40,7 +38,7 @@ $orderItem->setProductId(
     1
 );
 
-$order = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create(\Magento\Sales\Model\Order::class);
+$order = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create('Magento\Sales\Model\Order');
 $order->setCustomerEmail('mail@to.co')
     ->addItem(
     $orderItem

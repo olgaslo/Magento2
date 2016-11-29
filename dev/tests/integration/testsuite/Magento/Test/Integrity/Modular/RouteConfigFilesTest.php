@@ -14,7 +14,6 @@ class RouteConfigFilesTest extends \PHPUnit_Framework_TestCase
      */
 
     protected $validationStateMock;
-
     /**
      * attributes represent merging rules
      * copied from original class \Magento\Framework\App\Route\Config\Reader
@@ -43,7 +42,7 @@ class RouteConfigFilesTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->validationStateMock = $this->getMock(
-            \Magento\Framework\Config\ValidationStateInterface::class,
+            '\Magento\Framework\Config\ValidationStateInterface',
             [],
             [],
             '',

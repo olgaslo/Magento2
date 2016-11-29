@@ -151,7 +151,7 @@ class Options extends Section
     protected function getSearchGridBlock()
     {
         return $this->blockFactory->create(
-            \Magento\Catalog\Test\Block\Adminhtml\Product\Edit\Section\Options\Search\Grid::class,
+            'Magento\Catalog\Test\Block\Adminhtml\Product\Edit\Section\Options\Search\Grid',
             ['element' => $this->browser->find($this->importGrid)]
         );
     }
@@ -167,7 +167,7 @@ class Options extends Section
     {
         $element = $element ?: $this->_rootElement;
         return $this->blockFactory->create(
-            \Magento\Catalog\Test\Block\Adminhtml\Product\Edit\Section\Options\Row::class,
+            'Magento\Catalog\Test\Block\Adminhtml\Product\Edit\Section\Options\Row',
             ['element' => $element->find(sprintf($this->dynamicDataRow, ++$index))]
         );
     }

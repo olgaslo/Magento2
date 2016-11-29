@@ -30,30 +30,30 @@ class FormTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->_formMock = $this->getMock(
-            \Magento\Framework\Data\Form::class,
+            'Magento\Framework\Data\Form',
             ['setFieldNameSuffix', 'addFieldset'],
             [],
             '',
             false
         );
         $this->_fieldsetMock = $this->getMock(
-            \Magento\Framework\Data\Form\Element\Fieldset::class,
+            'Magento\Framework\Data\Form\Element\Fieldset',
             [],
             [],
             '',
             false
         );
         $this->_experimentCodeMock = $this->getMock(
-            \Magento\GoogleOptimizer\Model\Code::class,
+            'Magento\GoogleOptimizer\Model\Code',
             ['getExperimentScript', 'getCodeId', '__wakeup'],
             [],
             '',
             false
         );
-        $context = $this->getMock(\Magento\Framework\App\Helper\Context::class, [], [], '', false);
+        $context = $this->getMock('Magento\Framework\App\Helper\Context', [], [], '', false);
         $data = ['context' => $context];
         $objectManagerHelper = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
-        $this->_helper = $objectManagerHelper->getObject(\Magento\GoogleOptimizer\Helper\Form::class, $data);
+        $this->_helper = $objectManagerHelper->getObject('Magento\GoogleOptimizer\Helper\Form', $data);
     }
 
     public function testAddFieldsWithExperimentCode()

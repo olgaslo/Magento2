@@ -9,8 +9,6 @@ use Magento\Quote\Model\Quote\Address;
 
 /**
  * Class BuilderTest
- *
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
 class CustomerManagementTest extends \PHPUnit_Framework_TestCase
 {
@@ -51,30 +49,30 @@ class CustomerManagementTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->objectCopyService = $this->getMock(\Magento\Framework\DataObject\Copy::class, [], [], '', false);
-        $this->accountManagement = $this->getMock(\Magento\Customer\Api\AccountManagementInterface::class);
+        $this->objectCopyService = $this->getMock('\Magento\Framework\DataObject\Copy', [], [], '', false);
+        $this->accountManagement = $this->getMock('\Magento\Customer\Api\AccountManagementInterface');
         $this->customerFactory = $this->getMock(
-            \Magento\Customer\Api\Data\CustomerInterfaceFactory::class,
+            '\Magento\Customer\Api\Data\CustomerInterfaceFactory',
             ['create'],
             [],
             '',
             false
         );
         $this->addressFactory = $this->getMock(
-            \Magento\Customer\Api\Data\AddressInterfaceFactory::class,
+            '\Magento\Customer\Api\Data\AddressInterfaceFactory',
             ['create'],
             [],
             '',
             false
         );
         $this->regionFactory = $this->getMock(
-            \Magento\Customer\Api\Data\RegionInterfaceFactory::class,
+            'Magento\Customer\Api\Data\RegionInterfaceFactory',
             ['create'],
             [],
             '',
             false
         );
-        $this->orderRepository = $this->getMock(\Magento\Sales\Api\OrderRepositoryInterface::class);
+        $this->orderRepository = $this->getMock('\Magento\Sales\Api\OrderRepositoryInterface');
 
         $this->service = new \Magento\Sales\Model\Order\CustomerManagement(
             $this->objectCopyService,
@@ -91,7 +89,7 @@ class CustomerManagementTest extends \PHPUnit_Framework_TestCase
      */
     public function testCreateThrowsExceptionIfCustomerAlreadyExists()
     {
-        $orderMock = $this->getMock(\Magento\Sales\Api\Data\OrderInterface::class);
+        $orderMock = $this->getMock('\Magento\Sales\Api\Data\OrderInterface');
         $orderMock->expects($this->once())->method('getCustomerId')->will($this->returnValue('customer_id'));
         $this->orderRepository->expects($this->once())->method('get')->with(1)->will($this->returnValue($orderMock));
         $this->service->create(1);
@@ -99,16 +97,16 @@ class CustomerManagementTest extends \PHPUnit_Framework_TestCase
 
     public function testCreateCreatesCustomerBasedonGuestOrder()
     {
-        $orderMock = $this->getMock(\Magento\Sales\Model\Order::class, [], [], '', false);
+        $orderMock = $this->getMock('\Magento\Sales\Model\Order', [], [], '', false);
         $orderMock->expects($this->once())->method('getCustomerId')->will($this->returnValue(null));
         $orderMock->expects($this->any())->method('getBillingAddress')->will($this->returnValue('billing_address'));
 
-        $orderBillingAddress = $this->getMock(\Magento\Sales\Api\Data\OrderAddressInterface::class);
+        $orderBillingAddress = $this->getMock('\Magento\Sales\Api\Data\OrderAddressInterface');
         $orderBillingAddress->expects($this->once())
             ->method('getAddressType')
             ->willReturn(Address::ADDRESS_TYPE_BILLING);
 
-        $orderShippingAddress = $this->getMock(\Magento\Sales\Api\Data\OrderAddressInterface::class);
+        $orderShippingAddress = $this->getMock('\Magento\Sales\Api\Data\OrderAddressInterface');
         $orderShippingAddress->expects($this->once())
             ->method('getAddressType')
             ->willReturn(Address::ADDRESS_TYPE_SHIPPING);
@@ -126,7 +124,7 @@ class CustomerManagementTest extends \PHPUnit_Framework_TestCase
             ]
         ));
 
-        $addressMock = $this->getMock(\Magento\Customer\Api\Data\AddressInterface::class);
+        $addressMock = $this->getMock('\Magento\Customer\Api\Data\AddressInterface');
         $addressMock->expects($this->any())
             ->method('setIsDefaultBilling')
             ->with(true)
@@ -139,7 +137,7 @@ class CustomerManagementTest extends \PHPUnit_Framework_TestCase
         $this->addressFactory->expects($this->any())->method('create')->with(['data' => 'address_data'])->will(
             $this->returnValue($addressMock)
         );
-        $customerMock = $this->getMock(\Magento\Customer\Api\Data\CustomerInterface::class);
+        $customerMock = $this->getMock('\Magento\Customer\Api\Data\CustomerInterface');
         $customerMock->expects($this->any())->method('getId')->will($this->returnValue('customer_id'));
         $this->customerFactory->expects($this->once())->method('create')->with(
             ['data' => ['customer_data' => [], 'addresses' => [$addressMock, $addressMock]]]

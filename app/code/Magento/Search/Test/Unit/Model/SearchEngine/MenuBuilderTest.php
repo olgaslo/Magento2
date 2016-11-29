@@ -28,14 +28,8 @@ class MenuBuilderTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->searchFeatureConfig = $this->getMock(
-            \Magento\Search\Model\SearchEngine\Config::class,
-            [],
-            [],
-            '',
-            false
-        );
-        $this->engineResolver = $this->getMock(\Magento\Search\Model\EngineResolver::class, [], [], '', false);
+        $this->searchFeatureConfig = $this->getMock('\Magento\Search\Model\SearchEngine\Config', [], [], '', false);
+        $this->engineResolver = $this->getMock('\Magento\Search\Model\EngineResolver', [], [], '', false);
     }
 
     public function testAfterGetResult()
@@ -47,22 +41,22 @@ class MenuBuilderTest extends \PHPUnit_Framework_TestCase
             ->with('synonyms', 'mysql')
             ->willReturn(false);
         /** @var \Magento\Backend\Model\Menu $menu */
-        $menu = $this->getMock(\Magento\Backend\Model\Menu::class, [], [], '', false);
+        $menu = $this->getMock('\Magento\Backend\Model\Menu', [], [], '', false);
         $menu->expects($this->once())->method('remove')->willReturn(true);
 
         /** @var \Magento\Backend\Model\Menu\Builder $menuBuilder */
-        $menuBuilder = $this->getMock(\Magento\Backend\Model\Menu\Builder::class, [], [], '', false);
+        $menuBuilder = $this->getMock('\Magento\Backend\Model\Menu\Builder', [], [], '', false);
         $objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
         /** @var \Magento\Search\Model\SearchEngine\MenuBuilder $searchMenuBuilder */
         $searchMenuBuilder = $objectManager->getObject(
-            \Magento\Search\Model\SearchEngine\MenuBuilder::class,
+            'Magento\Search\Model\SearchEngine\MenuBuilder',
             [
                 'searchFeatureConfig' => $this->searchFeatureConfig,
                 'engineResolver' => $this->engineResolver
             ]
         );
         $this->assertInstanceOf(
-            \Magento\Backend\Model\Menu::class,
+            '\Magento\Backend\Model\Menu',
             $searchMenuBuilder->afterGetResult($menuBuilder, $menu)
         );
     }

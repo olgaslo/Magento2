@@ -28,14 +28,14 @@ class CategoryTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->productRuleProcessor = $this->getMock(
-            \Magento\CatalogRule\Model\Indexer\Product\ProductRuleProcessor::class,
+            'Magento\CatalogRule\Model\Indexer\Product\ProductRuleProcessor',
             [],
             [],
             '',
             false
         );
         $this->subject = $this->getMock(
-            \Magento\Catalog\Model\Category::class,
+            'Magento\Catalog\Model\Category',
             ['getAffectedProductIds', '__wakeUp'],
             [],
             '',
@@ -43,7 +43,7 @@ class CategoryTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->plugin = (new ObjectManager($this))->getObject(
-            \Magento\CatalogRule\Plugin\Indexer\Category::class,
+            'Magento\CatalogRule\Plugin\Indexer\Category',
             [
                 'productRuleProcessor' => $this->productRuleProcessor,
             ]

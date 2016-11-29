@@ -27,18 +27,18 @@ class ChildrenUrlRewriteGeneratorTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->childrenCategoriesProvider = $this->getMockBuilder(
-            \Magento\CatalogUrlRewrite\Model\Category\ChildrenCategoriesProvider::class
+            'Magento\CatalogUrlRewrite\Model\Category\ChildrenCategoriesProvider'
         )->disableOriginalConstructor()->getMock();
-        $this->category = $this->getMockBuilder(\Magento\Catalog\Model\Category::class)
+        $this->category = $this->getMockBuilder('Magento\Catalog\Model\Category')
             ->disableOriginalConstructor()->getMock();
         $this->categoryUrlRewriteGeneratorFactory = $this->getMockBuilder(
-            \Magento\CatalogUrlRewrite\Model\CategoryUrlRewriteGeneratorFactory::class
+            'Magento\CatalogUrlRewrite\Model\CategoryUrlRewriteGeneratorFactory'
         )->disableOriginalConstructor()->setMethods(['create'])->getMock();
         $this->categoryUrlRewriteGenerator = $this->getMockBuilder(
-            \Magento\CatalogUrlRewrite\Model\CategoryUrlRewriteGenerator::class
+            'Magento\CatalogUrlRewrite\Model\CategoryUrlRewriteGenerator'
         )->disableOriginalConstructor()->getMock();
         $this->childrenUrlRewriteGenerator = (new ObjectManager($this))->getObject(
-            \Magento\CatalogUrlRewrite\Model\Category\ChildrenUrlRewriteGenerator::class,
+            'Magento\CatalogUrlRewrite\Model\Category\ChildrenUrlRewriteGenerator',
             [
                 'childrenCategoriesProvider' => $this->childrenCategoriesProvider,
                 'categoryUrlRewriteGeneratorFactory' => $this->categoryUrlRewriteGeneratorFactory
@@ -59,7 +59,7 @@ class ChildrenUrlRewriteGeneratorTest extends \PHPUnit_Framework_TestCase
         $storeId = 'store_id';
         $saveRewritesHistory = 'flag';
 
-        $childCategory = $this->getMockBuilder(\Magento\Catalog\Model\Category::class)
+        $childCategory = $this->getMockBuilder('Magento\Catalog\Model\Category')
             ->disableOriginalConstructor()->getMock();
         $childCategory->expects($this->once())->method('setStoreId')->with($storeId);
         $childCategory->expects($this->once())->method('setData')

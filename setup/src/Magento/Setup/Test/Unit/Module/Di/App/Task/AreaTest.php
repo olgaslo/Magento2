@@ -38,20 +38,19 @@ class AreaTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->areaListMock = $this->getMockBuilder(\Magento\Framework\App\AreaList::class)
+        $this->areaListMock = $this->getMockBuilder('Magento\Framework\App\AreaList')
             ->disableOriginalConstructor()
             ->getMock();
-        $this->areaInstancesNamesList =
-            $this->getMockBuilder(\Magento\Setup\Module\Di\Code\Reader\Decorator\Area::class)
+        $this->areaInstancesNamesList = $this->getMockBuilder('\Magento\Setup\Module\Di\Code\Reader\Decorator\Area')
             ->disableOriginalConstructor()
             ->getMock();
-        $this->configReaderMock = $this->getMockBuilder(\Magento\Setup\Module\Di\Compiler\Config\Reader::class)
+        $this->configReaderMock = $this->getMockBuilder('Magento\Setup\Module\Di\Compiler\Config\Reader')
             ->disableOriginalConstructor()
             ->getMock();
-        $this->configWriterMock = $this->getMockBuilder(\Magento\Setup\Module\Di\Compiler\Config\WriterInterface::class)
+        $this->configWriterMock = $this->getMockBuilder('Magento\Setup\Module\Di\Compiler\Config\WriterInterface')
             ->disableOriginalConstructor()
             ->getMock();
-        $this->configChain = $this->getMockBuilder(\Magento\Setup\Module\Di\Compiler\Config\ModificationChain::class)
+        $this->configChain = $this->getMockBuilder('Magento\Setup\Module\Di\Compiler\Config\ModificationChain')
             ->disableOriginalConstructor()
             ->getMock();
     }
@@ -98,7 +97,7 @@ class AreaTest extends \PHPUnit_Framework_TestCase
         $this->configReaderMock->expects($this->once())
             ->method('generateCachePerScope')
             ->with(
-                $this->isInstanceOf(\Magento\Setup\Module\Di\Definition\Collection::class),
+                $this->isInstanceOf('Magento\Setup\Module\Di\Definition\Collection'),
                 App\Area::AREA_GLOBAL
             )
             ->willReturn($generatedConfig);

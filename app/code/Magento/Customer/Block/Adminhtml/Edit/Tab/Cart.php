@@ -127,7 +127,7 @@ class Cart extends \Magento\Backend\Block\Widget\Grid\Extended
             [
                 'header' => __('Product'),
                 'index' => 'name',
-                'renderer' => \Magento\Customer\Block\Adminhtml\Edit\Tab\View\Grid\Renderer\Item::class
+                'renderer' => 'Magento\Customer\Block\Adminhtml\Edit\Tab\View\Grid\Renderer\Item'
             ]
         );
 
@@ -165,7 +165,7 @@ class Cart extends \Magento\Backend\Block\Widget\Grid\Extended
             [
                 'header' => __('Action'),
                 'index' => 'quote_item_id',
-                'renderer' => \Magento\Customer\Block\Adminhtml\Grid\Renderer\Multiaction::class,
+                'renderer' => 'Magento\Customer\Block\Adminhtml\Grid\Renderer\Multiaction',
                 'filter' => false,
                 'sortable' => false,
                 'actions' => [

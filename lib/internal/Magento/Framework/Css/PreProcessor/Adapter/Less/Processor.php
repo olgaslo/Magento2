@@ -16,6 +16,7 @@ use Magento\Framework\View\Asset\ContentProcessorInterface;
 
 /**
  * Class Processor
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
 class Processor implements ContentProcessorInterface
 {
@@ -96,7 +97,10 @@ class Processor implements ContentProcessorInterface
 
             return $content;
         } catch (\Exception $e) {
-            throw new ContentProcessorException(new Phrase($e->getMessage()));
+            $errorMessage = PHP_EOL . self::ERROR_MESSAGE_PREFIX . PHP_EOL . $path . PHP_EOL . $e->getMessage();
+            $this->logger->critical($errorMessage);
+
+            throw new ContentProcessorException(new Phrase($errorMessage));
         }
     }
 }

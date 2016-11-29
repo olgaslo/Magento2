@@ -15,7 +15,7 @@ class CaptchaFactoryTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->_objectManagerMock = $this->getMock(\Magento\Framework\ObjectManagerInterface::class);
+        $this->_objectManagerMock = $this->getMock('Magento\Framework\ObjectManagerInterface');
         $this->_model = new \Magento\Captcha\Model\CaptchaFactory($this->_objectManagerMock);
     }
 
@@ -23,7 +23,7 @@ class CaptchaFactoryTest extends \PHPUnit_Framework_TestCase
     {
         $captchaType = 'default';
 
-        $defaultCaptchaMock = $this->getMock(\Magento\Captcha\Model\DefaultModel::class, [], [], '', false);
+        $defaultCaptchaMock = $this->getMock('Magento\Captcha\Model\DefaultModel', [], [], '', false);
 
         $this->_objectManagerMock->expects(
             $this->once()
@@ -42,7 +42,7 @@ class CaptchaFactoryTest extends \PHPUnit_Framework_TestCase
     {
         $captchaType = 'wrong_instance';
 
-        $defaultCaptchaMock = $this->getMock(\stdClass::class);
+        $defaultCaptchaMock = $this->getMock('stdClass');
 
         $this->_objectManagerMock->expects(
             $this->once()

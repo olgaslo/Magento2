@@ -21,13 +21,13 @@ class BooleanTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $objectManager = new ObjectManager($this);
-        $this->_model = $objectManager->getObject(\Magento\Eav\Model\Entity\Attribute\Source\Boolean::class);
+        $this->_model = $objectManager->getObject('Magento\Eav\Model\Entity\Attribute\Source\Boolean');
     }
 
     public function testGetFlatColumns()
     {
         $abstractAttributeMock = $this->getMock(
-            \Magento\Eav\Model\Entity\Attribute\AbstractAttribute::class,
+            '\Magento\Eav\Model\Entity\Attribute\AbstractAttribute',
             ['getAttributeCode', '__wakeup'],
             [],
             '',
@@ -75,7 +75,7 @@ class BooleanTest extends \PHPUnit_Framework_TestCase
         $entity->expects($this->once())->method('getLinkField')->willReturn('entity_id');
         $attributeMock->expects($this->once())->method('getEntity')->willReturn($entity);
 
-        $selectMock = $this->getMock(\Magento\Framework\DB\Select::class, [], [], '', false);
+        $selectMock = $this->getMock('\Magento\Framework\DB\Select', [], [], '', false);
 
         $collectionMock = $this->getCollectionMock();
         $collectionMock->expects($this->any())->method('getSelect')->will($this->returnValue($selectMock));
@@ -165,10 +165,10 @@ class BooleanTest extends \PHPUnit_Framework_TestCase
     {
         $collectionMethods = ['getSelect', 'getStoreId', 'getConnection'];
         $collectionMock = $this->getMock(
-            \Magento\Eav\Model\Entity\Collection\AbstractCollection::class, $collectionMethods, [], '', false
+            '\Magento\Eav\Model\Entity\Collection\AbstractCollection', $collectionMethods, [], '', false
         );
 
-        $connectionMock = $this->getMock(\Magento\Framework\DB\Adapter\Pdo\Mysql::class, ['method'], [], '', false);
+        $connectionMock = $this->getMock('\Magento\Framework\DB\Adapter\Pdo\Mysql', ['method'], [], '', false);
 
         $collectionMock->expects($this->any())->method('getConnection')->will($this->returnValue($connectionMock));
         $collectionMock->expects($this->any())->method('getStoreId')->will($this->returnValue('12'));
@@ -183,19 +183,9 @@ class BooleanTest extends \PHPUnit_Framework_TestCase
     {
         $attributeMockMethods = ['getAttributeCode', 'getId', 'getBackend', 'isScopeGlobal', '__wakeup' , 'getEntity'];
         $attributeMock = $this->getMock(
-            \Magento\Eav\Model\Entity\Attribute\AbstractAttribute::class,
-            $attributeMockMethods,
-            [],
-            '',
-            false
+            '\Magento\Eav\Model\Entity\Attribute\AbstractAttribute', $attributeMockMethods, [], '', false
         );
-        $backendMock = $this->getMock(
-            \Magento\Eav\Model\Entity\Attribute\Backend\AbstractBackend::class,
-            [],
-            [],
-            '',
-            false
-        );
+        $backendMock = $this->getMock('\Magento\Eav\Model\Entity\Attribute\Backend\AbstractBackend', [], [], '', false);
 
         $attributeMock->expects($this->any())->method('getAttributeCode')->will($this->returnValue('code'));
         $attributeMock->expects($this->any())->method('getId')->will($this->returnValue('123'));

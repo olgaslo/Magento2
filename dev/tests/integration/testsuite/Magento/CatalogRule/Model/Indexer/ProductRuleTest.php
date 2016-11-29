@@ -20,9 +20,9 @@ class ProductRuleTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->resourceRule = Bootstrap::getObjectManager()->get(\Magento\CatalogRule\Model\ResourceModel\Rule::class);
+        $this->resourceRule = Bootstrap::getObjectManager()->get('Magento\CatalogRule\Model\ResourceModel\Rule');
 
-        Bootstrap::getObjectManager()->get(\Magento\CatalogRule\Model\Indexer\Product\ProductRuleProcessor::class)
+        Bootstrap::getObjectManager()->get('Magento\CatalogRule\Model\Indexer\Product\ProductRuleProcessor')
             ->getIndexer()->isScheduled(false);
     }
 
@@ -36,7 +36,7 @@ class ProductRuleTest extends \PHPUnit_Framework_TestCase
     {
         /** @var \Magento\Catalog\Model\ProductRepository $productRepository */
         $productRepository = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create(
-            \Magento\Catalog\Model\ProductRepository::class
+            'Magento\Catalog\Model\ProductRepository'
         );
         $product = $productRepository->get('simple');
         $product->setData('test_attribute', 'test_attribute_value')->save();

@@ -8,11 +8,10 @@ namespace Magento\Sales\Test\TestCase;
 
 use Magento\Sales\Test\Fixture\OrderInjectable;
 use Magento\Mtf\TestCase\Injectable;
-use Magento\Mtf\TestStep\TestStepFactory;
 
 /**
  * Preconditions:
- * 1. Enable payment method: "Check/Money Order/Bank Transfer/Cash on Delivery/Purchase Order/Zero Subtotal Checkout".
+ * 1. Enable payment method "Check/Money Order".
  * 2. Enable shipping method one of "Flat Rate/Free Shipping".
  * 3. Create order.
  *
@@ -24,32 +23,27 @@ use Magento\Mtf\TestStep\TestStepFactory;
  * 5. Click 'Submit Invoice' button.
  * 6. Perform assertions.
  *
- * @group Order_Management
+ * @group Order_Management_(CS)
  * @ZephyrId MAGETWO-28209
  */
 class CreateInvoiceEntityTest extends Injectable
 {
     /* tags */
     const MVP = 'yes';
-    const STABLE = 'no';
+    const DOMAIN = 'CS';
     /* end tags */
 
     /**
-     * Factory for Test Steps.
+     * Set up configuration.
      *
-     * @var TestStepFactory
-     */
-    protected $stepFactory;
-
-    /**
-     * Prepare data.
-     *
-     * @param TestStepFactory $stepFactory
      * @return void
      */
-    public function __prepare(TestStepFactory $stepFactory)
+    public function __prepare()
     {
-        $this->stepFactory = $stepFactory;
+        $this->objectManager->create(
+            'Magento\Config\Test\TestStep\SetupConfigurationStep',
+            ['configData' => 'checkmo, flatrate']
+        )->run();
     }
 
     /**
@@ -57,21 +51,16 @@ class CreateInvoiceEntityTest extends Injectable
      *
      * @param OrderInjectable $order
      * @param array $data
-     * @param string $configData
      * @return array
      */
-    public function test(OrderInjectable $order, array $data, $configData)
+    public function test(OrderInjectable $order, array $data)
     {
         // Preconditions
-        $this->stepFactory->create(
-            \Magento\Config\Test\TestStep\SetupConfigurationStep::class,
-            ['configData' => $configData]
-        )->run();
         $order->persist();
 
         // Steps
-        $result = $this->stepFactory->create(
-            \Magento\Sales\Test\TestStep\CreateInvoiceStep::class,
+        $result = $this->objectManager->create(
+            'Magento\Sales\Test\TestStep\CreateInvoiceStep',
             ['order' => $order, 'data' => $data]
         )->run();
 
@@ -85,6 +74,6 @@ class CreateInvoiceEntityTest extends Injectable
      */
     public function tearDown()
     {
-        $this->stepFactory->create(\Magento\Customer\Test\TestStep\LogoutCustomerOnFrontendStep::class)->run();
+        $this->objectManager->create('Magento\Customer\Test\TestStep\LogoutCustomerOnFrontendStep')->run();
     }
 }

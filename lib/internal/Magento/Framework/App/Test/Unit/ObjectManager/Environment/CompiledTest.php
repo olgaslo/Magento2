@@ -16,7 +16,7 @@ class CompiledTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $envFactoryMock = $this->getMock(\Magento\Framework\App\EnvironmentFactory::class, [], [], '', false);
+        $envFactoryMock = $this->getMock('Magento\Framework\App\EnvironmentFactory', [], [], '', false);
         $this->_compiled = new CompiledTesting($envFactoryMock);
     }
 
@@ -28,7 +28,7 @@ class CompiledTest extends \PHPUnit_Framework_TestCase
     public function testGetObjectManagerFactory()
     {
         $this->assertInstanceOf(
-            \Magento\Framework\ObjectManager\Factory\Compiled::class,
+            'Magento\Framework\ObjectManager\Factory\Compiled',
             $this->_compiled->getObjectManagerFactory(['shared_instances' => []])
         );
     }

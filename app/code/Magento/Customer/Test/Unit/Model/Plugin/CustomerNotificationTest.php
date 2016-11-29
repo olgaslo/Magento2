@@ -33,22 +33,21 @@ class CustomerNotificationTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->session = $this->getMockBuilder(\Magento\Customer\Model\Session::class)
+        $this->session = $this->getMockBuilder('Magento\Customer\Model\Session')
             ->disableOriginalConstructor()
             ->getMock();
-        $this->notificationStorage = $this->getMockBuilder(\Magento\Customer\Model\Customer\NotificationStorage::class)
+        $this->notificationStorage = $this->getMockBuilder('Magento\Customer\Model\Customer\NotificationStorage')
             ->disableOriginalConstructor()
             ->getMock();
-        $this->customerRepository = $this->getMockBuilder(\Magento\Customer\Api\CustomerRepositoryInterface::class)
+        $this->customerRepository = $this->getMockBuilder('Magento\Customer\Api\CustomerRepositoryInterface')
             ->getMockForAbstractClass();
-        $this->abstractAction = $this->getMockBuilder(\Magento\Backend\App\AbstractAction::class)
+        $this->abstractAction = $this->getMockBuilder('Magento\Backend\App\AbstractAction')
             ->disableOriginalConstructor()
             ->getMockForAbstractClass();
-        $this->request = $this->getMockBuilder(\Magento\Framework\App\RequestInterface::class)
+        $this->request = $this->getMockBuilder('Magento\Framework\App\RequestInterface')
             ->setMethods(['isPost'])
             ->getMockForAbstractClass();
-        $this->appState = $this->getMockBuilder(\Magento\Framework\App\State::class)
-            ->disableOriginalConstructor()->getMock();
+        $this->appState = $this->getMockBuilder('Magento\Framework\App\State')->disableOriginalConstructor()->getMock();
         $this->plugin = new CustomerNotification(
             $this->session,
             $this->notificationStorage,
@@ -65,8 +64,7 @@ class CustomerNotificationTest extends \PHPUnit_Framework_TestCase
             ->method('getAreaCode')
             ->willReturn(\Magento\Framework\App\Area::AREA_FRONTEND);
         $this->request->expects($this->any())->method('isPost')->willReturn(true);
-        $customerMock = $this->getMockBuilder(\Magento\Customer\Api\Data\CustomerInterface::class)
-            ->getMockForAbstractClass();
+        $customerMock = $this->getMockBuilder('Magento\Customer\Api\Data\CustomerInterface')->getMockForAbstractClass();
         $customerMock->expects($this->any())->method('getGroupId')->willReturn($customerGroupId);
         $this->customerRepository->expects($this->any())
             ->method('getById')

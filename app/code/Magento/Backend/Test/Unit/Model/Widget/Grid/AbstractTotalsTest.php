@@ -36,7 +36,7 @@ class AbstractTotalsTest extends \PHPUnit_Framework_TestCase
 
         $arguments = ['factory' => $this->_factoryMock, 'parser' => $this->_parserMock];
         $this->_model = $this->getMockForAbstractClass(
-            \Magento\Backend\Model\Widget\Grid\AbstractTotals::class,
+            'Magento\Backend\Model\Widget\Grid\AbstractTotals',
             $arguments,
             '',
             true,
@@ -64,7 +64,7 @@ class AbstractTotalsTest extends \PHPUnit_Framework_TestCase
     protected function _getTestCollection()
     {
         $collection = new \Magento\Framework\Data\Collection(
-            $this->getMock(\Magento\Framework\Data\Collection\EntityFactory::class, [], [], '', false)
+            $this->getMock('Magento\Framework\Data\Collection\EntityFactory', [], [], '', false)
         );
         $items = [new \Magento\Framework\DataObject(['test1' => '1', 'test2' => '2'])];
         foreach ($items as $item) {
@@ -100,7 +100,7 @@ class AbstractTotalsTest extends \PHPUnit_Framework_TestCase
     protected function _prepareParserMock()
     {
         $this->_parserMock = $this->getMock(
-            \Magento\Backend\Model\Widget\Grid\Parser::class,
+            'Magento\Backend\Model\Widget\Grid\Parser',
             ['parseExpression', 'isOperation']
         );
 
@@ -143,7 +143,7 @@ class AbstractTotalsTest extends \PHPUnit_Framework_TestCase
     protected function _prepareFactoryMock()
     {
         $this->_factoryMock = $this->getMock(
-            \Magento\Framework\DataObject\Factory::class,
+            'Magento\Framework\DataObject\Factory',
             ['create'],
             [],
             '',

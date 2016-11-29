@@ -7,9 +7,6 @@ namespace Magento\Captcha\Test\Unit\Observer;
 
 use Magento\Customer\Model\AuthenticationInterface;
 
-/**
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
- */
 class CheckUserEditObserverTest extends \PHPUnit_Framework_TestCase
 {
     /** @var \Magento\Captcha\Helper\Data|\PHPUnit_Framework_MockObject_MockObject */
@@ -45,24 +42,24 @@ class CheckUserEditObserverTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->helperMock = $this->getMock(\Magento\Captcha\Helper\Data::class, [], [], '', false);
-        $this->actionFlagMock = $this->getMock(\Magento\Framework\App\ActionFlag::class, [], [], '', false);
+        $this->helperMock = $this->getMock('\Magento\Captcha\Helper\Data', [], [], '', false);
+        $this->actionFlagMock = $this->getMock('\Magento\Framework\App\ActionFlag', [], [], '', false);
         $this->messageManagerMock = $this->getMock(
-            \Magento\Framework\Message\ManagerInterface::class,
+            '\Magento\Framework\Message\ManagerInterface',
             [],
             [],
             '',
             false
         );
         $this->redirectMock = $this->getMock(
-            \Magento\Framework\App\Response\RedirectInterface::class,
+            '\Magento\Framework\App\Response\RedirectInterface',
             [],
             [],
             '',
             false
         );
         $this->captchaStringResolverMock = $this->getMock(
-            \Magento\Captcha\Observer\CaptchaStringResolver::class,
+            '\Magento\Captcha\Observer\CaptchaStringResolver',
             [],
             [],
             '',
@@ -73,14 +70,14 @@ class CheckUserEditObserverTest extends \PHPUnit_Framework_TestCase
             ->getMock();
 
         $this->customerSessionMock = $this->getMock(
-            \Magento\Customer\Model\Session::class,
+            '\Magento\Customer\Model\Session',
             ['getCustomerId', 'getCustomer', 'logout', 'start'],
             [],
             '',
             false
         );
         $this->scopeConfigMock = $this->getMock(
-            \Magento\Framework\App\Config\ScopeConfigInterface::class,
+            '\Magento\Framework\App\Config\ScopeConfigInterface',
             [],
             [],
             '',
@@ -89,7 +86,7 @@ class CheckUserEditObserverTest extends \PHPUnit_Framework_TestCase
 
         $objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
         $this->observer = $objectManager->getObject(
-            \Magento\Captcha\Observer\CheckUserEditObserver::class,
+            'Magento\Captcha\Observer\CheckUserEditObserver',
             [
                 'helper' => $this->helperMock,
                 'actionFlag' => $this->actionFlagMock,
@@ -113,7 +110,7 @@ class CheckUserEditObserverTest extends \PHPUnit_Framework_TestCase
         $email = 'test@example.com';
         $redirectUrl = 'http://magento.com/customer/account/edit/';
 
-        $captcha = $this->getMock(\Magento\Captcha\Model\DefaultModel::class, [], [], '', false);
+        $captcha = $this->getMock('Magento\Captcha\Model\DefaultModel', [], [], '', false);
         $captcha->expects($this->once())
             ->method('isRequired')
             ->willReturn(true);
@@ -127,14 +124,14 @@ class CheckUserEditObserverTest extends \PHPUnit_Framework_TestCase
             ->with(\Magento\Captcha\Observer\CheckUserEditObserver::FORM_ID)
             ->willReturn($captcha);
 
-        $response = $this->getMock(\Magento\Framework\App\Response\Http::class, [], [], '', false);
-        $request = $this->getMock(\Magento\Framework\App\Request\Http::class, [], [], '', false);
+        $response = $this->getMock('Magento\Framework\App\Response\Http', [], [], '', false);
+        $request = $this->getMock('Magento\Framework\App\Request\Http', [], [], '', false);
         $request->expects($this->any())
             ->method('getPost')
             ->with(\Magento\Captcha\Helper\Data::INPUT_NAME_FIELD_VALUE, null)
             ->willReturn([\Magento\Captcha\Observer\CheckUserEditObserver::FORM_ID => $captchaValue]);
 
-        $controller = $this->getMock(\Magento\Framework\App\Action\Action::class, [], [], '', false);
+        $controller = $this->getMock('Magento\Framework\App\Action\Action', [], [], '', false);
         $controller->expects($this->any())->method('getRequest')->will($this->returnValue($request));
         $controller->expects($this->any())->method('getResponse')->will($this->returnValue($response));
 
@@ -144,7 +141,7 @@ class CheckUserEditObserverTest extends \PHPUnit_Framework_TestCase
             ->willReturn($captchaValue);
 
         $customerDataMock = $this->getMock(
-            \Magento\Customer\Model\Data\Customer::class,
+            '\Magento\Customer\Model\Data\Customer',
             [],
             [],
             '',

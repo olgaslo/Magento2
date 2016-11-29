@@ -6,7 +6,6 @@
 namespace Magento\Cms\Test\Unit\Ui\Component\Listing\Column;
 
 use Magento\Cms\Ui\Component\Listing\Column\PageActions;
-use Magento\Framework\Escaper;
 
 class PageActionsTest extends \PHPUnit_Framework_TestCase
 {
@@ -16,39 +15,31 @@ class PageActionsTest extends \PHPUnit_Framework_TestCase
         // Create Mocks and SUT
         $objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
         /** @var \PHPUnit_Framework_MockObject_MockObject $urlBuilderMock */
-        $urlBuilderMock = $this->getMockBuilder(\Magento\Framework\UrlInterface::class)
+        $urlBuilderMock = $this->getMockBuilder('Magento\Framework\UrlInterface')
             ->disableOriginalConstructor()
             ->getMock();
-        $contextMock = $this->getMockBuilder(\Magento\Framework\View\Element\UiComponent\ContextInterface::class)
+        $contextMock = $this->getMockBuilder('Magento\Framework\View\Element\UiComponent\ContextInterface')
             ->getMockForAbstractClass();
-        $processor = $this->getMockBuilder(\Magento\Framework\View\Element\UiComponent\Processor::class)
+        $processor = $this->getMockBuilder('Magento\Framework\View\Element\UiComponent\Processor')
             ->disableOriginalConstructor()
             ->getMock();
         $contextMock->expects($this->any())->method('getProcessor')->willReturn($processor);
 
         /** @var \Magento\Cms\Ui\Component\Listing\Column\PageActions $model */
         $model = $objectManager->getObject(
-            \Magento\Cms\Ui\Component\Listing\Column\PageActions::class,
+            'Magento\Cms\Ui\Component\Listing\Column\PageActions',
             [
                 'urlBuilder' => $urlBuilderMock,
                 'context' => $contextMock,
             ]
         );
 
-        $escaper = $this->getMockBuilder(Escaper::class)
-            ->disableOriginalConstructor()
-            ->setMethods(['escapeHtml'])
-            ->getMock();
-        $objectManager->setBackwardCompatibleProperty($model, 'escaper', $escaper);
-
         // Define test input and expectations
-        $title = 'page title';
         $items = [
             'data' => [
                 'items' => [
                     [
-                        'page_id' => $pageId,
-                        'title' => $title
+                        'page_id' => $pageId
                     ]
                 ]
             ]
@@ -57,7 +48,6 @@ class PageActionsTest extends \PHPUnit_Framework_TestCase
         $expectedItems = [
             [
                 'page_id' => $pageId,
-                'title' => $title,
                 $name => [
                     'edit' => [
                         'href' => 'test/url/edit',
@@ -67,18 +57,13 @@ class PageActionsTest extends \PHPUnit_Framework_TestCase
                         'href' => 'test/url/delete',
                         'label' => __('Delete'),
                         'confirm' => [
-                            'title' => __('Delete %1', $title),
-                            'message' => __('Are you sure you wan\'t to delete a %1 record?', $title)
+                            'title' => __('Delete ${ $.$data.title }'),
+                            'message' => __('Are you sure you wan\'t to delete a ${ $.$data.title } record?')
                         ],
                     ]
                 ],
             ]
         ];
-
-        $escaper->expects(static::once())
-            ->method('escapeHtml')
-            ->with($title)
-            ->willReturn($title);
 
         // Configure mocks and object data
         $urlBuilderMock->expects($this->any())

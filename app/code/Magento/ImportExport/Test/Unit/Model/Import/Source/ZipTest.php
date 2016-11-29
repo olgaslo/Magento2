@@ -20,7 +20,7 @@ class ZipTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->directory = $this->getMockBuilder(\Magento\Framework\Filesystem\Directory\Write::class)
+        $this->directory = $this->getMockBuilder('\Magento\Framework\Filesystem\Directory\Write')
             ->disableOriginalConstructor()
             ->setMethods(['getRelativePath'])
             ->getMock();
@@ -66,7 +66,7 @@ class ZipTest extends \PHPUnit_Framework_TestCase
     {
         try {
             $this->zip = $this->getMockBuilder(
-                \Magento\ImportExport\Model\Import\Source\Zip::class
+                '\Magento\ImportExport\Model\Import\Source\Zip'
             )
                 ->setConstructorArgs(
                     [
@@ -78,7 +78,7 @@ class ZipTest extends \PHPUnit_Framework_TestCase
                 ->getMock();
 
             $reflectedClass = new \ReflectionClass(
-                \Magento\ImportExport\Model\Import\Source\Zip::class
+                '\Magento\ImportExport\Model\Import\Source\Zip'
             );
             $constructor = $reflectedClass->getConstructor();
             $constructor->invoke(

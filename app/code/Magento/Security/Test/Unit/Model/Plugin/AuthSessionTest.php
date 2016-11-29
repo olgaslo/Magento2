@@ -46,14 +46,14 @@ class AuthSessionTest extends \PHPUnit_Framework_TestCase
         $this->objectManager = new ObjectManager($this);
 
         $this->requestMock = $this->getMockForAbstractClass(
-            \Magento\Framework\App\RequestInterface::class,
+            '\Magento\Framework\App\RequestInterface',
             ['getParam', 'getModuleName', 'getActionName'],
             '',
             false
         );
 
         $this->messageManagerMock = $this->getMock(
-            \Magento\Framework\Message\ManagerInterface::class,
+            '\Magento\Framework\Message\ManagerInterface',
             [],
             [],
             '',
@@ -61,7 +61,7 @@ class AuthSessionTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->adminSessionsManagerMock = $this->getMock(
-            \Magento\Security\Model\AdminSessionsManager::class,
+            '\Magento\Security\Model\AdminSessionsManager',
             ['getCurrentSession', 'processProlong', 'getLogoutReasonMessage'],
             [],
             '',
@@ -77,7 +77,7 @@ class AuthSessionTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->authSessionMock = $this->getMock(
-            \Magento\Backend\Model\Auth\Session::class,
+            '\Magento\Backend\Model\Auth\Session',
             ['destroy'],
             [],
             '',
@@ -85,7 +85,7 @@ class AuthSessionTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->currentSessionMock = $this->getMock(
-            \Magento\Security\Model\AdminSessionInfo::class,
+            '\Magento\Security\Model\AdminSessionInfo',
             ['isLoggedInStatus', 'getStatus'],
             [],
             '',
@@ -93,7 +93,7 @@ class AuthSessionTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->model = $this->objectManager->getObject(
-            \Magento\Security\Model\Plugin\AuthSession::class,
+            '\Magento\Security\Model\Plugin\AuthSession',
             [
                 'request' => $this->requestMock,
                 'messageManager' => $this->messageManagerMock,

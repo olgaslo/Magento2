@@ -46,14 +46,14 @@ class ProductOptionProcessorTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->dataObject = $this->getMockBuilder(\Magento\Framework\DataObject::class)
+        $this->dataObject = $this->getMockBuilder('Magento\Framework\DataObject')
             ->setMethods([
                 'getLinks',
             ])
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->dataObjectFactory = $this->getMockBuilder(\Magento\Framework\DataObject\Factory::class)
+        $this->dataObjectFactory = $this->getMockBuilder('Magento\Framework\DataObject\Factory')
             ->setMethods(['create'])
             ->disableOriginalConstructor()
             ->getMock();
@@ -61,12 +61,12 @@ class ProductOptionProcessorTest extends \PHPUnit_Framework_TestCase
             ->method('create')
             ->willReturn($this->dataObject);
 
-        $this->dataObjectHelper = $this->getMockBuilder(\Magento\Framework\Api\DataObjectHelper::class)
+        $this->dataObjectHelper = $this->getMockBuilder('Magento\Framework\Api\DataObjectHelper')
             ->disableOriginalConstructor()
             ->getMock();
 
         $this->downloadableOption = $this->getMockBuilder(
-            \Magento\Downloadable\Api\Data\DownloadableOptionInterface::class
+            'Magento\Downloadable\Api\Data\DownloadableOptionInterface'
         )
             ->setMethods([
                 'getDownloadableLinks',
@@ -74,7 +74,7 @@ class ProductOptionProcessorTest extends \PHPUnit_Framework_TestCase
             ->getMockForAbstractClass();
 
         $this->downloadableOptionFactory = $this->getMockBuilder(
-            \Magento\Downloadable\Model\DownloadableOptionFactory::class
+            'Magento\Downloadable\Model\DownloadableOptionFactory'
         )
             ->setMethods(['create'])
             ->disableOriginalConstructor()
@@ -99,12 +99,10 @@ class ProductOptionProcessorTest extends \PHPUnit_Framework_TestCase
         $options,
         $requestData
     ) {
-        $productOptionMock = $this->getMockBuilder(\Magento\Catalog\Api\Data\ProductOptionInterface::class)
+        $productOptionMock = $this->getMockBuilder('Magento\Catalog\Api\Data\ProductOptionInterface')
             ->getMockForAbstractClass();
 
-        $productOptionExtensionMock = $this->getMockBuilder(
-            \Magento\Catalog\Api\Data\ProductOptionExtensionInterface::class
-        )
+        $productOptionExtensionMock = $this->getMockBuilder('Magento\Catalog\Api\Data\ProductOptionExtensionInterface')
             ->setMethods([
                 'getDownloadableOption',
             ])
@@ -165,7 +163,7 @@ class ProductOptionProcessorTest extends \PHPUnit_Framework_TestCase
             ->with(
                 $this->downloadableOption,
                 ['downloadable_links' => $options],
-                \Magento\Downloadable\Api\Data\DownloadableOptionInterface::class
+                'Magento\Downloadable\Api\Data\DownloadableOptionInterface'
             )
             ->willReturnSelf();
 

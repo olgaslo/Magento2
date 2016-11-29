@@ -34,22 +34,22 @@ class AgreementsTest extends \PHPUnit_Framework_TestCase
     {
         $objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
         $this->agreementCollFactoryMock = $this->getMock(
-            \Magento\CheckoutAgreements\Model\ResourceModel\Agreement\CollectionFactory::class,
+            '\Magento\CheckoutAgreements\Model\ResourceModel\Agreement\CollectionFactory',
             ['create'],
             [],
             '',
             false
         );
 
-        $this->scopeConfigMock = $this->getMock(\Magento\Framework\App\Config\ScopeConfigInterface::class);
-        $this->storeManagerMock = $this->getMock(\Magento\Store\Model\StoreManagerInterface::class);
+        $this->scopeConfigMock = $this->getMock('\Magento\Framework\App\Config\ScopeConfigInterface');
+        $this->storeManagerMock = $this->getMock('\Magento\Store\Model\StoreManagerInterface');
 
-        $contextMock = $this->getMock(\Magento\Framework\View\Element\Template\Context::class, [], [], '', false);
+        $contextMock = $this->getMock('\Magento\Framework\View\Element\Template\Context', [], [], '', false);
         $contextMock->expects($this->once())->method('getScopeConfig')->willReturn($this->scopeConfigMock);
         $contextMock->expects($this->once())->method('getStoreManager')->willReturn($this->storeManagerMock);
 
         $this->model = $objectManager->getObject(
-            \Magento\CheckoutAgreements\Block\Agreements::class,
+            'Magento\CheckoutAgreements\Block\Agreements',
             [
                 'agreementCollectionFactory' => $this->agreementCollFactoryMock,
                 'context' => $contextMock
@@ -66,7 +66,7 @@ class AgreementsTest extends \PHPUnit_Framework_TestCase
             ->willReturn(true);
 
         $agreementCollection = $this->getMock(
-            \Magento\CheckoutAgreements\Model\ResourceModel\Agreement\Collection::class,
+            '\Magento\CheckoutAgreements\Model\ResourceModel\Agreement\Collection',
             [],
             [],
             '',
@@ -74,7 +74,7 @@ class AgreementsTest extends \PHPUnit_Framework_TestCase
         );
         $this->agreementCollFactoryMock->expects($this->once())->method('create')->willReturn($agreementCollection);
 
-        $storeMock = $this->getMock(\Magento\Store\Model\Store::class, [], [], '', false);
+        $storeMock = $this->getMock('\Magento\Store\Model\Store', [], [], '', false);
         $storeMock->expects($this->once())->method('getId')->willReturn($storeId);
         $this->storeManagerMock->expects($this->once())->method('getStore')->willReturn($storeMock);
 

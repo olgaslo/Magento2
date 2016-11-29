@@ -20,7 +20,7 @@ class BeforeOrderPaymentSaveObserverTest extends \PHPUnit_Framework_TestCase
     {
         $objectManagerHelper = new ObjectManager($this);
         $this->_model = $objectManagerHelper
-            ->getObject(\Magento\OfflinePayments\Observer\BeforeOrderPaymentSaveObserver::class);
+            ->getObject('Magento\OfflinePayments\Observer\BeforeOrderPaymentSaveObserver');
     }
 
     /**
@@ -29,10 +29,10 @@ class BeforeOrderPaymentSaveObserverTest extends \PHPUnit_Framework_TestCase
      */
     public function testBeforeOrderPaymentSaveWithInstructions($methodCode)
     {
-        $observer = $this->getMock(\Magento\Framework\Event\Observer::class, ['getEvent'], [], '', false);
-        $event = $this->getMock(\Magento\Framework\Event::class, ['getPayment'], [], '', false);
+        $observer = $this->getMock('Magento\Framework\Event\Observer', ['getEvent'], [], '', false);
+        $event = $this->getMock('Magento\Framework\Event', ['getPayment'], [], '', false);
         $payment = $this->getMock(
-            \Magento\Sales\Model\Order\Payment::class,
+            'Magento\Sales\Model\Order\Payment',
             ['getMethod', 'setAdditionalInformation', 'getMethodInstance'],
             [],
             '',
@@ -44,7 +44,7 @@ class BeforeOrderPaymentSaveObserverTest extends \PHPUnit_Framework_TestCase
         $payment->expects($this->once())
             ->method('setAdditionalInformation')
             ->with('instructions', 'payment configuration');
-        $method = $this->getMockBuilder(\Magento\OfflinePayments\Model\Banktransfer::class)
+        $method = $this->getMockBuilder('\Magento\OfflinePayments\Model\Banktransfer')
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -73,10 +73,10 @@ class BeforeOrderPaymentSaveObserverTest extends \PHPUnit_Framework_TestCase
 
     public function testBeforeOrderPaymentSaveWithCheckmo()
     {
-        $observer = $this->getMock(\Magento\Framework\Event\Observer::class, ['getEvent'], [], '', false);
-        $event = $this->getMock(\Magento\Framework\Event::class, ['getPayment'], [], '', false);
+        $observer = $this->getMock('Magento\Framework\Event\Observer', ['getEvent'], [], '', false);
+        $event = $this->getMock('Magento\Framework\Event', ['getPayment'], [], '', false);
         $payment = $this->getMock(
-            \Magento\Sales\Model\Order\Payment::class,
+            'Magento\Sales\Model\Order\Payment',
             ['getMethod', 'setAdditionalInformation', 'getMethodInstance'],
             [],
             '',
@@ -94,7 +94,7 @@ class BeforeOrderPaymentSaveObserverTest extends \PHPUnit_Framework_TestCase
                 ]
             );
 
-        $method = $this->getMockBuilder(\Magento\OfflinePayments\Model\Checkmo::class)
+        $method = $this->getMockBuilder('Magento\OfflinePayments\Model\Checkmo')
             ->disableOriginalConstructor()
             ->getMock();
         $method->expects($this->once())
@@ -117,10 +117,10 @@ class BeforeOrderPaymentSaveObserverTest extends \PHPUnit_Framework_TestCase
 
     public function testBeforeOrderPaymentSaveWithOthers()
     {
-        $observer = $this->getMock(\Magento\Framework\Event\Observer::class, ['getEvent'], [], '', false);
-        $event = $this->getMock(\Magento\Framework\Event::class, ['getPayment'], [], '', false);
+        $observer = $this->getMock('Magento\Framework\Event\Observer', ['getEvent'], [], '', false);
+        $event = $this->getMock('Magento\Framework\Event', ['getPayment'], [], '', false);
         $payment = $this->getMock(
-            \Magento\Sales\Model\Order\Payment::class,
+            'Magento\Sales\Model\Order\Payment',
             ['getMethod', 'setAdditionalInformation', 'getMethodInstance'],
             [],
             '',

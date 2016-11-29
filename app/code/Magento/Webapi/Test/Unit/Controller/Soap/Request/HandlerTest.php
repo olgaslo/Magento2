@@ -49,33 +49,33 @@ class HandlerTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         /** Prepare mocks for SUT constructor. */
-        $this->_apiConfigMock = $this->getMockBuilder(\Magento\Webapi\Model\Soap\Config::class)
+        $this->_apiConfigMock = $this->getMockBuilder('Magento\Webapi\Model\Soap\Config')
             ->setMethods(['getServiceMethodInfo'])->disableOriginalConstructor()->getMock();
-        $this->_requestMock = $this->getMock(\Magento\Framework\Webapi\Request::class, [], [], '', false);
-        $this->_objectManagerMock = $this->getMock(\Magento\Framework\ObjectManagerInterface::class);
-        $this->_authorizationMock = $this->getMock(\Magento\Framework\Webapi\Authorization::class, [], [], '', false);
+        $this->_requestMock = $this->getMock('Magento\Framework\Webapi\Request', [], [], '', false);
+        $this->_objectManagerMock = $this->getMock('Magento\Framework\ObjectManagerInterface');
+        $this->_authorizationMock = $this->getMock('Magento\Framework\Webapi\Authorization', [], [], '', false);
         $this->_dataObjectConverter = $this->getMock(
-            \Magento\Framework\Api\SimpleDataObjectConverter::class,
+            'Magento\Framework\Api\SimpleDataObjectConverter',
             ['convertStdObjectToArray'],
             [],
             '',
             false
         );
         $this->_serviceInputProcessorMock = $this->getMock(
-            \Magento\Framework\Webapi\ServiceInputProcessor::class,
+            'Magento\Framework\Webapi\ServiceInputProcessor',
             [],
             [],
             '',
             false
         );
         $this->_dataObjectProcessorMock = $this->getMock(
-            \Magento\Framework\Reflection\DataObjectProcessor::class,
+            'Magento\Framework\Reflection\DataObjectProcessor',
             [],
             [],
             '',
             false);
         $this->_methodsMapProcessorMock = $this->getMock(
-            \Magento\Framework\Reflection\MethodsMap::class,
+            'Magento\Framework\Reflection\MethodsMap',
             [],
             [],
             '',
@@ -105,7 +105,7 @@ class HandlerTest extends \PHPUnit_Framework_TestCase
             ->method('convertStdObjectToArray')
             ->will($this->returnValue(['field' => 1]));
         $operationName = 'soapOperation';
-        $className = \Magento\Framework\DataObject::class;
+        $className = 'Magento\Framework\DataObject';
         $methodName = 'testMethod';
         $isSecure = false;
         $aclResources = [['Magento_TestModule::resourceA']];

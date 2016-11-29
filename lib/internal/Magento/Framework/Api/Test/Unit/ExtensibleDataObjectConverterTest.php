@@ -23,16 +23,16 @@ class ExtensibleDataObjectConverterTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->processor = $this->getMockBuilder(\Magento\Framework\Reflection\DataObjectProcessor::class)
+        $this->processor = $this->getMockBuilder('Magento\Framework\Reflection\DataObjectProcessor')
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->dataObject = $this->getMockBuilder(\Magento\Framework\Api\ExtensibleDataInterface::class)
+        $this->dataObject = $this->getMockBuilder('Magento\Framework\Api\ExtensibleDataInterface')
             ->getMock();
 
         $objectManager = new ObjectManager($this);
         $this->converter = $objectManager->getObject(
-            \Magento\Framework\Api\ExtensibleDataObjectConverter::class,
+            'Magento\Framework\Api\ExtensibleDataObjectConverter',
             [
                 'dataObjectProcessor' => $this->processor,
             ]

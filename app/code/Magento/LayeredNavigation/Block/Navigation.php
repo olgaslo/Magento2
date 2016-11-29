@@ -59,6 +59,7 @@ class Navigation extends \Magento\Framework\View\Element\Template
      */
     protected function _prepareLayout()
     {
+        $this->renderer = $this->getChildBlock('renderer');
         foreach ($this->filterList->getFilters($this->_catalogLayer) as $filter) {
             $filter->apply($this->getRequest());
         }

@@ -25,11 +25,11 @@ class ItemsTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->_layout = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->get(
-            \Magento\Framework\View\LayoutInterface::class
+            'Magento\Framework\View\LayoutInterface'
         );
-        $this->_block = $this->_layout->createBlock(\Magento\Sales\Block\Order\Creditmemo\Items::class, 'block');
+        $this->_block = $this->_layout->createBlock('Magento\Sales\Block\Order\Creditmemo\Items', 'block');
         $this->_creditmemo = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create(
-            \Magento\Sales\Model\Order\Creditmemo::class
+            'Magento\Sales\Model\Order\Creditmemo'
         );
     }
 
@@ -38,11 +38,7 @@ class ItemsTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetTotalsHtml()
     {
-        $childBlock = $this->_layout->addBlock(
-            \Magento\Framework\View\Element\Text::class,
-            'creditmemo_totals',
-            'block'
-        );
+        $childBlock = $this->_layout->addBlock('Magento\Framework\View\Element\Text', 'creditmemo_totals', 'block');
 
         $expectedHtml = '<b>Any html</b>';
         $this->assertEmpty($childBlock->getCreditmemo());
@@ -56,11 +52,7 @@ class ItemsTest extends \PHPUnit_Framework_TestCase
 
     public function testGetCommentsHtml()
     {
-        $childBlock = $this->_layout->addBlock(
-            \Magento\Framework\View\Element\Text::class,
-            'creditmemo_comments',
-            'block'
-        );
+        $childBlock = $this->_layout->addBlock('Magento\Framework\View\Element\Text', 'creditmemo_comments', 'block');
 
         $expectedHtml = '<b>Any html</b>';
         $this->assertEmpty($childBlock->getEntity());

@@ -21,12 +21,10 @@ class RatingTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $storeId = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()
-            ->get(\Magento\Store\Model\StoreManagerInterface::class)
+            ->get('Magento\Store\Model\StoreManagerInterface')
             ->getStore()->getId();
 
-        $rating = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create(
-            \Magento\Review\Model\Rating::class
-        );
+        $rating = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create('Magento\Review\Model\Rating');
         $rating->setData([
             'rating_code' => 'Test Rating',
             'position' => 0,
@@ -44,9 +42,7 @@ class RatingTest extends \PHPUnit_Framework_TestCase
      */
     public function testRatingLoad()
     {
-        $rating = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create(
-            \Magento\Review\Model\Rating::class
-        );
+        $rating = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create('Magento\Review\Model\Rating');
         $rating->load($this->id);
         $this->assertEquals('Test Rating', $rating->getRatingCode());
     }
@@ -56,13 +52,11 @@ class RatingTest extends \PHPUnit_Framework_TestCase
      */
     public function testRatingEdit()
     {
-        $rating = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create(
-            \Magento\Review\Model\Rating::class
-        );
+        $rating = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create('Magento\Review\Model\Rating');
         $rating->load($this->id);
         $this->assertEquals('Test Rating', $rating->getRatingCode());
         $storeId = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()
-            ->get(\Magento\Store\Model\StoreManagerInterface::class)
+            ->get('Magento\Store\Model\StoreManagerInterface')
             ->getStore()->getId();
         $rating->setRatingCode('Test Rating Edited');
         $rating->setRatingCodes([$storeId => 'Test Rating Edited']);
@@ -78,9 +72,7 @@ class RatingTest extends \PHPUnit_Framework_TestCase
     public function testRatingSaveWithError()
     {
         $this->setExpectedException('Exception', 'Rolled back transaction has not been completed correctly');
-        $rating = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create(
-            \Magento\Review\Model\Rating::class
-        );
+        $rating = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create('Magento\Review\Model\Rating');
         $rating->load($this->id);
         $rating->setRatingCodes([222 => 'Test Rating Edited']);
         $rating->save();

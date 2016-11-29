@@ -44,14 +44,14 @@ class NonceTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->contextMock = $this->getMock(
-            \Magento\Framework\Model\Context::class,
+            'Magento\Framework\Model\Context',
             ['getEventDispatcher'],
             [],
             '',
             false
         );
         $eventManagerMock = $this->getMockForAbstractClass(
-            \Magento\Framework\Event\ManagerInterface::class,
+            'Magento\Framework\Event\ManagerInterface',
             [],
             '',
             false,
@@ -63,21 +63,21 @@ class NonceTest extends \PHPUnit_Framework_TestCase
             ->method('getEventDispatcher')
             ->will($this->returnValue($eventManagerMock));
         $this->registryMock = $this->getMock(
-            \Magento\Framework\Registry::class,
+            'Magento\Framework\Registry',
             [],
             [],
             '',
             false
         );
         $this->oauthDataMock = $this->getMock(
-            \Magento\Integration\Helper\Oauth\Data::class,
+            'Magento\Integration\Helper\Oauth\Data',
             [],
             [],
             '',
             false
         );
         $this->resourceMock = $this->getMockForAbstractClass(
-            \Magento\Framework\Model\ResourceModel\AbstractResource::class,
+            'Magento\Framework\Model\ResourceModel\AbstractResource',
             [],
             '',
             false,
@@ -86,7 +86,7 @@ class NonceTest extends \PHPUnit_Framework_TestCase
             ['getIdFieldName', 'selectByCompositeKey', 'deleteOldEntries']
         );
         $this->resourceCollectionMock = $this->getMock(
-            \Magento\Framework\Data\Collection\AbstractDb::class,
+            'Magento\Framework\Data\Collection\AbstractDb',
             [],
             [],
             '',

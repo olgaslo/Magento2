@@ -32,12 +32,12 @@ class StateTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->filesystem = $this->getMockBuilder(\Magento\Framework\Filesystem::class)
+        $this->filesystem = $this->getMockBuilder('Magento\Framework\Filesystem')
             ->setMethods(['getDirectoryWrite'])
             ->disableOriginalConstructor()
             ->getMock();
         $this->writeInterface = $this->getMockForAbstractClass(
-            \Magento\Framework\Filesystem\Directory\WriteInterface::class,
+            'Magento\Framework\Filesystem\Directory\WriteInterface',
             [],
             '',
             false,
@@ -47,7 +47,7 @@ class StateTest extends \PHPUnit_Framework_TestCase
         );
         $objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
         $this->state = $objectManager->getObject(
-            \Magento\Framework\Setup\SampleData\State::class,
+            'Magento\Framework\Setup\SampleData\State',
             ['filesystem' => $this->filesystem]
         );
     }

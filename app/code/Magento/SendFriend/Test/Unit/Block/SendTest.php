@@ -34,18 +34,18 @@ class SendTest extends \PHPUnit_Framework_TestCase
     {
         $objectManager = new ObjectManager($this);
 
-        $this->sendfriendMock = $this->getMockBuilder(\Magento\SendFriend\Model\SendFriend::class)
+        $this->sendfriendMock = $this->getMockBuilder('Magento\SendFriend\Model\SendFriend')
             ->disableOriginalConstructor()
             ->getMock();
-        $this->urlBuilderMock = $this->getMockBuilder(\Magento\Framework\UrlInterface::class)
+        $this->urlBuilderMock = $this->getMockBuilder('Magento\Framework\UrlInterface')
             ->disableOriginalConstructor()
             ->getMockForAbstractClass();
-        $this->requestMock = $this->getMockBuilder(\Magento\Framework\App\RequestInterface::class)
+        $this->requestMock = $this->getMockBuilder('Magento\Framework\App\RequestInterface')
             ->disableOriginalConstructor()
             ->getMockForAbstractClass();
 
         $this->model = $objectManager->getObject(
-            \Magento\SendFriend\Block\Send::class,
+            'Magento\SendFriend\Block\Send',
             [
                 'sendfriend' => $this->sendfriendMock,
                 'urlBuilder' => $this->urlBuilderMock,

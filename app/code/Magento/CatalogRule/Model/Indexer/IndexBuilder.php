@@ -159,9 +159,7 @@ class IndexBuilder
             $this->doReindexByIds($ids);
         } catch (\Exception $e) {
             $this->critical($e);
-            throw new \Magento\Framework\Exception\LocalizedException(
-                __("Catalog rule indexing failed. See details in exception log.")
-            );
+            throw new \Magento\Framework\Exception\LocalizedException(__($e->getMessage()), $e);
         }
     }
 
@@ -195,9 +193,7 @@ class IndexBuilder
             $this->doReindexFull();
         } catch (\Exception $e) {
             $this->critical($e);
-            throw new \Magento\Framework\Exception\LocalizedException(
-                __("Catalog rule indexing failed. See details in exception log.")
-            );
+            throw new \Magento\Framework\Exception\LocalizedException(__($e->getMessage()), $e);
         }
     }
 
@@ -741,7 +737,7 @@ class IndexBuilder
     {
         if (null === $this->metadataPool) {
             $this->metadataPool = \Magento\Framework\App\ObjectManager::getInstance()
-                ->get(\Magento\Framework\EntityManager\MetadataPool::class);
+                ->get('Magento\Framework\EntityManager\MetadataPool');
         }
         return $this->metadataPool;
     }

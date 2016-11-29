@@ -9,7 +9,6 @@ use Magento\Customer\Model\EmailNotificationInterface;
 
 /**
  * @SuppressWarnings(PHPMD.TooManyFields)
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
 class InlineEditTest extends \PHPUnit_Framework_TestCase
 {
@@ -74,77 +73,77 @@ class InlineEditTest extends \PHPUnit_Framework_TestCase
     {
         $objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
 
-        $this->request = $this->getMockForAbstractClass(\Magento\Framework\App\RequestInterface::class, [], '', false);
+        $this->request = $this->getMockForAbstractClass('Magento\Framework\App\RequestInterface', [], '', false);
         $this->messageManager = $this->getMockForAbstractClass(
-            \Magento\Framework\Message\ManagerInterface::class,
+            'Magento\Framework\Message\ManagerInterface',
             [],
             '',
             false
         );
         $this->customerData = $this->getMockForAbstractClass(
-            \Magento\Customer\Api\Data\CustomerInterface::class,
+            'Magento\Customer\Api\Data\CustomerInterface',
             [],
             '',
             false
         );
         $this->address = $this->getMockForAbstractClass(
-            \Magento\Customer\Api\Data\AddressInterface::class,
+            'Magento\Customer\Api\Data\AddressInterface',
             [],
             'address',
             false
         );
-        $this->addressMapper = $this->getMock(\Magento\Customer\Model\Address\Mapper::class, [], [], '', false);
-        $this->customerMapper = $this->getMock(\Magento\Customer\Model\Customer\Mapper::class, [], [], '', false);
+        $this->addressMapper = $this->getMock('Magento\Customer\Model\Address\Mapper', [], [], '', false);
+        $this->customerMapper = $this->getMock('Magento\Customer\Model\Customer\Mapper', [], [], '', false);
         $this->resultJsonFactory = $this->getMock(
-            \Magento\Framework\Controller\Result\JsonFactory::class,
+            'Magento\Framework\Controller\Result\JsonFactory',
             ['create'],
             [],
             '',
             false
         );
-        $this->resultJson = $this->getMock(\Magento\Framework\Controller\Result\Json::class, [], [], '', false);
+        $this->resultJson = $this->getMock('Magento\Framework\Controller\Result\Json', [], [], '', false);
         $this->customerRepository = $this->getMockForAbstractClass(
-            \Magento\Customer\Api\CustomerRepositoryInterface::class,
+            'Magento\Customer\Api\CustomerRepositoryInterface',
             [],
             '',
             false
         );
-        $this->dataObjectHelper = $this->getMock(\Magento\Framework\Api\DataObjectHelper::class, [], [], '', false);
+        $this->dataObjectHelper = $this->getMock('Magento\Framework\Api\DataObjectHelper', [], [], '', false);
         $this->addressDataFactory = $this->getMock(
-            \Magento\Customer\Api\Data\AddressInterfaceFactory::class,
+            'Magento\Customer\Api\Data\AddressInterfaceFactory',
             ['create'],
             [],
             '',
             false
         );
         $this->addressRepository = $this->getMockForAbstractClass(
-            \Magento\Customer\Api\AddressRepositoryInterface::class,
+            'Magento\Customer\Api\AddressRepositoryInterface',
             [],
             '',
             false
         );
-        $this->messageCollection = $this->getMock(\Magento\Framework\Message\Collection::class, [], [], '', false);
+        $this->messageCollection = $this->getMock('Magento\Framework\Message\Collection', [], [], '', false);
         $this->message = $this->getMockForAbstractClass(
-            \Magento\Framework\Message\MessageInterface::class,
+            'Magento\Framework\Message\MessageInterface',
             [],
             '',
             false
         );
-        $this->logger = $this->getMockForAbstractClass(\Psr\Log\LoggerInterface::class, [], '', false);
+        $this->logger = $this->getMockForAbstractClass('Psr\Log\LoggerInterface', [], '', false);
 
         $this->emailNotification = $this->getMockBuilder(EmailNotificationInterface::class)
             ->disableOriginalConstructor()
             ->getMock();
 
         $this->context = $objectManager->getObject(
-            \Magento\Backend\App\Action\Context::class,
+            'Magento\Backend\App\Action\Context',
             [
                 'request' => $this->request,
                 'messageManager' => $this->messageManager,
             ]
         );
         $this->controller = $objectManager->getObject(
-            \Magento\Customer\Controller\Adminhtml\Index\InlineEdit::class,
+            'Magento\Customer\Controller\Adminhtml\Index\InlineEdit',
             [
                 'context' => $this->context,
                 'resultJsonFactory' => $this->resultJsonFactory,
@@ -199,7 +198,7 @@ class InlineEditTest extends \PHPUnit_Framework_TestCase
                     'name' => 'Firstname Lastname',
                     'email' => 'test@test.ua',
                 ],
-                \Magento\Customer\Api\Data\CustomerInterface::class
+                '\Magento\Customer\Api\Data\CustomerInterface'
             );
         $this->customerData->expects($this->any())
             ->method('getId')
@@ -225,7 +224,7 @@ class InlineEditTest extends \PHPUnit_Framework_TestCase
             ->with(
                 $this->address,
                 $addressData,
-                \Magento\Customer\Api\Data\AddressInterface::class
+                '\Magento\Customer\Api\Data\AddressInterface'
             );
     }
 

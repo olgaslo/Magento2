@@ -23,7 +23,7 @@ class RelationTest extends \PHPUnit_Framework_TestCase
     {
         $objectManager = new ObjectManager($this);
         $this->modelMock = $this->getMock(
-            \Magento\Framework\Model\AbstractModel::class,
+            'Magento\Framework\Model\AbstractModel',
             [
                 'getItemsCollection',
                 'getShippingRatesCollection',
@@ -34,20 +34,20 @@ class RelationTest extends \PHPUnit_Framework_TestCase
             '',
             false
         );
-        $this->relation = $objectManager->getObject(\Magento\Quote\Model\Quote\Address\Relation::class, []);
+        $this->relation = $objectManager->getObject('Magento\Quote\Model\Quote\Address\Relation', []);
     }
 
     public function testProcessRelation()
     {
         $itemsCollection = $this->getMock(
-            \Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection::class,
+            'Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection',
             [],
             [],
             '',
             false
         );
         $shippingRatesCollection = $this->getMock(
-            \Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection::class,
+            'Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection',
             [],
             [],
             '',

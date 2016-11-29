@@ -5,20 +5,12 @@
  */
 namespace Magento\Config\Model\Config\Backend;
 
-use Magento\Framework\Validator\Url as UrlValidator;
-use Magento\Framework\App\ObjectManager;
-
 class Baseurl extends \Magento\Framework\App\Config\Value
 {
     /**
      * @var \Magento\Framework\View\Asset\MergeService
      */
     protected $_mergeService;
-
-    /**
-     * @var UrlValidator
-     */
-    private $urlValidator;
 
     /**
      * @param \Magento\Framework\Model\Context $context
@@ -201,7 +193,8 @@ class Baseurl extends \Magento\Framework\App\Config\Value
      */
     private function _isFullyQualifiedUrl($value)
     {
-        return preg_match('/\/$/', $value) && $this->getUrlValidator()->isValid($value, ['http', 'https']);
+        $url = parse_url($value);
+        return isset($url['scheme']) && isset($url['host']) && preg_match('/\/$/', $value);
     }
 
     /**
@@ -222,19 +215,5 @@ class Baseurl extends \Magento\Framework\App\Config\Value
             }
         }
         return parent::afterSave();
-    }
-
-    /**
-     * Get URL Validator
-     *
-     * @deprecated
-     * @return UrlValidator
-     */
-    private function getUrlValidator()
-    {
-        if (!$this->urlValidator) {
-            $this->urlValidator = ObjectManager::getInstance()->get(UrlValidator::class);
-        }
-        return $this->urlValidator;
     }
 }

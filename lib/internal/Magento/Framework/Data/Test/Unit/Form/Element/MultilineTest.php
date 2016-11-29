@@ -29,15 +29,15 @@ class MultilineTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->elementFactory = $this->getMockBuilder(\Magento\Framework\Data\Form\Element\Factory::class)
+        $this->elementFactory = $this->getMockBuilder('Magento\Framework\Data\Form\Element\Factory')
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->collectionFactory = $this->getMockBuilder(\Magento\Framework\Data\Form\Element\CollectionFactory::class)
+        $this->collectionFactory = $this->getMockBuilder('Magento\Framework\Data\Form\Element\CollectionFactory')
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->escaper = $this->getMockBuilder(\Magento\Framework\Escaper::class)
+        $this->escaper = $this->getMockBuilder('Magento\Framework\Escaper')
             ->disableOriginalConstructor()
             ->getMock();
 

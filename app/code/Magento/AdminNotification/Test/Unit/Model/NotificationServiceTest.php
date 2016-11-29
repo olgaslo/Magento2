@@ -24,14 +24,14 @@ class NotificationServiceTest extends \PHPUnit_Framework_TestCase
          *  $notificationFactory \PHPUnit_Framework_MockObject_MockObject|\Magento\AdminNotification\Model\InboxFactory
          */
         $notificationFactory = $this->getMock(
-            \Magento\AdminNotification\Model\InboxFactory::class,
+            'Magento\AdminNotification\Model\InboxFactory',
             ['create'],
             [],
             '',
             false
         );
         $notification = $this->getMock(
-            \Magento\AdminNotification\Model\Inbox::class,
+            'Magento\AdminNotification\Model\Inbox',
             ['load', 'getId', 'save', 'setIsRead', '__sleep', '__wakeup'],
             [],
             '',

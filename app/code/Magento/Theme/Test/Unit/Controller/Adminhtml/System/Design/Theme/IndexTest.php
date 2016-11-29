@@ -16,21 +16,21 @@ class IndexTest extends \Magento\Theme\Test\Unit\Controller\Adminhtml\System\Des
     public function testIndexAction()
     {
         $menuModel = $this->getMock(
-            \Magento\Backend\Model\Menu::class,
+            'Magento\Backend\Model\Menu',
             [],
-            [$this->getMock(\Psr\Log\LoggerInterface::class)]
+            [$this->getMock('Psr\Log\LoggerInterface')]
         );
         $menuModel->expects($this->once())
             ->method('getParentItems')
             ->with($this->equalTo('Magento_Theme::system_design_theme'))
             ->will($this->returnValue([]));
 
-        $menuBlock = $this->getMock(\Magento\Backend\Block\Menu::class, [], [], '', false);
+        $menuBlock = $this->getMock('\Magento\Backend\Block\Menu', [], [], '', false);
         $menuBlock->expects($this->once())
             ->method('getMenuModel')
             ->will($this->returnValue($menuModel));
 
-        $layout = $this->getMock(\Magento\Framework\View\LayoutInterface::class, [], [], '', false);
+        $layout = $this->getMock('\Magento\Framework\View\LayoutInterface', [], [], '', false);
         $layout->expects($this->any())
             ->method('getBlock')
             ->with($this->equalTo('menu'))

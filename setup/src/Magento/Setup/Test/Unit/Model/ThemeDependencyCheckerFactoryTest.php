@@ -27,15 +27,9 @@ class ThemeDependencyCheckerFactoryTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->objectManagerProvider = $this->getMock(
-            \Magento\Setup\Model\ObjectManagerProvider::class,
-            [],
-            [],
-            '',
-            false
-        );
+        $this->objectManagerProvider = $this->getMock('Magento\Setup\Model\ObjectManagerProvider', [], [], '', false);
         $this->objectManager = $this->getMockForAbstractClass(
-            \Magento\Framework\ObjectManagerInterface::class,
+            'Magento\Framework\ObjectManagerInterface',
             [],
             '',
             false
@@ -47,7 +41,7 @@ class ThemeDependencyCheckerFactoryTest extends \PHPUnit_Framework_TestCase
         $this->objectManagerProvider->expects($this->once())->method('get')->willReturn($this->objectManager);
         $this->objectManager->expects($this->once())
             ->method('get')
-            ->with(\Magento\Theme\Model\Theme\ThemeDependencyChecker::class);
+            ->with('Magento\Theme\Model\Theme\ThemeDependencyChecker');
         $this->themeDependencyCheckerFactory = new ThemeDependencyCheckerFactory($this->objectManagerProvider);
         $this->themeDependencyCheckerFactory->create();
     }

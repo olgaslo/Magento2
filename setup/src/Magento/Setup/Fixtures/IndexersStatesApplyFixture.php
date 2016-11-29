@@ -29,7 +29,7 @@ class IndexersStatesApplyFixture extends Fixture
         foreach ($indexers["indexer"] as $indexer) {
             $this->fixtureModel->indexersStates[$indexer['id']] = ($indexer['set_scheduled'] == "true");
         }
-        $this->fixtureModel->getObjectManager()->get(\Magento\Framework\App\CacheInterface::class)
+        $this->fixtureModel->getObjectManager()->get('Magento\Framework\App\CacheInterface')
             ->clean([\Magento\Framework\App\Config::CACHE_TAG]);
     }
 

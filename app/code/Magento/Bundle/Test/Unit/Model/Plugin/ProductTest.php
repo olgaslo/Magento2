@@ -25,17 +25,17 @@ class ProductTest extends \PHPUnit_Framework_TestCase
     {
         $objectManager = new ObjectManager($this);
 
-        $this->product = $this->getMockBuilder(\Magento\Catalog\Model\Product::class)
+        $this->product = $this->getMockBuilder('\Magento\Catalog\Model\Product')
             ->disableOriginalConstructor()
             ->setMethods(['getEntityId'])
             ->getMock();
-        $this->type = $this->getMockBuilder(\Magento\Bundle\Model\Product\Type::class)
+        $this->type = $this->getMockBuilder('\Magento\Bundle\Model\Product\Type')
             ->disableOriginalConstructor()
             ->setMethods(['getParentIdsByChild'])
             ->getMock();
 
         $this->plugin = $objectManager->getObject(
-            \Magento\Bundle\Model\Plugin\Product::class,
+            'Magento\Bundle\Model\Plugin\Product',
             [
                 'type' => $this->type,
             ]

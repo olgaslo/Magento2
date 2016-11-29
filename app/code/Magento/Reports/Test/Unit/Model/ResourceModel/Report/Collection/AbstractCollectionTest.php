@@ -17,19 +17,13 @@ class AbstractCollectionTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $entityFactory = $this->getMock(\Magento\Framework\Data\Collection\EntityFactory::class, [], [], '', false);
-        $logger = $this->getMock(\Psr\Log\LoggerInterface::class, [], [], '', false);
-        $fetchStrategy = $this->getMock(
-            \Magento\Framework\Data\Collection\Db\FetchStrategy\Query::class,
-            [],
-            [],
-            '',
-            false
-        );
-        $eventManager = $this->getMock(\Magento\Framework\Event\Manager::class, [], [], '', false);
-        $connection = $this->getMock(\Magento\Framework\DB\Adapter\Pdo\Mysql::class, [], [], '', false);
+        $entityFactory = $this->getMock('\Magento\Framework\Data\Collection\EntityFactory', [], [], '', false);
+        $logger = $this->getMock('\Psr\Log\LoggerInterface', [], [], '', false);
+        $fetchStrategy = $this->getMock('\Magento\Framework\Data\Collection\Db\FetchStrategy\Query', [], [], '', false);
+        $eventManager = $this->getMock('\Magento\Framework\Event\Manager', [], [], '', false);
+        $connection = $this->getMock('\Magento\Framework\DB\Adapter\Pdo\Mysql', [], [], '', false);
 
-        $resource = $this->getMockBuilder(\Magento\Framework\Model\ResourceModel\Db\AbstractDb::class)
+        $resource = $this->getMockBuilder('\Magento\Framework\Model\ResourceModel\Db\AbstractDb')
             ->disableOriginalConstructor()
             ->setMethods(['getConnection'])
             ->getMockForAbstractClass();

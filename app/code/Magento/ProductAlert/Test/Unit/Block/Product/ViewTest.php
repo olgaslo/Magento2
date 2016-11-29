@@ -21,14 +21,14 @@ class ViewTest extends \PHPUnit_Framework_TestCase
     {
         $objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
         $this->postHelper = $this->getMock(
-            \Magento\Framework\Data\Helper\PostHelper::class,
+            'Magento\Framework\Data\Helper\PostHelper',
             [],
             [],
             '',
             false
         );
         $this->block = $objectManager->getObject(
-            \Magento\ProductAlert\Block\Product\View::class,
+            'Magento\ProductAlert\Block\Product\View',
             ['coreHelper' => $this->postHelper]
         );
     }

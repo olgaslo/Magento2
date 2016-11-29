@@ -41,20 +41,20 @@ class InterpretationStrategyTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->renderersPool = $this->getMockBuilder(
-            \Magento\Framework\View\Element\Message\Renderer\RenderersPool::class
+            'Magento\Framework\View\Element\Message\Renderer\RenderersPool'
         )
             ->disableOriginalConstructor()
             ->getMock();
         $this->messageConfigurationsPool = $this->getMockBuilder(
-            \Magento\Framework\View\Element\Message\MessageConfigurationsPool::class
+            'Magento\Framework\View\Element\Message\MessageConfigurationsPool'
         )
             ->disableOriginalConstructor()
             ->getMock();
         $this->messageMock = $this->getMock(
-            \Magento\Framework\Message\MessageInterface::class
+            'Magento\Framework\Message\MessageInterface'
         );
         $this->renderer = $this->getMock(
-            \Magento\Framework\View\Element\Message\Renderer\RendererInterface::class
+            'Magento\Framework\View\Element\Message\Renderer\RendererInterface'
         );
 
         $this->interpretationStrategy = new InterpretationStrategy(
@@ -75,7 +75,7 @@ class InterpretationStrategyTest extends \PHPUnit_Framework_TestCase
         $renderedMessage = 'Script';
 
         $renderer = $this->getMock(
-            \Magento\Framework\View\Element\Message\Renderer\RendererInterface::class
+            'Magento\Framework\View\Element\Message\Renderer\RendererInterface'
         );
 
         $this->messageMock->expects(static::once())

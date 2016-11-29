@@ -67,7 +67,7 @@ class Comment extends AbstractModel implements CreditmemoCommentInterface
      */
     protected function _construct()
     {
-        $this->_init(\Magento\Sales\Model\ResourceModel\Order\Creditmemo\Comment::class);
+        $this->_init('Magento\Sales\Model\ResourceModel\Order\Creditmemo\Comment');
     }
 
     /**
@@ -110,7 +110,6 @@ class Comment extends AbstractModel implements CreditmemoCommentInterface
     }
 
     //@codeCoverageIgnoreStart
-
     /**
      * Returns comment
      *

@@ -13,7 +13,6 @@ class InterceptionConfigurationBuilderTest extends \PHPUnit_Framework_TestCase
      * @var \Magento\Setup\Module\Di\Code\Generator\InterceptionConfigurationBuilder
      */
     protected $model;
-
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject
      */
@@ -42,41 +41,35 @@ class InterceptionConfigurationBuilderTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->interceptionConfig = $this->getMock(
-            \Magento\Framework\Interception\Config\Config::class,
+            'Magento\Framework\Interception\Config\Config',
             ['hasPlugins'],
             [],
             '',
             false
         );
         $this->pluginList = $this->getMock(
-            \Magento\Setup\Module\Di\Code\Generator\PluginList::class,
+            'Magento\Setup\Module\Di\Code\Generator\PluginList',
             ['setInterceptedClasses', 'setScopePriorityScheme', 'getPluginsConfig'],
             [],
             '',
             false
         );
         $this->cacheManager = $this->getMock(
-            \Magento\Framework\App\Cache\Manager::class,
+            'Magento\Framework\App\Cache\Manager',
             [],
             [],
             '',
             false
         );
         $this->interceptableValidator = $this->getMock(
-            \Magento\Framework\ObjectManager\InterceptableValidator::class,
+            'Magento\Framework\ObjectManager\InterceptableValidator',
             [],
             [],
             '',
             false
         );
 
-        $this->typeReader = $this->getMock(
-            \Magento\Setup\Module\Di\Code\Reader\Type::class,
-            ['isConcrete'],
-            [],
-            '',
-            false
-        );
+        $this->typeReader = $this->getMock('Magento\Setup\Module\Di\Code\Reader\Type', ['isConcrete'], [], '', false);
         $this->model = new \Magento\Setup\Module\Di\Code\Generator\InterceptionConfigurationBuilder(
             $this->interceptionConfig,
             $this->pluginList,

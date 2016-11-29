@@ -127,7 +127,6 @@ class SimpleTest extends \PHPUnit_Framework_TestCase
                     'theme' => 'magento_theme',
                     'locale' => 'en_US',
                     'module_name' => 'Magento_Module',
-                    'file' => 'file.ext',
                 ],
             ],
             'no theme' => [
@@ -139,7 +138,6 @@ class SimpleTest extends \PHPUnit_Framework_TestCase
                     'area' => 'frontend',
                     'locale' => 'en_US',
                     'module_name' => 'Magento_Module',
-                    'file' => 'file.ext',
                 ],
             ],
             'no locale' => [
@@ -151,7 +149,6 @@ class SimpleTest extends \PHPUnit_Framework_TestCase
                     'area' => 'frontend',
                     'theme' => 'magento_theme',
                     'module_name' => 'Magento_Module',
-                    'file' => 'file.ext',
                 ],
             ],
             'no module' => [
@@ -163,7 +160,6 @@ class SimpleTest extends \PHPUnit_Framework_TestCase
                     'area' => 'frontend',
                     'theme' => 'magento_theme',
                     'locale' => 'en_US',
-                    'file' => 'file.ext',
                 ],
             ],
             'all params' => [
@@ -176,7 +172,6 @@ class SimpleTest extends \PHPUnit_Framework_TestCase
                     'theme' => 'magento_theme',
                     'locale' => 'en_US',
                     'module_name' => 'Magento_Module',
-                    'file' => 'file.ext',
                 ],
             ],
         ];
@@ -296,7 +291,7 @@ class SimpleTest extends \PHPUnit_Framework_TestCase
      */
     private function getMockForTheme($themePath)
     {
-        $theme = $this->getMockForAbstractClass(\Magento\Framework\View\Design\ThemeInterface::class);
+        $theme = $this->getMockForAbstractClass('Magento\Framework\View\Design\ThemeInterface');
         $theme->expects($this->any())
             ->method('getThemePath')
             ->willReturn($themePath);

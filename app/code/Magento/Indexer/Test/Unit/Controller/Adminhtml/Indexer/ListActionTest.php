@@ -65,7 +65,7 @@ class ListActionTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->contextMock = $this->getMock(
-            \Magento\Backend\App\Action\Context::class,
+            'Magento\Backend\App\Action\Context',
             [
                 'getAuthorization',
                 'getSession',
@@ -88,7 +88,7 @@ class ListActionTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->response = $this->getMock(
-            \Magento\Framework\App\ResponseInterface::class,
+            'Magento\Framework\App\ResponseInterface',
             ['setRedirect', 'sendResponse'],
             [],
             '',
@@ -96,14 +96,14 @@ class ListActionTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->request = $this->getMockForAbstractClass(
-            \Magento\Framework\App\RequestInterface::class,
+            '\Magento\Framework\App\RequestInterface',
             ['getParam', 'getRequest'],
             '',
             false
         );
 
         $this->view = $this->getMock(
-            \Magento\Framework\App\ViewInterface::class,
+            '\Magento\Framework\App\ViewInterface',
             [
                 'loadLayout',
                 'getPage',
@@ -126,7 +126,7 @@ class ListActionTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->block = $this->getMock(
-            \Magento\Framework\View\Element\AbstractBlock::class,
+            '\Magento\Framework\View\Element\AbstractBlock',
             ['setActive', 'getMenuModel'],
             [],
             '',
@@ -134,14 +134,14 @@ class ListActionTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->layout = $this->getMockForAbstractClass(
-            \Magento\Framework\View\LayoutInterface::class,
+            '\Magento\Framework\View\LayoutInterface',
             ['getBlock'],
             '',
             false
         );
 
         $this->menu = $this->getMock(
-            \Magento\Backend\Model\Menu::class,
+            '\Magento\Backend\Model\Menu',
             ['getParentItems'],
             [],
             '',
@@ -149,7 +149,7 @@ class ListActionTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->items = $this->getMock(
-            \Magento\Backend\Model\Menu\Item::class,
+            '\Magento\Backend\Model\Menu\Item',
             ['getParentItems'],
             [],
             '',
@@ -160,9 +160,9 @@ class ListActionTest extends \PHPUnit_Framework_TestCase
         $this->contextMock->expects($this->any())->method("getResponse")->willReturn($this->response);
         $this->contextMock->expects($this->any())->method('getView')->will($this->returnValue($this->view));
 
-        $this->page = $this->getMock(\Magento\Framework\View\Result\Page::class, ['getConfig'], [], '', false);
-        $this->config = $this->getMock(\Magento\Framework\View\Result\Page::class, ['getTitle'], [], '', false);
-        $this->title = $this->getMock('Title', ['prepend'], [], '', false);
+        $this->page = $this->getMock('\Magento\Framework\View\Result\Page', ['getConfig'], [], '', false);
+        $this->config = $this->getMock('\Magento\Framework\View\Result\Page', ['getTitle'], [], '', false);
+        $this->title = $this->getMock('\Title', ['prepend'], [], '', false);
 
         $this->block->expects($this->any())->method('setActive')->will($this->returnValue(1));
         $this->view->expects($this->any())->method('getLayout')->will($this->returnValue($this->layout));
@@ -173,6 +173,7 @@ class ListActionTest extends \PHPUnit_Framework_TestCase
         $this->object = new \Magento\Indexer\Controller\Adminhtml\Indexer\ListAction($this->contextMock);
 
     }
+
 
     public function testExecute()
     {

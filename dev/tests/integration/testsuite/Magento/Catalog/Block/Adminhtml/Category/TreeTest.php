@@ -17,13 +17,13 @@ class TreeTest extends \PHPUnit_Framework_TestCase
     {
         parent::setUp();
         $this->_block = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create(
-            \Magento\Catalog\Block\Adminhtml\Category\Tree::class
+            'Magento\Catalog\Block\Adminhtml\Category\Tree'
         );
 
         $this->_block = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->get(
-            \Magento\Framework\View\LayoutInterface::class
+            'Magento\Framework\View\LayoutInterface'
         )->createBlock(
-            \Magento\Catalog\Block\Adminhtml\Category\Tree::class,
+            'Magento\Catalog\Block\Adminhtml\Category\Tree',
             '',
             []
         );

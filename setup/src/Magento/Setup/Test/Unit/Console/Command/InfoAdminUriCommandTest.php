@@ -18,7 +18,7 @@ class InfoAdminUriCommandTest extends \PHPUnit_Framework_TestCase
 
     protected function setup()
     {
-        $this->deploymentConfig = $this->getMock(\Magento\Framework\App\DeploymentConfig::class, [], [], '', false);
+        $this->deploymentConfig = $this->getMock('Magento\Framework\App\DeploymentConfig', [], [], '', false);
     }
 
     public function testExecute()

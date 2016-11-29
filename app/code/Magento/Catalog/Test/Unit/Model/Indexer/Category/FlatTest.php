@@ -40,7 +40,7 @@ class FlatTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->fullMock = $this->getMock(
-            \Magento\Catalog\Model\Indexer\Category\Flat\Action\FullFactory::class,
+            'Magento\Catalog\Model\Indexer\Category\Flat\Action\FullFactory',
             ['create'],
             [],
             '',
@@ -48,7 +48,7 @@ class FlatTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->rowsMock = $this->getMock(
-            \Magento\Catalog\Model\Indexer\Category\Flat\Action\RowsFactory::class,
+            'Magento\Catalog\Model\Indexer\Category\Flat\Action\RowsFactory',
             ['create'],
             [],
             '',
@@ -56,7 +56,7 @@ class FlatTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->indexerMock = $this->getMockForAbstractClass(
-            \Magento\Framework\Indexer\IndexerInterface::class,
+            'Magento\Framework\Indexer\IndexerInterface',
             [],
             '',
             false,
@@ -66,7 +66,7 @@ class FlatTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->indexerRegistryMock = $this->getMock(
-            \Magento\Framework\Indexer\IndexerRegistry::class,
+            'Magento\Framework\Indexer\IndexerRegistry',
             ['get'],
             [],
             '',
@@ -108,7 +108,7 @@ class FlatTest extends \PHPUnit_Framework_TestCase
         $this->prepareIndexer();
 
         $rowMock = $this->getMock(
-            \Magento\Catalog\Model\Indexer\Category\Flat\Action\Rows::class,
+            'Magento\Catalog\Model\Indexer\Category\Flat\Action\Rows',
             ['reindex'],
             [],
             '',
@@ -135,7 +135,7 @@ class FlatTest extends \PHPUnit_Framework_TestCase
         $this->prepareIndexer();
 
         $rowMock = $this->getMock(
-            \Magento\Catalog\Model\Indexer\Category\Flat\Action\Rows::class,
+            'Magento\Catalog\Model\Indexer\Category\Flat\Action\Rows',
             ['reindex'],
             [],
             '',

@@ -28,10 +28,7 @@ class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\Ab
     protected function _construct()
     {
         parent::_construct();
-        $this->_init(
-            \Magento\Widget\Model\Widget\Instance::class,
-            \Magento\Widget\Model\ResourceModel\Widget\Instance::class
-        );
+        $this->_init('Magento\Widget\Model\Widget\Instance', 'Magento\Widget\Model\ResourceModel\Widget\Instance');
     }
 
     /**

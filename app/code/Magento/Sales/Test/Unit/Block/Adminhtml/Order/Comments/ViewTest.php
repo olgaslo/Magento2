@@ -19,12 +19,12 @@ class ViewTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->adminHelperMock = $this->getMockBuilder(\Magento\Sales\Helper\Admin::class)
+        $this->adminHelperMock = $this->getMockBuilder('Magento\Sales\Helper\Admin')
             ->disableOriginalConstructor()
             ->getMock();
 
         $this->commentsView = (new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this))->getObject(
-            \Magento\Sales\Block\Adminhtml\Order\Comments\View::class,
+            'Magento\Sales\Block\Adminhtml\Order\Comments\View',
             [
                 'adminHelper' => $this->adminHelperMock
             ]

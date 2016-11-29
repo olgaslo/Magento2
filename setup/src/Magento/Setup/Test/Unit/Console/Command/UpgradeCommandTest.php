@@ -11,39 +11,16 @@ use Magento\Framework\Console\Cli;
 
 class UpgradeCommandTest extends \PHPUnit_Framework_TestCase
 {
-    /**
-     * @param array $options
-     * @param string $expectedString
-     * @dataProvider executeDataProvider
-     */
-    public function testExecute($options = [], $expectedString = '')
+    public function testExecute()
     {
-        $installerFactory = $this->getMock(\Magento\Setup\Model\InstallerFactory::class, [], [], '', false);
-        $installer = $this->getMock(\Magento\Setup\Model\Installer::class, [], [], '', false);
+        $installerFactory = $this->getMock('Magento\Setup\Model\InstallerFactory', [], [], '', false);
+        $objectManagerProvider = $this->getMock('\Magento\Setup\Model\ObjectManagerProvider', [], [], '', false);
+        $installer = $this->getMock('Magento\Setup\Model\Installer', [], [], '', false);
         $installer->expects($this->at(0))->method('updateModulesSequence');
         $installer->expects($this->at(1))->method('installSchema');
         $installer->expects($this->at(2))->method('installDataFixtures');
         $installerFactory->expects($this->once())->method('create')->willReturn($installer);
-        $commandTester = new CommandTester(new UpgradeCommand($installerFactory));
-        $this->assertSame(Cli::RETURN_SUCCESS, $commandTester->execute($options));
-        $this->assertEquals($expectedString, $commandTester->getDisplay());
-    }
-
-    /**
-     * @return array
-     */
-    public function executeDataProvider()
-    {
-        return [
-            [
-                'options' => [],
-                'expectedString' => 'Please re-run Magento compile command. Use the command "setup:di:compile"'
-                    . PHP_EOL
-            ],
-            [
-                'options' => ['--keep-generated' => true],
-                'expectedString' => ''
-            ],
-        ];
+        $commandTester = new CommandTester(new UpgradeCommand($installerFactory, $objectManagerProvider));
+        $this->assertSame(Cli::RETURN_SUCCESS, $commandTester->execute([]));
     }
 }

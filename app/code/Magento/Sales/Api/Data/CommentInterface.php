@@ -23,14 +23,14 @@ interface CommentInterface
     const COMMENT = 'comment';
 
     /**
-     * Gets the comment text.
+     * Gets the comment for the invoice.
      *
      * @return string Comment.
      */
     public function getComment();
 
     /**
-     * Sets the comment text.
+     * Sets the comment for the invoice.
      *
      * @param string $comment
      * @return $this
@@ -38,14 +38,14 @@ interface CommentInterface
     public function setComment($comment);
 
     /**
-     * Gets the is-visible-on-storefront flag value for the comment.
+     * Gets the is-visible-on-storefront flag value for the invoice.
      *
      * @return int Is-visible-on-storefront flag value.
      */
     public function getIsVisibleOnFront();
 
     /**
-     * Sets the is-visible-on-storefront flag value for the comment.
+     * Sets the is-visible-on-storefront flag value for the invoice.
      *
      * @param int $isVisibleOnFront
      * @return $this

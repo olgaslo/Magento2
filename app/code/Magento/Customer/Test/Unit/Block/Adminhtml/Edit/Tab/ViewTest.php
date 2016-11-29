@@ -20,11 +20,11 @@ class ViewTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $registry = $this->getMock(\Magento\Framework\Registry::class);
+        $registry = $this->getMock('Magento\Framework\Registry');
 
         $objectManagerHelper = new ObjectManagerHelper($this);
         $this->view = $objectManagerHelper->getObject(
-            \Magento\Customer\Block\Adminhtml\Edit\Tab\View::class,
+            'Magento\Customer\Block\Adminhtml\Edit\Tab\View',
             [
                 'registry' => $registry
             ]

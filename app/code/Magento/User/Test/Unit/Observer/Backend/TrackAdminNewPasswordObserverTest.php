@@ -32,17 +32,17 @@ class TrackAdminNewPasswordObserverTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->configInterfaceMock = $this->getMockBuilder(\Magento\Backend\App\ConfigInterface::class)
+        $this->configInterfaceMock = $this->getMockBuilder('Magento\Backend\App\ConfigInterface')
             ->disableOriginalConstructor()
             ->setMethods([])
             ->getMock();
 
-        $this->userMock = $this->getMockBuilder(\Magento\User\Model\ResourceModel\User::class)
+        $this->userMock = $this->getMockBuilder('Magento\User\Model\ResourceModel\User')
             ->disableOriginalConstructor()
             ->setMethods([])
             ->getMock();
 
-        $this->authSessionMock = $this->getMockBuilder(\Magento\Backend\Model\Auth\Session::class)
+        $this->authSessionMock = $this->getMockBuilder('Magento\Backend\Model\Auth\Session')
             ->disableOriginalConstructor()
             ->setMethods(
                 [
@@ -54,7 +54,7 @@ class TrackAdminNewPasswordObserverTest extends \PHPUnit_Framework_TestCase
                 ]
             )->getMock();
 
-        $this->managerInterfaceMock = $this->getMockBuilder(\Magento\Framework\Message\ManagerInterface::class)
+        $this->managerInterfaceMock = $this->getMockBuilder('Magento\Framework\Message\ManagerInterface')
             ->disableOriginalConstructor()
             ->setMethods([])
             ->getMock();
@@ -62,14 +62,14 @@ class TrackAdminNewPasswordObserverTest extends \PHPUnit_Framework_TestCase
         $helper = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
 
         $this->observerConfig = $helper->getObject(
-            \Magento\User\Model\Backend\Config\ObserverConfig::class,
+            'Magento\User\Model\Backend\Config\ObserverConfig',
             [
                 'backendConfig' => $this->configInterfaceMock
             ]
         );
 
         $this->model = $helper->getObject(
-            \Magento\User\Observer\Backend\TrackAdminNewPasswordObserver::class,
+            'Magento\User\Observer\Backend\TrackAdminNewPasswordObserver',
             [
                 'observerConfig' => $this->observerConfig,
                 'userResource' => $this->userMock,
@@ -84,19 +84,19 @@ class TrackAdminNewPasswordObserverTest extends \PHPUnit_Framework_TestCase
         $newPW = "mYn3wpassw0rd";
         $uid = 123;
         /** @var \Magento\Framework\Event\Observer|\PHPUnit_Framework_MockObject_MockObject $eventObserverMock */
-        $eventObserverMock = $this->getMockBuilder(\Magento\Framework\Event\Observer::class)
+        $eventObserverMock = $this->getMockBuilder('Magento\Framework\Event\Observer')
             ->disableOriginalConstructor()
             ->setMethods([])
             ->getMock();
 
         /** @var \Magento\Framework\Event|\PHPUnit_Framework_MockObject_MockObject */
-        $eventMock = $this->getMockBuilder(\Magento\Framework\Event::class)
+        $eventMock = $this->getMockBuilder('Magento\Framework\Event')
             ->disableOriginalConstructor()
             ->setMethods(['getObject'])
             ->getMock();
 
         /** @var \Magento\User\Model\User|\PHPUnit_Framework_MockObject_MockObject $userMock */
-        $userMock = $this->getMockBuilder(\Magento\User\Model\User::class)
+        $userMock = $this->getMockBuilder('Magento\User\Model\User')
             ->disableOriginalConstructor()
             ->setMethods(['getId', 'getPassword', 'getForceNewPassword'])
             ->getMock();
@@ -112,7 +112,7 @@ class TrackAdminNewPasswordObserverTest extends \PHPUnit_Framework_TestCase
         $userMock->expects($this->once())->method('getForceNewPassword')->willReturn(false);
 
         /** @var \Magento\Framework\Message\Collection|\PHPUnit_Framework_MockObject_MockObject $collectionMock */
-        $collectionMock = $this->getMockBuilder(\Magento\Framework\Message\Collection::class)
+        $collectionMock = $this->getMockBuilder('Magento\Framework\Message\Collection')
             ->disableOriginalConstructor()
             ->setMethods([])
             ->getMock();

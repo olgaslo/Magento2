@@ -34,16 +34,9 @@ class RecentTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->context = $this->getMock(
-            \Magento\Framework\View\Element\Template\Context::class,
-            [],
-            [],
-            '',
-            false,
-            false
-        );
+        $this->context = $this->getMock('Magento\Framework\View\Element\Template\Context', [], [], '', false, false);
         $this->orderCollectionFactory = $this->getMock(
-            \Magento\Sales\Model\ResourceModel\Order\CollectionFactory::class,
+            'Magento\Sales\Model\ResourceModel\Order\CollectionFactory',
             ['create'],
             [],
             '',
@@ -51,7 +44,7 @@ class RecentTest extends \PHPUnit_Framework_TestCase
             false
         );
         $this->customerSession = $this->getMock(
-            \Magento\Customer\Model\Session::class,
+            'Magento\Customer\Model\Session',
             ['getCustomerId'],
             [],
             '',
@@ -59,7 +52,7 @@ class RecentTest extends \PHPUnit_Framework_TestCase
             false
         );
         $this->orderConfig = $this->getMock(
-            \Magento\Sales\Model\Order\Config::class,
+            'Magento\Sales\Model\Order\Config',
             ['getVisibleOnFrontStatuses'],
             [],
             '',
@@ -73,7 +66,7 @@ class RecentTest extends \PHPUnit_Framework_TestCase
         $data = [];
         $attribute = ['customer_id', 'status'];
         $customerId = 25;
-        $layout = $this->getMock(\Magento\Framework\View\Layout::class, ['getBlock'], [], '', false, false);
+        $layout = $this->getMock('Magento\Framework\View\Layout', ['getBlock'], [], '', false, false);
         $this->context->expects($this->once())
             ->method('getLayout')
             ->will($this->returnValue($layout));
@@ -87,7 +80,7 @@ class RecentTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue($statuses));
 
         $orderCollection = $this->getMock(
-            \Magento\Sales\Model\ResourceModel\Order\Collection::class,
+            'Magento\Sales\Model\ResourceModel\Order\Collection',
             [
                 'addAttributeToSelect',
                 'addFieldToFilter',

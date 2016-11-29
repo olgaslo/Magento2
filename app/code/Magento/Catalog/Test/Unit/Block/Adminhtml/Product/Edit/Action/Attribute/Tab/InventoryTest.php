@@ -45,27 +45,27 @@ class InventoryTest extends \PHPUnit_Framework_TestCase
         $objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
 
         $this->contextMock = $this->getMock(
-            \Magento\Backend\Block\Template\Context::class,
+            'Magento\Backend\Block\Template\Context',
             ['getRequest'],
             [],
             '',
             false
         );
         $this->backordersMock = $this->getMock(
-            \Magento\CatalogInventory\Model\Source\Backorders::class,
+            'Magento\CatalogInventory\Model\Source\Backorders',
             [],
             [],
             '',
             false
         );
         $this->stockConfigurationMock = $this->getMockForAbstractClass(
-            \Magento\CatalogInventory\Api\StockConfigurationInterface::class,
+            'Magento\CatalogInventory\Api\StockConfigurationInterface',
             [],
             '',
             false
         );
         $this->requestMock = $this->getMockForAbstractClass(
-            \Magento\Framework\App\RequestInterface::class,
+            'Magento\Framework\App\RequestInterface',
             ['getParam'],
             '',
             false
@@ -76,7 +76,7 @@ class InventoryTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue($this->requestMock));
 
         $this->inventory = $objectManager->getObject(
-            \Magento\Catalog\Block\Adminhtml\Product\Edit\Action\Attribute\Tab\Inventory::class,
+            'Magento\Catalog\Block\Adminhtml\Product\Edit\Action\Attribute\Tab\Inventory',
             [
                 'context' => $this->contextMock,
                 'backorders' => $this->backordersMock,

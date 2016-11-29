@@ -26,13 +26,13 @@ class ConfigurableTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->_product = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create(
-            \Magento\Catalog\Model\Product::class
+            'Magento\Catalog\Model\Product'
         );
         $this->_product->load(1);
         $this->_block = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->get(
-            \Magento\Framework\View\LayoutInterface::class
+            'Magento\Framework\View\LayoutInterface'
         )->createBlock(
-            \Magento\ConfigurableProduct\Block\Product\View\Type\Configurable::class
+            'Magento\ConfigurableProduct\Block\Product\View\Type\Configurable'
         );
         $this->_block->setProduct($this->_product);
     }
@@ -44,7 +44,7 @@ class ConfigurableTest extends \PHPUnit_Framework_TestCase
     {
         $attributes = $this->_block->getAllowAttributes();
         $this->assertInstanceOf(
-            \Magento\ConfigurableProduct\Model\ResourceModel\Product\Type\Configurable\Attribute\Collection::class,
+            'Magento\ConfigurableProduct\Model\ResourceModel\Product\Type\Configurable\Attribute\Collection',
             $attributes
         );
         $this->assertGreaterThanOrEqual(1, $attributes->getSize());
@@ -66,7 +66,7 @@ class ConfigurableTest extends \PHPUnit_Framework_TestCase
         $products = $this->_block->getAllowProducts();
         $this->assertGreaterThanOrEqual(2, count($products));
         foreach ($products as $product) {
-            $this->assertInstanceOf(\Magento\Catalog\Model\Product::class, $product);
+            $this->assertInstanceOf('Magento\Catalog\Model\Product', $product);
         }
     }
 

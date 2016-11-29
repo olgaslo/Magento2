@@ -34,14 +34,14 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
     {
         $objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
         $this->repositoryMock = $this->getMock(
-            \Magento\Sales\Model\Order\Payment\Transaction\Repository::class,
+            'Magento\Sales\Model\Order\Payment\Transaction\Repository',
             [],
             [],
             '',
             false
         );
         $this->paymentMock = $this->getMock(
-            \Magento\Sales\Model\Order\Payment::class,
+            'Magento\Sales\Model\Order\Payment',
             [
                 'hasIsTransactionClosed',
                 'getIsTransactionClosed',
@@ -54,14 +54,14 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
             false
         );
         $this->orderMock = $this->getMock(
-            \Magento\Sales\Model\Order::class,
+            'Magento\Sales\Model\Order',
             [],
             [],
             '',
             false
         );
         $this->builder = $objectManager->getObject(
-            \Magento\Sales\Model\Order\Payment\Transaction\Builder::class,
+            'Magento\Sales\Model\Order\Payment\Transaction\Builder',
             ['transactionRepository' => $this->repositoryMock]
         );
     }
@@ -194,6 +194,7 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
         }
     }
 
+
     /**
      * @param int $orderId
      * @param int $paymentId
@@ -202,7 +203,7 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
     protected function expectTransaction($orderId, $paymentId)
     {
         $newTransaction = $this->getMock(
-            \Magento\Sales\Model\Order\Payment\Transaction::class,
+            'Magento\Sales\Model\Order\Payment\Transaction',
             [
                 'getId',
                 'setOrderId',
@@ -238,7 +239,7 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
     protected function expectDocument($transactionId)
     {
         $document = $this->getMock(
-            \Magento\Sales\Model\Order::class,
+            'Magento\Sales\Model\Order',
             [
                 'setTransactionId'
             ],

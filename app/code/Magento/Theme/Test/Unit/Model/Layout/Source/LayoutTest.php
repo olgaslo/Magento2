@@ -22,7 +22,7 @@ class LayoutTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->config = $this->getMockBuilder(\Magento\Theme\Model\Layout\Config::class)
+        $this->config = $this->getMockBuilder('Magento\Theme\Model\Layout\Config')
             ->disableOriginalConstructor()
             ->getMock();
         $this->_model = new Layout($this->config);

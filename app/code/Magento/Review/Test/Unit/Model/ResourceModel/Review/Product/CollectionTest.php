@@ -5,9 +5,6 @@
  */
 namespace Magento\Review\Test\Unit\Model\ResourceModel\Review\Product;
 
-/**
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
- */
 class CollectionTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -27,14 +24,14 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $attribute = $this->getMock(\Magento\Eav\Model\Entity\Attribute\AbstractAttribute::class, null, [], '', false);
-        $eavConfig = $this->getMock(\Magento\Eav\Model\Config::class, ['getAttribute'], [], '', false);
+        $attribute = $this->getMock('\Magento\Eav\Model\Entity\Attribute\AbstractAttribute', null, [], '', false);
+        $eavConfig = $this->getMock('\Magento\Eav\Model\Config', ['getAttribute'], [], '', false);
         $eavConfig->expects($this->any())->method('getAttribute')->will($this->returnValue($attribute));
-        $this->dbSelect = $this->getMock(\Magento\Framework\DB\Select::class, ['where', 'from', 'join'], [], '', false);
+        $this->dbSelect = $this->getMock('Magento\Framework\DB\Select', ['where', 'from', 'join'], [], '', false);
         $this->dbSelect->expects($this->any())->method('from')->will($this->returnSelf());
         $this->dbSelect->expects($this->any())->method('join')->will($this->returnSelf());
         $this->connectionMock = $this->getMock(
-            \Magento\Framework\DB\Adapter\Pdo\Mysql::class,
+            'Magento\Framework\DB\Adapter\Pdo\Mysql',
             ['prepareSqlCondition', 'select', 'quoteInto'],
             [],
             '',
@@ -42,7 +39,7 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
         );
         $this->connectionMock->expects($this->once())->method('select')->will($this->returnValue($this->dbSelect));
         $entity = $this->getMock(
-            \Magento\Catalog\Model\ResourceModel\Product::class,
+            'Magento\Catalog\Model\ResourceModel\Product',
             ['getConnection', 'getTable', 'getDefaultAttributes', 'getEntityTable', 'getEntityType', 'getType'],
             [],
             '',
@@ -54,20 +51,14 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
         $entity->expects($this->any())->method('getDefaultAttributes')->will($this->returnValue([1 => 1]));
         $entity->expects($this->any())->method('getType')->will($this->returnValue('type'));
         $entity->expects($this->any())->method('getEntityType')->will($this->returnValue('type'));
-        $universalFactory = $this->getMock(
-            \Magento\Framework\Validator\UniversalFactory::class,
-            ['create'],
-            [],
-            '',
-            false
-        );
+        $universalFactory = $this->getMock('\Magento\Framework\Validator\UniversalFactory', ['create'], [], '', false);
         $universalFactory->expects($this->any())->method('create')->will($this->returnValue($entity));
-        $store = $this->getMock(\Magento\Store\Model\Store::class, ['getId'], [], '', false);
+        $store = $this->getMock('\Magento\Store\Model\Store', ['getId'], [], '', false);
         $store->expects($this->any())->method('getId')->will($this->returnValue(1));
-        $storeManager = $this->getMock(\Magento\Store\Model\StoreManagerInterface::class);
+        $storeManager = $this->getMock('\Magento\Store\Model\StoreManagerInterface');
         $storeManager->expects($this->any())->method('getStore')->will($this->returnValue($store));
         $fetchStrategy = $this->getMock(
-            \Magento\Framework\Data\Collection\Db\FetchStrategy\Query::class,
+            '\Magento\Framework\Data\Collection\Db\FetchStrategy\Query',
             ['fetchAll'],
             [],
             '',
@@ -76,7 +67,7 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
         $fetchStrategy->expects($this->any())->method('fetchAll')->will($this->returnValue([]));
         $this->model = (new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this))
             ->getObject(
-                \Magento\Review\Model\ResourceModel\Review\Product\Collection::class,
+                '\Magento\Review\Model\ResourceModel\Review\Product\Collection',
                 [
                     'universalFactory' => $universalFactory,
                     'storeManager' => $storeManager,

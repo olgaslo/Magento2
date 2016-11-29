@@ -11,7 +11,7 @@ class UnionExpressionTest extends \PHPUnit_Framework_TestCase
 {
     public function testToString()
     {
-        $sqlMock = $this->getMockBuilder(\Magento\Framework\DB\Select::class)
+        $sqlMock = $this->getMockBuilder('Magento\Framework\DB\Select')
             ->disableOriginalConstructor()
             ->getMock();
         $sqlMock->expects($this->once())

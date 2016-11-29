@@ -17,7 +17,7 @@ class SelectTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->block = (new ObjectManager($this))
-            ->getObject(\Magento\Bundle\Block\Adminhtml\Catalog\Product\Composite\Fieldset\Options\Type\Select::class);
+            ->getObject('Magento\Bundle\Block\Adminhtml\Catalog\Product\Composite\Fieldset\Options\Type\Select');
     }
 
     public function testSetValidationContainer()

@@ -51,20 +51,14 @@ class FilterTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->objectManagerHelper = new ObjectManagerHelper($this);
-        $this->storeMock = $this->getMock(\Magento\Store\Model\Store::class, [], [], '', false);
-        $this->storeManagerMock = $this->getMock(\Magento\Store\Model\StoreManagerInterface::class);
-        $this->widgetResourceMock = $this->getMock(
-            \Magento\Widget\Model\ResourceModel\Widget::class,
-            [],
-            [],
-            '',
-            false
-        );
-        $this->widgetMock = $this->getMock(\Magento\Widget\Model\Widget::class, [], [], '', false);
-        $this->layoutMock = $this->getMock(\Magento\Framework\View\LayoutInterface::class);
+        $this->storeMock = $this->getMock('Magento\Store\Model\Store', [], [], '', false);
+        $this->storeManagerMock = $this->getMock('Magento\Store\Model\StoreManagerInterface');
+        $this->widgetResourceMock = $this->getMock('Magento\Widget\Model\ResourceModel\Widget', [], [], '', false);
+        $this->widgetMock = $this->getMock('Magento\Widget\Model\Widget', [], [], '', false);
+        $this->layoutMock = $this->getMock('Magento\Framework\View\LayoutInterface');
 
         $this->filter = $this->objectManagerHelper->getObject(
-            \Magento\Widget\Model\Template\Filter::class,
+            'Magento\Widget\Model\Template\Filter',
             [
                 'storeManager' => $this->storeManagerMock,
                 'widgetResource' => $this->widgetResourceMock,
@@ -246,7 +240,7 @@ class FilterTest extends \PHPUnit_Framework_TestCase
     protected function getBlockMock($returnedResult = '')
     {
         /** @var \Magento\Widget\Block\BlockInterface|\PHPUnit_Framework_MockObject_MockObject $blockMock */
-        $blockMock = $this->getMockBuilder(\Magento\Widget\Block\BlockInterface::class)
+        $blockMock = $this->getMockBuilder('Magento\Widget\Block\BlockInterface')
             ->setMethods(['toHtml'])
             ->getMockForAbstractClass();
         $blockMock->expects($this->any())

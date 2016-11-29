@@ -39,21 +39,21 @@ class GetPriceConfigurationObserverTest extends \PHPUnit_Framework_TestCase
             ]
         );
 
-        $weeeHelper=$this->getMock(\Magento\Weee\Helper\Data::class, [], [], '', false);
+        $weeeHelper=$this->getMock('Magento\Weee\Helper\Data', [], [], '', false);
         $weeeHelper->expects($this->any())
             ->method('isEnabled')
             ->will($this->returnValue(true));
 
-        $observerObject=$this->getMock(\Magento\Framework\Event\Observer::class, [], [], '', false);
+        $observerObject=$this->getMock('Magento\Framework\Event\Observer', [], [], '', false);
         $observerObject->expects($this->any())
             ->method('getData')
             ->with('configObj')
             ->will($this->returnValue($configObj));
 
-        $productInstance=$this->getMock(\Magento\Catalog\Model\Product\Type\Simple::class, [], [], '', false);
+        $productInstance=$this->getMock('\Magento\Catalog\Model\Product\Type\Simple', [], [], '', false);
 
         $product=$this->getMock(
-            \Magento\Bundle\Model\Product\Type::class,
+            '\Magento\Bundle\Model\Product\Type',
             ['getTypeInstance', 'getTypeId', 'getStoreId'],
             [],
             '',
@@ -69,7 +69,7 @@ class GetPriceConfigurationObserverTest extends \PHPUnit_Framework_TestCase
             ->method('getStoreId')
             ->will($this->returnValue(null));
 
-        $registry=$this->getMock(\Magento\Framework\Registry::class, [], [], '', false);
+        $registry=$this->getMock('Magento\Framework\Registry', [], [], '', false);
         $registry->expects($this->any())
             ->method('registry')
             ->with('current_product')
@@ -94,7 +94,7 @@ class GetPriceConfigurationObserverTest extends \PHPUnit_Framework_TestCase
         $objectManager = new ObjectManager($this);
         /** @var \Magento\Weee\Observer\GetPriceConfigurationObserver $weeeObserverObject */
         $weeeObserverObject = $objectManager->getObject(
-            \Magento\Weee\Observer\GetPriceConfigurationObserver::class,
+            'Magento\Weee\Observer\GetPriceConfigurationObserver',
             [
                 'weeeData' => $weeeHelper,
                 'registry' => $registry,

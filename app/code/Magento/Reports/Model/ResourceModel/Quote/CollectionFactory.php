@@ -34,7 +34,7 @@ class CollectionFactory implements \Magento\Reports\Model\ResourceModel\Quote\Co
      */
     public function __construct(
         \Magento\Framework\ObjectManagerInterface $objectManager,
-        $instanceName = \Magento\Reports\Model\ResourceModel\Quote\Collection::class
+        $instanceName = 'Magento\Reports\Model\ResourceModel\\Quote\\Collection'
     ) {
         $this->_objectManager = $objectManager;
         $this->_instanceName = $instanceName;

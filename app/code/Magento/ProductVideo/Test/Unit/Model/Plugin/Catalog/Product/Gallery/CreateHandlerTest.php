@@ -40,7 +40,7 @@ class CreateHandlerTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->product = $this->getMock(
-            \Magento\Catalog\Model\Product::class,
+            'Magento\Catalog\Model\Product',
             [],
             [],
             '',
@@ -48,7 +48,7 @@ class CreateHandlerTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->attribute = $this->getMock(
-            \Magento\Eav\Model\Entity\Attribute::class,
+            'Magento\Eav\Model\Entity\Attribute',
             [],
             [],
             '',
@@ -59,7 +59,7 @@ class CreateHandlerTest extends \PHPUnit_Framework_TestCase
             ->willReturn('media_gallery');
 
         $this->resourceModel = $this->getMock(
-            \Magento\Catalog\Model\ResourceModel\Product\Gallery::class,
+            'Magento\Catalog\Model\ResourceModel\Product\Gallery',
             [],
             [],
             '',
@@ -67,7 +67,7 @@ class CreateHandlerTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->mediaGalleryCreateHandler = $this->getMock(
-            \Magento\Catalog\Model\Product\Gallery\CreateHandler::class,
+            'Magento\Catalog\Model\Product\Gallery\CreateHandler',
             [],
             [],
             '',
@@ -77,7 +77,7 @@ class CreateHandlerTest extends \PHPUnit_Framework_TestCase
         $objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
 
         $this->subject = $objectManager->getObject(
-            \Magento\ProductVideo\Model\Plugin\Catalog\Product\Gallery\CreateHandler::class,
+            'Magento\ProductVideo\Model\Plugin\Catalog\Product\Gallery\CreateHandler',
             [
                 'resourceModel' => $this->resourceModel
             ]

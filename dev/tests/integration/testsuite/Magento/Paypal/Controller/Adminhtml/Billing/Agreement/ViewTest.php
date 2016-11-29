@@ -27,7 +27,7 @@ class ViewTest extends \Magento\TestFramework\TestCase\AbstractBackendController
     {
         /** @var \Magento\Paypal\Model\ResourceModel\Billing\Agreement\Collection $billingAgreementCollection */
         $billingAgreementCollection = Bootstrap::getObjectManager()->create(
-            \Magento\Paypal\Model\ResourceModel\Billing\Agreement\Collection::class
+            'Magento\Paypal\Model\ResourceModel\Billing\Agreement\Collection'
         );
         $agreementId = $billingAgreementCollection->getFirstItem()->getId();
         $this->uri = $this->uri . '/agreement/' . $agreementId;

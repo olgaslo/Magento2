@@ -22,9 +22,6 @@ class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\Ab
      */
     protected function _construct()
     {
-        $this->_init(
-            \Magento\Search\Model\SynonymGroup::class,
-            \Magento\Search\Model\ResourceModel\SynonymGroup::class
-        );
+        $this->_init('Magento\Search\Model\SynonymGroup', 'Magento\Search\Model\ResourceModel\SynonymGroup');
     }
 }

@@ -7,7 +7,7 @@
 /** @var $category \Magento\Catalog\Model\Category */
 $objectManager = \Magento\TestFramework\Helper\Bootstrap::getObjectManager();
 
-$categoryFirst = $objectManager->create(\Magento\Catalog\Model\Category::class);
+$categoryFirst = $objectManager->create('Magento\Catalog\Model\Category');
 $categoryFirst->setName('Category 1')
     ->setPath('1/2')
     ->setLevel(2)
@@ -17,7 +17,7 @@ $categoryFirst->setName('Category 1')
     ->setPosition(1)
     ->save();
 
-$categorySecond = $objectManager->create(\Magento\Catalog\Model\Category::class);
+$categorySecond = $objectManager->create('Magento\Catalog\Model\Category');
 $categorySecond->setName('Category 2')
     ->setPath('1/2')
     ->setLevel(2)
@@ -27,7 +27,7 @@ $categorySecond->setName('Category 2')
     ->setPosition(2)
     ->save();
 
-$categoryThird = $objectManager->create(\Magento\Catalog\Model\Category::class);
+$categoryThird = $objectManager->create('Magento\Catalog\Model\Category');
 $categoryThird->setName('Category 3')
     ->setPath($categoryFirst->getPath())
     ->setLevel(3)
@@ -37,7 +37,7 @@ $categoryThird->setName('Category 3')
     ->setPosition(2)
     ->save();
 
-$categoryFourth = $objectManager->create(\Magento\Catalog\Model\Category::class);
+$categoryFourth = $objectManager->create('Magento\Catalog\Model\Category');
 $categoryFourth->setName('Category 4')
     ->setPath($categoryThird->getPath())
     ->setLevel(4)
@@ -47,7 +47,7 @@ $categoryFourth->setName('Category 4')
     ->setPosition(1)
     ->save();
 
-$categoryFifth = $objectManager->create(\Magento\Catalog\Model\Category::class);
+$categoryFifth = $objectManager->create('Magento\Catalog\Model\Category');
 $categoryFifth->setName('Category 5')
     ->setPath($categorySecond->getPath())
     ->setLevel(3)
@@ -58,7 +58,7 @@ $categoryFifth->setName('Category 5')
     ->save();
 
 /** @var $productFirst \Magento\Catalog\Model\Product */
-$productFirst = $objectManager->create(\Magento\Catalog\Model\Product::class);
+$productFirst = $objectManager->create('Magento\Catalog\Model\Product');
 $productFirst->setTypeId('simple')
     ->setId(1)
     ->setAttributeSetId(4)
@@ -75,7 +75,7 @@ $productFirst->setTypeId('simple')
     ->save();
 
 /** @var $productSecond \Magento\Catalog\Model\Product */
-$productSecond = $objectManager->create(\Magento\Catalog\Model\Product::class);
+$productSecond = $objectManager->create('Magento\Catalog\Model\Product');
 $productSecond->setTypeId('simple')
     ->setId(2)
     ->setAttributeSetId(4)
@@ -92,7 +92,7 @@ $productSecond->setTypeId('simple')
     ->save();
 
 /** @var $productThird \Magento\Catalog\Model\Product */
-$productThird = $objectManager->create(\Magento\Catalog\Model\Product::class);
+$productThird = $objectManager->create('Magento\Catalog\Model\Product');
 $productThird->setTypeId('simple')
     ->setId(3)
     ->setAttributeSetId(4)

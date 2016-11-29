@@ -86,8 +86,9 @@ class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\Ab
      */
     protected function _construct()
     {
-        $this->_init(\Magento\Quote\Model\Quote\Item::class, \Magento\Quote\Model\ResourceModel\Quote\Item::class);
+        $this->_init('Magento\Quote\Model\Quote\Item', 'Magento\Quote\Model\ResourceModel\Quote\Item');
     }
+
 
     /**
      * Prepare select query for products in carts report

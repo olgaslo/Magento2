@@ -52,7 +52,7 @@ class ListsTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->mockConfig = $this->getMockBuilder(\Magento\Framework\Locale\ConfigInterface::class)
+        $this->mockConfig = $this->getMockBuilder('\Magento\Framework\Locale\ConfigInterface')
             ->disableOriginalConstructor()
             ->getMock();
         $this->mockConfig->expects($this->any())

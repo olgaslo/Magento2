@@ -46,24 +46,18 @@ class LinkPriceTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->saleableItemMock = $this->getMock(\Magento\Catalog\Model\Product::class, [], [], '', false);
-        $this->amountMock = $this->getMock(\Magento\Framework\Pricing\Amount\Base::class, [], [], '', false);
-        $this->calculatorMock = $this->getMock(
-            \Magento\Framework\Pricing\Adjustment\Calculator::class,
-            [],
-            [],
-            '',
-            false
-        );
+        $this->saleableItemMock = $this->getMock('Magento\Catalog\Model\Product', [], [], '', false);
+        $this->amountMock = $this->getMock('Magento\Framework\Pricing\Amount\Base', [], [], '', false);
+        $this->calculatorMock = $this->getMock('Magento\Framework\Pricing\Adjustment\Calculator', [], [], '', false);
         $this->linkMock = $this->getMock(
-            \Magento\Downloadable\Model\Link::class,
+            'Magento\Downloadable\Model\Link',
             ['getPrice', 'getProduct', '__wakeup'],
             [],
             '',
             false
         );
 
-        $this->priceCurrencyMock = $this->getMock(\Magento\Framework\Pricing\PriceCurrencyInterface::class);
+        $this->priceCurrencyMock = $this->getMock('\Magento\Framework\Pricing\PriceCurrencyInterface');
 
         $this->linkPrice = new \Magento\Downloadable\Pricing\Price\LinkPrice(
             $this->saleableItemMock,

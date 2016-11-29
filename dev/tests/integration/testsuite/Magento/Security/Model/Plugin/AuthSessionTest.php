@@ -48,14 +48,14 @@ class AuthSessionTest extends \PHPUnit_Framework_TestCase
         parent::setUp();
 
         $this->objectManager = \Magento\TestFramework\Helper\Bootstrap::getObjectManager();
-        $this->objectManager->get(\Magento\Framework\Config\ScopeInterface::class)
+        $this->objectManager->get('Magento\Framework\Config\ScopeInterface')
             ->setCurrentScope(\Magento\Backend\App\Area\FrontNameResolver::AREA_CODE);
-        $this->auth = $this->objectManager->create(\Magento\Backend\Model\Auth::class);
-        $this->authSession = $this->objectManager->create(\Magento\Backend\Model\Auth\Session::class);
-        $this->adminSessionInfo = $this->objectManager->create(\Magento\Security\Model\AdminSessionInfo::class);
+        $this->auth = $this->objectManager->create('Magento\Backend\Model\Auth');
+        $this->authSession = $this->objectManager->create('Magento\Backend\Model\Auth\Session');
+        $this->adminSessionInfo = $this->objectManager->create('Magento\Security\Model\AdminSessionInfo');
         $this->auth->setAuthStorage($this->authSession);
-        $this->adminSessionsManager = $this->objectManager->create(\Magento\Security\Model\AdminSessionsManager::class);
-        $this->dateTime = $this->objectManager->create(\Magento\Framework\Stdlib\DateTime::class);
+        $this->adminSessionsManager = $this->objectManager->create('Magento\Security\Model\AdminSessionsManager');
+        $this->dateTime = $this->objectManager->create('Magento\Framework\Stdlib\DateTime');
     }
 
     /**

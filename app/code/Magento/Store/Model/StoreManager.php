@@ -5,16 +5,12 @@
  */
 namespace Magento\Store\Model;
 
-use Magento\Framework\App\ObjectManager;
 use Magento\Store\Api\StoreResolverInterface;
-use Magento\Store\Model\ResourceModel\StoreWebsiteRelation;
 
 /**
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
-class StoreManager implements
-    \Magento\Store\Model\StoreManagerInterface,
-    \Magento\Store\Api\StoreWebsiteRelationInterface
+class StoreManager implements \Magento\Store\Model\StoreManagerInterface
 {
     /**
      * Application run code
@@ -289,22 +285,5 @@ class StoreManager implements
             self::XML_PATH_SINGLE_STORE_MODE_ENABLED,
             \Magento\Store\Model\ScopeInterface::SCOPE_STORE
         );
-    }
-
-    /**
-     * @deprecated
-     * @return StoreWebsiteRelation
-     */
-    private function getStoreWebsiteRelation()
-    {
-        return ObjectManager::getInstance()->get(StoreWebsiteRelation::class);
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getStoreByWebsiteId($websiteId)
-    {
-        return $this->getStoreWebsiteRelation()->getStoreByWebsiteId($websiteId);
     }
 }

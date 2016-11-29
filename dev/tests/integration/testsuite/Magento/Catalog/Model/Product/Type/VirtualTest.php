@@ -11,10 +11,10 @@ class VirtualTest extends \PHPUnit_Framework_TestCase
     {
         /** @var $model \Magento\Catalog\Model\Product\Type\Virtual */
         $model = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create(
-            \Magento\Catalog\Model\Product\Type\Virtual::class
+            'Magento\Catalog\Model\Product\Type\Virtual'
         );
         $product = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create(
-            \Magento\Catalog\Model\Product::class
+            'Magento\Catalog\Model\Product'
         );
         $this->assertTrue($model->isVirtual($product));
     }

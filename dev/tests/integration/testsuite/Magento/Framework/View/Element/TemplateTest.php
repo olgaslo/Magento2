@@ -5,8 +5,6 @@
  */
 namespace Magento\Framework\View\Element;
 
-use \Magento\Framework\App\Area;
-
 class TemplateTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -17,12 +15,12 @@ class TemplateTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $objectManager = \Magento\TestFramework\Helper\Bootstrap::getObjectManager();
-        $params = ['layout' => $objectManager->create(\Magento\Framework\View\Layout::class, [])];
-        $context = $objectManager->create(\Magento\Framework\View\Element\Template\Context::class, $params);
+        $params = ['layout' => $objectManager->create('Magento\Framework\View\Layout', [])];
+        $context = $objectManager->create('Magento\Framework\View\Element\Template\Context', $params);
         $this->_block = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->get(
-            \Magento\Framework\View\LayoutInterface::class
+            'Magento\Framework\View\LayoutInterface'
         )->createBlock(
-            \Magento\Framework\View\Element\Template::class,
+            'Magento\Framework\View\Element\Template',
             '',
             ['context' => $context]
         );
@@ -31,9 +29,9 @@ class TemplateTest extends \PHPUnit_Framework_TestCase
     public function testConstruct()
     {
         $block = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->get(
-            \Magento\Framework\View\LayoutInterface::class
+            'Magento\Framework\View\LayoutInterface'
         )->createBlock(
-            \Magento\Framework\View\Element\Template::class,
+            'Magento\Framework\View\Element\Template',
             '',
             ['data' => ['template' => 'value']]
         );
@@ -49,17 +47,21 @@ class TemplateTest extends \PHPUnit_Framework_TestCase
 
     public function testGetArea()
     {
-        \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->get(\Magento\Framework\App\State::class)
+        \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->get('Magento\Framework\App\State')
             ->setAreaCode('frontend');
         $this->assertEquals('frontend', $this->_block->getArea());
         \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->get(
-            \Magento\Framework\App\State::class
-        )->setAreaCode(Area::AREA_ADMINHTML);
-        $this->assertEquals(Area::AREA_ADMINHTML, $this->_block->getArea());
+            'Magento\Framework\App\State'
+        )->setAreaCode(
+            'some_area'
+        );
+        $this->assertEquals('some_area', $this->_block->getArea());
         \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->get(
-            \Magento\Framework\App\State::class
-        )->setAreaCode(Area::AREA_GLOBAL);
-        $this->assertEquals(Area::AREA_GLOBAL, $this->_block->getArea());
+            'Magento\Framework\App\State'
+        )->setAreaCode(
+            'another_area'
+        );
+        $this->assertEquals('another_area', $this->_block->getArea());
     }
 
     /**
@@ -68,8 +70,8 @@ class TemplateTest extends \PHPUnit_Framework_TestCase
      */
     public function testToHtml()
     {
-        \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->get(\Magento\Framework\App\State::class)
-            ->setAreaCode(Area::AREA_GLOBAL);
+        \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->get('Magento\Framework\App\State')
+            ->setAreaCode('any area');
         $this->assertEmpty($this->_block->toHtml());
         $this->_block->setTemplate(uniqid('invalid_filename.phtml'));
         $this->assertEmpty($this->_block->toHtml());

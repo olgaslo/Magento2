@@ -31,21 +31,21 @@ class BackendModelFactoryTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->objectManagerMock = $this->getMockBuilder(\Magento\Framework\ObjectManagerInterface::class)
+        $this->objectManagerMock = $this->getMockBuilder('Magento\Framework\ObjectManagerInterface')
             ->getMockForAbstractClass();
-        $this->metadataProviderMock = $this->getMockBuilder(\Magento\Theme\Model\Design\Config\MetadataProvider::class)
+        $this->metadataProviderMock = $this->getMockBuilder('Magento\Theme\Model\Design\Config\MetadataProvider')
             ->disableOriginalConstructor()
             ->getMock();
         $this->collectionFactoryMock = $this->getMockBuilder(
-            \Magento\Theme\Model\ResourceModel\Design\Config\CollectionFactory::class
+                'Magento\Theme\Model\ResourceModel\Design\Config\CollectionFactory'
             )
             ->disableOriginalConstructor()
             ->setMethods(['create'])
             ->getMock();
-        $this->collection = $this->getMockBuilder(\Magento\Theme\Model\ResourceModel\Design\Config\Collection::class)
+        $this->collection = $this->getMockBuilder('Magento\Theme\Model\ResourceModel\Design\Config\Collection')
             ->disableOriginalConstructor()
             ->getMock();
-        $this->backendModel = $this->getMockBuilder(\Magento\Framework\App\Config\Value::class)
+        $this->backendModel = $this->getMockBuilder('Magento\Framework\App\Config\Value')
             ->disableOriginalConstructor()
             ->setMethods(['setValue'])
             ->getMock();
@@ -67,7 +67,7 @@ class BackendModelFactoryTest extends \PHPUnit_Framework_TestCase
             'value' => 'value',
             'config' => [
                 'path' => 'design/head/default_title',
-                'backend_model' => \Magento\Framework\App\Config\Value::class
+                'backend_model' => 'Magento\Framework\App\Config\Value'
             ]
         ];
         $this->metadataProviderMock->expects($this->once())
@@ -100,7 +100,7 @@ class BackendModelFactoryTest extends \PHPUnit_Framework_TestCase
         $this->objectManagerMock->expects($this->once())
             ->method('create')
             ->with(
-                \Magento\Framework\App\Config\Value::class,
+                'Magento\Framework\App\Config\Value',
                 [
                     'data' => [
                         'path' => 'design/head/default_title',
@@ -121,7 +121,7 @@ class BackendModelFactoryTest extends \PHPUnit_Framework_TestCase
     public function testCreateByPath()
     {
         $path = 'design/head/default_title';
-        $backendModelType = \Magento\Theme\Model\Design\Backend\Exceptions::class;
+        $backendModelType = 'Magento\Theme\Model\Design\Backend\Exceptions';
         $backendModel = $this->getMockBuilder($backendModelType)
             ->disableOriginalConstructor()
             ->getMock();

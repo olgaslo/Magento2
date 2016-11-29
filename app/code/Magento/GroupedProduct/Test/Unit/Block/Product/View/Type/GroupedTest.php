@@ -38,9 +38,9 @@ class GroupedTest extends \PHPUnit_Framework_TestCase
             'getTypeId',
             '__wakeup',
         ];
-        $this->productMock = $this->getMock(\Magento\Catalog\Model\Product::class, $methodsProduct, [], '', false);
+        $this->productMock = $this->getMock('Magento\Catalog\Model\Product', $methodsProduct, [], '', false);
         $this->typeInstanceMock = $this->getMock(
-            \Magento\GroupedProduct\Model\Product\Type\Grouped::class,
+            'Magento\GroupedProduct\Model\Product\Type\Grouped',
             [],
             [],
             '',
@@ -54,15 +54,15 @@ class GroupedTest extends \PHPUnit_Framework_TestCase
             $this->returnValue($this->typeInstanceMock)
         );
         $this->configuredValueMock = $this->getMock(
-            \Magento\Framework\DataObject::class,
+            'Magento\Framework\DataObject',
             ['getSuperGroup'],
             [],
             '',
             false
         );
-        $layout = $this->getMock(\Magento\Framework\View\LayoutInterface::class);
+        $layout = $this->getMock('Magento\Framework\View\LayoutInterface');
         $this->groupedView = $helper->getObject(
-            \Magento\GroupedProduct\Block\Product\View\Type\Grouped::class,
+            'Magento\GroupedProduct\Block\Product\View\Type\Grouped',
             [
                 'data' => ['product' => $this->productMock],
                 'layout' => $layout

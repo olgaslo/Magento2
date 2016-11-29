@@ -16,7 +16,7 @@ class SaveHandlerFactoryTest extends \PHPUnit_Framework_TestCase
     {
         $saveHandler = $this->getMock($saveClass);
         $objectManager = $this->getMock(
-            \Magento\Framework\ObjectManager\ObjectManager::class,
+            '\Magento\Framework\ObjectManager\ObjectManager',
             ['create'],
             [],
             '',
@@ -35,7 +35,7 @@ class SaveHandlerFactoryTest extends \PHPUnit_Framework_TestCase
         $model = new SaveHandlerFactory($objectManager, $handlers);
         $result = $model->create($saveMethod);
         $this->assertInstanceOf($saveClass, $result);
-        $this->assertInstanceOf(\Magento\Framework\Session\SaveHandler\Native::class, $result);
+        $this->assertInstanceOf('\Magento\Framework\Session\SaveHandler\Native', $result);
         $this->assertInstanceOf('\SessionHandlerInterface', $result);
     }
 
@@ -44,7 +44,7 @@ class SaveHandlerFactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function createDataProvider()
     {
-        return [[[], \Magento\Framework\Session\SaveHandler\Native::class, 'files']];
+        return [[[], 'Magento\Framework\Session\SaveHandler\Native', 'files']];
     }
 
     /**
@@ -54,7 +54,7 @@ class SaveHandlerFactoryTest extends \PHPUnit_Framework_TestCase
     public function testCreateInvalid()
     {
         $invalidSaveHandler = new \Magento\Framework\DataObject();
-        $objectManager = $this->getMockBuilder(\Magento\Framework\ObjectManager\ObjectManager::class)
+        $objectManager = $this->getMockBuilder('Magento\Framework\ObjectManager\ObjectManager')
             ->disableOriginalConstructor()
             ->getMock();
         $objectManager->expects($this->once())

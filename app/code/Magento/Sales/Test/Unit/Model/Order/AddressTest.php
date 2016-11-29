@@ -38,28 +38,28 @@ class AddressTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->orderMock = $this->getMock(
-            \Magento\Sales\Model\Order::class,
+            'Magento\Sales\Model\Order',
             [],
             [],
             '',
             false
         );
         $this->orderMock = $this->getMock(
-            \Magento\Sales\Model\Order::class,
+            'Magento\Sales\Model\Order',
             [],
             [],
             '',
             false
         );
         $this->regionFactoryMock = $this->getMock(
-            \Magento\Directory\Model\RegionFactory::class,
+            'Magento\Directory\Model\RegionFactory',
             [],
             [],
             '',
             false
         );
         $this->regionMock = $this->getMock(
-            \Magento\Directory\Model\Region::class,
+            'Magento\Directory\Model\Region',
             ['load', 'getCountryId', 'getCode'],
             [],
             '',
@@ -67,7 +67,7 @@ class AddressTest extends \PHPUnit_Framework_TestCase
         );
         $objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
         $this->address = $objectManager->getObject(
-            \Magento\Sales\Model\Order\Address::class,
+            'Magento\Sales\Model\Order\Address',
             [
                 'regionFactory' => $this->regionFactoryMock
             ]

@@ -14,8 +14,8 @@ class LinkTest extends \PHPUnit_Framework_TestCase
     {
         $objectManagerHelper = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
 
-        $context = $objectManagerHelper->getObject(\Magento\Framework\View\Element\Template\Context::class);
-        $httpContext = $this->getMockBuilder(\Magento\Framework\App\Http\Context::class)
+        $context = $objectManagerHelper->getObject('Magento\Framework\View\Element\Template\Context');
+        $httpContext = $this->getMockBuilder('\Magento\Framework\App\Http\Context')
             ->disableOriginalConstructor()
             ->setMethods(['getValue'])
             ->getMock();
@@ -25,7 +25,7 @@ class LinkTest extends \PHPUnit_Framework_TestCase
 
         /** @var \Magento\Sales\Block\Guest\Link $link */
         $link = $objectManagerHelper->getObject(
-            \Magento\Sales\Block\Guest\Link::class,
+            'Magento\Sales\Block\Guest\Link',
             [
                 'context' => $context,
                 'httpContext' => $httpContext,

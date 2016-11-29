@@ -92,7 +92,7 @@ class EmailTest extends \PHPUnit_Framework_TestCase
     {
         $objectManagerHelper = new ObjectManagerHelper($this);
         $this->context = $this->getMock(
-            \Magento\Backend\App\Action\Context::class,
+            'Magento\Backend\App\Action\Context',
             [
                 'getRequest',
                 'getResponse',
@@ -108,42 +108,42 @@ class EmailTest extends \PHPUnit_Framework_TestCase
             '',
             false
         );
-        $this->orderManagementMock = $this->getMockBuilder(\Magento\Sales\Api\OrderManagementInterface::class)
+        $this->orderManagementMock = $this->getMockBuilder('Magento\Sales\Api\OrderManagementInterface')
             ->getMockForAbstractClass();
-        $this->orderRepositoryMock = $this->getMockBuilder(\Magento\Sales\Api\OrderRepositoryInterface::class)
+        $this->orderRepositoryMock = $this->getMockBuilder('Magento\Sales\Api\OrderRepositoryInterface')
             ->getMockForAbstractClass();
-        $this->loggerMock = $this->getMockBuilder(\Psr\Log\LoggerInterface::class)
+        $this->loggerMock = $this->getMockBuilder('Psr\Log\LoggerInterface')
             ->getMockForAbstractClass();
         $resultRedirectFactory = $this->getMock(
-            \Magento\Backend\Model\View\Result\RedirectFactory::class,
+            'Magento\Backend\Model\View\Result\RedirectFactory',
             ['create'],
             [],
             '',
             false
         );
         $this->response = $this->getMock(
-            \Magento\Framework\App\ResponseInterface::class,
+            'Magento\Framework\App\ResponseInterface',
             ['setRedirect', 'sendResponse'],
             [],
             '',
             false
         );
-        $this->request = $this->getMockBuilder(\Magento\Framework\App\Request\Http::class)
+        $this->request = $this->getMockBuilder('Magento\Framework\App\Request\Http')
             ->disableOriginalConstructor()->getMock();
         $this->messageManager = $this->getMock(
-            \Magento\Framework\Message\Manager::class,
+            'Magento\Framework\Message\Manager',
             ['addSuccess', 'addError'],
             [],
             '',
             false
         );
 
-        $this->orderMock = $this->getMockBuilder(\Magento\Sales\Api\Data\OrderInterface::class)
+        $this->orderMock = $this->getMockBuilder('Magento\Sales\Api\Data\OrderInterface')
             ->getMockForAbstractClass();
-        $this->session = $this->getMock(\Magento\Backend\Model\Session::class, ['setIsUrlNotice'], [], '', false);
-        $this->actionFlag = $this->getMock(\Magento\Framework\App\ActionFlag::class, ['get', 'set'], [], '', false);
-        $this->helper = $this->getMock(\Magento\Backend\Helper\Data::class, ['getUrl'], [], '', false);
-        $this->resultRedirect = $this->getMock(\Magento\Backend\Model\View\Result\Redirect::class, [], [], '', false);
+        $this->session = $this->getMock('Magento\Backend\Model\Session', ['setIsUrlNotice'], [], '', false);
+        $this->actionFlag = $this->getMock('Magento\Framework\App\ActionFlag', ['get', 'set'], [], '', false);
+        $this->helper = $this->getMock('\Magento\Backend\Helper\Data', ['getUrl'], [], '', false);
+        $this->resultRedirect = $this->getMock('Magento\Backend\Model\View\Result\Redirect', [], [], '', false);
         $resultRedirectFactory->expects($this->any())->method('create')->willReturn($this->resultRedirect);
 
         $this->context->expects($this->once())->method('getMessageManager')->willReturn($this->messageManager);
@@ -156,7 +156,7 @@ class EmailTest extends \PHPUnit_Framework_TestCase
         $this->context->expects($this->once())->method('getResultRedirectFactory')->willReturn($resultRedirectFactory);
 
         $this->orderEmail = $objectManagerHelper->getObject(
-            \Magento\Sales\Controller\Adminhtml\Order\Email::class,
+            'Magento\Sales\Controller\Adminhtml\Order\Email',
             [
                 'context' => $this->context,
                 'request' => $this->request,
@@ -195,7 +195,7 @@ class EmailTest extends \PHPUnit_Framework_TestCase
             ->willReturnSelf();
 
         $this->assertInstanceOf(
-            \Magento\Backend\Model\View\Result\Redirect::class,
+            'Magento\Backend\Model\View\Result\Redirect',
             $this->orderEmail->execute()
         );
         $this->assertEquals($this->response, $this->orderEmail->getResponse());
@@ -227,7 +227,7 @@ class EmailTest extends \PHPUnit_Framework_TestCase
             ->willReturnSelf();
 
         $this->assertInstanceOf(
-            \Magento\Backend\Model\View\Result\Redirect::class,
+            'Magento\Backend\Model\View\Result\Redirect',
             $this->orderEmail->execute()
         );
     }

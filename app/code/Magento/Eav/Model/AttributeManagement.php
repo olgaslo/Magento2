@@ -6,14 +6,10 @@
  */
 namespace Magento\Eav\Model;
 
-use Magento\Framework\App\ObjectManager;
 use Magento\Framework\Exception\InputException;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\Exception\StateException;
 
-/**
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
- */
 class AttributeManagement implements \Magento\Eav\Api\AttributeManagementInterface
 {
     /**
@@ -23,7 +19,6 @@ class AttributeManagement implements \Magento\Eav\Api\AttributeManagementInterfa
 
     /**
      * @var \Magento\Eav\Model\ResourceModel\Entity\Attribute\Collection
-     * @deprecated please use instead \Magento\Eav\Model\ResourceModel\Entity\Attribute\CollectionFactory
      */
     protected $attributeCollection;
 
@@ -51,11 +46,6 @@ class AttributeManagement implements \Magento\Eav\Api\AttributeManagementInterfa
      * @var \Magento\Eav\Model\ResourceModel\Entity\Attribute
      */
     protected $attributeResource;
-
-    /**
-     * @var \Magento\Eav\Model\ResourceModel\Entity\Attribute\CollectionFactory
-     */
-    private $attributeCollectionFactory;
 
     /**
      * @param \Magento\Eav\Api\AttributeSetRepositoryInterface $setRepository
@@ -164,26 +154,11 @@ class AttributeManagement implements \Magento\Eav\Api\AttributeManagementInterfa
         if (!$attributeSet->getAttributeSetId() || $attributeSet->getEntityTypeId() != $requiredEntityTypeId) {
             throw NoSuchEntityException::singleField('attributeSetId', $attributeSetId);
         }
-        /** @var \Magento\Eav\Model\ResourceModel\Entity\Attribute\Collection $attributeCollection */
-        $attributeCollection = $this->getCollectionFactory()->create();
-        $attributeCollection->setAttributeSetFilter($attributeSet->getAttributeSetId())->load();
+
+        $attributeCollection = $this->attributeCollection
+            ->setAttributeSetFilter($attributeSet->getAttributeSetId())
+            ->load();
 
         return $attributeCollection->getItems();
-    }
-
-    /**
-     * Retrieve collection factory
-     *
-     * @deprecated
-     * @return \Magento\Eav\Model\ResourceModel\Entity\Attribute\CollectionFactory
-     */
-    private function getCollectionFactory()
-    {
-        if ($this->attributeCollectionFactory === null) {
-            $this->attributeCollectionFactory = ObjectManager::getInstance()->create(
-                \Magento\Eav\Model\ResourceModel\Entity\Attribute\CollectionFactory::class
-            );
-        }
-        return $this->attributeCollectionFactory;
     }
 }

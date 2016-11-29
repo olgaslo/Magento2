@@ -17,8 +17,7 @@ define([
                 sortable: true,
                 sorting: false,
                 headerTmpl: 'header',
-                bodyTmpl: 'body',
-                source: function () {}
+                bodyTmpl: 'body'
             });
         });
 
@@ -26,6 +25,11 @@ define([
             it('apply sorting first time', function () {
                 column.sort(true);
                 expect(column.sorting).toBe('asc');
+            });
+
+            it('apply sorting in other direction', function () {
+                column.sort(true).sort(true);
+                expect(column.sorting).toBe('desc');
             });
 
             it('remove sorting', function () {

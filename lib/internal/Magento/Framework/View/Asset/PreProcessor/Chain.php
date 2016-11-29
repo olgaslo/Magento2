@@ -15,11 +15,6 @@ use Magento\Framework\View\Asset\LocalInterface;
 class Chain
 {
     /**
-     * @var array
-     */
-    private $compatibleTypes;
-
-    /**
      * @var LocalInterface
      */
     private $asset;
@@ -64,14 +59,12 @@ class Chain
      * @param string $origContent
      * @param string $origContentType
      * @param string $origAssetPath
-     * @param array $compatibleTypes
      */
     public function __construct(
         LocalInterface $asset,
         $origContent,
         $origContentType,
-        $origAssetPath,
-        array $compatibleTypes = []
+        $origAssetPath
     ) {
         $this->asset = $asset;
         $this->origContent = $origContent;
@@ -81,7 +74,6 @@ class Chain
         $this->targetContentType = $asset->getContentType();
         $this->targetAssetPath = $asset->getPath();
         $this->origAssetPath = $origAssetPath;
-        $this->compatibleTypes = $compatibleTypes;
     }
 
     /**
@@ -186,9 +178,7 @@ class Chain
      */
     public function assertValid()
     {
-        if ($this->contentType !== $this->targetContentType
-                && empty($this->compatibleTypes[$this->targetContentType][$this->contentType])) {
-
+        if ($this->contentType !== $this->targetContentType) {
             throw new \LogicException(
                 "The requested asset type was '{$this->targetContentType}', but ended up with '{$this->contentType}'"
             );

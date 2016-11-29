@@ -22,7 +22,7 @@ class LabelTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->labelList = $this->getMockBuilder(\Magento\Framework\View\Design\Theme\Label\ListInterface::class)
+        $this->labelList = $this->getMockBuilder('Magento\Framework\View\Design\Theme\Label\ListInterface')
             ->getMockForAbstractClass();
 
         $this->model = new Label(

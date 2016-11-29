@@ -6,6 +6,7 @@
 
 namespace Magento\ConfigurableProduct\Pricing\Price;
 
+use Magento\Catalog\Model\Product;
 use Magento\ConfigurableProduct\Model\Product\Type\Configurable;
 use Magento\Framework\App\ObjectManager;
 use Magento\Framework\Pricing\PriceCurrencyInterface;
@@ -28,27 +29,23 @@ class ConfigurablePriceResolver implements PriceResolverInterface
     protected $configurable;
 
     /**
-     * @var LowestPriceOptionsProviderInterface
+     * @var ConfigurableOptionsProviderInterface
      */
-    private $lowestPriceOptionsProvider;
+    private $configurableOptionsProvider;
 
     /**
      * @param PriceResolverInterface $priceResolver
      * @param Configurable $configurable
      * @param PriceCurrencyInterface $priceCurrency
-     * @param LowestPriceOptionsProviderInterface $lowestPriceOptionsProvider
      */
     public function __construct(
         PriceResolverInterface $priceResolver,
         Configurable $configurable,
-        PriceCurrencyInterface $priceCurrency,
-        LowestPriceOptionsProviderInterface $lowestPriceOptionsProvider = null
+        PriceCurrencyInterface $priceCurrency
     ) {
         $this->priceResolver = $priceResolver;
         $this->configurable = $configurable;
         $this->priceCurrency = $priceCurrency;
-        $this->lowestPriceOptionsProvider = $lowestPriceOptionsProvider ?:
-            ObjectManager::getInstance()->get(LowestPriceOptionsProviderInterface::class);
     }
 
     /**
@@ -60,7 +57,7 @@ class ConfigurablePriceResolver implements PriceResolverInterface
     {
         $price = null;
 
-        foreach ($this->lowestPriceOptionsProvider->getProducts($product) as $subProduct) {
+        foreach ($this->getConfigurableOptionsProvider()->getProducts($product) as $subProduct) {
             $productPrice = $this->priceResolver->resolvePrice($subProduct);
             $price = $price ? min($price, $productPrice) : $productPrice;
         }
@@ -71,5 +68,18 @@ class ConfigurablePriceResolver implements PriceResolverInterface
         }
 
         return (float)$price;
+    }
+
+    /**
+     * @return \Magento\ConfigurableProduct\Pricing\Price\ConfigurableOptionsProviderInterface
+     * @deprecated
+     */
+    private function getConfigurableOptionsProvider()
+    {
+        if (null === $this->configurableOptionsProvider) {
+            $this->configurableOptionsProvider = ObjectManager::getInstance()
+                ->get(ConfigurableOptionsProviderInterface::class);
+        }
+        return $this->configurableOptionsProvider;
     }
 }

@@ -27,9 +27,9 @@ class MessagesTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->messageManager = $this->getMockBuilder(\Magento\Framework\Message\ManagerInterface::class)->getMock();
+        $this->messageManager = $this->getMockBuilder('Magento\Framework\Message\ManagerInterface')->getMock();
         $this->messageInterpretationStrategy = $this->getMock(
-            \Magento\Framework\View\Element\Message\InterpretationStrategyInterface::class
+            'Magento\Framework\View\Element\Message\InterpretationStrategyInterface'
         );
         $this->object = new Messages($this->messageManager, $this->messageInterpretationStrategy);
     }
@@ -38,9 +38,9 @@ class MessagesTest extends \PHPUnit_Framework_TestCase
     {
         $msgType = 'error';
         $msgText = 'All is lost';
-        $msg = $this->getMockBuilder(\Magento\Framework\Message\MessageInterface::class)->getMock();
+        $msg = $this->getMockBuilder('Magento\Framework\Message\MessageInterface')->getMock();
         $messages = [$msg];
-        $msgCollection = $this->getMockBuilder(\Magento\Framework\Message\Collection::class)
+        $msgCollection = $this->getMockBuilder('Magento\Framework\Message\Collection')
             ->getMock();
 
         $msg->expects($this->once())

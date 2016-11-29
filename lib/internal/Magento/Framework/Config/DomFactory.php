@@ -10,7 +10,7 @@ namespace Magento\Framework\Config;
  */
 class DomFactory
 {
-    const CLASS_NAME = \Magento\Framework\Config\Dom::class;
+    const CLASS_NAME = 'Magento\Framework\Config\Dom';
 
     /**
      * Object manager

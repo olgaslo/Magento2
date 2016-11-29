@@ -5,14 +5,14 @@
  */
 \Magento\TestFramework\Helper\Bootstrap::getInstance()->loadArea('adminhtml');
 \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->get(
-    \Magento\Framework\App\Config\MutableScopeConfigInterface::class
+    'Magento\Framework\App\Config\MutableScopeConfigInterface'
 )->setValue(
     'carriers/flatrate/active',
     1,
     \Magento\Store\Model\ScopeInterface::SCOPE_STORE
 );
 \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->get(
-    \Magento\Framework\App\Config\MutableScopeConfigInterface::class
+    'Magento\Framework\App\Config\MutableScopeConfigInterface'
 )->setValue(
     'payment/paypal_express/active',
     1,
@@ -20,7 +20,7 @@
 );
 $objectManager = \Magento\TestFramework\Helper\Bootstrap::getObjectManager();
 /** @var $product \Magento\Catalog\Model\Product */
-$product = $objectManager->create(\Magento\Catalog\Model\Product::class);
+$product = $objectManager->create('Magento\Catalog\Model\Product');
 $product->setTypeId('simple')
     ->setId(1)
     ->setAttributeSetId(4)
@@ -59,7 +59,7 @@ $billingData = [
 ];
 
 $billingAddress = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()
-    ->create(\Magento\Quote\Model\Quote\Address::class, ['data' => $billingData]);
+    ->create('Magento\Quote\Model\Quote\Address', ['data' => $billingData]);
 $billingAddress->setAddressType('billing');
 
 $shippingAddress = clone $billingAddress;
@@ -68,12 +68,12 @@ $shippingAddress->setShippingMethod('flatrate_flatrate');
 $shippingAddress->setCollectShippingRates(true);
 
 /** @var $quote \Magento\Quote\Model\Quote */
-$quote = $objectManager->create(\Magento\Quote\Model\Quote::class);
+$quote = $objectManager->create('Magento\Quote\Model\Quote');
 $quote->setCustomerIsGuest(
     true
 )->setStoreId(
     $objectManager->get(
-        \Magento\Store\Model\StoreManagerInterface::class
+        'Magento\Store\Model\StoreManagerInterface'
     )->getStore()->getId()
 )->setReservedOrderId(
     '100000002'
@@ -96,5 +96,5 @@ $quote->setCustomerEmail('admin@example.com');
 
 /** @var $service \Magento\Quote\Api\CartManagementInterface */
 $service = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()
-    ->create(\Magento\Quote\Api\CartManagementInterface::class);
+    ->create('\Magento\Quote\Api\CartManagementInterface');
 $order = $service->submit($quote, ['increment_id' => '100000002']);

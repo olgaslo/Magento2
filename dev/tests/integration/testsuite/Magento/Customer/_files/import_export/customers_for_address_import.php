@@ -4,9 +4,7 @@
  * See COPYING.txt for license details.
  */
 //Create customer
-$customer = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create(
-    \Magento\Customer\Model\Customer::class
-);
+$customer = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create('Magento\Customer\Model\Customer');
 $customer->setWebsiteId(
     0
 )->setEntityId(
@@ -36,9 +34,7 @@ $customer->isObjectNew(true);
 $customer->save();
 
 // Create and set addresses
-$addressFirst = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create(
-    \Magento\Customer\Model\Address::class
-);
+$addressFirst = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create('Magento\Customer\Model\Address');
 $addressFirst->addData(
     [
         'entity_id' => 1,
@@ -56,9 +52,7 @@ $addressFirst->isObjectNew(true);
 $customer->addAddress($addressFirst);
 $customer->setDefaultBilling($addressFirst->getId());
 
-$addressSecond = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create(
-    \Magento\Customer\Model\Address::class
-);
+$addressSecond = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create('Magento\Customer\Model\Address');
 $addressSecond->addData(
     [
         'entity_id' => 2,

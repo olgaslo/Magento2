@@ -61,11 +61,6 @@ class Payment extends \Magento\Payment\Model\Info implements PaymentInterface
     protected $methodSpecificationFactory;
 
     /**
-     * @var array
-     */
-    private $additionalChecks;
-
-    /**
      * @param \Magento\Framework\Model\Context $context
      * @param \Magento\Framework\Registry $registry
      * @param \Magento\Framework\Api\ExtensionAttributesFactory $extensionFactory
@@ -76,7 +71,6 @@ class Payment extends \Magento\Payment\Model\Info implements PaymentInterface
      * @param \Magento\Framework\Model\ResourceModel\AbstractResource $resource
      * @param \Magento\Framework\Data\Collection\AbstractDb $resourceCollection
      * @param array $data
-     * @param array $additionalChecks
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
@@ -89,11 +83,9 @@ class Payment extends \Magento\Payment\Model\Info implements PaymentInterface
         \Magento\Payment\Model\Checks\SpecificationFactory $methodSpecificationFactory,
         \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
         \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
-        array $data = [],
-        array $additionalChecks = []
+        array $data = []
     ) {
         $this->methodSpecificationFactory = $methodSpecificationFactory;
-        $this->additionalChecks = $additionalChecks;
         parent::__construct(
             $context,
             $registry,
@@ -114,7 +106,7 @@ class Payment extends \Magento\Payment\Model\Info implements PaymentInterface
      */
     protected function _construct()
     {
-        $this->_init(\Magento\Quote\Model\ResourceModel\Quote\Payment::class);
+        $this->_init('Magento\Quote\Model\ResourceModel\Quote\Payment');
     }
 
     /**
@@ -170,8 +162,7 @@ class Payment extends \Magento\Payment\Model\Info implements PaymentInterface
          */
         $quote->collectTotals();
 
-        $checks = array_merge($data->getChecks(), $this->additionalChecks);
-        $methodSpecification = $this->methodSpecificationFactory->create($checks);
+        $methodSpecification = $this->methodSpecificationFactory->create($data->getChecks());
         if (!$method->isAvailable($quote) || !$methodSpecification->isApplicable($method, $quote)) {
             throw new \Magento\Framework\Exception\LocalizedException(
                 __('The requested Payment Method is not available.')

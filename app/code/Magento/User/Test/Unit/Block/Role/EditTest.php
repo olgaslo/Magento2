@@ -33,29 +33,29 @@ class EditTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->jsonEncoderMock = $this->getMockBuilder(\Magento\Framework\Json\EncoderInterface::class)
+        $this->jsonEncoderMock = $this->getMockBuilder('Magento\Framework\Json\EncoderInterface')
             ->disableOriginalConstructor()
             ->setMethods([])
             ->getMock();
 
-        $this->authSessionsMock = $this->getMockBuilder(\Magento\Backend\Model\Auth\Session::class)
+        $this->authSessionsMock = $this->getMockBuilder('Magento\Backend\Model\Auth\Session')
             ->disableOriginalConstructor()
             ->setMethods([])
             ->getMock();
 
-        $this->registryMock = $this->getMockBuilder(\Magento\Framework\Registry::class)
+        $this->registryMock = $this->getMockBuilder('Magento\Framework\Registry')
             ->disableOriginalConstructor()
             ->setMethods([])
             ->getMock();
 
-        $this->layoutInterfaceMock = $this->getMockBuilder(\Magento\Framework\View\LayoutInterface::class)
+        $this->layoutInterfaceMock = $this->getMockBuilder('Magento\Framework\View\LayoutInterface')
             ->disableOriginalConstructor()
             ->setMethods(['setRole', 'setActive', 'getId'])
             ->getMockForAbstractClass();
 
         $objectManagerHelper = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
         $this->model = $objectManagerHelper->getObject(
-            \Magento\User\Block\Role\Edit::class,
+            'Magento\User\Block\Role\Edit',
             [
                 'jsonEncoder' => $this->jsonEncoderMock,
                 'authSession' => $this->authSessionsMock,
@@ -76,7 +76,7 @@ class EditTest extends \PHPUnit_Framework_TestCase
         $this->layoutInterfaceMock->expects($this->once())->method('getId')->willReturn(false);
 
         $this->assertInstanceOf(
-            \Magento\Backend\Block\Widget\Tabs::class,
+            'Magento\Backend\Block\Widget\Tabs',
             $this->invokeMethod($this->model, '_prepareLayout')
         );
     }

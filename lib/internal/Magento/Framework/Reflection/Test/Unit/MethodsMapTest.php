@@ -27,7 +27,7 @@ class MethodsMapTest extends \PHPUnit_Framework_TestCase
     {
         $objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
 
-        $cacheMock = $this->getMockBuilder(\Magento\Framework\Cache\FrontendInterface::class)
+        $cacheMock = $this->getMockBuilder('Magento\Framework\Cache\FrontendInterface')
             ->getMockForAbstractClass();
         $cacheMock->expects($this->any())
             ->method('save');
@@ -35,12 +35,12 @@ class MethodsMapTest extends \PHPUnit_Framework_TestCase
             ->method('load')
             ->will($this->returnValue(null));
 
-        $attributeTypeResolverMock = $this->getMockBuilder(\Magento\Framework\Api\AttributeTypeResolverInterface::class)
+        $attributeTypeResolverMock = $this->getMockBuilder('Magento\Framework\Api\AttributeTypeResolverInterface')
             ->getMockForAbstractClass();
-        $fieldNamerMock = $this->getMockBuilder(\Magento\Framework\Reflection\FieldNamer::class)
+        $fieldNamerMock = $this->getMockBuilder('Magento\Framework\Reflection\FieldNamer')
             ->getMockForAbstractClass();
         $this->model = $objectManager->getObject(
-            \Magento\Framework\Reflection\MethodsMap::class,
+            'Magento\Framework\Reflection\MethodsMap',
             [
                 'cache' => $cacheMock,
                 'typeProcessor' => new TypeProcessor(),
@@ -54,30 +54,21 @@ class MethodsMapTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertEquals(
             'string',
-            $this->model->getMethodReturnType(
-                \Magento\Framework\Reflection\FieldNamer::class,
-                'getFieldNameForMethodName'
-            )
+            $this->model->getMethodReturnType('Magento\Framework\Reflection\FieldNamer', 'getFieldNameForMethodName')
         );
         $this->assertEquals(
             'mixed',
-            $this->model->getMethodReturnType(
-                \Magento\Framework\Reflection\TypeCaster::class,
-                'castValueToType'
-            )
+            $this->model->getMethodReturnType('Magento\Framework\Reflection\TypeCaster', 'castValueToType')
         );
         $this->assertEquals(
             'array',
-            $this->model->getMethodReturnType(
-                \Magento\Framework\Reflection\MethodsMap::class,
-                'getMethodsMap'
-            )
+            $this->model->getMethodReturnType('Magento\Framework\Reflection\MethodsMap', 'getMethodsMap')
         );
     }
 
     public function testGetMethodsMap()
     {
-        $methodsMap = $this->model->getMethodsMap(\Magento\Framework\Reflection\MethodsMap::class);
+        $methodsMap = $this->model->getMethodsMap('Magento\Framework\Reflection\MethodsMap');
         $this->assertEquals(
             [
                 'getMethodReturnType' => [
@@ -134,15 +125,18 @@ class MethodsMapTest extends \PHPUnit_Framework_TestCase
     public function isMethodValidForDataFieldProvider()
     {
         return [
-            'MethodsMap#isMethodValidForDataField' => [\Magento\Framework\Reflection\MethodsMap::class,
+            'MethodsMap#isMethodValidForDataField' => [
+                'Magento\Framework\Reflection\MethodsMap',
                 'isMethodValidForDataField',
                 false,
             ],
-            'DataObject#getAttrName' => [\Magento\Framework\Reflection\Test\Unit\DataObject::class,
+            'DataObject#getAttrName' => [
+                'Magento\Framework\Reflection\Test\Unit\DataObject',
                 'getAttrName',
                 true,
             ],
-            'DataObject#isActive' => [\Magento\Framework\Reflection\Test\Unit\DataObject::class,
+            'DataObject#isActive' => [
+                'Magento\Framework\Reflection\Test\Unit\DataObject',
                 'isActive',
                 true,
             ],
@@ -166,15 +160,18 @@ class MethodsMapTest extends \PHPUnit_Framework_TestCase
     public function isMethodReturnValueRequiredProvider()
     {
         return [
-            'DataObject#getAttrName' => [\Magento\Framework\Reflection\Test\Unit\DataObject::class,
+            'DataObject#getAttrName' => [
+                'Magento\Framework\Reflection\Test\Unit\DataObject',
                 'getAttrName',
                 true,
             ],
-            'DataObject#isActive' => [\Magento\Framework\Reflection\Test\Unit\DataObject::class,
+            'DataObject#isActive' => [
+                'Magento\Framework\Reflection\Test\Unit\DataObject',
                 'isActive',
                 true,
             ],
-            'FieldNamer#getFieldNameForMethodName' => [\Magento\Framework\Reflection\FieldNamer::class,
+            'FieldNamer#getFieldNameForMethodName' => [
+                'Magento\Framework\Reflection\FieldNamer',
                 'getFieldNameForMethodName',
                 false,
             ],

@@ -42,22 +42,22 @@ class DesignConfigRepositoryTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->configStorage = $this->getMock(\Magento\Theme\Model\Design\Config\Storage::class, [], [], '', false);
+        $this->configStorage = $this->getMock('Magento\Theme\Model\Design\Config\Storage', [], [], '', false);
         $this->reinitableConfig = $this->getMockForAbstractClass(
-            \Magento\Framework\App\Config\ReinitableConfigInterface::class,
+            'Magento\Framework\App\Config\ReinitableConfigInterface',
             [],
             '',
             false
         );
-        $this->indexerRegistry = $this->getMock(\Magento\Framework\Indexer\IndexerRegistry::class, [], [], '', false);
+        $this->indexerRegistry = $this->getMock('Magento\Framework\Indexer\IndexerRegistry', [], [], '', false);
         $this->designConfig = $this->getMockForAbstractClass(
-            \Magento\Theme\Api\Data\DesignConfigInterface::class,
+            'Magento\Theme\Api\Data\DesignConfigInterface',
             [],
             '',
             false
         );
         $this->designExtension = $this->getMockForAbstractClass(
-            \Magento\Theme\Api\Data\DesignConfigExtensionInterface::class,
+            'Magento\Theme\Api\Data\DesignConfigExtensionInterface',
             [],
             '',
             false,
@@ -66,13 +66,13 @@ class DesignConfigRepositoryTest extends \PHPUnit_Framework_TestCase
             ['getDesignConfigData']
         );
         $this->designConfigData = $this->getMockForAbstractClass(
-            \Magento\Theme\Api\Data\DesignConfigDataInterface::class,
+            'Magento\Theme\Api\Data\DesignConfigDataInterface',
             [],
             '',
             false
         );
         $this->indexer = $this->getMockForAbstractClass(
-            \Magento\Framework\Indexer\IndexerInterface::class,
+            'Magento\Framework\Indexer\IndexerInterface',
             [],
             '',
             false

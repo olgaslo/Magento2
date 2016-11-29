@@ -35,10 +35,7 @@ class AssertUserRoleRestrictedAccess extends AbstractConstraint
         array $restrictedAccess,
         $denyUrl
     ) {
-        $this->objectManager->create(
-            \Magento\User\Test\TestStep\LoginUserOnBackendStep::class,
-            ['user' => $user]
-        )->run();
+        $this->objectManager->create('Magento\User\Test\TestStep\LoginUserOnBackendStep', ['user' => $user])->run();
 
         $menuItems = $dashboard->getMenuBlock()->getTopMenuItems();
         \PHPUnit_Framework_Assert::assertEquals($menuItems, $restrictedAccess, 'Wrong display menu.');

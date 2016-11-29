@@ -27,13 +27,14 @@ use Magento\Customer\Test\Fixture\Customer;
  * 3. Create Cart Price rule according to dataset and click "Save" button.
  * 4. Perform asserts.
  *
- * @group Shopping_Cart_Price_Rules
+ * @group Shopping_Cart_Price_Rules_(CS)
  * @ZephyrId MAGETWO-24855
  */
 class CreateSalesRuleEntityTest extends Injectable
 {
     /* tags */
     const MVP = 'yes';
+    const DOMAIN = 'CS';
     const TEST_TYPE = 'extended_acceptance_test';
     /* end tags */
 

@@ -141,7 +141,7 @@ class View extends Block
     {
         $selector = ($id === null) ? $this->content : sprintf($this->itemBlock, $id) . $this->content;
         return $this->blockFactory->create(
-            \Magento\Sales\Test\Block\Order\Items::class,
+            'Magento\Sales\Test\Block\Order\Items',
             ['element' => $this->_rootElement->find($selector, Locator::SELECTOR_XPATH)]
         );
     }

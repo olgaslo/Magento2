@@ -13,7 +13,6 @@ use Magento\Backend\Block\Widget\ContainerInterface;
  *
  * @author      Magento Core Team <core@magentocommerce.com>
  * @method array getTemplateOptions()
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
 class Edit extends Widget implements ContainerInterface
 {
@@ -217,7 +216,7 @@ class Edit extends Widget implements ContainerInterface
             null
         );
         $this->toolbar->pushButtons($this, $this->buttonList);
-        $this->addChild('form', \Magento\Email\Block\Adminhtml\Template\Edit\Form::class);
+        $this->addChild('form', 'Magento\Email\Block\Adminhtml\Template\Edit\Form');
         return parent::_prepareLayout();
     }
 

@@ -37,12 +37,12 @@ class FilterModifierTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->request = $this->getMockForAbstractClass(\Magento\Framework\App\RequestInterface::class);
+        $this->request = $this->getMockForAbstractClass('Magento\Framework\App\RequestInterface');
         $this->dataProvider = $this->getMockForAbstractClass(
-            \Magento\Framework\View\Element\UiComponent\DataProvider\DataProviderInterface::class
+            'Magento\Framework\View\Element\UiComponent\DataProvider\DataProviderInterface'
         );
         $this->filterBuilder = $this->getMock(
-            \Magento\Framework\Api\FilterBuilder::class,
+            'Magento\Framework\Api\FilterBuilder',
             [],
             [],
             '',
@@ -50,7 +50,7 @@ class FilterModifierTest extends \PHPUnit_Framework_TestCase
         );
         $this->unit = (new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this))
             ->getObject(
-                \Magento\Ui\Component\Filters\FilterModifier::class,
+                'Magento\Ui\Component\Filters\FilterModifier',
                 [
                     'request' => $this->request,
                     'filterBuilder' => $this->filterBuilder,
@@ -97,7 +97,7 @@ class FilterModifierTest extends \PHPUnit_Framework_TestCase
      */
     public function testApplyFilterModifierWith($filterModifier, $filterName, $conditionType, $value)
     {
-        $filter = $this->getMock(\Magento\Framework\Api\Filter::class);
+        $filter = $this->getMock('Magento\Framework\Api\Filter');
 
         $this->request->expects($this->once())->method('getParam')
             ->with(\Magento\Ui\Component\Filters\FilterModifier::FILTER_MODIFIER)

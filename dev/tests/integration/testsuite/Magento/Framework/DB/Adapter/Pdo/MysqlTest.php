@@ -33,7 +33,6 @@ class MysqlTest extends \PHPUnit_Framework_TestCase
         restore_error_handler();
     }
 
-
     /**
      * Test lost connection re-initializing
      *
@@ -53,7 +52,7 @@ class MysqlTest extends \PHPUnit_Framework_TestCase
             // Sleep for time greater than wait_timeout and try to perform query
             sleep($minWaitTimeout + 1);
             $result = $this->_executeQuery('SELECT 1');
-            $this->assertInstanceOf(\Magento\Framework\DB\Statement\Pdo\Mysql::class, $result);
+            $this->assertInstanceOf('Magento\Framework\DB\Statement\Pdo\Mysql', $result);
             // Restore wait_timeout
             $this->_setWaitTimeout($defaultWaitTimeout);
             $this->assertEquals(
@@ -127,9 +126,9 @@ class MysqlTest extends \PHPUnit_Framework_TestCase
     protected function _getConnection()
     {
         if (is_null($this->_connection)) {
-            /** @var $coreResource ResourceConnection */
+            /** @var $coreResource \Magento\Framework\App\ResourceConnection */
             $coreResource = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()
-                ->get(ResourceConnection::class);
+                ->get('Magento\Framework\App\ResourceConnection');
             $this->_connection = $coreResource->getConnection();
         }
         return $this->_connection;

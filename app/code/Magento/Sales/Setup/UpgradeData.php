@@ -51,42 +51,42 @@ class UpgradeData implements UpgradeDataInterface
             $salesSetup->updateEntityType(
                 \Magento\Sales\Model\Order::ENTITY,
                 'entity_model',
-                \Magento\Sales\Model\ResourceModel\Order::class
+                'Magento\Sales\Model\ResourceModel\Order'
             );
             $salesSetup->updateEntityType(
                 \Magento\Sales\Model\Order::ENTITY,
                 'increment_model',
-                \Magento\Eav\Model\Entity\Increment\NumericValue::class
+                'Magento\Eav\Model\Entity\Increment\NumericValue'
             );
             $salesSetup->updateEntityType(
                 'invoice',
                 'entity_model',
-                \Magento\Sales\Model\ResourceModel\Order::class
+                'Magento\Sales\Model\ResourceModel\Order'
             );
             $salesSetup->updateEntityType(
                 'invoice',
                 'increment_model',
-                \Magento\Eav\Model\Entity\Increment\NumericValue::class
+                'Magento\Eav\Model\Entity\Increment\NumericValue'
             );
             $salesSetup->updateEntityType(
                 'creditmemo',
                 'entity_model',
-                \Magento\Sales\Model\ResourceModel\Order\Creditmemo::class
+                'Magento\Sales\Model\ResourceModel\Order\Creditmemo'
             );
             $salesSetup->updateEntityType(
                 'creditmemo',
                 'increment_model',
-                \Magento\Eav\Model\Entity\Increment\NumericValue::class
+                'Magento\Eav\Model\Entity\Increment\NumericValue'
             );
             $salesSetup->updateEntityType(
                 'shipment',
                 'entity_model',
-                \Magento\Sales\Model\ResourceModel\Order\Shipment::class
+                'Magento\Sales\Model\ResourceModel\Order\Shipment'
             );
             $salesSetup->updateEntityType(
                 'shipment',
                 'increment_model',
-                \Magento\Eav\Model\Entity\Increment\NumericValue::class
+                'Magento\Eav\Model\Entity\Increment\NumericValue'
             );
         }
         $this->eavConfig->clear();

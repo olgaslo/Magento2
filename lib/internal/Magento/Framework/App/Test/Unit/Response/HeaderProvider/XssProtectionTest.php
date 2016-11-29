@@ -18,12 +18,12 @@ class XssProtectionTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetValue($userAgent, $expectedHeader)
     {
-        $headerServiceMock = $this->getMockBuilder(\Magento\Framework\HTTP\Header::class)
+        $headerServiceMock = $this->getMockBuilder('Magento\Framework\HTTP\Header')
             ->disableOriginalConstructor()
             ->getMock();
         $headerServiceMock->expects($this->once())->method('getHttpUserAgent')->willReturn($userAgent);
         $model = (new ObjectManager($this))->getObject(
-            \Magento\Framework\App\Response\HeaderProvider\XssProtection::class,
+            'Magento\Framework\App\Response\HeaderProvider\XssProtection',
             ['headerService' => $headerServiceMock]
         );
         $this->assertSame($expectedHeader, $model->getValue());

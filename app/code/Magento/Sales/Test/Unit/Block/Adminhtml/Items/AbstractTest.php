@@ -17,9 +17,9 @@ class AbstractTest extends \PHPUnit_Framework_TestCase
 
     public function testGetItemRenderer()
     {
-        $renderer = $this->getMock(\Magento\Framework\View\Element\AbstractBlock::class, [], [], '', false);
+        $renderer = $this->getMock('Magento\Framework\View\Element\AbstractBlock', [], [], '', false);
         $layout = $this->getMock(
-            \Magento\Framework\View\Layout::class,
+            'Magento\Framework\View\Layout',
             ['getChildName', 'getBlock', 'getGroupChildNames', '__wakeup'],
             [],
             '',
@@ -47,10 +47,10 @@ class AbstractTest extends \PHPUnit_Framework_TestCase
 
         /** @var $block \Magento\Sales\Block\Adminhtml\Items\AbstractItems */
         $block = $this->_objectManager->getObject(
-            \Magento\Sales\Block\Adminhtml\Items\AbstractItems::class,
+            'Magento\Sales\Block\Adminhtml\Items\AbstractItems',
             [
                 'context' => $this->_objectManager->getObject(
-                    \Magento\Backend\Block\Template\Context::class,
+                    'Magento\Backend\Block\Template\Context',
                     ['layout' => $layout]
                 )
             ]
@@ -65,9 +65,9 @@ class AbstractTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetItemRendererThrowsExceptionForNonexistentRenderer()
     {
-        $renderer = $this->getMock(\StdClass::class);
+        $renderer = $this->getMock('StdClass');
         $layout = $this->getMock(
-            \Magento\Framework\View\Layout::class,
+            'Magento\Framework\View\Layout',
             ['getChildName', 'getBlock', '__wakeup'],
             [],
             '',
@@ -95,10 +95,10 @@ class AbstractTest extends \PHPUnit_Framework_TestCase
 
         /** @var $block \Magento\Sales\Block\Adminhtml\Items\AbstractItems */
         $block = $this->_objectManager->getObject(
-            \Magento\Sales\Block\Adminhtml\Items\AbstractItems::class,
+            'Magento\Sales\Block\Adminhtml\Items\AbstractItems',
             [
                 'context' => $this->_objectManager->getObject(
-                    \Magento\Backend\Block\Template\Context::class,
+                    'Magento\Backend\Block\Template\Context',
                     ['layout' => $layout]
                 )
             ]

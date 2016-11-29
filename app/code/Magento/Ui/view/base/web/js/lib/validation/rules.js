@@ -9,9 +9,8 @@ define([
     'moment',
     'jquery/validate',
     'jquery/ui',
-    'mage/translate',
-    'mageUtils'
-], function ($, _, utils, moment, validate, ui, $t, mageUtils) {
+    'mage/translate'
+], function ($, _, utils, moment) {
     'use strict';
 
     /**
@@ -50,13 +49,13 @@ define([
     return _.mapObject({
         "min_text_length": [
             function (value, params) {
-                return _.isUndefined(value) || value.length == 0 || value.length >= +params;
+                return value.length == 0 || value.length >= +params;
             },
             $.mage.__('Please enter more or equal than {0} symbols.')
         ],
         "max_text_length": [
             function (value, params) {
-                return !_.isUndefined(value) && value.length <= +params;
+                return value.length <= +params;
             },
             $.mage.__('Please enter less or equal than {0} symbols.')
         ],
@@ -431,10 +430,10 @@ define([
                 var pass = $.trim(v);
                 var result = pass.length >= passwordMinLength;
                 if (result == false) {
-                    /*eslint-disable max-len*/
-                    validator.passwordErrorMessage = $.mage.__('Minimum length of this field must be equal or greater than %1 symbols. Leading and trailing spaces will be ignored.').replace('%1', passwordMinLength);
-
-                    /*eslint-enable max-len*/
+                    validator.passwordErrorMessage = $.mage.__(
+                        "Minimum length of this field must be equal or greater than %1 symbols." +
+                        " Leading and trailing spaces will be ignored."
+                    ).replace('%1', passwordMinLength);
                     return result;
                 }
                 if (pass.match(/\d+/)) {
@@ -451,11 +450,10 @@ define([
                 }
                 if (counter < passwordMinCharacterSets) {
                     result = false;
-
-                    /*eslint-disable max-len*/
-                    validator.passwordErrorMessage = $.mage.__('Minimum of different classes of characters in password is %1. Classes of characters: Lower Case, Upper Case, Digits, Special Characters.').replace('%1', passwordMinCharacterSets);
-
-                    /*eslint-enable max-len*/
+                    validator.passwordErrorMessage = $.mage.__(
+                        "Minimum of different classes of characters in password is %1." +
+                        " Classes of characters: Lower Case, Upper Case, Digits, Special Characters."
+                    ).replace('%1', passwordMinCharacterSets);
                 }
                 return result;
             }, function () {
@@ -574,15 +572,6 @@ define([
             },
             $.mage.__('Please enter a valid number in this field.')
         ],
-        'validate-integer': [
-            function(value) {
-                return (
-                    utils.isEmptyNoTrim(value)
-                    || (!isNaN(utils.parseNumber(value)) && /^\s*-?\d*\s*$/.test(value))
-                );
-            },
-            $.mage.__('Please enter a valid integer in this field.')
-        ],
         "validate-number-range": [
             function(value, param) {
                 if (utils.isEmptyNoTrim(value)) {
@@ -684,9 +673,9 @@ define([
             $.mage.__('Please use only letters (a-z or A-Z) or numbers (0-9) in this field. No spaces or other characters are allowed.')
         ],
         "validate-date": [
-            function(value, params, additionalParams) {
-                var test = moment(value, additionalParams.dateFormat);
-                return utils.isEmptyNoTrim(value) || test.isValid();
+            function(value) {
+                var test = new Date(value);
+                return utils.isEmptyNoTrim(value) || !isNaN(test);
             },$.mage.__('Please enter a valid date.')
 
         ],
@@ -743,8 +732,7 @@ define([
                     }
                 }
                 return true;
-            },
-            $.mage.__('Please enter valid email addresses, separated by commas. For example, johndoe@domain.com, johnsmith@domain.com.')
+            }, "Please enter valid email addresses, separated by commas. For example, johndoe@domain.com, johnsmith@domain.com."
         ],
         "validate-cc-number": [
             /**

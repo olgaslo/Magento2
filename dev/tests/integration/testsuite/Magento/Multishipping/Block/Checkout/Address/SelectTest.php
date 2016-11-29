@@ -21,7 +21,7 @@ class SelectTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->_selectBlock = Bootstrap::getObjectManager()->create(
-            \Magento\Multishipping\Block\Checkout\Address\Select::class
+            'Magento\Multishipping\Block\Checkout\Address\Select'
         );
         parent::setUp();
     }
@@ -34,14 +34,14 @@ class SelectTest extends \PHPUnit_Framework_TestCase
     {
         /** @var \Magento\Customer\Api\AddressRepositoryInterface $addressRepository */
         $addressRepository = Bootstrap::getObjectManager()->create(
-            \Magento\Customer\Api\AddressRepositoryInterface::class
+            'Magento\Customer\Api\AddressRepositoryInterface'
         );
         $fixtureAddressId = 1;
         $address = $addressRepository->getById($fixtureAddressId);
         $addressAsHtml = $this->_selectBlock->getAddressAsHtml($address);
         $this->assertEquals(
             "John Smith<br/>CompanyName<br />Green str, 67<br />CityM,  Alabama, 75477"
-                . "<br/>United States<br/>T: <a href=\"tel:3468676\">3468676</a>",
+                . "<br/>United States<br/>T: 3468676",
             str_replace("\n", '', $addressAsHtml),
             "Address was represented as HTML incorrectly"
         );

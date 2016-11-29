@@ -187,7 +187,7 @@ class Trigger
                 (string)new \Magento\Framework\Phrase('Trigger table name should be a string')
             );
         }
-        $this->tableName = $name;
+        $this->tableName = strtolower($name);
         return $this;
     }
 

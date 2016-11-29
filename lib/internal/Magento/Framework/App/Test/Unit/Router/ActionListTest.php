@@ -32,10 +32,10 @@ class ActionListTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
-        $this->cacheMock = $this->getMockBuilder(\Magento\Framework\Config\CacheInterface::class)
+        $this->cacheMock = $this->getMockBuilder('Magento\Framework\Config\CacheInterface')
             ->disableOriginalConstructor()
             ->getMock();
-        $this->moduleReaderMock = $this->getMockBuilder(\Magento\Framework\Module\Dir\Reader::class)
+        $this->moduleReaderMock = $this->getMockBuilder('Magento\Framework\Module\Dir\Reader')
             ->disableOriginalConstructor()
             ->getMock();
     }
@@ -50,7 +50,7 @@ class ActionListTest extends \PHPUnit_Framework_TestCase
         $this->moduleReaderMock->expects($this->never())
             ->method('getActionFiles');
         $this->actionList = $this->objectManager->getObject(
-            \Magento\Framework\App\Router\ActionList::class,
+            'Magento\Framework\App\Router\ActionList',
             [
                 'cache' => $this->cacheMock,
                 'moduleReader' => $this->moduleReaderMock,
@@ -69,7 +69,7 @@ class ActionListTest extends \PHPUnit_Framework_TestCase
             ->method('getActionFiles')
             ->will($this->returnValue('data'));
         $this->actionList = $this->objectManager->getObject(
-            \Magento\Framework\App\Router\ActionList::class,
+            'Magento\Framework\App\Router\ActionList',
             [
                 'cache' => $this->cacheMock,
                 'moduleReader' => $this->moduleReaderMock,
@@ -98,7 +98,7 @@ class ActionListTest extends \PHPUnit_Framework_TestCase
             ->method('getActionFiles')
             ->will($this->returnValue($data));
         $this->actionList = $this->objectManager->getObject(
-            \Magento\Framework\App\Router\ActionList::class,
+            'Magento\Framework\App\Router\ActionList',
             [
                 'cache' => $this->cacheMock,
                 'moduleReader' => $this->moduleReaderMock,
@@ -111,7 +111,7 @@ class ActionListTest extends \PHPUnit_Framework_TestCase
     {
         $mockClassName = 'Mock_Action_Class';
         $actionClass = $this->getMockClass(
-            \Magento\Framework\App\ActionInterface::class,
+            'Magento\Framework\App\ActionInterface',
             ['execute', 'getResponse'],
             [],
             $mockClassName

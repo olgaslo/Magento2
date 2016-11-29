@@ -30,7 +30,7 @@ class ProductCustomOptionRepositoryTest extends WebapiAbstract
     protected function setUp()
     {
         $this->objectManager = \Magento\TestFramework\Helper\Bootstrap::getObjectManager();
-        $this->productFactory = $this->objectManager->get(\Magento\Catalog\Model\ProductFactory::class);
+        $this->productFactory = $this->objectManager->get('Magento\Catalog\Model\ProductFactory');
     }
 
     /**
@@ -42,7 +42,7 @@ class ProductCustomOptionRepositoryTest extends WebapiAbstract
         $sku = 'simple';
         /** @var ProductRepository $productRepository */
         $productRepository = $this->objectManager->create(
-            \Magento\Catalog\Model\ProductRepository::class
+            'Magento\Catalog\Model\ProductRepository'
         );
         /** @var  \Magento\Catalog\Model\Product $product */
         $product = $productRepository->get($sku, false, null, true);
@@ -75,7 +75,7 @@ class ProductCustomOptionRepositoryTest extends WebapiAbstract
         $productSku = 'simple';
         /** @var \Magento\Catalog\Api\ProductCustomOptionRepositoryInterface $service */
         $service = Bootstrap::getObjectManager()
-            ->get(\Magento\Catalog\Api\ProductCustomOptionRepositoryInterface::class);
+            ->get('Magento\Catalog\Api\ProductCustomOptionRepositoryInterface');
         $options = $service->getList('simple');
         $option = current($options);
         $optionId = $option->getOptionId();
@@ -243,7 +243,7 @@ class ProductCustomOptionRepositoryTest extends WebapiAbstract
         $productSku = 'simple';
         /** @var ProductRepository $productRepository */
         $productRepository = $this->objectManager->create(
-            \Magento\Catalog\Model\ProductRepository::class
+            'Magento\Catalog\Model\ProductRepository'
         );
 
         $options = $productRepository->get($productSku, true)->getOptions();
@@ -309,7 +309,7 @@ class ProductCustomOptionRepositoryTest extends WebapiAbstract
 
         /** @var ProductRepository $productRepository */
         $productRepository = $this->objectManager->create(
-            \Magento\Catalog\Model\ProductRepository::class
+            'Magento\Catalog\Model\ProductRepository'
         );
         /** @var  \Magento\Catalog\Model\Product $product */
         $product = $productRepository->get('simple', false, null, true);

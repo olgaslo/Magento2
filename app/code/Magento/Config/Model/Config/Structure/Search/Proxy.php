@@ -36,7 +36,7 @@ class Proxy implements
     protected function _getSubject()
     {
         if (!$this->_subject) {
-            $this->_subject = $this->_objectManager->get(\Magento\Config\Model\Config\Structure::class);
+            $this->_subject = $this->_objectManager->get('Magento\Config\Model\Config\Structure');
         }
         return $this->_subject;
     }

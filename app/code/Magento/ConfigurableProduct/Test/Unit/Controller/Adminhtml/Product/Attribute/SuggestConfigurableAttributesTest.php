@@ -35,18 +35,18 @@ class SuggestConfigurableAttributesTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $helper = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
-        $this->responseMock = $this->getMock(\Magento\Framework\App\Response\Http::class, [], [], '', false);
-        $this->requestMock = $this->getMock(\Magento\Framework\App\Request\Http::class, [], [], '', false);
-        $this->helperMock = $this->getMock(\Magento\Framework\Json\Helper\Data::class, [], [], '', false);
+        $this->responseMock = $this->getMock('Magento\Framework\App\Response\Http', [], [], '', false);
+        $this->requestMock = $this->getMock('Magento\Framework\App\Request\Http', [], [], '', false);
+        $this->helperMock = $this->getMock('Magento\Framework\Json\Helper\Data', [], [], '', false);
         $this->attributeListMock = $this->getMock(
-            \Magento\ConfigurableProduct\Model\SuggestedAttributeList::class,
+            'Magento\ConfigurableProduct\Model\SuggestedAttributeList',
             [],
             [],
             '',
             false
         );
         $this->suggestAttributes = $helper->getObject(
-            \Magento\ConfigurableProduct\Controller\Adminhtml\Product\Attribute\SuggestConfigurableAttributes::class,
+            'Magento\ConfigurableProduct\Controller\Adminhtml\Product\Attribute\SuggestConfigurableAttributes',
             [
                 'response' => $this->responseMock,
                 'request' => $this->requestMock,

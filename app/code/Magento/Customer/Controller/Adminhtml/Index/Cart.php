@@ -23,15 +23,15 @@ class Cart extends \Magento\Customer\Controller\Adminhtml\Index
         $deleteItemId = $this->getRequest()->getPost('delete');
         if ($deleteItemId) {
             /** @var \Magento\Quote\Api\CartRepositoryInterface $quoteRepository */
-            $quoteRepository = $this->_objectManager->create(\Magento\Quote\Api\CartRepositoryInterface::class);
+            $quoteRepository = $this->_objectManager->create('Magento\Quote\Api\CartRepositoryInterface');
             /** @var \Magento\Quote\Model\Quote $quote */
             try {
                 $quote = $quoteRepository->getForCustomer($customerId);
             } catch (\Magento\Framework\Exception\NoSuchEntityException $e) {
-                $quote = $this->_objectManager->create(\Magento\Quote\Model\QuoteFactory::class)->create();
+                $quote = $this->_objectManager->create('\Magento\Quote\Model\QuoteFactory')->create();
             }
             $quote->setWebsite(
-                $this->_objectManager->get(\Magento\Store\Model\StoreManagerInterface::class)->getWebsite($websiteId)
+                $this->_objectManager->get('Magento\Store\Model\StoreManagerInterface')->getWebsite($websiteId)
             );
             $item = $quote->getItemById($deleteItemId);
             if ($item && $item->getId()) {

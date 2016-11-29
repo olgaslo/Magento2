@@ -39,14 +39,14 @@ class PriceTest extends \PHPUnit_Framework_TestCase
     {
         $objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
         $this->_helper = $this->getMock(
-            \Magento\ProductAlert\Helper\Data::class,
+            'Magento\ProductAlert\Helper\Data',
             ['isPriceAlertAllowed', 'getSaveUrl'],
             [],
             '',
             false
         );
         $this->_product = $this->getMock(
-            \Magento\Catalog\Model\Product::class,
+            'Magento\Catalog\Model\Product',
             ['getCanShowPrice', 'getId', '__wakeup'],
             [],
             '',
@@ -54,15 +54,15 @@ class PriceTest extends \PHPUnit_Framework_TestCase
         );
         $this->_product->expects($this->any())->method('getId')->will($this->returnValue(1));
         $this->_registry = $this->getMockBuilder(
-            \Magento\Framework\Registry::class
+            'Magento\Framework\Registry'
         )->disableOriginalConstructor()->setMethods(
             ['registry']
         )->getMock();
         $this->_block = $objectManager->getObject(
-            \Magento\ProductAlert\Block\Product\View\Price::class,
+            'Magento\ProductAlert\Block\Product\View\Price',
             ['helper' => $this->_helper, 'registry' => $this->_registry]
         );
-        $this->_layout = $this->getMock(\Magento\Framework\View\Layout::class, [], [], '', false);
+        $this->_layout = $this->getMock('Magento\Framework\View\Layout', [], [], '', false);
     }
 
     public function testSetTemplatePriceAlertAllowed()

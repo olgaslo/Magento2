@@ -49,11 +49,6 @@ class File implements MergeableInterface
     private $minification;
 
     /**
-     * @var string
-     */
-    private $sourceContentType;
-
-    /**
      * @param Source $source
      * @param ContextInterface $context
      * @param string $filePath
@@ -158,19 +153,6 @@ class File implements MergeableInterface
             }
         }
         return $this->resolvedFile;
-    }
-
-    /**
-     * Get source content type
-     *
-     * @return string
-     */
-    public function getSourceContentType()
-    {
-        if ($this->sourceContentType === null) {
-            $this->sourceContentType = $this->source->getSourceContentType($this);
-        }
-        return $this->sourceContentType;
     }
 
     /**

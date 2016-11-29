@@ -6,7 +6,7 @@
 -->
 <div class="admin__field" visible="visible" css="$data.additionalClasses">
     <label class="admin__field-label" if="$data.label" attr="for: uid">
-        <span translate="label" attr="'data-config-scope': $data.scopeLabel"/>
+        <span text="label" attr="'data-config-scope': $data.scopeLabel"/>
     </label>
 
     <div class="admin__field-control" css="'_with-tooltip': $data.tooltip">
@@ -29,6 +29,5 @@
 
             <each args="data: value, as: '$file'" render="$parent.getPreviewTmpl($file)"/>
         </div>
-        <render args="$data.service.template" if="$data.hasService()"/>
     </div>
 </div>

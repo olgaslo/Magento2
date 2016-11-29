@@ -21,11 +21,10 @@ class UnsetAllObserverTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->objectManager = new ObjectManager($this);
-        $this->checkoutSession = $this->getMock(\Magento\Checkout\Model\Session::class, [], [], '', false);
-        $this->object = $this->objectManager->getObject(
-            \Magento\Checkout\Observer\UnsetAllObserver::class,
-            ['checkoutSession' => $this->checkoutSession]
-        );
+        $this->checkoutSession = $this->getMock('Magento\Checkout\Model\Session', [], [], '', false);
+        $this->object = $this->objectManager->getObject('Magento\Checkout\Observer\UnsetAllObserver', [
+            'checkoutSession' => $this->checkoutSession,
+        ]);
     }
 
     public function testUnsetAll()
@@ -33,7 +32,7 @@ class UnsetAllObserverTest extends \PHPUnit_Framework_TestCase
         $this->checkoutSession->expects($this->once())->method('clearQuote')->will($this->returnSelf());
         $this->checkoutSession->expects($this->once())->method('clearStorage')->will($this->returnSelf());
 
-        $observerMock = $this->getMockBuilder(\Magento\Framework\Event\Observer::class)
+        $observerMock = $this->getMockBuilder('Magento\Framework\Event\Observer')
             ->disableOriginalConstructor()
             ->getMock();
 

@@ -54,7 +54,7 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
     {
         $driver = $this->_factory->create($configData);
         $this->assertInstanceOf($expectedClass, $driver);
-        $this->assertInstanceOf(\Magento\Framework\Profiler\Driver\Standard\OutputInterface::class, $driver);
+        $this->assertInstanceOf('Magento\Framework\Profiler\Driver\Standard\OutputInterface', $driver);
     }
 
     /**
@@ -63,13 +63,13 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
     public function createDataProvider()
     {
         $defaultOutputClass = $this->getMockClass(
-            \Magento\Framework\Profiler\Driver\Standard\OutputInterface::class,
+            'Magento\Framework\Profiler\Driver\Standard\OutputInterface',
             [],
             [],
             'Magento_Framework_Profiler_Driver_Standard_Output_Test_Default'
         );
         $testOutputClass = $this->getMockClass(
-            \Magento\Framework\Profiler\Driver\Standard\OutputInterface::class,
+            'Magento\Framework\Profiler\Driver\Standard\OutputInterface',
             [],
             [],
             'Magento_Framework_Profiler_Driver_Standard_Output_Test_Test'

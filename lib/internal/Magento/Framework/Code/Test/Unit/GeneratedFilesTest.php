@@ -28,11 +28,10 @@ class GeneratedFilesTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->directoryList =
-            $this->getMock(\Magento\Framework\App\Filesystem\DirectoryList::class, [], [], '', false);
-        $writeFactory = $this->getMock(\Magento\Framework\Filesystem\Directory\WriteFactory::class, [], [], '', false);
+        $this->directoryList = $this->getMock('\Magento\Framework\App\Filesystem\DirectoryList', [], [], '', false);
+        $writeFactory = $this->getMock('\Magento\Framework\Filesystem\Directory\WriteFactory', [], [], '', false);
         $this->writeInterface = $this->getMock(
-            \Magento\Framework\Filesystem\Directory\WriteInterface::class,
+            '\Magento\Framework\Filesystem\Directory\WriteInterface',
             [],
             [],
             '',

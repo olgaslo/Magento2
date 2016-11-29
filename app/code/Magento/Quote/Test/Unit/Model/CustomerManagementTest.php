@@ -53,7 +53,7 @@ class CustomerManagementTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->customerRepositoryMock = $this->getMockForAbstractClass(
-            \Magento\Customer\Api\CustomerRepositoryInterface::class,
+            'Magento\Customer\Api\CustomerRepositoryInterface',
             [],
             '',
             false,
@@ -62,7 +62,7 @@ class CustomerManagementTest extends \PHPUnit_Framework_TestCase
             ['getById']
         );
         $this->customerAddressRepositoryMock = $this->getMockForAbstractClass(
-            \Magento\Customer\Api\AddressRepositoryInterface::class,
+            'Magento\Customer\Api\AddressRepositoryInterface',
             [],
             '',
             false,
@@ -71,7 +71,7 @@ class CustomerManagementTest extends \PHPUnit_Framework_TestCase
             ['getById']
         );
         $this->accountManagementMock = $this->getMockForAbstractClass(
-            \Magento\Customer\Api\AccountManagementInterface::class,
+            'Magento\Customer\Api\AccountManagementInterface',
             [],
             '',
             false,
@@ -80,21 +80,21 @@ class CustomerManagementTest extends \PHPUnit_Framework_TestCase
             []
         );
         $this->quoteMock = $this->getMock(
-            \Magento\Quote\Model\Quote::class,
+            'Magento\Quote\Model\Quote',
             ['getId', 'getCustomer', 'getBillingAddress', 'getShippingAddress', 'setCustomer', 'getPasswordHash'],
             [],
             '',
             false
         );
         $this->quoteAddressMock = $this->getMock(
-            \Magento\Quote\Model\Quote\Address::class,
+            'Magento\Quote\Model\Quote\Address',
             [],
             [],
             '',
             false
         );
         $this->customerMock = $this->getMockForAbstractClass(
-            \Magento\Customer\Api\Data\CustomerInterface::class,
+            'Magento\Customer\Api\Data\CustomerInterface',
             [],
             '',
             false,
@@ -103,7 +103,7 @@ class CustomerManagementTest extends \PHPUnit_Framework_TestCase
             ['getId', 'getDefaultBilling']
         );
         $this->customerAddressMock = $this->getMockForAbstractClass(
-            \Magento\Customer\Api\Data\AddressInterface::class,
+            'Magento\Customer\Api\Data\AddressInterface',
             [],
             '',
             false,

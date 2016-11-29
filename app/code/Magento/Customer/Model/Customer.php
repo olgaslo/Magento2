@@ -284,7 +284,7 @@ class Customer extends \Magento\Framework\Model\AbstractModel
      */
     public function _construct()
     {
-        $this->_init(\Magento\Customer\Model\ResourceModel\Customer::class);
+        $this->_init('Magento\Customer\Model\ResourceModel\Customer');
     }
 
     /**
@@ -304,7 +304,7 @@ class Customer extends \Magento\Framework\Model\AbstractModel
         $this->dataObjectHelper->populateWithArray(
             $customerDataObject,
             $customerData,
-            \Magento\Customer\Api\Data\CustomerInterface::class
+            '\Magento\Customer\Api\Data\CustomerInterface'
         );
         $customerDataObject->setAddresses($addressesData)
             ->setId($this->getId());
@@ -321,7 +321,7 @@ class Customer extends \Magento\Framework\Model\AbstractModel
     {
         $customerDataAttributes = $this->dataObjectProcessor->buildOutputDataArray(
             $customer,
-            \Magento\Customer\Api\Data\CustomerInterface::class
+            '\Magento\Customer\Api\Data\CustomerInterface'
         );
 
         foreach ($customerDataAttributes as $attributeCode => $attributeData) {
@@ -1340,7 +1340,7 @@ class Customer extends \Magento\Framework\Model\AbstractModel
     }
 
     /**
-     * Return Password
+     * Return Password Confirmation
      *
      * @return string
      */

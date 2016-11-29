@@ -46,7 +46,7 @@ class View extends \Magento\Framework\Config\Reader\Filesystem
         ValidationStateInterface $validationState,
         $fileName,
         $idAttributes = [],
-        $domDocumentClass = \Magento\Framework\Config\Dom::class,
+        $domDocumentClass = 'Magento\Framework\Config\Dom',
         $defaultScope = 'global',
         $xpath = []
     ) {

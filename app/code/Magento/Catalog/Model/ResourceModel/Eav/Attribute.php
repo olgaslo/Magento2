@@ -164,7 +164,7 @@ class Attribute extends \Magento\Eav\Model\Entity\Attribute implements
      */
     protected function _construct()
     {
-        $this->_init(\Magento\Catalog\Model\ResourceModel\Attribute::class);
+        $this->_init('Magento\Catalog\Model\ResourceModel\Attribute');
     }
 
     /**
@@ -193,7 +193,7 @@ class Attribute extends \Magento\Eav\Model\Entity\Attribute implements
         }
         if ($this->getFrontendInput() == 'price') {
             if (!$this->getBackendModel()) {
-                $this->setBackendModel(\Magento\Catalog\Model\Product\Attribute\Backend\Price::class);
+                $this->setBackendModel('Magento\Catalog\Model\Product\Attribute\Backend\Price');
             }
         }
         if ($this->getFrontendInput() == 'textarea') {
@@ -351,11 +351,14 @@ class Attribute extends \Magento\Eav\Model\Entity\Attribute implements
      */
     public function getApplyTo()
     {
-        $applyTo = $this->_getData(self::APPLY_TO) ?: [];
-        if (!is_array($applyTo)) {
-            $applyTo = explode(',', $applyTo);
+        if ($this->getData(self::APPLY_TO)) {
+            if (is_array($this->getData(self::APPLY_TO))) {
+                return $this->getData(self::APPLY_TO);
+            }
+            return explode(',', $this->getData(self::APPLY_TO));
+        } else {
+            return [];
         }
-        return $applyTo;
     }
 
     /**
@@ -402,7 +405,7 @@ class Attribute extends \Magento\Eav\Model\Entity\Attribute implements
      */
     public function _getDefaultSourceModel()
     {
-        return \Magento\Eav\Model\Entity\Attribute\Source\Table::class;
+        return 'Magento\Eav\Model\Entity\Attribute\Source\Table';
     }
 
     /**

@@ -39,29 +39,29 @@ class ResolverTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->designMock = $this->getMockForAbstractClass(\Magento\Framework\View\DesignInterface::class);
+        $this->designMock = $this->getMockForAbstractClass('Magento\Framework\View\DesignInterface');
         $this->themeCollectionFactoryMock = $this->getMock(
-            \Magento\Theme\Model\ResourceModel\Theme\CollectionFactory::class,
+            'Magento\Theme\Model\ResourceModel\Theme\CollectionFactory',
             ['create'],
             [],
             '',
             false
         );
         $this->themeCollectionMock = $this->getMock(
-            \Magento\Theme\Model\ResourceModel\Theme\Collection::class,
+            'Magento\Theme\Model\ResourceModel\Theme\Collection',
             [],
             [],
             '',
             false
         );
         $this->appStateMock = $this->getMock(
-            \Magento\Framework\App\State::class,
+            'Magento\Framework\App\State',
             [],
             [],
             '',
             false
         );
-        $this->themeMock = $this->getMockForAbstractClass(\Magento\Framework\View\Design\ThemeInterface::class);
+        $this->themeMock = $this->getMockForAbstractClass('Magento\Framework\View\Design\ThemeInterface');
 
         $this->model = new \Magento\Theme\Model\Theme\Resolver(
             $this->appStateMock,

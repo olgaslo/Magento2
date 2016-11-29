@@ -25,10 +25,10 @@ class JavascriptTest extends \PHPUnit_Framework_TestCase
     {
         $objectManager = \Magento\TestFramework\Helper\Bootstrap::getObjectManager();
 
-        $this->request = $objectManager->get(\Magento\Framework\App\RequestInterface::class);
+        $this->request = $objectManager->get('Magento\Framework\App\RequestInterface');
 
         $this->javascript = $objectManager->create(
-            \Magento\PageCache\Block\Javascript::class
+            'Magento\PageCache\Block\Javascript'
         );
     }
 

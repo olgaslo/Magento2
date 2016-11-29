@@ -35,44 +35,44 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
         );
 
         $entityFactory = $this->getMock(
-            \Magento\Framework\Data\Collection\EntityFactoryInterface::class,
+            '\Magento\Framework\Data\Collection\EntityFactoryInterface',
             [],
             [],
             '',
             false
         );
         $logger = $this->getMock(
-            \Psr\Log\LoggerInterface::class,
+            '\Psr\Log\LoggerInterface',
             [],
             [],
             '',
             false
         );
         $fetchStrategy = $this->getMock(
-            \Magento\Framework\Data\Collection\Db\FetchStrategyInterface::class,
+            '\Magento\Framework\Data\Collection\Db\FetchStrategyInterface',
             [],
             [],
             '',
             false
         );
         $eventManager = $this->getMock(
-            \Magento\Framework\Event\ManagerInterface::class,
+            '\Magento\Framework\Event\ManagerInterface',
             [],
             [],
             '',
             false
         );
 
-        $select = $this->getMockBuilder(\Magento\Framework\DB\Select::class)
+        $select = $this->getMockBuilder('Magento\Framework\DB\Select')
             ->disableOriginalConstructor()
             ->getMock();
 
-        $connection = $this->getMockBuilder(\Magento\Framework\DB\Adapter\Pdo\Mysql::class)
+        $connection = $this->getMockBuilder('Magento\Framework\DB\Adapter\Pdo\Mysql')
             ->disableOriginalConstructor()
             ->getMock();
         $connection->expects($this->any())->method('select')->willReturn($select);
 
-        $this->resourceMock = $this->getMockBuilder(\Magento\Framework\Model\ResourceModel\Db\AbstractDb::class)
+        $this->resourceMock = $this->getMockBuilder('Magento\Framework\Model\ResourceModel\Db\AbstractDb')
             ->disableOriginalConstructor()
             ->setMethods(
                 ['getConnection', 'getMainTable', 'getTable', 'deleteSessionsOlderThen', 'updateStatusByUserId']
@@ -87,7 +87,7 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
         $this->resourceMock->expects($this->any())->method('getTable')->willReturn('test');
 
         $this->collectionMock = $this->getMock(
-            \Magento\Security\Model\ResourceModel\AdminSessionInfo\Collection::class,
+            '\Magento\Security\Model\ResourceModel\AdminSessionInfo\Collection',
             ['addFieldToFilter'],
             [$entityFactory, $logger, $fetchStrategy, $eventManager,
                 $this->dateTimeMock,

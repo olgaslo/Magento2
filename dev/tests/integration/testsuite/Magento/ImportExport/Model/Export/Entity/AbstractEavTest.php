@@ -36,11 +36,11 @@ class AbstractEavTest extends \PHPUnit_Framework_TestCase
         $objectManager = \Magento\TestFramework\Helper\Bootstrap::getObjectManager();
 
         $customerAttributes = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create(
-            \Magento\Customer\Model\ResourceModel\Attribute\Collection::class
+            'Magento\Customer\Model\ResourceModel\Attribute\Collection'
         );
 
         $this->_model = $this->getMockForAbstractClass(
-            \Magento\ImportExport\Model\Export\Entity\AbstractEav::class,
+            'Magento\ImportExport\Model\Export\Entity\AbstractEav',
             [],
             '',
             false
@@ -60,12 +60,12 @@ class AbstractEavTest extends \PHPUnit_Framework_TestCase
             $this->returnValue($customerAttributes)
         );
         $this->_model->__construct(
-            $objectManager->get(\Magento\Framework\App\Config\ScopeConfigInterface::class),
-            $objectManager->get(\Magento\Store\Model\StoreManager::class),
-            $objectManager->get(\Magento\ImportExport\Model\Export\Factory::class),
-            $objectManager->get(\Magento\ImportExport\Model\ResourceModel\CollectionByPagesIteratorFactory::class),
-            $objectManager->get(\Magento\Framework\Stdlib\DateTime\TimezoneInterface::class),
-            $objectManager->get(\Magento\Eav\Model\Config::class)
+            $objectManager->get('Magento\Framework\App\Config\ScopeConfigInterface'),
+            $objectManager->get('Magento\Store\Model\StoreManager'),
+            $objectManager->get('Magento\ImportExport\Model\Export\Factory'),
+            $objectManager->get('Magento\ImportExport\Model\ResourceModel\CollectionByPagesIteratorFactory'),
+            $objectManager->get('Magento\Framework\Stdlib\DateTime\TimezoneInterface'),
+            $objectManager->get('Magento\Eav\Model\Config')
         );
     }
 
@@ -76,7 +76,7 @@ class AbstractEavTest extends \PHPUnit_Framework_TestCase
     {
         $entityCode = 'customer';
         $entityId = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->get(
-            \Magento\Eav\Model\Config::class
+            'Magento\Eav\Model\Config'
         )->getEntityType(
             $entityCode
         )->getEntityTypeId();
@@ -107,7 +107,7 @@ class AbstractEavTest extends \PHPUnit_Framework_TestCase
     {
         /** @var $attributeCollection \Magento\Customer\Model\ResourceModel\Attribute\Collection */
         $attributeCollection = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create(
-            \Magento\Customer\Model\ResourceModel\Attribute\Collection::class
+            'Magento\Customer\Model\ResourceModel\Attribute\Collection'
         );
         $attributeCollection->addFieldToFilter('attribute_code', 'gender');
         /** @var $attribute \Magento\Customer\Model\Attribute */
@@ -131,7 +131,7 @@ class AbstractEavTest extends \PHPUnit_Framework_TestCase
     {
         /** @var $attributeCollection \Magento\Customer\Model\ResourceModel\Attribute\Collection */
         $attributeCollection = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create(
-            \Magento\Customer\Model\ResourceModel\Attribute\Collection::class
+            'Magento\Customer\Model\ResourceModel\Attribute\Collection'
         );
         $attributeCollection->addFieldToFilter('attribute_code', ['in' => self::$_skippedAttributes]);
         $skippedAttributes = [];

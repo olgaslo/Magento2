@@ -34,9 +34,8 @@ class IndexerRegistry
     public function get($indexerId)
     {
         if (!isset($this->indexers[$indexerId])) {
-            $this->indexers[$indexerId] = $this->objectManager->create(
-                \Magento\Framework\Indexer\IndexerInterface::class
-            )->load($indexerId);
+            $this->indexers[$indexerId] = $this->objectManager->create('Magento\Framework\Indexer\IndexerInterface')
+                ->load($indexerId);
         }
         return $this->indexers[$indexerId];
     }

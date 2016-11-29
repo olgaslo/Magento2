@@ -44,27 +44,27 @@ class CatalogPriceTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->storeManagerMock = $this->getMock(\Magento\Store\Model\StoreManagerInterface::class);
+        $this->storeManagerMock = $this->getMock('Magento\Store\Model\StoreManagerInterface');
         $this->commonPriceMock = $this->getMock(
-            \Magento\Catalog\Model\Product\CatalogPrice::class,
+            'Magento\Catalog\Model\Product\CatalogPrice',
             [],
             [],
             '',
             false
         );
         $productMethods = ['getWebsiteId', 'getCustomerGroupId', '__wakeup', 'getTypeInstance', 'setTaxClassId'];
-        $this->productMock = $this->getMock(\Magento\Catalog\Model\Product::class, $productMethods, [], '', false);
+        $this->productMock = $this->getMock('Magento\Catalog\Model\Product', $productMethods, [], '', false);
         $methods = ['setWebsiteId', 'isSalable', '__wakeup', 'setCustomerGroupId', 'getTaxClassId'];
-        $this->associatedProductMock = $this->getMock(\Magento\Catalog\Model\Product::class, $methods, [], '', false);
+        $this->associatedProductMock = $this->getMock('Magento\Catalog\Model\Product', $methods, [], '', false);
         $this->priceModelMock = $this->getMock(
-            \Magento\Catalog\Model\Product\Type\Price::class,
+            'Magento\Catalog\Model\Product\Type\Price',
             ['getTotalPrices'],
             [],
             '',
             false
         );
         $this->productTypeMock = $this->getMock(
-            \Magento\GroupedProduct\Model\Product\Type\Grouped::class,
+            'Magento\GroupedProduct\Model\Product\Type\Grouped',
             [],
             [],
             '',
@@ -145,9 +145,9 @@ class CatalogPriceTest extends \PHPUnit_Framework_TestCase
 
     public function testGetCatalogPriceWithCustomStoreAndSubProductIsSalable()
     {
-        $storeMock = $this->getMock(\Magento\Store\Api\Data\StoreInterface::class);
+        $storeMock = $this->getMock('Magento\Store\Api\Data\StoreInterface');
         $storeMock->expects($this->once())->method('getId')->willReturn('store_id');
-        $currentStoreMock = $this->getMock(\Magento\Store\Api\Data\StoreInterface::class);
+        $currentStoreMock = $this->getMock('Magento\Store\Api\Data\StoreInterface');
         $currentStoreMock->expects($this->once())->method('getId')->willReturn('current_store_id');
 
         $this->productMock->expects(

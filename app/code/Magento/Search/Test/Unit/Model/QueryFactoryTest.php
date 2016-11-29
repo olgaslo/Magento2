@@ -14,11 +14,6 @@ use Magento\Search\Model\QueryFactory;
 use Magento\Framework\Stdlib\StringUtils;
 use Magento\Search\Model\Query;
 
-/**
- * Class QueryFactoryTest tests Magento\Search\Model\QueryFactory
- *
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
- */
 class QueryFactoryTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -338,7 +333,7 @@ class QueryFactoryTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @param string $cleanedRawText
-     * @return void
+     * @param void
      */
     private function mockSetQueryTextOnceExecute($cleanedRawText)
     {

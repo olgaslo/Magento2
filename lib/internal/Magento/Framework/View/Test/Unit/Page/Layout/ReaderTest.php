@@ -54,39 +54,39 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->processorInterface = $this->getMock(
-            \Magento\Framework\View\Layout\ProcessorInterface::class,
+            'Magento\Framework\View\Layout\ProcessorInterface',
             [],
             [],
             '',
             false
         );
-        $this->themeInterface = $this->getMock(\Magento\Framework\View\Design\ThemeInterface::class, [], [], '', false);
+        $this->themeInterface = $this->getMock('Magento\Framework\View\Design\ThemeInterface', [], [], '', false);
         $this->processorFactory = $this->getMock(
-            \Magento\Framework\View\Layout\ProcessorFactory::class,
+            'Magento\Framework\View\Layout\ProcessorFactory',
             ['create'],
             [],
             '',
             false
         );
         $this->themeResolver = $this->getMock(
-            \Magento\Framework\View\Design\Theme\ResolverInterface::class,
+            'Magento\Framework\View\Design\Theme\ResolverInterface',
             [],
             [],
             '',
             false
         );
-        $this->pageLayoutFileSource = $this->getMockBuilder(\Magento\Framework\View\File\CollectorInterface::class)
+        $this->pageLayoutFileSource = $this->getMockBuilder('Magento\Framework\View\File\CollectorInterface')
             ->getMock();
-        $this->readerPool = $this->getMockBuilder(\Magento\Framework\View\Layout\ReaderPool::class)
+        $this->readerPool = $this->getMockBuilder('Magento\Framework\View\Layout\ReaderPool')
             ->disableOriginalConstructor()
             ->getMock();
-        $this->readerContext = $this->getMockBuilder(\Magento\Framework\View\Layout\Reader\Context::class)
+        $this->readerContext = $this->getMockBuilder('Magento\Framework\View\Layout\Reader\Context')
             ->setMethods(['getScheduledStructure'])
             ->disableOriginalConstructor()
             ->getMock();
         $this->model = (new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this))
             ->getObject(
-                \Magento\Framework\View\Page\Layout\Reader::class,
+                'Magento\Framework\View\Page\Layout\Reader',
                 [
                     'themeResolver' => $this->themeResolver,
                     'processorFactory' => $this->processorFactory,

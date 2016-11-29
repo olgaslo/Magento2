@@ -29,19 +29,19 @@ class StockTest extends \PHPUnit_Framework_TestCase
     {
         $objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
         $this->_filter = $this->getMock(
-            \Magento\Framework\Filter\Input\MaliciousCode::class,
+            '\Magento\Framework\Filter\Input\MaliciousCode',
             ['filter'],
             [],
             '',
             false
         );
 
-        $this->imageBuilder = $this->getMockBuilder(\Magento\Catalog\Block\Product\ImageBuilder::class)
+        $this->imageBuilder = $this->getMockBuilder('Magento\Catalog\Block\Product\ImageBuilder')
             ->disableOriginalConstructor()
             ->getMock();
 
         $this->_block = $objectManager->getObject(
-            \Magento\ProductAlert\Block\Email\Stock::class,
+            'Magento\ProductAlert\Block\Email\Stock',
             [
                 'maliciousCode' => $this->_filter,
                 'imageBuilder' => $this->imageBuilder,
@@ -74,11 +74,11 @@ class StockTest extends \PHPUnit_Framework_TestCase
         $imageId = 'test_image_id';
         $attributes = [];
 
-        $productMock = $this->getMockBuilder(\Magento\Catalog\Model\Product::class)
+        $productMock = $this->getMockBuilder('Magento\Catalog\Model\Product')
             ->disableOriginalConstructor()
             ->getMock();
 
-        $imageMock = $this->getMockBuilder(\Magento\Catalog\Block\Product\Image::class)
+        $imageMock = $this->getMockBuilder('Magento\Catalog\Block\Product\Image')
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -99,7 +99,7 @@ class StockTest extends \PHPUnit_Framework_TestCase
             ->willReturn($imageMock);
 
         $this->assertInstanceOf(
-            \Magento\Catalog\Block\Product\Image::class,
+            'Magento\Catalog\Block\Product\Image',
             $this->_block->getImage($productMock, $imageId, $attributes)
         );
     }

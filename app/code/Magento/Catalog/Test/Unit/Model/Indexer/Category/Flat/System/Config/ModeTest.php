@@ -34,21 +34,21 @@ class ModeTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->configMock = $this->getMock(\Magento\Framework\App\Config\ScopeConfigInterface::class);
+        $this->configMock = $this->getMock('Magento\Framework\App\Config\ScopeConfigInterface');
         $this->indexerStateMock = $this->getMock(
-            \Magento\Indexer\Model\Indexer\State::class,
+            'Magento\Indexer\Model\Indexer\State',
             ['loadByIndexer', 'setStatus', 'save', '__wakeup'],
             [],
             '',
             false
         );
-        $this->indexerRegistry = $this->getMock(\Magento\Framework\Indexer\IndexerRegistry::class, [], [], '', false);
+        $this->indexerRegistry = $this->getMock('Magento\Framework\Indexer\IndexerRegistry', [], [], '', false);
 
-        $this->flatIndexer = $this->getMock(\Magento\Framework\Indexer\IndexerInterface::class);
+        $this->flatIndexer = $this->getMock('Magento\Framework\Indexer\IndexerInterface');
 
         $objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
         $this->model = $objectManager->getObject(
-            \Magento\Catalog\Model\Indexer\Category\Flat\System\Config\Mode::class,
+            'Magento\Catalog\Model\Indexer\Category\Flat\System\Config\Mode',
             [
                 'config' => $this->configMock,
                 'indexerState' => $this->indexerStateMock,

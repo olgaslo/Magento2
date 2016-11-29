@@ -15,8 +15,6 @@ use Magento\Framework\Session\SaveHandlerInterface;
 
 /**
  * Magento session configuration
- *
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
 class Config implements ConfigInterface
 {
@@ -294,7 +292,7 @@ class Config implements ConfigInterface
     {
         $validator = $this->_validatorFactory->create(
             [],
-            \Magento\Framework\Session\Config\Validator\CookieLifetimeValidator::class
+            'Magento\Framework\Session\Config\Validator\CookieLifetimeValidator'
         );
         if ($validator->isValid($cookieLifetime)) {
             $this->setOption('session.cookie_lifetime', (int)$cookieLifetime);
@@ -327,7 +325,7 @@ class Config implements ConfigInterface
         $cookiePath = (string)$cookiePath;
         $validator = $this->_validatorFactory->create(
             [],
-            \Magento\Framework\Session\Config\Validator\CookiePathValidator::class
+            'Magento\Framework\Session\Config\Validator\CookiePathValidator'
         );
         if ($validator->isValid($cookiePath)) {
             $this->setOption('session.cookie_path', $cookiePath);
@@ -359,7 +357,7 @@ class Config implements ConfigInterface
     {
         $validator = $this->_validatorFactory->create(
             [],
-            \Magento\Framework\Session\Config\Validator\CookieDomainValidator::class
+            'Magento\Framework\Session\Config\Validator\CookieDomainValidator'
         );
         if ($validator->isValid($cookieDomain)) {
             $this->setOption('session.cookie_domain', $cookieDomain);

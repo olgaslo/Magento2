@@ -48,21 +48,21 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->objectManagerMock = $this->getMock(
-            \Magento\Framework\ObjectManager\ObjectManager::class,
+            'Magento\Framework\ObjectManager\ObjectManager',
             [],
             [],
             '',
             false
         );
         $this->pricesMock = $this->getMock(
-            \Magento\Framework\Pricing\Price\Collection::class,
+            'Magento\Framework\Pricing\Price\Collection',
             [],
             [],
             '',
             false
         );
         $this->saleableItemMock = $this->getMockForAbstractClass(
-            \Magento\Framework\Pricing\SaleableInterface::class,
+            'Magento\Framework\Pricing\SaleableInterface',
             [],
             '',
             false,
@@ -71,7 +71,7 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
             ['getQty']
         );
         $this->priceInfoMock = $this->getMockForAbstractClass(
-            \Magento\Framework\Pricing\PriceInfoInterface::class,
+            'Magento\Framework\Pricing\PriceInfoInterface',
             [],
             '',
             false,

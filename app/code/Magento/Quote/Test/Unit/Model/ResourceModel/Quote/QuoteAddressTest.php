@@ -53,42 +53,42 @@ class QuoteAddressTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->addressMock = $this->getMock(
-            \Magento\Quote\Model\Quote\Address::class,
+            'Magento\Quote\Model\Quote\Address',
             ['__wakeup', 'getOrderId', 'hasDataChanges', 'beforeSave', 'afterSave', 'validateBeforeSave', 'getOrder'],
             [],
             '',
             false
         );
         $this->quoteMock = $this->getMock(
-            \Magento\Quote\Model\Quote::class,
+            'Magento\Quote\Model\Quote',
             ['__wakeup', 'getId'],
             [],
             '',
             false
         );
         $this->appResourceMock = $this->getMock(
-            \Magento\Framework\App\ResourceConnection::class,
+            'Magento\Framework\App\ResourceConnection',
             [],
             [],
             '',
             false
         );
         $this->connectionMock = $this->getMock(
-            \Magento\Framework\DB\Adapter\Pdo\Mysql::class,
+            'Magento\Framework\DB\Adapter\Pdo\Mysql',
             [],
             [],
             '',
             false
         );
         $this->entitySnapshotMock = $this->getMock(
-            \Magento\Framework\Model\ResourceModel\Db\VersionControl\Snapshot::class,
+            'Magento\Framework\Model\ResourceModel\Db\VersionControl\Snapshot',
             [],
             [],
             '',
             false
         );
         $this->relationCompositeMock = $this->getMock(
-            \Magento\Framework\Model\ResourceModel\Db\VersionControl\RelationComposite::class,
+            'Magento\Framework\Model\ResourceModel\Db\VersionControl\RelationComposite',
             [],
             [],
             '',
@@ -106,7 +106,7 @@ class QuoteAddressTest extends \PHPUnit_Framework_TestCase
         $this->connectionMock->expects($this->any())
                           ->method('lastInsertId');
         $this->addressResource = $objectManager->getObject(
-            \Magento\Quote\Model\ResourceModel\Quote\Address::class,
+            'Magento\Quote\Model\ResourceModel\Quote\Address',
             [
                 'resource' => $this->appResourceMock,
                 'entitySnapshot' => $this->entitySnapshotMock,

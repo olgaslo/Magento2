@@ -28,17 +28,17 @@ class CompilerPreparationTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->serviceManagerMock = $this->getMockBuilder(\Zend\ServiceManager\ServiceManager::class)
+        $this->serviceManagerMock = $this->getMockBuilder('\Zend\ServiceManager\ServiceManager')
             ->disableOriginalConstructor()
             ->getMock();
-        $this->inputMock = $this->getMockBuilder(\Symfony\Component\Console\Input\ArgvInput::class)
+        $this->inputMock = $this->getMockBuilder('\Symfony\Component\Console\Input\ArgvInput')
             ->disableOriginalConstructor()
             ->getMock();
-        $this->filesystemDriverMock = $this->getMockBuilder(\Magento\Framework\Filesystem\Driver\File::class)
+        $this->filesystemDriverMock = $this->getMockBuilder('\Magento\Framework\Filesystem\Driver\File')
             ->disableOriginalConstructor()
             ->getMock();
         $this->model = (new ObjectManager($this))->getObject(
-            \Magento\Setup\Console\CompilerPreparation::class,
+            '\Magento\Setup\Console\CompilerPreparation',
             [
                 'serviceManager' => $this->serviceManagerMock,
                 'input' => $this->inputMock,

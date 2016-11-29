@@ -63,35 +63,35 @@ class EavAbstractTest extends \Magento\ImportExport\Test\Unit\Model\Import\Abstr
         parent::setUp();
 
         $this->_string = new \Magento\Framework\Stdlib\StringUtils();
-        $scopeConfig = $this->getMock(\Magento\Framework\App\Config\ScopeConfigInterface::class);
+        $scopeConfig = $this->getMock('Magento\Framework\App\Config\ScopeConfigInterface');
 
         $this->_importFactory = $this->getMock(
-            \Magento\ImportExport\Model\ImportFactory::class,
+            'Magento\ImportExport\Model\ImportFactory',
             [],
             [],
             '',
             false
         );
-        $this->_resource = $this->getMock(\Magento\Framework\App\ResourceConnection::class, [], [], '', false);
+        $this->_resource = $this->getMock('Magento\Framework\App\ResourceConnection', [], [], '', false);
         $this->_resourceHelper = $this->getMock(
-            \Magento\ImportExport\Model\ResourceModel\Helper::class,
+            'Magento\ImportExport\Model\ResourceModel\Helper',
             [],
             [],
             '',
             false
         );
-        $this->_storeManager = $this->getMock(\Magento\Store\Model\StoreManager::class, [], [], '', false);
+        $this->_storeManager = $this->getMock('Magento\Store\Model\StoreManager', [], [], '', false);
         $this->_collectionFactory = $this->getMock(
-            \Magento\ImportExport\Model\Export\Factory::class,
+            'Magento\ImportExport\Model\Export\Factory',
             [],
             [],
             '',
             false
         );
-        $this->_eavConfig = $this->getMock(\Magento\Eav\Model\Config::class, [], [], '', false);
+        $this->_eavConfig = $this->getMock('Magento\Eav\Model\Config', [], [], '', false);
 
         $this->_model = $this->getMockForAbstractClass(
-            \Magento\ImportExport\Model\Import\Entity\AbstractEav::class,
+            'Magento\ImportExport\Model\Import\Entity\AbstractEav',
             [
                 $this->_string,
                 $scopeConfig,

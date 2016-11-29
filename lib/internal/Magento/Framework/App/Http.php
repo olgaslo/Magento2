@@ -131,7 +131,7 @@ class Http implements \Magento\Framework\AppInterface
         $this->_state->setAreaCode($areaCode);
         $this->_objectManager->configure($this->_configLoader->load($areaCode));
         /** @var \Magento\Framework\App\FrontControllerInterface $frontController */
-        $frontController = $this->_objectManager->get(\Magento\Framework\App\FrontControllerInterface::class);
+        $frontController = $this->_objectManager->get('Magento\Framework\App\FrontControllerInterface');
         $result = $frontController->dispatch($this->_request);
         // TODO: Temporary solution until all controllers return ResultInterface (MAGETWO-28359)
         if ($result instanceof ResultInterface) {
@@ -241,7 +241,8 @@ class Http implements \Magento\Framework\AppInterface
                 . "because the Magento setup directory cannot be accessed. \n"
                 . 'You can install Magento using either the command line or you must restore access '
                 . 'to the following directory: ' . $setupInfo->getDir($projectRoot) . "\n";
-
+            $newMessage .= 'If you are using the sample nginx configuration, please go to '
+                . $this->_request->getScheme(). '://' . $this->_request->getHttpHost() . $setupInfo->getUrl();
             throw new \Exception($newMessage, 0, $exception);
         }
     }

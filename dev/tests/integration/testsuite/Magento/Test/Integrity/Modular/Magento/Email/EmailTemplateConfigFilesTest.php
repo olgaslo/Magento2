@@ -17,13 +17,7 @@ class EmailTemplateConfigFilesTest extends \PHPUnit_Framework_TestCase
     {
         $urnResolver = new \Magento\Framework\Config\Dom\UrnResolver();
         $schemaFile = $urnResolver->getRealPath('urn:magento:module:Magento_Email:etc/email_templates.xsd');
-        $validationStateMock = $this->getMock(
-            \Magento\Framework\Config\ValidationStateInterface::class,
-            [],
-            [],
-            '',
-            false
-        );
+        $validationStateMock = $this->getMock('\Magento\Framework\Config\ValidationStateInterface', [], [], '', false);
         $validationStateMock->method('isValidationRequired')
             ->willReturn(true);
         $dom = new \Magento\Framework\Config\Dom(file_get_contents($file), $validationStateMock);
@@ -49,7 +43,7 @@ class EmailTemplateConfigFilesTest extends \PHPUnit_Framework_TestCase
     {
         /** @var \Magento\Email\Model\Template\Config $emailConfig */
         $emailConfig = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create(
-            \Magento\Email\Model\Template\Config::class
+            'Magento\Email\Model\Template\Config'
         );
 
         $parts = $emailConfig->parseTemplateIdParts($templateId);
@@ -73,7 +67,7 @@ class EmailTemplateConfigFilesTest extends \PHPUnit_Framework_TestCase
         $data = [];
         /** @var \Magento\Email\Model\Template\Config $emailConfig */
         $emailConfig = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create(
-            \Magento\Email\Model\Template\Config::class
+            'Magento\Email\Model\Template\Config'
         );
         foreach ($emailConfig->getAvailableTemplates() as $template) {
             $data[$template['value']] = [$template['value']];
@@ -86,11 +80,11 @@ class EmailTemplateConfigFilesTest extends \PHPUnit_Framework_TestCase
      */
     public function testMergedFormat()
     {
-        $validationState = $this->getMock(\Magento\Framework\Config\ValidationStateInterface::class);
+        $validationState = $this->getMock('Magento\Framework\Config\ValidationStateInterface');
         $validationState->expects($this->any())->method('isValidationRequired')->will($this->returnValue(true));
         /** @var \Magento\Email\Model\Template\Config\Reader $reader */
         $reader = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create(
-            \Magento\Email\Model\Template\Config\Reader::class,
+            'Magento\Email\Model\Template\Config\Reader',
             ['validationState' => $validationState]
         );
         try {

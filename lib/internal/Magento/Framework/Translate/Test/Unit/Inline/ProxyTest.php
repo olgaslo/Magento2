@@ -21,8 +21,8 @@ class ProxyTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->objectManagerMock = $this->getMock(\Magento\Framework\ObjectManagerInterface::class);
-        $this->translateMock = $this->getMock(\Magento\Framework\Translate\Inline::class, [], [], '', false);
+        $this->objectManagerMock = $this->getMock('Magento\Framework\ObjectManagerInterface');
+        $this->translateMock = $this->getMock('Magento\Framework\Translate\Inline', [], [], '', false);
     }
 
     public function testIsAllowed()
@@ -32,7 +32,7 @@ class ProxyTest extends \PHPUnit_Framework_TestCase
         )->method(
             'get'
         )->with(
-            \Magento\Framework\Translate\Inline::class
+            'Magento\Framework\Translate\Inline'
         )->will(
             $this->returnValue($this->translateMock)
         );
@@ -41,7 +41,7 @@ class ProxyTest extends \PHPUnit_Framework_TestCase
 
         $model = new Proxy(
             $this->objectManagerMock,
-            \Magento\Framework\Translate\Inline::class,
+            'Magento\Framework\Translate\Inline',
             true
         );
 
@@ -56,7 +56,7 @@ class ProxyTest extends \PHPUnit_Framework_TestCase
         )->method(
             'create'
         )->with(
-            \Magento\Framework\Translate\Inline::class
+            'Magento\Framework\Translate\Inline'
         )->will(
             $this->returnValue($this->translateMock)
         );
@@ -65,7 +65,7 @@ class ProxyTest extends \PHPUnit_Framework_TestCase
 
         $model = new Proxy(
             $this->objectManagerMock,
-            \Magento\Framework\Translate\Inline::class,
+            'Magento\Framework\Translate\Inline',
             false
         );
 
@@ -80,7 +80,7 @@ class ProxyTest extends \PHPUnit_Framework_TestCase
         )->method(
             'get'
         )->with(
-            \Magento\Framework\Translate\Inline::class
+            'Magento\Framework\Translate\Inline'
         )->will(
             $this->returnValue($this->translateMock)
         );
@@ -93,7 +93,7 @@ class ProxyTest extends \PHPUnit_Framework_TestCase
 
         $model = new Proxy(
             $this->objectManagerMock,
-            \Magento\Framework\Translate\Inline::class,
+            'Magento\Framework\Translate\Inline',
             true
         );
         $body = '';
@@ -108,7 +108,7 @@ class ProxyTest extends \PHPUnit_Framework_TestCase
         )->method(
             'create'
         )->with(
-            \Magento\Framework\Translate\Inline::class
+            'Magento\Framework\Translate\Inline'
         )->will(
             $this->returnValue($this->translateMock)
         );
@@ -120,7 +120,7 @@ class ProxyTest extends \PHPUnit_Framework_TestCase
 
         $model = new Proxy(
             $this->objectManagerMock,
-            \Magento\Framework\Translate\Inline::class,
+            'Magento\Framework\Translate\Inline',
             false
         );
 

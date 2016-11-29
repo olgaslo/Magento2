@@ -28,26 +28,26 @@ class AddFieldsToAttributeObserverTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->moduleManagerMock = $this->getMock(
-            \Magento\Framework\Module\Manager::class,
+            '\Magento\Framework\Module\Manager',
             [],
             [],
             '',
             false
         );
 
-        $this->yesNoMock = $this->getMock(\Magento\Config\Model\Config\Source\Yesno::class, [], [], '', false);
+        $this->yesNoMock = $this->getMock('\Magento\Config\Model\Config\Source\Yesno', [], [], '', false);
         $this->eventObserverMock = $this->getMock(
-            \Magento\Framework\Event\Observer::class,
+            '\Magento\Framework\Event\Observer',
             ['getForm', 'getEvent', 'getAttribute'],
             [],
             '',
             false
         );
-        $this->formMock = $this->getMock(\Magento\Framework\Data\Form::class, ['getElement'], [], '', false);
+        $this->formMock = $this->getMock('\Magento\Framework\Data\Form', ['getElement'], [], '', false);
 
         $objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
         $this->observerMock = $objectManager->getObject(
-            \Magento\Swatches\Observer\AddFieldsToAttributeObserver::class,
+            'Magento\Swatches\Observer\AddFieldsToAttributeObserver',
             [
                 'moduleManager' => $this->moduleManagerMock,
                 'yesNo' => $this->yesNoMock,
@@ -71,7 +71,7 @@ class AddFieldsToAttributeObserverTest extends \PHPUnit_Framework_TestCase
             ->method('getForm')
             ->willReturn($this->formMock);
 
-        $element = $this->getMock(\Magento\Framework\Data\Form\Element\AbstractElement::class, [], [], '', false);
+        $element = $this->getMock('Magento\Framework\Data\Form\Element\AbstractElement', [], [], '', false);
         $this->formMock
             ->expects($this->exactly($expected['methods_count']))
             ->method('getElement')

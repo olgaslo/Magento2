@@ -30,11 +30,11 @@ class LinkTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->urlBuilderInterface = $this->getMock(\Magento\Framework\App\Rss\UrlBuilderInterface::class);
+        $this->urlBuilderInterface = $this->getMock('Magento\Framework\App\Rss\UrlBuilderInterface');
 
         $this->objectManagerHelper = new ObjectManagerHelper($this);
         $this->link = $this->objectManagerHelper->getObject(
-            \Magento\Review\Block\Adminhtml\Rss\Grid\Link::class,
+            'Magento\Review\Block\Adminhtml\Rss\Grid\Link',
             [
                 'rssUrlBuilder' => $this->urlBuilderInterface
             ]

@@ -33,11 +33,10 @@ class PriceModifierTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->productMock =
-            $this->getMock(
-                \Magento\Catalog\Model\Product::class,
+            $this->getMock('Magento\Catalog\Model\Product',
                 ['getData', 'setData', '__wakeup'], [], '', false);
         $this->productRepositoryMock = $this->getMock(
-            \Magento\Catalog\Model\ProductRepository::class,
+            '\Magento\Catalog\Model\ProductRepository',
             [],
             [],
             '',

@@ -12,8 +12,6 @@ use Magento\Paypal\Model\Payflow\Service\Response\Handler\HandlerInterface;
 
 /**
  * Test class for \Magento\Paypal\Model\Payflow\Service\Response\Transaction
- *
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
 class TransactionTest extends \PHPUnit_Framework_TestCase
 {
@@ -54,27 +52,21 @@ class TransactionTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->sessionTransparent = $this->getMock(
-            \Magento\Framework\Session\Generic::class,
-            ['getQuoteId'],
-            [],
-            '',
-            false
-        );
-        $this->quoteRepository = $this->getMock(\Magento\Quote\Api\CartRepositoryInterface::class);
-        $this->transparent = $this->getMock(\Magento\Paypal\Model\Payflow\Transparent::class, [], [], '', false);
+        $this->sessionTransparent = $this->getMock('Magento\Framework\Session\Generic', ['getQuoteId'], [], '', false);
+        $this->quoteRepository = $this->getMock('\Magento\Quote\Api\CartRepositoryInterface');
+        $this->transparent = $this->getMock('Magento\Paypal\Model\Payflow\Transparent', [], [], '', false);
         $this->paymentMethodManagementInterface = $this->getMock(
-            \Magento\Quote\Api\PaymentMethodManagementInterface::class,
+            'Magento\Quote\Api\PaymentMethodManagementInterface',
             [],
             [],
             '',
             false
         );
         $this->errorHandlerMock = $this->getMockBuilder(
-            \Magento\Paypal\Model\Payflow\Service\Response\Handler\HandlerInterface::class
+            'Magento\Paypal\Model\Payflow\Service\Response\Handler\HandlerInterface'
         )->getMock();
 
-        $this->loggerMock = $this->getMockBuilder(\Magento\Payment\Model\Method\Logger::class)
+        $this->loggerMock = $this->getMockBuilder('Magento\Payment\Model\Method\Logger')
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -109,6 +101,7 @@ class TransactionTest extends \PHPUnit_Framework_TestCase
             ->method('debug')
             ->with($gatewayTransactionResponse, ['key1', 'key2'], true);
 
+
         $this->assertEquals($result, $this->model->getResponseObject($gatewayTransactionResponse));
     }
 
@@ -117,7 +110,7 @@ class TransactionTest extends \PHPUnit_Framework_TestCase
         $quoteId = 1;
         $response = new DataObject();
 
-        $payment = $this->getMockBuilder(\Magento\Quote\Model\Quote\Payment::class)
+        $payment = $this->getMockBuilder('Magento\Quote\Model\Quote\Payment')
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -127,7 +120,7 @@ class TransactionTest extends \PHPUnit_Framework_TestCase
         $this->errorHandlerMock->expects($this->once())
             ->method('handle')
             ->with($payment, $response);
-        $quote = $this->getMock(\Magento\Quote\Api\Data\CartInterface::class, [], [], '', false);
+        $quote = $this->getMock('Magento\Quote\Api\Data\CartInterface', [], [], '', false);
         $quote->expects($this->exactly(2))
             ->method('getId')
             ->willReturn($quoteId);

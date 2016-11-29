@@ -22,9 +22,9 @@ class InterceptorTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->ioObjectMock = $this->getMock(\Magento\Framework\Code\Generator\Io::class, [], [], '', false);
+        $this->ioObjectMock = $this->getMock('\Magento\Framework\Code\Generator\Io', [], [], '', false);
         $this->classGeneratorMock = $this->getMock(
-            \Magento\Framework\Code\Generator\CodeGeneratorInterface::class,
+            '\Magento\Framework\Code\Generator\CodeGeneratorInterface',
             [],
             [],
             '',
@@ -35,8 +35,7 @@ class InterceptorTest extends \PHPUnit_Framework_TestCase
     public function testGetDefaultResultClassName()
     {
         // resultClassName should be stdClass_Interceptor
-        $model = $this->getMock(
-            \Magento\Framework\Interception\Code\Generator\Interceptor::class,
+        $model = $this->getMock('\Magento\Framework\Interception\Code\Generator\Interceptor',
             ['_validateData'],
             [
                 'Exception',

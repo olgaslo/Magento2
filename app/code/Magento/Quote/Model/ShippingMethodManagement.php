@@ -5,16 +5,14 @@
  */
 namespace Magento\Quote\Model;
 
-use Magento\Customer\Api\Data\AddressInterfaceFactory;
-use Magento\Framework\App\ObjectManager;
 use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Framework\Exception\InputException;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\Exception\StateException;
-use Magento\Framework\Reflection\DataObjectProcessor;
 use Magento\Quote\Api\Data\AddressInterface;
 use Magento\Quote\Api\Data\EstimateAddressInterface;
 use Magento\Quote\Api\ShipmentEstimationInterface;
+use Magento\Quote\Model\Quote;
 
 /**
  * Shipping method read service.
@@ -50,16 +48,6 @@ class ShippingMethodManagement implements
      * @var Quote\TotalsCollector
      */
     protected $totalsCollector;
-
-    /**
-     * @var \Magento\Framework\Reflection\DataObjectProcessor $dataProcessor
-     */
-    private $dataProcessor;
-
-    /**
-     * @var AddressInterfaceFactory $addressFactory
-     */
-    private $addressFactory;
 
     /**
      * Constructs a shipping method read service object.
@@ -201,7 +189,13 @@ class ShippingMethodManagement implements
             return [];
         }
 
-        return $this->getShippingMethods($quote, $address);
+        return $this->getEstimatedRates(
+            $quote,
+            $address->getCountryId(),
+            $address->getPostcode(),
+            $address->getRegionId(),
+            $address->getRegion()
+        );
     }
 
     /**
@@ -216,7 +210,7 @@ class ShippingMethodManagement implements
         if ($quote->isVirtual() || 0 == $quote->getItemsCount()) {
             return [];
         }
-        return $this->getShippingMethods($quote, $address);
+        return $this->getShippingMethods($quote, $address->getData());
     }
 
     /**
@@ -233,7 +227,13 @@ class ShippingMethodManagement implements
         }
         $address = $this->addressRepository->getById($addressId);
 
-        return $this->getShippingMethods($quote, $address);
+        return $this->getEstimatedRates(
+            $quote,
+            $address->getCountryId(),
+            $address->getPostcode(),
+            $address->getRegionId(),
+            $address->getRegion()
+        );
     }
 
     /**
@@ -244,39 +244,30 @@ class ShippingMethodManagement implements
      * @param string $postcode
      * @param int $regionId
      * @param string $region
-     * @param \Magento\Framework\Api\ExtensibleDataInterface|null $address
      * @return \Magento\Quote\Api\Data\ShippingMethodInterface[] An array of shipping methods.
-     * @deprecated
      */
-    protected function getEstimatedRates(
-        \Magento\Quote\Model\Quote $quote,
-        $country,
-        $postcode,
-        $regionId,
-        $region,
-        $address = null
-    ) {
-        if (!$address) {
-            $address = $this->getAddressFactory()->create()
-                ->setCountryId($country)
-                ->setPostcode($postcode)
-                ->setRegionId($regionId)
-                ->setRegion($region);
-        }
-        return $this->getShippingMethods($quote, $address);
+    protected function getEstimatedRates(\Magento\Quote\Model\Quote $quote, $country, $postcode, $regionId, $region)
+    {
+        $data = [
+            EstimateAddressInterface::KEY_COUNTRY_ID => $country,
+            EstimateAddressInterface::KEY_POSTCODE => $postcode,
+            EstimateAddressInterface::KEY_REGION_ID => $regionId,
+            EstimateAddressInterface::KEY_REGION => $region
+        ];
+        return $this->getShippingMethods($quote, $data);
     }
 
     /**
      * Get list of available shipping methods
      * @param \Magento\Quote\Model\Quote $quote
-     * @param \Magento\Framework\Api\ExtensibleDataInterface $address
+     * @param array $addressData
      * @return \Magento\Quote\Api\Data\ShippingMethodInterface[]
      */
-    private function getShippingMethods(Quote $quote, $address)
+    private function getShippingMethods(Quote $quote, array $addressData)
     {
         $output = [];
         $shippingAddress = $quote->getShippingAddress();
-        $shippingAddress->addData($this->extractAddressData($address));
+        $shippingAddress->addData($addressData);
         $shippingAddress->setCollectShippingRates(true);
 
         $this->totalsCollector->collectAddressTotals($quote, $shippingAddress);
@@ -287,52 +278,5 @@ class ShippingMethodManagement implements
             }
         }
         return $output;
-    }
-
-    /**
-     * Get transform address interface into Array
-     * @param \Magento\Framework\Api\ExtensibleDataInterface  $address
-     * @return array
-     */
-    private function extractAddressData($address)
-    {
-        $className = \Magento\Customer\Api\Data\AddressInterface::class;
-        if ($address instanceof \Magento\Quote\Api\Data\AddressInterface) {
-            $className = \Magento\Quote\Api\Data\AddressInterface::class;
-        } elseif ($address instanceof EstimateAddressInterface) {
-            $className = EstimateAddressInterface::class;
-        }
-        return $this->getDataObjectProcessor()->buildOutputDataArray(
-            $address,
-            $className
-        );
-    }
-
-    /**
-     * Gets the data object processor
-     * @return \Magento\Framework\Reflection\DataObjectProcessor
-     * @deprecated
-     */
-    private function getDataObjectProcessor()
-    {
-        if ($this->dataProcessor === null) {
-            $this->dataProcessor = ObjectManager::getInstance()
-                ->get(DataObjectProcessor::class);
-        }
-        return $this->dataProcessor;
-    }
-
-    /**
-     * Gets the address factory
-     * @return AddressInterfaceFactory
-     * @deprecated
-     */
-    private function getAddressFactory()
-    {
-        if ($this->addressFactory === null) {
-            $this->addressFactory = ObjectManager::getInstance()
-                ->get(AddressInterfaceFactory::class);
-        }
-        return $this->addressFactory;
     }
 }

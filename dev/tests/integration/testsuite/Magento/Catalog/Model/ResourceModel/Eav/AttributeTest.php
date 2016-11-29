@@ -15,7 +15,7 @@ class AttributeTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->_model = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create(
-            \Magento\Catalog\Model\ResourceModel\Eav\Attribute::class
+            'Magento\Catalog\Model\ResourceModel\Eav\Attribute'
         );
     }
 
@@ -25,7 +25,7 @@ class AttributeTest extends \PHPUnit_Framework_TestCase
             'test'
         )->setEntityTypeId(
             \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->get(
-                \Magento\Eav\Model\Config::class
+                'Magento\Eav\Model\Config'
             )->getEntityType(
                 'catalog_product'
             )->getId()

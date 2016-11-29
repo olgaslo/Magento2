@@ -21,10 +21,10 @@ class CustomerTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->customerModel = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create(
-            \Magento\Customer\Model\Customer::class
+            'Magento\Customer\Model\Customer'
         );
         $this->customerFactory = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create(
-            \Magento\Customer\Api\Data\CustomerInterfaceFactory::class
+            'Magento\Customer\Api\Data\CustomerInterfaceFactory'
         );
     }
 

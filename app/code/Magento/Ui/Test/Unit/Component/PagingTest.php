@@ -33,7 +33,7 @@ class PagingTest extends \PHPUnit_Framework_TestCase
         $this->objectManager = new ObjectManager($this);
 
         $this->contextMock = $this->getMockForAbstractClass(
-            \Magento\Framework\View\Element\UiComponent\ContextInterface::class,
+            'Magento\Framework\View\Element\UiComponent\ContextInterface',
             [],
             '',
             false,
@@ -41,7 +41,7 @@ class PagingTest extends \PHPUnit_Framework_TestCase
             true,
             []
         );
-        $processor = $this->getMockBuilder(\Magento\Framework\View\Element\UiComponent\Processor::class)
+        $processor = $this->getMockBuilder('Magento\Framework\View\Element\UiComponent\Processor')
             ->disableOriginalConstructor()
             ->getMock();
         $this->contextMock->expects($this->any())->method('getProcessor')->willReturn($processor);
@@ -56,7 +56,7 @@ class PagingTest extends \PHPUnit_Framework_TestCase
     {
         /** @var Paging $listing */
         $paging = $this->objectManager->getObject(
-            \Magento\Ui\Component\Paging::class,
+            'Magento\Ui\Component\Paging',
             [
                 'context' => $this->contextMock,
                 'data' => []
@@ -116,7 +116,7 @@ class PagingTest extends \PHPUnit_Framework_TestCase
 
         /** @var Paging $paging */
         $paging = $this->objectManager->getObject(
-            \Magento\Ui\Component\Paging::class,
+            'Magento\Ui\Component\Paging',
             [
                 'context' => $this->contextMock,
                 'data' => [
@@ -143,7 +143,7 @@ class PagingTest extends \PHPUnit_Framework_TestCase
         );
         /** @var DataProviderInterface|\PHPUnit_Framework_MockObject_MockObject $dataProviderMock */
         $dataProviderMock = $this->getMockForAbstractClass(
-            \Magento\Framework\View\Element\UiComponent\DataProvider\DataProviderInterface::class,
+            'Magento\Framework\View\Element\UiComponent\DataProvider\DataProviderInterface',
             [],
             '',
             false

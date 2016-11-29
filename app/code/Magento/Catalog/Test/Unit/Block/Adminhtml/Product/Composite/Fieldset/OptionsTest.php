@@ -9,7 +9,6 @@ namespace Magento\Catalog\Test\Unit\Block\Adminhtml\Product\Composite\Fieldset;
  * Test class for \Magento\Catalog\Block\Adminhtml\Product\Composite\Fieldset\Options
  *
  * @SuppressWarnings(PHPMD.LongVariable)
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
 class OptionsTest extends \PHPUnit_Framework_TestCase
 {
@@ -32,7 +31,7 @@ class OptionsTest extends \PHPUnit_Framework_TestCase
     {
         $this->_objectHelper = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
         $this->_optionResource = $this->getMock(
-            \Magento\Catalog\Model\ResourceModel\Product\Option::class,
+            'Magento\Catalog\Model\ResourceModel\Product\Option',
             [],
             [],
             '',
@@ -43,18 +42,18 @@ class OptionsTest extends \PHPUnit_Framework_TestCase
     public function testGetOptionHtml()
     {
         $layout = $this->getMock(
-            \Magento\Framework\View\Layout::class,
+            'Magento\Framework\View\Layout',
             ['getChildName', 'getBlock', 'renderElement'],
             [],
             '',
             false
         );
         $context = $this->_objectHelper->getObject(
-            \Magento\Framework\View\Element\Template\Context::class,
+            'Magento\Framework\View\Element\Template\Context',
             ['layout' => $layout]
         );
         $optionFactoryMock = $this->getMock(
-            \Magento\Catalog\Model\Product\Option\ValueFactory::class,
+            'Magento\Catalog\Model\Product\Option\ValueFactory',
             ['create'],
             [],
             '',
@@ -62,11 +61,11 @@ class OptionsTest extends \PHPUnit_Framework_TestCase
         );
 
         $option = $this->_objectHelper->getObject(
-            \Magento\Catalog\Model\Product\Option::class,
+            'Magento\Catalog\Model\Product\Option',
             ['resource' => $this->_optionResource, 'optionValueFactory' => $optionFactoryMock]
         );
         $dateBlock = $this->getMock(
-            \Magento\Catalog\Block\Adminhtml\Product\Composite\Fieldset\Options::class,
+            'Magento\Catalog\Block\Adminhtml\Product\Composite\Fieldset\Options',
             ['setSkipJsReloadPrice'],
             ['context' => $context, 'option' => $option],
             '',
@@ -79,33 +78,33 @@ class OptionsTest extends \PHPUnit_Framework_TestCase
         $layout->expects($this->any())->method('renderElement')->with('date', false)->will($this->returnValue('html'));
 
         $this->_optionsBlock = $this->_objectHelper->getObject(
-            \Magento\Catalog\Block\Adminhtml\Product\Composite\Fieldset\Options::class,
+            'Magento\Catalog\Block\Adminhtml\Product\Composite\Fieldset\Options',
             ['context' => $context, 'option' => $option]
         );
 
         $itemOptFactoryMock = $this->getMock(
-            \Magento\Catalog\Model\Product\Configuration\Item\OptionFactory::class,
+            'Magento\Catalog\Model\Product\Configuration\Item\OptionFactory',
             ['create'],
             [],
             '',
             false
         );
         $stockItemFactoryMock = $this->getMock(
-            \Magento\CatalogInventory\Api\Data\StockItemInterfaceFactory::class,
+            'Magento\CatalogInventory\Api\Data\StockItemInterfaceFactory',
             ['create'],
             [],
             '',
             false
         );
         $productFactoryMock = $this->getMock(
-            \Magento\Catalog\Model\ProductFactory::class,
+            'Magento\Catalog\Model\ProductFactory',
             ['create'],
             [],
             '',
             false
         );
         $categoryFactoryMock = $this->getMock(
-            \Magento\Catalog\Model\CategoryFactory::class,
+            'Magento\Catalog\Model\CategoryFactory',
             ['create'],
             [],
             '',
@@ -114,10 +113,10 @@ class OptionsTest extends \PHPUnit_Framework_TestCase
 
         $this->_optionsBlock->setProduct(
             $this->_objectHelper->getObject(
-                \Magento\Catalog\Model\Product::class,
+                'Magento\Catalog\Model\Product',
                 [
                     'collectionFactory' => $this->getMock(
-                        \Magento\Framework\Data\CollectionFactory::class,
+                        'Magento\Framework\Data\CollectionFactory',
                         [],
                         [],
                         '',
@@ -132,7 +131,7 @@ class OptionsTest extends \PHPUnit_Framework_TestCase
         );
 
         $option = $this->_objectHelper->getObject(
-            \Magento\Catalog\Model\Product\Option::class,
+            'Magento\Catalog\Model\Product\Option',
             ['resource' => $this->_optionResource, 'optionValueFactory' => $optionFactoryMock]
         );
         $option->setType('date');

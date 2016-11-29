@@ -27,14 +27,14 @@ use Magento\Mtf\TestCase\Injectable;
  * 5. Click "Save Store" button
  * 6. Perform all assertions
  *
- * @group Store_Management
+ * @group Store_Management_(PS)
  * @ZephyrId MAGETWO-27568
  */
 class UpdateStoreGroupEntityTest extends Injectable
 {
     /* tags */
     const MVP = 'yes';
-    const SEVERITY = 'S2';
+    const DOMAIN = 'PS';
     /* end tags */
 
     /**

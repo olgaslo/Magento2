@@ -23,13 +23,13 @@ class DataTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->filesystem = $this->getMockBuilder(\Magento\Framework\Filesystem::class)->disableOriginalConstructor()
+        $this->filesystem = $this->getMockBuilder('Magento\Framework\Filesystem')->disableOriginalConstructor()
             ->getMock();
 
         $this->filesystem->expects($this->any())
             ->method('getDirectoryRead')
             ->will($this->returnCallback(function ($code) {
-                $dir = $this->getMockForAbstractClass(\Magento\Framework\Filesystem\Directory\ReadInterface::class);
+                $dir = $this->getMockForAbstractClass('\Magento\Framework\Filesystem\Directory\ReadInterface');
                 $dir->expects($this->any())
                     ->method('getAbsolutePath')
                     ->will($this->returnCallback(function ($path) use ($code) {
@@ -40,10 +40,9 @@ class DataTest extends \PHPUnit_Framework_TestCase
             }));
 
         $this->helper = (new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this))
-            ->getObject(
-                \Magento\Backup\Helper\Data::class,
-                ['filesystem' => $this->filesystem]
-            );
+            ->getObject('Magento\Backup\Helper\Data', [
+                'filesystem' => $this->filesystem,
+            ]);
     }
 
     public function testGetBackupIgnorePaths()

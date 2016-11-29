@@ -31,7 +31,7 @@ class DiscountsTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->collectionFactory = $this->getMock(
-            \Magento\SalesRule\Model\ResourceModel\Rule\CollectionFactory::class,
+            'Magento\SalesRule\Model\ResourceModel\Rule\CollectionFactory',
             ['create'],
             [],
             '',
@@ -40,7 +40,7 @@ class DiscountsTest extends \PHPUnit_Framework_TestCase
 
         $this->objectManagerHelper = new ObjectManagerHelper($this);
         $this->discounts = $this->objectManagerHelper->getObject(
-            \Magento\SalesRule\Model\Rss\Discounts::class,
+            'Magento\SalesRule\Model\Rss\Discounts',
             [
                 'collectionFactory' => $this->collectionFactory
             ]
@@ -50,7 +50,7 @@ class DiscountsTest extends \PHPUnit_Framework_TestCase
     public function testGetDiscountCollection()
     {
         $ruleCollection = $this->getMock(
-            \Magento\SalesRule\Model\ResourceModel\Rule\Collection::class,
+            'Magento\SalesRule\Model\ResourceModel\Rule\Collection',
             [
                 'addWebsiteGroupDateFilter',
                 'addFieldToFilter',

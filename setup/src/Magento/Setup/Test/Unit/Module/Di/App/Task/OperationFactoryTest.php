@@ -25,10 +25,10 @@ class OperationFactoryTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->objectManagerMock = $this->getMockBuilder(\Magento\Framework\ObjectManagerInterface::class)
+        $this->objectManagerMock = $this->getMockBuilder('Magento\Framework\ObjectManagerInterface')
             ->setMethods([])
             ->getMock();
-        $objectManagerProviderMock = $this->getMock(\Magento\Setup\Model\ObjectManagerProvider::class, [], [], '', false);
+        $objectManagerProviderMock = $this->getMock('Magento\Setup\Model\ObjectManagerProvider', [], [], '', false);
         $objectManagerProviderMock->expects($this->once())->method('get')->willReturn($this->objectManagerMock);
         $this->factory = new OperationFactory(
             $objectManagerProviderMock
@@ -42,7 +42,7 @@ class OperationFactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testCreateSuccess($alias, $arguments, $instanceName)
     {
-        $operationInstance = $this->getMockBuilder(\Magento\Setup\Module\Di\App\Task\OperationInterface::class)
+        $operationInstance = $this->getMockBuilder('Magento\Setup\Module\Di\App\Task\OperationInterface')
             ->getMock();
 
         $this->objectManagerMock->expects($this->once())
@@ -57,7 +57,7 @@ class OperationFactoryTest extends \PHPUnit_Framework_TestCase
     {
         $notRegisteredOperation = 'coffee';
         $this->setExpectedException(
-            \Magento\Setup\Module\Di\App\Task\OperationException::class,
+            'Magento\Setup\Module\Di\App\Task\OperationException',
             sprintf('Unrecognized operation "%s"', $notRegisteredOperation),
             OperationException::UNAVAILABLE_OPERATION
         );
@@ -70,9 +70,9 @@ class OperationFactoryTest extends \PHPUnit_Framework_TestCase
     public function aliasesDataProvider()
     {
         return  [
-            [OperationFactory::AREA_CONFIG_GENERATOR, [], \Magento\Setup\Module\Di\App\Task\Operation\Area::class],
-            [OperationFactory::INTERCEPTION, null, \Magento\Setup\Module\Di\App\Task\Operation\Interception::class],
-            [OperationFactory::INTERCEPTION_CACHE, 1, \Magento\Setup\Module\Di\App\Task\Operation\InterceptionCache::class],
+            [OperationFactory::AREA_CONFIG_GENERATOR, [], 'Magento\Setup\Module\Di\App\Task\Operation\Area'],
+            [OperationFactory::INTERCEPTION, null, 'Magento\Setup\Module\Di\App\Task\Operation\Interception'],
+            [OperationFactory::INTERCEPTION_CACHE, 1, 'Magento\Setup\Module\Di\App\Task\Operation\InterceptionCache'],
         ];
     }
 

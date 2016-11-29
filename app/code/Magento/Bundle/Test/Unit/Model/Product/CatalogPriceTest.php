@@ -39,19 +39,19 @@ class CatalogPriceTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->storeManagerMock = $this->getMock(\Magento\Store\Model\StoreManagerInterface::class);
+        $this->storeManagerMock = $this->getMock('Magento\Store\Model\StoreManagerInterface');
         $this->commonPriceMock = $this->getMock(
-            \Magento\Catalog\Model\Product\CatalogPrice::class,
+            'Magento\Catalog\Model\Product\CatalogPrice',
             [],
             [],
             '',
             false
         );
-        $this->coreRegistryMock = $this->getMock(\Magento\Framework\Registry::class, [], [], '', false);
+        $this->coreRegistryMock = $this->getMock('Magento\Framework\Registry', [], [], '', false);
         $methods = ['getStoreId', 'getWebsiteId', 'getCustomerGroupId', 'getPriceModel', '__wakeup'];
-        $this->productMock = $this->getMock(\Magento\Catalog\Model\Product::class, $methods, [], '', false);
+        $this->productMock = $this->getMock('Magento\Catalog\Model\Product', $methods, [], '', false);
         $this->priceModelMock = $this->getMock(
-            \Magento\Catalog\Model\Product\Type\Price::class,
+            'Magento\Catalog\Model\Product\Type\Price',
             ['getTotalPrices'],
             [],
             '',
@@ -96,9 +96,9 @@ class CatalogPriceTest extends \PHPUnit_Framework_TestCase
 
     public function testGetCatalogPriceWithCustomStore()
     {
-        $storeMock = $this->getMock(\Magento\Store\Api\Data\StoreInterface::class);
+        $storeMock = $this->getMock('Magento\Store\Api\Data\StoreInterface');
         $storeMock->expects($this->once())->method('getId')->willReturn('store_id');
-        $currentStoreMock = $this->getMock(\Magento\Store\Api\Data\StoreInterface::class);
+        $currentStoreMock = $this->getMock('Magento\Store\Api\Data\StoreInterface');
         $currentStoreMock->expects($this->once())->method('getId')->willReturn('current_store_id');
 
         $this->coreRegistryMock->expects($this->once())->method('unregister')->with('rule_data');

@@ -27,8 +27,8 @@ class TableDataTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->_objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
-        $this->_connectionMock = $this->getMock(\Magento\Framework\DB\Adapter\AdapterInterface::class);
-        $this->_resourceMock = $this->getMock(\Magento\Framework\App\ResourceConnection::class, [], [], '', false);
+        $this->_connectionMock = $this->getMock('Magento\Framework\DB\Adapter\AdapterInterface');
+        $this->_resourceMock = $this->getMock('Magento\Framework\App\ResourceConnection', [], [], '', false);
     }
 
     /**
@@ -74,7 +74,7 @@ class TableDataTest extends \PHPUnit_Framework_TestCase
         );
 
         $model = $this->_objectManager->getObject(
-            \Magento\Catalog\Model\Indexer\Product\Flat\TableData::class,
+            'Magento\Catalog\Model\Indexer\Product\Flat\TableData',
             ['resource' => $this->_resourceMock]
         );
 

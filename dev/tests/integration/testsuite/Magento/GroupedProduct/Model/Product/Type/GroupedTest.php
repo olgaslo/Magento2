@@ -21,7 +21,7 @@ class GroupedTest extends \PHPUnit_Framework_TestCase
     {
         $this->objectManager = \Magento\TestFramework\Helper\Bootstrap::getObjectManager();
 
-        $this->_productType = $this->objectManager->get(\Magento\Catalog\Model\Product\Type::class);
+        $this->_productType = $this->objectManager->get('Magento\Catalog\Model\Product\Type');
     }
 
     public function testFactory()
@@ -29,7 +29,7 @@ class GroupedTest extends \PHPUnit_Framework_TestCase
         $product = new \Magento\Framework\DataObject();
         $product->setTypeId(\Magento\GroupedProduct\Model\Product\Type\Grouped::TYPE_CODE);
         $type = $this->_productType->factory($product);
-        $this->assertInstanceOf(\Magento\GroupedProduct\Model\Product\Type\Grouped::class, $type);
+        $this->assertInstanceOf('\Magento\GroupedProduct\Model\Product\Type\Grouped', $type);
     }
 
     /**
@@ -38,12 +38,12 @@ class GroupedTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetAssociatedProducts()
     {
-        $productRepository = $this->objectManager->create(\Magento\Catalog\Api\ProductRepositoryInterface::class);
+        $productRepository = $this->objectManager->create('Magento\Catalog\Api\ProductRepositoryInterface');
 
         /** @var \Magento\Catalog\Model\Product $product */
         $product = $productRepository->get('grouped-product');
         $type = $product->getTypeInstance();
-        $this->assertInstanceOf(\Magento\GroupedProduct\Model\Product\Type\Grouped::class, $type);
+        $this->assertInstanceOf('\Magento\GroupedProduct\Model\Product\Type\Grouped', $type);
 
         $associatedProducts = $type->getAssociatedProducts($product);
         $this->assertCount(2, $associatedProducts);

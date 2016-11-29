@@ -44,24 +44,24 @@ class ToOrderPaymentTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->paymentMock = $this->getMock(
-            \Magento\Quote\Model\Quote\Payment::class,
+            'Magento\Quote\Model\Quote\Payment',
             ['getCcNumber', 'getCcCid', 'getMethodInstance', 'getAdditionalInformation'],
             [],
             '',
             false
         );
-        $this->objectCopyMock = $this->getMock(\Magento\Framework\DataObject\Copy::class, [], [], '', false);
+        $this->objectCopyMock = $this->getMock('Magento\Framework\DataObject\Copy', [], [], '', false);
         $this->orderPaymentRepositoryMock = $this->getMockForAbstractClass(
-            \Magento\Sales\Api\OrderPaymentRepositoryInterface::class,
+            'Magento\Sales\Api\OrderPaymentRepositoryInterface',
             [],
             '',
             false,
             false
         );
-        $this->dataObjectHelper = $this->getMock(\Magento\Framework\Api\DataObjectHelper::class, [], [], '', false);
+        $this->dataObjectHelper = $this->getMock('\Magento\Framework\Api\DataObjectHelper', [], [], '', false);
         $objectManager = new ObjectManager($this);
         $this->converter = $objectManager->getObject(
-            \Magento\Quote\Model\Quote\Payment\ToOrderPayment::class,
+            'Magento\Quote\Model\Quote\Payment\ToOrderPayment',
             [
                 'orderPaymentRepository' => $this->orderPaymentRepositoryMock,
                 'objectCopyService' => $this->objectCopyMock,
@@ -75,7 +75,7 @@ class ToOrderPaymentTest extends \PHPUnit_Framework_TestCase
      */
     public function testConvert()
     {
-        $methodInterface = $this->getMockForAbstractClass(\Magento\Payment\Model\MethodInterface::class);
+        $methodInterface = $this->getMockForAbstractClass('Magento\Payment\Model\MethodInterface');
 
         $paymentData = ['test' => 'test2'];
         $data = ['some_id' => 1];
@@ -103,7 +103,7 @@ class ToOrderPaymentTest extends \PHPUnit_Framework_TestCase
             ->willReturn($ccCid);
 
         $orderPayment = $this->getMockForAbstractClass(
-            \Magento\Sales\Api\Data\OrderPaymentInterface::class,
+            'Magento\Sales\Api\Data\OrderPaymentInterface',
             [],
             '',
             false,
@@ -125,7 +125,7 @@ class ToOrderPaymentTest extends \PHPUnit_Framework_TestCase
         $this->orderPaymentRepositoryMock->expects($this->once())->method('create')->willReturn($orderPayment);
         $this->dataObjectHelper->expects($this->once())
             ->method('populateWithArray')
-            ->with($orderPayment, array_merge($paymentData, $data), \Magento\Sales\Api\Data\OrderPaymentInterface::class)
+            ->with($orderPayment, array_merge($paymentData, $data), '\Magento\Sales\Api\Data\OrderPaymentInterface')
             ->willReturnSelf();
 
         $this->assertSame($orderPayment, $this->converter->convert($this->paymentMock, $data));

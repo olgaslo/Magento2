@@ -42,12 +42,12 @@ class StatusTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->selectMock = $this->getMock(\Magento\Framework\DB\Select::class, [], [], '', false);
+        $this->selectMock = $this->getMock('\Magento\Framework\DB\Select', [], [], '', false);
         $this->selectMock->expects($this->any())->method('from')->will($this->returnSelf());
         $this->selectMock->expects($this->any())->method('where');
 
         $this->connectionMock = $this->getMock(
-            \Magento\Framework\DB\Adapter\Pdo\Mysql::class,
+            '\Magento\Framework\DB\Adapter\Pdo\Mysql',
             ['update', 'insertOnDuplicate'],
             [],
             '',
@@ -56,7 +56,7 @@ class StatusTest extends \PHPUnit_Framework_TestCase
         $this->connectionMock->expects($this->any())->method('select')->will($this->returnValue($this->selectMock));
 
         $this->resourceMock = $this->getMock(
-            \Magento\Framework\App\ResourceConnection::class,
+            '\Magento\Framework\App\ResourceConnection',
             [],
             [],
             '',
@@ -73,10 +73,9 @@ class StatusTest extends \PHPUnit_Framework_TestCase
                 $this->returnValue($this->connectionMock)
             );
 
-        $this->configMock = $this->getMock(\Magento\Eav\Model\Config::class, ['getConnectionName'], [], '', false);
+        $this->configMock = $this->getMock('\Magento\Eav\Model\Config', ['getConnectionName'], [], '', false);
         $objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
-        $this->model = $objectManager->getObject(
-            \Magento\Sales\Model\ResourceModel\Order\Status::class,
+        $this->model = $objectManager->getObject('Magento\Sales\Model\ResourceModel\Order\Status',
             ['resource' => $this->resourceMock]
         );
     }

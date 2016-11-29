@@ -5,13 +5,11 @@
  */
 namespace Magento\Developer\Model\View\Asset\PreProcessor;
 
-use Magento\Developer\Model\Config\Source\WorkflowType;
-use Magento\Framework\App\Config\ScopeConfigInterface;
-use Magento\Framework\App\ObjectManager;
-use Magento\Framework\App\State;
 use Magento\Framework\View\Asset\PreProcessor;
-use Magento\Framework\View\Asset\PreProcessor\AlternativeSourceInterface;
+use Magento\Framework\App\Config\ScopeConfigInterface;
+use Magento\Developer\Model\Config\Source\WorkflowType;
 use Magento\Framework\View\Asset\PreProcessorInterface;
+use Magento\Framework\View\Asset\PreProcessor\AlternativeSourceInterface;
 
 /**
  * Class PreprocessorStrategy
@@ -32,11 +30,6 @@ class PreprocessorStrategy implements PreProcessorInterface
      * @var ScopeConfigInterface
      */
     private $scopeConfig;
-
-    /**
-     * @var State
-     */
-    private $state;
 
     /**
      * Constructor
@@ -63,26 +56,10 @@ class PreprocessorStrategy implements PreProcessorInterface
      */
     public function process(PreProcessor\Chain $chain)
     {
-        $isClientSideCompilation =
-            $this->getState()->getMode() !== State::MODE_PRODUCTION
-            && WorkflowType::CLIENT_SIDE_COMPILATION === $this->scopeConfig->getValue(WorkflowType::CONFIG_NAME_PATH);
-
-        if ($isClientSideCompilation) {
+        if (WorkflowType::CLIENT_SIDE_COMPILATION === $this->scopeConfig->getValue(WorkflowType::CONFIG_NAME_PATH)) {
             $this->frontendCompilation->process($chain);
         } else {
             $this->alternativeSource->process($chain);
         }
-    }
-
-    /**
-     * @return State
-     * @deprecated
-     */
-    private function getState()
-    {
-        if (null === $this->state) {
-            $this->state = ObjectManager::getInstance()->get(State::class);
-        }
-        return $this->state;
     }
 }

@@ -28,15 +28,10 @@ class FilterableAttributeListTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->collectionFactoryMock = $this->getMock(
-            \Magento\Catalog\Model\ResourceModel\Product\Attribute\CollectionFactory::class,
-            ['create'],
-            [],
-            '',
-            false
-        );
+            '\Magento\Catalog\Model\ResourceModel\Product\Attribute\CollectionFactory', ['create'], [], '', false);
 
         $this->storeManagerMock = $this->getMock(
-            \Magento\Store\Model\StoreManagerInterface::class, [], [], '', false
+            '\Magento\Store\Model\StoreManagerInterface', [], [], '', false
         );
 
         $this->model = new \Magento\Catalog\Model\Layer\Search\FilterableAttributeList(
@@ -51,14 +46,14 @@ class FilterableAttributeListTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetList()
     {
-        $storeMock = $this->getMock(\Magento\Store\Model\Store::class, [], [], '', false);
+        $storeMock = $this->getMock('\Magento\Store\Model\Store', [], [], '', false);
         $this->storeManagerMock->expects($this->once())->method('getStore')->will($this->returnValue($storeMock));
 
         $storeId = 4321;
         $storeMock->expects($this->once())->method('getId')->will($this->returnValue($storeId));
 
         $collectionMock = $this->getMock(
-            \Magento\Catalog\Model\ResourceModel\Product\Attribute\Collection::class, [], [], '', false
+            '\Magento\Catalog\Model\ResourceModel\Product\Attribute\Collection', [], [], '', false
         );
         $this->collectionFactoryMock
             ->expects($this->once())
@@ -68,7 +63,7 @@ class FilterableAttributeListTest extends \PHPUnit_Framework_TestCase
         $collectionMock
             ->expects($this->once())
             ->method('setItemObjectClass')
-            ->with(\Magento\Catalog\Model\ResourceModel\Eav\Attribute::class)
+            ->with('Magento\Catalog\Model\ResourceModel\Eav\Attribute')
             ->will($this->returnSelf());
         $collectionMock
             ->expects($this->once())

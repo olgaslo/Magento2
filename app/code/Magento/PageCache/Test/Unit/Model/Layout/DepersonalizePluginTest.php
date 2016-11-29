@@ -43,17 +43,16 @@ class DepersonalizePluginTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->layoutMock = $this->getMock(\Magento\Framework\View\Layout::class, [], [], '', false);
-        $this->eventManagerMock = $this->getMock(\Magento\Framework\Event\Manager::class, [], [], '', false);
-        $this->messageSessionMock = $this->getMock(
-            \Magento\Framework\Message\Session::class,
+        $this->layoutMock = $this->getMock('Magento\Framework\View\Layout', [], [], '', false);
+        $this->eventManagerMock = $this->getMock('Magento\Framework\Event\Manager', [], [], '', false);
+        $this->messageSessionMock = $this->getMock('Magento\Framework\Message\Session',
             ['clearStorage'],
             [],
             '',
             false
         );
         $this->depersonalizeCheckerMock = $this->getMock(
-            \Magento\PageCache\Model\DepersonalizeChecker::class,
+            'Magento\PageCache\Model\DepersonalizeChecker',
             [],
             [],
             '',
@@ -68,7 +67,7 @@ class DepersonalizePluginTest extends \PHPUnit_Framework_TestCase
 
     public function testAfterGenerateXml()
     {
-        $expectedResult = $this->getMock(\Magento\Framework\View\Layout::class, [], [], '', false);
+        $expectedResult = $this->getMock('Magento\Framework\View\Layout', [], [], '', false);
 
         $this->eventManagerMock->expects($this->once())
             ->method('dispatch')
@@ -87,7 +86,7 @@ class DepersonalizePluginTest extends \PHPUnit_Framework_TestCase
             ->method('dispatch');
         $this->messageSessionMock->expects($this->never())->method('clearStorage');
 
-        $expectedResult = $this->getMock(\Magento\Framework\View\Layout::class, [], [], '', false);
+        $expectedResult = $this->getMock('Magento\Framework\View\Layout', [], [], '', false);
         $actualResult = $this->plugin->afterGenerateXml($this->layoutMock, $expectedResult);
         $this->assertEquals($expectedResult, $actualResult);
     }

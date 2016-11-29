@@ -32,21 +32,21 @@ class LinkTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $wishlist = $this->getMock(\Magento\Wishlist\Model\Wishlist::class, ['getId'], [], '', false);
+        $wishlist = $this->getMock('Magento\Wishlist\Model\Wishlist', ['getId'], [], '', false);
         $wishlist->expects($this->any())->method('getId')->will($this->returnValue(5));
 
-        $customer = $this->getMock(\Magento\Customer\Api\Data\CustomerInterface::class, [], [], '', false);
+        $customer = $this->getMock('Magento\Customer\Api\Data\CustomerInterface', [], [], '', false);
         $customer->expects($this->any())->method('getId')->will($this->returnValue(8));
         $customer->expects($this->any())->method('getEmail')->will($this->returnValue('test@example.com'));
 
         $this->wishlistHelper = $this->getMock(
-            \Magento\Wishlist\Helper\Data::class,
+            'Magento\Wishlist\Helper\Data',
             ['getWishlist', 'getCustomer', 'urlEncode'],
             [],
             '',
             false
         );
-        $this->urlEncoder = $this->getMock(\Magento\Framework\Url\EncoderInterface::class, ['encode'], [], '', false);
+        $this->urlEncoder = $this->getMock('Magento\Framework\Url\EncoderInterface', ['encode'], [], '', false);
 
         $this->wishlistHelper->expects($this->any())->method('getWishlist')->will($this->returnValue($wishlist));
         $this->wishlistHelper->expects($this->any())->method('getCustomer')->will($this->returnValue($customer));
@@ -56,12 +56,12 @@ class LinkTest extends \PHPUnit_Framework_TestCase
                 return strtr(base64_encode($url), '+/=', '-_,');
             });
 
-        $this->urlBuilder = $this->getMock(\Magento\Framework\App\Rss\UrlBuilderInterface::class);
-        $this->scopeConfig = $this->getMock(\Magento\Framework\App\Config\ScopeConfigInterface::class);
+        $this->urlBuilder = $this->getMock('Magento\Framework\App\Rss\UrlBuilderInterface');
+        $this->scopeConfig = $this->getMock('Magento\Framework\App\Config\ScopeConfigInterface');
 
         $this->objectManagerHelper = new ObjectManagerHelper($this);
         $this->link = $this->objectManagerHelper->getObject(
-            \Magento\Wishlist\Block\Rss\Link::class,
+            'Magento\Wishlist\Block\Rss\Link',
             [
                 'wishlistHelper' => $this->wishlistHelper,
                 'rssUrlBuilder' => $this->urlBuilder,

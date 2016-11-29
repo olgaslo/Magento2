@@ -22,7 +22,7 @@ class GroupRegistryTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->groupFactory = $this->getMockBuilder(\Magento\Customer\Model\GroupFactory::class)
+        $this->groupFactory = $this->getMockBuilder('\Magento\Customer\Model\GroupFactory')
             ->disableOriginalConstructor()
             ->setMethods(['create'])
             ->getMock();
@@ -37,7 +37,7 @@ class GroupRegistryTest extends \PHPUnit_Framework_TestCase
     public function testRetrieve()
     {
         $groupId = 1;
-        $group = $this->getMockBuilder(\Magento\Customer\Model\Group::class)
+        $group = $this->getMockBuilder('Magento\Customer\Model\Group')
             ->setMethods(['load', 'getId', '__wakeup'])
             ->disableOriginalConstructor()
             ->getMock();
@@ -66,7 +66,7 @@ class GroupRegistryTest extends \PHPUnit_Framework_TestCase
     public function testRetrieveException()
     {
         $groupId = 1;
-        $group = $this->getMockBuilder(\Magento\Customer\Model\Group::class)
+        $group = $this->getMockBuilder('Magento\Customer\Model\Group')
             ->setMethods(['load', 'getId', '__wakeup'])
             ->disableOriginalConstructor()
             ->getMock();
@@ -91,7 +91,7 @@ class GroupRegistryTest extends \PHPUnit_Framework_TestCase
     public function testRemove()
     {
         $groupId = 1;
-        $group = $this->getMockBuilder(\Magento\Customer\Model\Group::class)
+        $group = $this->getMockBuilder('Magento\Customer\Model\Group')
             ->disableOriginalConstructor()
             ->setMethods(['load', 'getId', '__wakeup'])
             ->getMock();

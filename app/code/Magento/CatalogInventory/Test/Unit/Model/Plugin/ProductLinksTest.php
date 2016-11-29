@@ -25,14 +25,14 @@ class ProductLinksTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->configMock = $this->getMock(
-            \Magento\CatalogInventory\Model\Configuration::class,
+            'Magento\CatalogInventory\Model\Configuration',
             [],
             [],
             '',
             false
         );
         $this->stockHelperMock = $this->getMock(
-            \Magento\CatalogInventory\Helper\Stock::class,
+            '\Magento\CatalogInventory\Helper\Stock',
             [],
             [],
             '',
@@ -64,7 +64,7 @@ class ProductLinksTest extends \PHPUnit_Framework_TestCase
     {
         /** @var \Magento\Catalog\Model\ResourceModel\Product\Link\Product\Collection $collectionMock */
         $collectionMock = $this->getMock(
-            \Magento\Catalog\Model\ResourceModel\Product\Link\Product\Collection::class,
+            'Magento\Catalog\Model\ResourceModel\Product\Link\Product\Collection',
             [],
             [],
             '',
@@ -72,7 +72,7 @@ class ProductLinksTest extends \PHPUnit_Framework_TestCase
         );
 
         /** @var \Magento\Catalog\Model\Product\Link $subjectMock */
-        $subjectMock = $this->getMock(\Magento\Catalog\Model\Product\Link::class, [], [], '', false);
+        $subjectMock = $this->getMock('Magento\Catalog\Model\Product\Link', [], [], '', false);
         return [$collectionMock, $subjectMock];
     }
 

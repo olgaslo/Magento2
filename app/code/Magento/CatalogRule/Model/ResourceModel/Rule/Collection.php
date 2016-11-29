@@ -43,7 +43,7 @@ class Collection extends \Magento\Rule\Model\ResourceModel\Rule\Collection\Abstr
      */
     protected function _construct()
     {
-        $this->_init(\Magento\CatalogRule\Model\Rule::class, \Magento\CatalogRule\Model\ResourceModel\Rule::class);
+        $this->_init('Magento\CatalogRule\Model\Rule', 'Magento\CatalogRule\Model\ResourceModel\Rule');
     }
 
     /**
@@ -138,7 +138,7 @@ class Collection extends \Magento\Rule\Model\ResourceModel\Rule\Collection\Abstr
     {
         if (!$this->_associatedEntitiesMap) {
             $this->_associatedEntitiesMap = \Magento\Framework\App\ObjectManager::getInstance()
-                ->get(\Magento\CatalogRule\Model\ResourceModel\Rule\AssociatedEntityMap::class)
+                ->get('Magento\CatalogRule\Model\ResourceModel\Rule\AssociatedEntityMap')
                 ->getData();
         }
         return $this->_associatedEntitiesMap;

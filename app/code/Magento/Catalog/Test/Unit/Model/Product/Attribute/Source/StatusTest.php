@@ -37,7 +37,7 @@ class StatusTest extends \PHPUnit_Framework_TestCase
     {
         $this->objectManagerHelper = new ObjectManagerHelper($this);
         $this->collection = $this->getMock(
-            \Magento\Catalog\Model\ResourceModel\Product\Collection::class,
+            '\Magento\Catalog\Model\ResourceModel\Product\Collection',
             [
                 '__wakeup',
                 'getSelect',
@@ -52,7 +52,7 @@ class StatusTest extends \PHPUnit_Framework_TestCase
             false
         );
         $this->attributeModel = $this->getMock(
-            \Magento\Catalog\Model\Entity\Attributee::class,
+            '\Magento\Catalog\Model\Entity\Attributee',
             [
                 '__wakeup',
                 'getAttributeCode',
@@ -66,14 +66,9 @@ class StatusTest extends \PHPUnit_Framework_TestCase
             false
         );
         $this->backendAttributeModel = $this->getMock(
-            \Magento\Catalog\Model\Product\Attribute\Backend\Sku::class,
-            ['__wakeup', 'getTable'],
-            [],
-            '',
-            false
-        );
+            '\Magento\Catalog\Model\Product\Attribute\Backend\Sku', ['__wakeup', 'getTable'], [], '', false);
         $this->status = $this->objectManagerHelper->getObject(
-            \Magento\Catalog\Model\Product\Attribute\Source\Status::class
+            'Magento\Catalog\Model\Product\Attribute\Source\Status'
         );
 
         $this->attributeModel->expects($this->any())->method('getAttribute')

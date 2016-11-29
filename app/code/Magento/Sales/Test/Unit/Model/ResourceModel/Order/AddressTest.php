@@ -48,42 +48,42 @@ class AddressTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->addressMock = $this->getMock(
-            \Magento\Sales\Model\Order\Address::class,
+            'Magento\Sales\Model\Order\Address',
             ['__wakeup', 'getParentId', 'hasDataChanges', 'beforeSave', 'afterSave', 'validateBeforeSave', 'getOrder'],
             [],
             '',
             false
         );
         $this->orderMock = $this->getMock(
-            \Magento\Sales\Model\Order::class,
+            'Magento\Sales\Model\Order',
             ['__wakeup', 'getId'],
             [],
             '',
             false
         );
         $this->appResourceMock = $this->getMock(
-            \Magento\Framework\App\ResourceConnection::class,
+            'Magento\Framework\App\ResourceConnection',
             [],
             [],
             '',
             false
         );
         $this->connectionMock = $this->getMock(
-            \Magento\Framework\DB\Adapter\Pdo\Mysql::class,
+            'Magento\Framework\DB\Adapter\Pdo\Mysql',
             [],
             [],
             '',
             false
         );
         $this->validatorMock = $this->getMock(
-            \Magento\Sales\Model\Order\Address\Validator::class,
+            'Magento\Sales\Model\Order\Address\Validator',
             [],
             [],
             '',
             false
         );
         $this->entitySnapshotMock = $this->getMock(
-            \Magento\Framework\Model\ResourceModel\Db\VersionControl\Snapshot::class,
+            'Magento\Framework\Model\ResourceModel\Db\VersionControl\Snapshot',
             [],
             [],
             '',
@@ -101,7 +101,7 @@ class AddressTest extends \PHPUnit_Framework_TestCase
         $this->connectionMock->expects($this->any())
             ->method('lastInsertId');
         $this->addressResource = $objectManager->getObject(
-            \Magento\Sales\Model\ResourceModel\Order\Address::class,
+            'Magento\Sales\Model\ResourceModel\Order\Address',
             [
                 'resource' => $this->appResourceMock,
                 'validator' => $this->validatorMock,

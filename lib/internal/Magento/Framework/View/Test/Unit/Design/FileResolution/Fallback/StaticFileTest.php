@@ -24,15 +24,13 @@ class StaticFileTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->resolver = $this->getMock(
-            \Magento\Framework\View\Design\FileResolution\Fallback\ResolverInterface::class
-        );
+        $this->resolver = $this->getMock('Magento\Framework\View\Design\FileResolution\Fallback\ResolverInterface');
         $this->object = new StaticFile($this->resolver);
     }
 
     public function testGetFile()
     {
-        $theme = $this->getMockForAbstractClass(\Magento\Framework\View\Design\ThemeInterface::class);
+        $theme = $this->getMockForAbstractClass('\Magento\Framework\View\Design\ThemeInterface');
         $expected = 'some/file.ext';
         $this->resolver->expects($this->once())
             ->method('resolve')

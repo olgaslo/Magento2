@@ -69,7 +69,7 @@ class Item extends \Magento\Backend\Block\Widget
         $type = isset($config['type']) ? $config['type'] : 'default';
         switch ($type) {
             default:
-                $blockClass = \Magento\Backend\Block\Widget\Grid\Massaction\Item\Additional\DefaultAdditional::class;
+                $blockClass = 'Magento\Backend\Block\Widget\Grid\Massaction\Item\Additional\DefaultAdditional';
                 break;
         }
 

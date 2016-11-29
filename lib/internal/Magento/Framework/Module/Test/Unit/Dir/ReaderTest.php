@@ -54,25 +54,25 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->_protFactoryMock = $this->getMock(
-            \Magento\Framework\App\Config\BaseFactory::class,
+            'Magento\Framework\App\Config\BaseFactory',
             [],
             [],
             '',
             false,
             false
         );
-        $this->_dirsMock = $this->getMock(\Magento\Framework\Module\Dir::class, [], [], '', false, false);
+        $this->_dirsMock = $this->getMock('Magento\Framework\Module\Dir', [], [], '', false, false);
         $this->_baseConfigMock = $this->getMock(
-            \Magento\Framework\App\Config\Base::class,
+            'Magento\Framework\App\Config\Base',
             [],
             [],
             '',
             false,
             false
         );
-        $this->_moduleListMock = $this->getMock(\Magento\Framework\Module\ModuleListInterface::class);
+        $this->_moduleListMock = $this->getMock('Magento\Framework\Module\ModuleListInterface');
         $this->directoryReadFactoryMock = $this->getMock(
-            \Magento\Framework\Filesystem\Directory\ReadFactory::class,
+            '\Magento\Framework\Filesystem\Directory\ReadFactory',
             [],
             [],
             '',
@@ -80,7 +80,7 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
             false
         );
         $this->_fileIteratorFactory = $this->getMock(
-            \Magento\Framework\Config\FileIteratorFactory::class,
+            '\Magento\Framework\Config\FileIteratorFactory',
             [],
             [],
             '',
@@ -125,7 +125,7 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
     public function testGetConfigurationFiles()
     {
         $configPath = 'app/code/Test/Module/etc/config.xml';
-        $modulesDirectoryMock = $this->getMock(\Magento\Framework\Filesystem\Directory\ReadInterface::class);
+        $modulesDirectoryMock = $this->getMock('Magento\Framework\Filesystem\Directory\ReadInterface');
         $modulesDirectoryMock->expects($this->any())->method('getRelativePath')->will($this->returnArgument(0));
         $modulesDirectoryMock->expects($this->any())->method('isExist')
             ->with($configPath)
@@ -151,7 +151,7 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
     public function testGetComposerJsonFiles()
     {
         $configPath = 'app/code/Test/Module/composer.json';
-        $modulesDirectoryMock = $this->getMock(\Magento\Framework\Filesystem\Directory\ReadInterface::class);
+        $modulesDirectoryMock = $this->getMock('Magento\Framework\Filesystem\Directory\ReadInterface');
         $modulesDirectoryMock->expects($this->any())->method('getRelativePath')->will($this->returnArgument(0));
         $modulesDirectoryMock->expects($this->any())->method('isExist')
             ->with($configPath)

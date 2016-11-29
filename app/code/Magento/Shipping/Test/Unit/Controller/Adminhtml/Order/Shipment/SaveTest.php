@@ -9,7 +9,6 @@
 namespace Magento\Shipping\Test\Unit\Controller\Adminhtml\Order\Shipment;
 
 use Magento\Backend\App\Action;
-use Magento\Sales\Model\ValidatorResultInterface;
 use Magento\Sales\Model\Order\Email\Sender\ShipmentSender;
 use Magento\Framework\TestFramework\Unit\Helper\ObjectManager as ObjectManagerHelper;
 use Magento\Sales\Model\Order\Shipment\ShipmentValidatorInterface;
@@ -19,7 +18,6 @@ use Magento\Sales\Model\Order\Shipment\Validation\QuantityValidator;
  * Class SaveTest
  *
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
- * @SuppressWarnings(PHPMD.TooManyFields)
  */
 class SaveTest extends \PHPUnit_Framework_TestCase
 {
@@ -99,11 +97,6 @@ class SaveTest extends \PHPUnit_Framework_TestCase
     private $shipmentValidatorMock;
 
     /**
-     * @var ValidatorResultInterface|\PHPUnit_Framework_MockObject_MockObject
-     */
-    private $validationResult;
-
-    /**
      * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
      */
     protected function setUp()
@@ -113,9 +106,6 @@ class SaveTest extends \PHPUnit_Framework_TestCase
             \Magento\Shipping\Controller\Adminhtml\Order\ShipmentLoader::class)
             ->disableOriginalConstructor()
             ->setMethods([])
-            ->getMock();
-        $this->validationResult = $this->getMockBuilder(ValidatorResultInterface::class)
-            ->disableOriginalConstructor()
             ->getMock();
         $this->labelGenerator = $this->getMockBuilder(\Magento\Shipping\Model\Shipping\LabelGenerator::class)
             ->disableOriginalConstructor()
@@ -261,7 +251,6 @@ class SaveTest extends \PHPUnit_Framework_TestCase
         $this->request->expects($this->any())
             ->method('isPost')
             ->willReturn($isPost);
-
         if (!$formKeyIsValid || !$isPost) {
             $this->messageManager->expects($this->once())
                 ->method('addError');
@@ -353,15 +342,16 @@ class SaveTest extends \PHPUnit_Framework_TestCase
             $this->session->expects($this->once())
                 ->method('getCommentText')
                 ->with(true);
-
             $this->objectManager->expects($this->once())
                 ->method('create')
                 ->with(\Magento\Framework\DB\Transaction::class)
                 ->will($this->returnValue($saveTransaction));
-            $this->objectManager->expects($this->once())
+            $this->objectManager->expects($this->exactly(1))
                 ->method('get')
-                ->with(\Magento\Backend\Model\Session::class)
-                ->will($this->returnValue($this->session));
+                ->withConsecutive(
+                    [\Magento\Backend\Model\Session::class]
+                )
+                ->willReturnOnConsecutiveCalls($this->session);
             $path = 'sales/order/view';
             $arguments = ['order_id' => $orderId];
             $shipment->expects($this->once())
@@ -372,11 +362,7 @@ class SaveTest extends \PHPUnit_Framework_TestCase
             $this->shipmentValidatorMock->expects($this->once())
                 ->method('validate')
                 ->with($shipment, [QuantityValidator::class])
-                ->willReturn($this->validationResult);
-
-            $this->validationResult->expects($this->once())
-                ->method('hasMessages')
-                ->willReturn(false);
+                ->willReturn([]);
 
             $this->saveAction->execute();
             $this->assertEquals($this->response, $this->saveAction->getResponse());

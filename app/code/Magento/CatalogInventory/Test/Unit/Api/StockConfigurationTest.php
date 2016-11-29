@@ -37,20 +37,20 @@ class StockConfigurationTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->config = $this->getMockForAbstractClass(
-            \Magento\Catalog\Model\ProductTypes\ConfigInterface::class,
+            'Magento\Catalog\Model\ProductTypes\ConfigInterface',
             [],
             '',
             false
         );
         $this->scopeConfig = $this->getMockForAbstractClass(
-            \Magento\Framework\App\Config\ScopeConfigInterface::class,
+            'Magento\Framework\App\Config\ScopeConfigInterface',
             ['isSetFlag'],
             '',
             false
         );
 
         $this->minsaleqtyHelper = $this->getMock(
-            \Magento\CatalogInventory\Helper\Minsaleqty::class,
+            'Magento\CatalogInventory\Helper\Minsaleqty',
             [],
             [],
             '',
@@ -59,7 +59,7 @@ class StockConfigurationTest extends \PHPUnit_Framework_TestCase
 
         $this->objectManagerHelper = new ObjectManagerHelper($this);
         $this->stockConfiguration = $this->objectManagerHelper->getObject(
-            \Magento\CatalogInventory\Model\Configuration::class,
+            'Magento\CatalogInventory\Model\Configuration',
             [
                 'config' => $this->config,
                 'scopeConfig' => $this->scopeConfig,

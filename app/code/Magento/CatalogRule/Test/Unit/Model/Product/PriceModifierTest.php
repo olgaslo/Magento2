@@ -30,14 +30,14 @@ class PriceModifierTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->ruleFactoryMock = $this->getMock(
-            \Magento\CatalogRule\Model\RuleFactory::class,
+            'Magento\CatalogRule\Model\RuleFactory',
             ['create'],
             [],
             '',
             false
         );
-        $this->productMock = $this->getMock(\Magento\Catalog\Model\Product::class, [], [], '', false);
-        $this->ruleMock = $this->getMock(\Magento\CatalogRule\Model\Rule::class, [], [], '', false);
+        $this->productMock = $this->getMock('Magento\Catalog\Model\Product', [], [], '', false);
+        $this->ruleMock = $this->getMock('Magento\CatalogRule\Model\Rule', [], [], '', false);
         $this->priceModifier = new \Magento\CatalogRule\Model\Product\PriceModifier($this->ruleFactoryMock);
     }
 

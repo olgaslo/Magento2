@@ -26,8 +26,8 @@ class DomainTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $eventDispatcherMock = $this->getMock(\Magento\Framework\Event\Manager::class, [], [], '', false);
-        $contextMock = $this->getMock(\Magento\Framework\Model\Context::class, [], [], '', false);
+        $eventDispatcherMock = $this->getMock('Magento\Framework\Event\Manager', [], [], '', false);
+        $contextMock = $this->getMock('Magento\Framework\Model\Context', [], [], '', false);
         $contextMock->expects(
             $this->any()
         )->method(
@@ -37,7 +37,7 @@ class DomainTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->resourceMock = $this->getMock(
-            \Magento\Framework\Model\ResourceModel\AbstractResource::class,
+            'Magento\Framework\Model\ResourceModel\AbstractResource',
             [
                 '_construct',
                 'getConnection',
@@ -54,12 +54,12 @@ class DomainTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->validatorMock = $this->getMockBuilder(
-            \Magento\Framework\Session\Config\Validator\CookieDomainValidator::class
+            'Magento\Framework\Session\Config\Validator\CookieDomainValidator'
         )->disableOriginalConstructor()
             ->getMock();
         $helper = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
         $this->domain = $helper->getObject(
-            \Magento\Cookie\Model\Config\Backend\Domain::class,
+            'Magento\Cookie\Model\Config\Backend\Domain',
             [
                 'context' => $contextMock,
                 'resource' => $this->resourceMock,

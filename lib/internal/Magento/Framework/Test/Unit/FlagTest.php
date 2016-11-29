@@ -25,15 +25,15 @@ class FlagTest extends \PHPUnit_Framework_TestCase
 
     protected function createInstance(array $data = [])
     {
-        $eventManager = $this->getMock(\Magento\Framework\Event\Manager::class, ['dispatch'], [], '', false, false);
-        $context = $this->getMock(\Magento\Framework\Model\Context::class, [], [], '', false, false);
+        $eventManager = $this->getMock('Magento\Framework\Event\Manager', ['dispatch'], [], '', false, false);
+        $context = $this->getMock('Magento\Framework\Model\Context', [], [], '', false, false);
         $context->expects($this->once())
             ->method('getEventDispatcher')
             ->will($this->returnValue($eventManager));
-        $registry = $this->getMock(\Magento\Framework\Registry::class, [], [], '', false, false);
+        $registry = $this->getMock('Magento\Framework\Registry', [], [], '', false, false);
 
         $connection = $this->getMock(
-            \Magento\Framework\DB\Adapter\Adapter::class,
+            'Magento\Framework\DB\Adapter\Adapter',
             ['beginTransaction'],
             [],
             '',
@@ -44,7 +44,7 @@ class FlagTest extends \PHPUnit_Framework_TestCase
             ->method('beginTransaction')
             ->will($this->returnSelf());
         $appResource = $this->getMock(
-            \Magento\Framework\App\ResourceConnection::class,
+            'Magento\Framework\App\ResourceConnection',
             [],
             [],
             '',
@@ -55,10 +55,10 @@ class FlagTest extends \PHPUnit_Framework_TestCase
             ->method('getConnection')
             ->will($this->returnValue($connection));
 
-        $dbContextMock = $this->getMock(\Magento\Framework\Model\ResourceModel\Db\Context::class, [], [], '', false);
+        $dbContextMock = $this->getMock('\Magento\Framework\Model\ResourceModel\Db\Context', [], [], '', false);
         $dbContextMock->expects($this->once())->method('getResources')->willReturn($appResource);
         $resource = $this->getMock(
-            \Magento\Framework\Flag\FlagResource::class,
+            '\Magento\Framework\Flag\FlagResource',
             ['__wakeup', 'load', 'save', 'addCommitCallback', 'commit', 'rollBack'],
             ['context' => $dbContextMock],
             '',
@@ -68,7 +68,7 @@ class FlagTest extends \PHPUnit_Framework_TestCase
             ->method('addCommitCallback')
             ->will($this->returnSelf());
 
-        $resourceCollection = $this->getMockBuilder(\Magento\Framework\Data\Collection\AbstractDb::class)
+        $resourceCollection = $this->getMockBuilder('Magento\Framework\Data\Collection\AbstractDb')
             ->disableOriginalConstructor()
             ->getMockForAbstractClass();
 
@@ -114,7 +114,7 @@ class FlagTest extends \PHPUnit_Framework_TestCase
 
     public function testLoadSelf()
     {
-        $this->assertInstanceOf(\Magento\Framework\Flag::class, $this->flag->loadSelf());
+        $this->assertInstanceOf('Magento\Framework\Flag', $this->flag->loadSelf());
     }
 
     /**

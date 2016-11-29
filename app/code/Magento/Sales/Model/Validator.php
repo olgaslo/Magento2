@@ -21,41 +21,26 @@ class Validator
     private $objectManager;
 
     /**
-     * @var ValidatorResultInterfaceFactory
-     */
-    private $validatorResultFactory;
-
-    /**
      * Validator constructor.
      *
      * @param ObjectManagerInterface $objectManager
-     * @param ValidatorResultInterfaceFactory $validatorResult
      */
-    public function __construct(
-        ObjectManagerInterface $objectManager,
-        ValidatorResultInterfaceFactory $validatorResult
-    ) {
+    public function __construct(ObjectManagerInterface $objectManager)
+    {
         $this->objectManager = $objectManager;
-        $this->validatorResultFactory = $validatorResult;
     }
 
     /**
      * @param object $entity
      * @param ValidatorInterface[] $validators
-     * @param object|null $context
-     * @return ValidatorResultInterface
+     * @return string[]
      * @throws ConfigurationMismatchException
      */
-    public function validate($entity, array $validators, $context = null)
+    public function validate($entity, array $validators)
     {
         $messages = [];
-        $validatorArguments = [];
-        if ($context !== null) {
-            $validatorArguments['context'] = $context;
-        }
-
         foreach ($validators as $validatorName) {
-            $validator = $this->objectManager->create($validatorName, $validatorArguments);
+            $validator = $this->objectManager->get($validatorName);
             if (!$validator instanceof ValidatorInterface) {
                 throw new ConfigurationMismatchException(
                     __(
@@ -65,11 +50,7 @@ class Validator
             }
             $messages = array_merge($messages, $validator->validate($entity));
         }
-        $validationResult = $this->validatorResultFactory->create();
-        foreach ($messages as $message) {
-            $validationResult->addMessage($message);
-        }
 
-        return $validationResult;
+        return $messages;
     }
 }

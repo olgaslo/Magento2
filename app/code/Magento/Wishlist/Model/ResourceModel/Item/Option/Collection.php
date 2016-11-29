@@ -37,10 +37,7 @@ class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\Ab
      */
     protected function _construct()
     {
-        $this->_init(
-            \Magento\Wishlist\Model\Item\Option::class,
-            \Magento\Wishlist\Model\ResourceModel\Item\Option::class
-        );
+        $this->_init('Magento\Wishlist\Model\Item\Option', 'Magento\Wishlist\Model\ResourceModel\Item\Option');
     }
 
     /**

@@ -28,7 +28,7 @@ class FormTest extends \PHPUnit_Framework_TestCase
     {
         $this->prepareContext();
 
-        $this->dataForm = $this->getMockBuilder(\Magento\Framework\Data\Form::class)
+        $this->dataForm = $this->getMockBuilder('Magento\Framework\Data\Form')
             ->disableOriginalConstructor()
             ->setMethods([
                 'setParent',
@@ -44,10 +44,10 @@ class FormTest extends \PHPUnit_Framework_TestCase
 
     protected function prepareContext()
     {
-        $this->urlBuilder = $this->getMockBuilder(\Magento\Framework\UrlInterface::class)
+        $this->urlBuilder = $this->getMockBuilder('Magento\Framework\UrlInterface')
             ->getMock();
 
-        $this->context = $this->getMockBuilder(\Magento\Backend\Block\Template\Context::class)
+        $this->context = $this->getMockBuilder('Magento\Backend\Block\Template\Context')
             ->disableOriginalConstructor()
             ->getMock();
         $this->context->expects($this->any())

@@ -78,32 +78,30 @@ class ManagerTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->componentConfigProvider = $this->getMockBuilder(
-            \Magento\Framework\View\Element\UiComponent\Config\Provider\Component\Definition::class
+            'Magento\Framework\View\Element\UiComponent\Config\Provider\Component\Definition'
         )->disableOriginalConstructor()->getMock();
-        $this->domMerger = $this->getMockBuilder(
-            \Magento\Framework\View\Element\UiComponent\Config\DomMergerInterface::class
-        )->getMockForAbstractClass();
+        $this->domMerger = $this->getMockBuilder('Magento\Framework\View\Element\UiComponent\Config\DomMergerInterface')
+            ->getMockForAbstractClass();
         $this->aggregatedFileCollector = $this->getMockBuilder(
-            \Magento\Framework\View\Element\UiComponent\Config\FileCollector\AggregatedFileCollector::class
+            'Magento\Framework\View\Element\UiComponent\Config\FileCollector\AggregatedFileCollector'
         )->disableOriginalConstructor()->getMock();
         $this->aggregatedFileCollectorFactory = $this->getMockBuilder(
-            \Magento\Framework\View\Element\UiComponent\Config\FileCollector\AggregatedFileCollectorFactory::class
+            'Magento\Framework\View\Element\UiComponent\Config\FileCollector\AggregatedFileCollectorFactory'
         )->disableOriginalConstructor()->getMock();
         $this->arrayObjectFactory = $this->getMockBuilder(
-            \Magento\Framework\View\Element\UiComponent\ArrayObjectFactory::class
+            'Magento\Framework\View\Element\UiComponent\ArrayObjectFactory'
         )->disableOriginalConstructor()->getMock();
         $this->arrayObjectFactory->expects($this->at(0))
             ->method('create')
             ->willReturn(new \ArrayObject([]));
-        $this->uiReader = $this->getMockBuilder(
-            \Magento\Framework\View\Element\UiComponent\Config\UiReaderInterface::class
-        )->getMockForAbstractClass();
-        $this->readerFactory = $this->getMockBuilder(
-            \Magento\Framework\View\Element\UiComponent\Config\ReaderFactory::class
-        )->disableOriginalConstructor()->getMock();
-        $this->cacheConfig = $this->getMockBuilder(\Magento\Framework\Config\CacheInterface::class)
+        $this->uiReader = $this->getMockBuilder('Magento\Framework\View\Element\UiComponent\Config\UiReaderInterface')
             ->getMockForAbstractClass();
-        $this->argumentInterpreter = $this->getMockBuilder(\Magento\Framework\Data\Argument\InterpreterInterface::class)
+        $this->readerFactory = $this->getMockBuilder('Magento\Framework\View\Element\UiComponent\Config\ReaderFactory')
+            ->disableOriginalConstructor()
+            ->getMock();
+        $this->cacheConfig = $this->getMockBuilder('Magento\Framework\Config\CacheInterface')
+            ->getMockForAbstractClass();
+        $this->argumentInterpreter = $this->getMockBuilder('Magento\Framework\Data\Argument\InterpreterInterface')
             ->getMockForAbstractClass();
         $this->manager = new Manager(
             $this->componentConfigProvider,
@@ -131,7 +129,7 @@ class ManagerTest extends \PHPUnit_Framework_TestCase
     public function testPrepareDataWithoutName()
     {
         $this->setExpectedException(
-            \Magento\Framework\Exception\LocalizedException::class,
+            'Magento\Framework\Exception\LocalizedException',
             __("Invalid UI Component element name: ''")
         );
         $this->manager->prepareData(null);

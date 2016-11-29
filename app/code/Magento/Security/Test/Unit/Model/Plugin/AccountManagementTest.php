@@ -47,7 +47,7 @@ class AccountManagementTest extends \PHPUnit_Framework_TestCase
         $this->objectManager = new ObjectManager($this);
 
         $this->request =  $this->getMock(
-            \Magento\Framework\App\RequestInterface::class,
+            '\Magento\Framework\App\RequestInterface',
             [],
             [],
             '',
@@ -55,7 +55,7 @@ class AccountManagementTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->securityManager = $this->getMock(
-            \Magento\Security\Model\SecurityManager::class,
+            '\Magento\Security\Model\SecurityManager',
             ['performSecurityCheck'],
             [],
             '',
@@ -63,7 +63,7 @@ class AccountManagementTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->accountManagement =  $this->getMock(
-            \Magento\Customer\Model\AccountManagement::class,
+            '\Magento\Customer\Model\AccountManagement',
             [],
             [],
             '',
@@ -71,7 +71,7 @@ class AccountManagementTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->model = $this->objectManager->getObject(
-            \Magento\Security\Model\Plugin\AccountManagement::class,
+            '\Magento\Security\Model\Plugin\AccountManagement',
             [
                 'request' => $this->request,
                 'securityManager' => $this->securityManager

@@ -83,7 +83,7 @@ class ListCustomer extends \Magento\Customer\Block\Account\Dashboard
     {
         if ($this->getReviews()) {
             $toolbar = $this->getLayout()->createBlock(
-                \Magento\Theme\Block\Html\Pager::class,
+                'Magento\Theme\Block\Html\Pager',
                 'customer_review_list.toolbar'
             )->setCollection(
                 $this->getReviews()
@@ -118,7 +118,6 @@ class ListCustomer extends \Magento\Customer\Block\Account\Dashboard
      * Get review link
      *
      * @return string
-     * @deprecated
      */
     public function getReviewLink()
     {
@@ -126,36 +125,13 @@ class ListCustomer extends \Magento\Customer\Block\Account\Dashboard
     }
 
     /**
-     * Get review URL
-     *
-     * @param \Magento\Review\Model\Review $review
-     * @return string
-     */
-    public function getReviewUrl($review)
-    {
-        return $this->getUrl('review/customer/view', ['id' => $review->getReviewId()]);
-    }
-
-    /**
      * Get product link
      *
      * @return string
-     * @deprecated
      */
     public function getProductLink()
     {
         return $this->getUrl('catalog/product/view/');
-    }
-
-    /**
-     * Get product URL
-     *
-     * @param \Magento\Review\Model\Review $review
-     * @return string
-     */
-    public function getProductUrl($review)
-    {
-        return $this->getUrl('catalog/product/view', ['id' => $review->getEntityPkValue()]);
     }
 
     /**

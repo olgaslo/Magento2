@@ -66,7 +66,7 @@ class General extends \Magento\Backend\Block\Widget\Form\Generic
                 ]
             );
             $renderer = $this->getLayout()->createBlock(
-                 \Magento\Backend\Block\Store\Switcher\Form\Renderer\Fieldset\Element::class
+                'Magento\Backend\Block\Store\Switcher\Form\Renderer\Fieldset\Element'
             );
             $field->setRenderer($renderer);
         } else {

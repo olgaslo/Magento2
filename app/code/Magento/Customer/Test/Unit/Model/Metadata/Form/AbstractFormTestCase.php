@@ -22,11 +22,9 @@ abstract class AbstractFormTestCase extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->localeMock = $this->getMockBuilder(\Magento\Framework\Stdlib\DateTime\TimezoneInterface::class)
-            ->getMock();
-        $this->localeResolverMock = $this->getMockBuilder(\Magento\Framework\Locale\ResolverInterface::class)
-            ->getMock();
-        $this->loggerMock = $this->getMockBuilder(\Psr\Log\LoggerInterface::class)->getMock();
-        $this->attributeMetadataMock = $this->getMock(\Magento\Customer\Api\Data\AttributeMetadataInterface::class);
+        $this->localeMock = $this->getMockBuilder('Magento\Framework\Stdlib\DateTime\TimezoneInterface')->getMock();
+        $this->localeResolverMock = $this->getMockBuilder('Magento\Framework\Locale\ResolverInterface')->getMock();
+        $this->loggerMock = $this->getMockBuilder('Psr\Log\LoggerInterface')->getMock();
+        $this->attributeMetadataMock = $this->getMock('Magento\Customer\Api\Data\AttributeMetadataInterface');
     }
 }

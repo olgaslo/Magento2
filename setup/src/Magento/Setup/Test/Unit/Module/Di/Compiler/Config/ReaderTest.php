@@ -47,20 +47,17 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->diContainerConfig =
-            $this->getMock(\Magento\Framework\ObjectManager\ConfigInterface::class, [], [], '', false);
-        $this->configLoader =
-            $this->getMock(\Magento\Framework\App\ObjectManager\ConfigLoader::class, [], [], '', false);
-
+        $this->diContainerConfig = $this->getMock('Magento\Framework\ObjectManager\ConfigInterface', [], [], '', false);
+        $this->configLoader = $this->getMock('Magento\Framework\App\ObjectManager\ConfigLoader', [], [], '', false);
         $this->argumentsResolverFactory = $this->getMock(
-            \Magento\Setup\Module\Di\Compiler\ArgumentsResolverFactory::class,
+            'Magento\Setup\Module\Di\Compiler\ArgumentsResolverFactory',
             [],
             [],
             '',
             false
         );
         $this->argumentsResolver = $this->getMock(
-            \Magento\Setup\Module\Di\Compiler\ArgumentsResolver::class,
+            'Magento\Setup\Module\Di\Compiler\ArgumentsResolver',
             [],
             [],
             '',
@@ -70,13 +67,13 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
             ->method('create')
             ->willReturn($this->argumentsResolver);
         $this->classReaderDecorator = $this->getMock(
-            \Magento\Setup\Module\Di\Code\Reader\ClassReaderDecorator::class,
+            'Magento\Setup\Module\Di\Code\Reader\ClassReaderDecorator',
             [],
             [],
             '',
             false
         );
-        $this->typeReader = $this->getMock(\Magento\Setup\Module\Di\Code\Reader\Type::class, [], [], '', false);
+        $this->typeReader = $this->getMock('Magento\Setup\Module\Di\Code\Reader\Type', [], [], '', false);
 
         $this->model = new \Magento\Setup\Module\Di\Compiler\Config\Reader(
             $this->diContainerConfig,

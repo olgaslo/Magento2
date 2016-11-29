@@ -33,15 +33,15 @@ class ButtonTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->_layoutMock = $this->getMock(\Magento\Framework\View\Layout::class, [], [], '', false, false);
+        $this->_layoutMock = $this->getMock('Magento\Framework\View\Layout', [], [], '', false, false);
 
         $arguments = [
-            'urlBuilder' => $this->getMock(\Magento\Backend\Model\Url::class, [], [], '', false, false),
+            'urlBuilder' => $this->getMock('Magento\Backend\Model\Url', [], [], '', false, false),
             'layout' => $this->_layoutMock,
         ];
 
         $objectManagerHelper = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
-        $this->_blockMock = $objectManagerHelper->getObject(\Magento\Backend\Block\Widget\Button::class, $arguments);
+        $this->_blockMock = $objectManagerHelper->getObject('Magento\Backend\Block\Widget\Button', $arguments);
     }
 
     protected function tearDown()

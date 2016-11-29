@@ -92,21 +92,24 @@ class NodeTest extends \PHPUnit_Framework_TestCase
                 [
                     'node_data' => null,
                     'keys' => null,
-                ], \Magento\Framework\Exception\LocalizedException::class,
+                ],
+                '\Magento\Framework\Exception\LocalizedException',
                 'Empty array of node information',
             ],
             [
                 [
                     'node_data' => null,
                     'keys' => true,
-                ], \Magento\Framework\Exception\LocalizedException::class,
+                ],
+                '\Magento\Framework\Exception\LocalizedException',
                 'Empty array of node information'
             ],
             [
                 [
                     'node_data' => true,
                     'keys' => null,
-                ], \Magento\Framework\Exception\LocalizedException::class,
+                ],
+                '\Magento\Framework\Exception\LocalizedException',
                 'Empty keys array'
             ]
         ];

@@ -234,7 +234,7 @@ class Item extends \Magento\Quote\Model\Quote\Item\AbstractItem implements \Mage
      */
     protected function _construct()
     {
-        $this->_init(\Magento\Quote\Model\ResourceModel\Quote\Item::class);
+        $this->_init('Magento\Quote\Model\ResourceModel\Quote\Item');
     }
 
     /**

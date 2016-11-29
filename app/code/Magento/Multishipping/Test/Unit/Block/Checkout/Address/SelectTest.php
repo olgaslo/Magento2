@@ -11,9 +11,6 @@ namespace Magento\Multishipping\Test\Unit\Block\Checkout\Address;
 use Magento\Framework\TestFramework\Unit\Helper\ObjectManager;
 use Magento\Framework\Exception\NoSuchEntityException;
 
-/**
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
- */
 class SelectTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -70,17 +67,16 @@ class SelectTest extends \PHPUnit_Framework_TestCase
     {
         $this->objectManager = new ObjectManager($this);
         $this->multishippingMock =
-            $this->getMock(\Magento\Multishipping\Model\Checkout\Type\Multishipping::class, [], [], '', false);
-        $this->addressMock = $this->getMock(\Magento\Customer\Api\Data\AddressInterface::class);
-        $this->customerMock = $this->getMock(\Magento\Customer\Api\Data\CustomerInterface::class);
-        $this->filterBuilderMock = $this->getMock(\Magento\Framework\Api\FilterBuilder::class, [], [], '', false);
+            $this->getMock('Magento\Multishipping\Model\Checkout\Type\Multishipping', [], [], '', false);
+        $this->addressMock = $this->getMock('Magento\Customer\Api\Data\AddressInterface');
+        $this->customerMock = $this->getMock('Magento\Customer\Api\Data\CustomerInterface');
+        $this->filterBuilderMock = $this->getMock('Magento\Framework\Api\FilterBuilder', [], [], '', false);
         $this->searchCriteriaBuilderMock =
-            $this->getMock(\Magento\Framework\Api\SearchCriteriaBuilder::class, [], [], '', false);
-        $this->addressRepositoryMock = $this->getMock(\Magento\Customer\Api\AddressRepositoryInterface::class);
-        $this->filterMock = $this->getMock(\Magento\Framework\Api\Filter::class, [], [], '', false);
-        $this->searchCriteriaMock = $this->getMock(\Magento\Framework\Api\SearchCriteria::class, [], [], '', false);
-        $this->block = $this->objectManager->getObject(
-            \Magento\Multishipping\Block\Checkout\Address\Select::class, [
+            $this->getMock('Magento\Framework\Api\SearchCriteriaBuilder', [], [], '', false);
+        $this->addressRepositoryMock = $this->getMock('Magento\Customer\Api\AddressRepositoryInterface');
+        $this->filterMock = $this->getMock('Magento\Framework\Api\Filter', [], [], '', false);
+        $this->searchCriteriaMock = $this->getMock('Magento\Framework\Api\SearchCriteria', [], [], '', false);
+        $this->block = $this->objectManager->getObject('Magento\Multishipping\Block\Checkout\Address\Select', [
                 'multishipping' => $this->multishippingMock,
                 'addressRepository' => $this->addressRepositoryMock,
                 'searchCriteriaBuilder' => $this->searchCriteriaBuilderMock,
@@ -125,7 +121,7 @@ class SelectTest extends \PHPUnit_Framework_TestCase
 
     public function testGetAddress()
     {
-        $searchResultMock = $this->getMock(\Magento\Customer\Api\Data\AddressSearchResultsInterface::class);
+        $searchResultMock = $this->getMock('Magento\Customer\Api\Data\AddressSearchResultsInterface');
         $this->multishippingMock->expects($this->once())->method('getCustomer')->willReturn($this->customerMock);
         $this->customerMock->expects($this->once())->method('getId')->willReturn(1);
         $this->filterBuilderMock->expects($this->once())->method('setField')->with('parent_id')->willReturnSelf();
@@ -153,8 +149,7 @@ class SelectTest extends \PHPUnit_Framework_TestCase
 
     public function testGetAlreadyExistingAddress()
     {
-        $this->block = $this->objectManager->getObject(
-            \Magento\Multishipping\Block\Checkout\Address\Select::class, [
+        $this->block = $this->objectManager->getObject('Magento\Multishipping\Block\Checkout\Address\Select', [
                 'addressRepository' => $this->addressRepositoryMock,
                 'filterBuilder' => $this->filterBuilderMock,
                 'data' => [
@@ -172,7 +167,7 @@ class SelectTest extends \PHPUnit_Framework_TestCase
 
     public function testGetAddressWhenItNotExistInCustomer()
     {
-        $searchResultMock = $this->getMock(\Magento\Customer\Api\Data\AddressSearchResultsInterface::class);
+        $searchResultMock = $this->getMock('Magento\Customer\Api\Data\AddressSearchResultsInterface');
         $this->multishippingMock->expects($this->once())->method('getCustomer')->willReturn($this->customerMock);
         $this->customerMock->expects($this->once())->method('getId')->willReturn(1);
         $this->filterBuilderMock->expects($this->once())->method('setField')->with('parent_id')->willReturnSelf();

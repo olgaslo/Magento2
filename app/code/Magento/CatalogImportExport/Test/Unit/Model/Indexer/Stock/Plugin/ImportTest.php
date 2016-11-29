@@ -14,14 +14,14 @@ class ImportTest extends \PHPUnit_Framework_TestCase
          *      \PHPUnit_Framework_MockObject_MockObject $processorMock
          */
         $processorMock = $this->getMock(
-            \Magento\CatalogInventory\Model\Indexer\Stock\Processor::class,
+            'Magento\CatalogInventory\Model\Indexer\Stock\Processor',
             ['markIndexerAsInvalid', 'isIndexerScheduled'],
             [],
             '',
             false
         );
 
-        $subjectMock = $this->getMock(\Magento\ImportExport\Model\Import::class, [], [], '', false);
+        $subjectMock = $this->getMock('Magento\ImportExport\Model\Import', [], [], '', false);
         $processorMock->expects($this->any())->method('markIndexerAsInvalid');
         $processorMock->expects($this->any())->method('isIndexerScheduled')->willReturn(false);
 

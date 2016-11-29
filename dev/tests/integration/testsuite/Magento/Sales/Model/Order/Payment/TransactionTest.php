@@ -15,14 +15,14 @@ class TransactionTest extends \PHPUnit_Framework_TestCase
 {
     public function testLoadByTxnId()
     {
-        $order = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create(\Magento\Sales\Model\Order::class);
+        $order = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create('Magento\Sales\Model\Order');
         $order->loadByIncrementId('100000001');
 
         /**
          * @var $repository \Magento\Sales\Model\Order\Payment\Transaction\Repository
          */
         $repository = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create(
-            \Magento\Sales\Model\Order\Payment\Transaction\Repository::class
+            'Magento\Sales\Model\Order\Payment\Transaction\Repository'
         );
         /**
          * @var $model \Magento\Sales\Model\Order\Payment\Transaction

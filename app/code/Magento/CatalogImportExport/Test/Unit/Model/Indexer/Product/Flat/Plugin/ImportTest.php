@@ -14,14 +14,14 @@ class ImportTest extends \PHPUnit_Framework_TestCase
          *      \PHPUnit_Framework_MockObject_MockObject $processorMock
          */
         $processorMock = $this->getMock(
-            \Magento\Catalog\Model\Indexer\Product\Flat\Processor::class,
+            'Magento\Catalog\Model\Indexer\Product\Flat\Processor',
             ['markIndexerAsInvalid'],
             [],
             '',
             false
         );
 
-        $subjectMock = $this->getMock(\Magento\ImportExport\Model\Import::class, [], [], '', false);
+        $subjectMock = $this->getMock('Magento\ImportExport\Model\Import', [], [], '', false);
         $processorMock->expects($this->once())->method('markIndexerAsInvalid');
 
         $someData = [1, 2, 3];

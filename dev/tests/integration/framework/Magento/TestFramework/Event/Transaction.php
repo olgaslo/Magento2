@@ -113,7 +113,6 @@ class Transaction
             $this->_getConnection()->rollbackTransparentTransaction();
             $this->_isTransactionActive = false;
             $this->_eventManager->fireEvent('rollbackTransaction');
-            $this->_getConnection()->closeConnection();
         }
     }
 
@@ -128,7 +127,7 @@ class Transaction
     {
         /** @var $resource \Magento\Framework\App\ResourceConnection */
         $resource = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()
-            ->get(\Magento\Framework\App\ResourceConnection::class);
+            ->get('Magento\Framework\App\ResourceConnection');
         return $resource->getConnection($connectionName);
     }
 

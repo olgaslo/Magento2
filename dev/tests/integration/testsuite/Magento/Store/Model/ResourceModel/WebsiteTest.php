@@ -11,7 +11,7 @@ class WebsiteTest extends \PHPUnit_Framework_TestCase
     {
         /** @var $model \Magento\Store\Model\ResourceModel\Website */
         $model = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create(
-            \Magento\Store\Model\ResourceModel\Website::class
+            'Magento\Store\Model\ResourceModel\Website'
         );
         $this->assertEquals(1, $model->countAll());
         $this->assertEquals(1, $model->countAll(false));

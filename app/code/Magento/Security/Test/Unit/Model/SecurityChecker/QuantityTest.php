@@ -68,7 +68,7 @@ class QuantityTest extends \PHPUnit_Framework_TestCase
             );
 
         $this->collectionFactoryMock = $this->getMock(
-            \Magento\Security\Model\ResourceModel\PasswordResetRequestEvent\CollectionFactory::class,
+            '\Magento\Security\Model\ResourceModel\PasswordResetRequestEvent\CollectionFactory',
             ['create'],
             [],
             '',
@@ -76,7 +76,7 @@ class QuantityTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->collectionMock = $this->getMock(
-            \Magento\Security\Model\ResourceModel\PasswordResetRequestEvent\Collection::class,
+            '\Magento\Security\Model\ResourceModel\PasswordResetRequestEvent\Collection',
             ['addFieldToFilter', 'filterByLifetime', 'count'],
             [],
             '',
@@ -88,7 +88,7 @@ class QuantityTest extends \PHPUnit_Framework_TestCase
             ->getMock();
 
         $this->model = $this->objectManager->getObject(
-            \Magento\Security\Model\SecurityChecker\Quantity::class,
+            'Magento\Security\Model\SecurityChecker\Quantity',
             [
                 'securityConfig' => $this->securityConfigMock,
                 'collectionFactory' => $this->collectionFactoryMock,

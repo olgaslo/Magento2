@@ -28,13 +28,13 @@ class PluginTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->checkoutSessionMock = $this->getMock(
-            \Magento\Checkout\Model\Session::class,
+            'Magento\Checkout\Model\Session',
             ['getCheckoutState', 'setCheckoutState'],
             [],
             '',
             false
         );
-        $this->cartMock = $this->getMock(\Magento\Checkout\Model\Cart::class, [], [], '', false);
+        $this->cartMock = $this->getMock('\Magento\Checkout\Model\Cart', [], [], '', false);
         $this->model = new \Magento\Multishipping\Model\Checkout\Type\Multishipping\Plugin($this->checkoutSessionMock);
     }
 

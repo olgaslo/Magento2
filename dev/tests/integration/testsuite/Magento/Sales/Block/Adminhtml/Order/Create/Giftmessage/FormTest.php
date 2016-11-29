@@ -21,10 +21,10 @@ class FormTest extends \PHPUnit_Framework_TestCase
         $objectManager = \Magento\TestFramework\Helper\Bootstrap::getObjectManager();
         $fixtureCustomerId = 1;
         /** @var \Magento\Backend\Model\Session\Quote $backendQuoteSession */
-        $backendQuoteSession = $objectManager->get(\Magento\Backend\Model\Session\Quote::class);
+        $backendQuoteSession = $objectManager->get('Magento\Backend\Model\Session\Quote');
         $backendQuoteSession->setCustomerId($fixtureCustomerId);
         /** @var \Magento\Sales\Block\Adminhtml\Order\Create\Giftmessage\Form $block */
-        $block = $objectManager->create(\Magento\Sales\Block\Adminhtml\Order\Create\Giftmessage\Form::class);
+        $block = $objectManager->create('Magento\Sales\Block\Adminhtml\Order\Create\Giftmessage\Form');
         $block->setEntity(new \Magento\Framework\DataObject());
 
         /** SUT execution and assertions */

@@ -39,20 +39,20 @@ class ConfigurableProductHandlerTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->configurableMock = $this->getMock(
-            \Magento\ConfigurableProduct\Model\ResourceModel\Product\Type\Configurable::class,
+            'Magento\ConfigurableProduct\Model\ResourceModel\Product\Type\Configurable',
             ['getChildrenIds'],
             [],
             '',
             false
         );
         $this->configurableProductsProviderMock = $this->getMock(
-            \Magento\CatalogRuleConfigurable\Plugin\CatalogRule\Model\ConfigurableProductsProvider::class,
+            'Magento\CatalogRuleConfigurable\Plugin\CatalogRule\Model\ConfigurableProductsProvider',
             ['getIds'],
             [],
             '',
             false
         );
-        $this->ruleMock = $this->getMock(\Magento\CatalogRule\Model\Rule::class, [], [], '', false);
+        $this->ruleMock = $this->getMock('Magento\CatalogRule\Model\Rule', [], [], '', false);
 
         $this->configurableProductHandler = new ConfigurableProductHandler(
             $this->configurableMock,

@@ -29,8 +29,8 @@ class DbValidatorTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->connectionFactory = $this->getMock(\Magento\Setup\Module\ConnectionFactory::class, [], [], '', false);
-        $this->connection = $this->getMockForAbstractClass(\Magento\Framework\DB\Adapter\AdapterInterface::class);
+        $this->connectionFactory = $this->getMock('Magento\Setup\Module\ConnectionFactory', [], [], '', false);
+        $this->connection = $this->getMockForAbstractClass('Magento\Framework\DB\Adapter\AdapterInterface');
         $this->connectionFactory->expects($this->any())->method('create')->willReturn($this->connection);
         $this->dbValidator = new DbValidator($this->connectionFactory);
     }
@@ -38,11 +38,11 @@ class DbValidatorTest extends \PHPUnit_Framework_TestCase
     public function testCheckDatabaseConnection()
     {
         $this->connection
-            ->expects($this->exactly(2))
+            ->expects($this->once())
             ->method('fetchOne')
             ->with('SELECT version()')
             ->willReturn('5.6.0-0ubuntu0.12.04.1');
-        $pdo = $this->getMockForAbstractClass(\Zend_Db_Statement_Interface::class, [], '', false);
+        $pdo = $this->getMockForAbstractClass('Zend_Db_Statement_Interface', [], '', false);
         $this->connection
             ->expects($this->atLeastOnce())
             ->method('query')
@@ -79,7 +79,6 @@ class DbValidatorTest extends \PHPUnit_Framework_TestCase
                 ]
             );
         $this->assertEquals(true, $this->dbValidator->checkDatabaseConnection('name', 'host', 'user', 'password'));
-        $this->assertEquals(true, $this->dbValidator->checkDatabaseConnection('name', 'host:3339', 'user', 'password'));
     }
 
     /**
@@ -93,7 +92,7 @@ class DbValidatorTest extends \PHPUnit_Framework_TestCase
             ->method('fetchOne')
             ->with('SELECT version()')
             ->willReturn('5.6.0-0ubuntu0.12.04.1');
-        $pdo = $this->getMockForAbstractClass(\Zend_Db_Statement_Interface::class, [], '', false);
+        $pdo = $this->getMockForAbstractClass('Zend_Db_Statement_Interface', [], '', false);
         $this->connection
             ->expects($this->atLeastOnce())
             ->method('query')
@@ -123,7 +122,7 @@ class DbValidatorTest extends \PHPUnit_Framework_TestCase
             ->method('fetchOne')
             ->with('SELECT version()')
             ->willReturn('5.6.0-0ubuntu0.12.04.1');
-        $pdo = $this->getMockForAbstractClass(\Zend_Db_Statement_Interface::class, [], '', false);
+        $pdo = $this->getMockForAbstractClass('Zend_Db_Statement_Interface', [], '', false);
         $this->connection
             ->expects($this->atLeastOnce())
             ->method('query')
@@ -168,7 +167,7 @@ class DbValidatorTest extends \PHPUnit_Framework_TestCase
      */
     public function testCheckDatabaseConnectionFailed()
     {
-        $connectionFactory = $this->getMock(\Magento\Setup\Module\ConnectionFactory::class, [], [], '', false);
+        $connectionFactory = $this->getMock('Magento\Setup\Module\ConnectionFactory', [], [], '', false);
         $connectionFactory->expects($this->once())->method('create')->willReturn(false);
         $this->dbValidator = new DbValidator($connectionFactory);
         $this->dbValidator->checkDatabaseConnection('name', 'host', 'user', 'password');

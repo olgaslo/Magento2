@@ -33,7 +33,7 @@ class Coupon extends \Magento\Framework\Model\AbstractExtensibleModel implements
     protected function _construct()
     {
         parent::_construct();
-        $this->_init(\Magento\SalesRule\Model\ResourceModel\Coupon::class);
+        $this->_init('Magento\SalesRule\Model\ResourceModel\Coupon');
     }
 
     /**
@@ -73,7 +73,6 @@ class Coupon extends \Magento\Framework\Model\AbstractExtensibleModel implements
     }
 
     //@codeCoverageIgnoreStart
-
     /**
      * Get coupon id
      *

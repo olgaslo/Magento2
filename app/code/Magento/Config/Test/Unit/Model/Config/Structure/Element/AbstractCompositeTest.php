@@ -42,16 +42,16 @@ class AbstractCompositeTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->_iteratorMock = $this->getMock(
-            \Magento\Config\Model\Config\Structure\Element\Iterator::class,
+            'Magento\Config\Model\Config\Structure\Element\Iterator',
             [],
             [],
             '',
             false
         );
-        $this->_storeManagerMock = $this->getMock(\Magento\Store\Model\StoreManager::class, [], [], '', false);
-        $this->moduleManagerMock = $this->getMock(\Magento\Framework\Module\Manager::class, [], [], '', false);
+        $this->_storeManagerMock = $this->getMock('Magento\Store\Model\StoreManager', [], [], '', false);
+        $this->moduleManagerMock = $this->getMock('Magento\Framework\Module\Manager', [], [], '', false);
         $this->_model = $this->getMockForAbstractClass(
-            \Magento\Config\Model\Config\Structure\Element\AbstractComposite::class,
+            'Magento\Config\Model\Config\Structure\Element\AbstractComposite',
             [$this->_storeManagerMock, $this->moduleManagerMock, $this->_iteratorMock]
         );
     }

@@ -100,12 +100,13 @@ class Config implements Bundle\ConfigInterface
             case 'MB':
                 return (int)$size * 1024;
             default:
-                return (int)($size / 1024);
+                return (int)$size / 1024;
         }
     }
 
     /**
      * @return ThemeProviderInterface
+     * @deprecated
      */
     private function getThemeProvider()
     {

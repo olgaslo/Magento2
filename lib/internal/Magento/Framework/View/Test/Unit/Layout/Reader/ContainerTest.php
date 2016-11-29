@@ -37,13 +37,13 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
     {
         $this->objectManagerHelper = new ObjectManagerHelper($this);
 
-        $this->helperMock = $this->getMockBuilder(\Magento\Framework\View\Layout\ScheduledStructure\Helper::class)
+        $this->helperMock = $this->getMockBuilder('Magento\Framework\View\Layout\ScheduledStructure\Helper')
             ->disableOriginalConstructor()->getMock();
-        $this->readerPoolMock = $this->getMockBuilder(\Magento\Framework\View\Layout\ReaderPool::class)
+        $this->readerPoolMock = $this->getMockBuilder('Magento\Framework\View\Layout\ReaderPool')
             ->disableOriginalConstructor()->getMock();
 
         $this->container = $this->objectManagerHelper->getObject(
-            \Magento\Framework\View\Layout\Reader\Container::class,
+            'Magento\Framework\View\Layout\Reader\Container',
             [
                 'helper' => $this->helperMock,
                 'readerPool' => $this->readerPoolMock
@@ -72,7 +72,7 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
         $setRemoveCondition
     ) {
         /** @var ScheduledStructure|\PHPUnit_Framework_MockObject_MockObject $scheduledStructureMock */
-        $scheduledStructureMock = $this->getMockBuilder(\Magento\Framework\View\Layout\ScheduledStructure::class)
+        $scheduledStructureMock = $this->getMockBuilder('Magento\Framework\View\Layout\ScheduledStructure')
             ->disableOriginalConstructor()->getMock();
         $scheduledStructureMock->expects($getStructureCondition)
             ->method('getStructureElementData')
@@ -87,7 +87,7 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
             ->with($containerName);
 
         /** @var \Magento\Framework\View\Layout\Reader\Context|\PHPUnit_Framework_MockObject_MockObject $contextMock */
-        $contextMock = $this->getMockBuilder(\Magento\Framework\View\Layout\Reader\Context::class)
+        $contextMock = $this->getMockBuilder('Magento\Framework\View\Layout\Reader\Context')
             ->disableOriginalConstructor()->getMock();
         $contextMock->expects($this->any())
             ->method('getScheduledStructure')
@@ -102,12 +102,6 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
             ->with($contextMock, $elementCurrent)
             ->willReturnSelf();
 
-        if ($elementCurrent->getAttribute('remove') == 'false') {
-            $scheduledStructureMock->expects($this->once())
-                ->method('unsetElementFromListToRemove')
-                ->with($elementCurrent->getAttribute('name'));
-        }
-        
         $this->container->interpret($contextMock, $elementCurrent);
     }
 
@@ -239,7 +233,7 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
     {
         $xml = simplexml_load_string(
             '<parent_element>' . $xml . '</parent_element>',
-            \Magento\Framework\View\Layout\Element::class
+            'Magento\Framework\View\Layout\Element'
         );
         return $xml->{$elementType};
     }

@@ -23,7 +23,7 @@ class InvalidTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $collectionMock = $this->getMock(
-            \Magento\Indexer\Model\Indexer\Collection::class,
+            '\Magento\Indexer\Model\Indexer\Collection',
             ['getItems'],
             [],
             '',
@@ -31,7 +31,7 @@ class InvalidTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->indexerMock = $this->getMock(
-            \Magento\Indexer\Model\Indexer::class,
+            '\Magento\Indexer\Model\Indexer',
             ['getStatus'],
             [],
             '',
@@ -39,7 +39,7 @@ class InvalidTest extends \PHPUnit_Framework_TestCase
         );
 
         $urlBuilder = $this->getMock(
-            \Magento\Framework\UrlInterface::class,
+            '\Magento\Framework\UrlInterface',
             [],
             [],
             '',

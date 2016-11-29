@@ -24,11 +24,11 @@ class AbstractBuilderTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->dependenciesParserMock = $this->getMock(\Magento\Setup\Module\Dependency\ParserInterface::class);
-        $this->reportWriterMock = $this->getMock(\Magento\Setup\Module\Dependency\Report\WriterInterface::class);
+        $this->dependenciesParserMock = $this->getMock('Magento\Setup\Module\Dependency\ParserInterface');
+        $this->reportWriterMock = $this->getMock('Magento\Setup\Module\Dependency\Report\WriterInterface');
 
         $this->builder = $this->getMockForAbstractClass(
-            \Magento\Setup\Module\Dependency\Report\Builder\AbstractBuilder::class,
+            'Magento\Setup\Module\Dependency\Report\Builder\AbstractBuilder',
             ['dependenciesParser' => $this->dependenciesParserMock, 'reportWriter' => $this->reportWriterMock]
         );
     }
@@ -79,7 +79,7 @@ class AbstractBuilderTest extends \PHPUnit_Framework_TestCase
         ];
 
         $parseResult = ['foo', 'bar', 'baz'];
-        $configMock = $this->getMock(\Magento\Setup\Module\Dependency\Report\Data\ConfigInterface::class);
+        $configMock = $this->getMock('\Magento\Setup\Module\Dependency\Report\Data\ConfigInterface');
 
         $this->dependenciesParserMock->expects(
             $this->once()

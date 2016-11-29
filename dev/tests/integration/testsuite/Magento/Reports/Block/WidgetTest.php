@@ -10,9 +10,9 @@ class WidgetTest extends \PHPUnit_Framework_TestCase
     public function testViewedProductsWidget()
     {
         $model = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create(
-            \Magento\Widget\Model\Widget\Instance::class
+            'Magento\Widget\Model\Widget\Instance'
         );
-        $config = $model->setType(\Magento\Reports\Block\Product\Widget\Viewed::class)->getWidgetConfigAsArray();
+        $config = $model->setType('Magento\Reports\Block\Product\Widget\Viewed')->getWidgetConfigAsArray();
 
         $this->assertArrayHasKey('parameters', $config);
         $templates = $config['parameters'];
@@ -43,9 +43,9 @@ class WidgetTest extends \PHPUnit_Framework_TestCase
     public function testComparedProductsWidget()
     {
         $model = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create(
-            \Magento\Widget\Model\Widget\Instance::class
+            'Magento\Widget\Model\Widget\Instance'
         );
-        $config = $model->setType(\Magento\Reports\Block\Product\Widget\Compared::class)->getWidgetConfigAsArray();
+        $config = $model->setType('Magento\Reports\Block\Product\Widget\Compared')->getWidgetConfigAsArray();
 
         $this->assertArrayHasKey('parameters', $config);
         $templates = $config['parameters'];

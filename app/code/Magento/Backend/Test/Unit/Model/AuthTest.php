@@ -34,18 +34,12 @@ class AuthTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->_eventManagerMock = $this->getMock(\Magento\Framework\Event\ManagerInterface::class);
-        $this->_credentialStorage = $this->getMock(\Magento\Backend\Model\Auth\Credential\StorageInterface::class);
-        $this->_modelFactoryMock = $this->getMock(
-            \Magento\Framework\Data\Collection\ModelFactory::class,
-            [],
-            [],
-            '',
-            false
-        );
+        $this->_eventManagerMock = $this->getMock('\Magento\Framework\Event\ManagerInterface');
+        $this->_credentialStorage = $this->getMock('\Magento\Backend\Model\Auth\Credential\StorageInterface');
+        $this->_modelFactoryMock = $this->getMock('\Magento\Framework\Data\Collection\ModelFactory', [], [], '', false);
         $objectManager = new ObjectManager($this);
         $this->_model = $objectManager->getObject(
-            \Magento\Backend\Model\Auth::class,
+            'Magento\Backend\Model\Auth',
             [
                 'eventManager' => $this->_eventManagerMock,
                 'credentialStorage' => $this->_credentialStorage,
@@ -63,7 +57,7 @@ class AuthTest extends \PHPUnit_Framework_TestCase
         $this->_modelFactoryMock
             ->expects($this->once())
             ->method('create')
-            ->with(\Magento\Backend\Model\Auth\Credential\StorageInterface::class)
+            ->with('Magento\Backend\Model\Auth\Credential\StorageInterface')
             ->will($this->returnValue($this->_credentialStorage));
         $exceptionMock = new \Magento\Framework\Exception\LocalizedException(
             __('You did not sign in correctly or your account is temporarily disabled.')

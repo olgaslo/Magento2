@@ -72,7 +72,9 @@ class Processor
     public function getAttribute()
     {
         if (!$this->attribute) {
-            $this->attribute = $this->attributeRepository->get('media_gallery');
+            $this->attribute = $this->attributeRepository->get(
+                'media_gallery'
+            );
         }
 
         return $this->attribute;
@@ -298,11 +300,11 @@ class Processor
         if (is_array($mediaAttribute)) {
             foreach ($mediaAttribute as $attribute) {
                 if (in_array($attribute, $mediaAttributeCodes)) {
-                    $product->setData($attribute, 'no_selection');
+                    $product->setData($attribute, null);
                 }
             }
         } elseif (in_array($mediaAttribute, $mediaAttributeCodes)) {
-            $product->setData($mediaAttribute, 'no_selection');
+            $product->setData($mediaAttribute, null);
         }
 
         return $this;

@@ -71,7 +71,7 @@ class Items extends Block
     public function getItemProductByName($name)
     {
         return $this->blockFactory->create(
-            \Magento\Sales\Test\Block\Adminhtml\Order\Create\Items\ItemProduct::class,
+            'Magento\Sales\Test\Block\Adminhtml\Order\Create\Items\ItemProduct',
             ['element' => $this->_rootElement->find(sprintf($this->itemProduct, $name), Locator::SELECTOR_XPATH)]
         );
     }
@@ -103,7 +103,7 @@ class Items extends Block
     public function getTemplateBlock()
     {
         return $this->blockFactory->create(
-            \Magento\Backend\Test\Block\Template::class,
+            'Magento\Backend\Test\Block\Template',
             ['element' => $this->_rootElement->find($this->template, Locator::SELECTOR_XPATH)]
         );
     }

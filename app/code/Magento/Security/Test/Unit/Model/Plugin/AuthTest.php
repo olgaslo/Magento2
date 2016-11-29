@@ -52,7 +52,7 @@ class AuthTest extends \PHPUnit_Framework_TestCase
         $this->objectManager = new ObjectManager($this);
 
         $this->sessionsManager =  $this->getMock(
-            \Magento\Security\Model\AdminSessionsManager::class,
+            '\Magento\Security\Model\AdminSessionsManager',
             ['processLogin', 'processLogout', 'getCurrentSession'],
             [],
             '',
@@ -60,14 +60,14 @@ class AuthTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->messageManager = $this->getMockForAbstractClass(
-            \Magento\Framework\Message\ManagerInterface::class,
+            '\Magento\Framework\Message\ManagerInterface',
             ['addWarning'],
             '',
             false
         );
 
         $this->currentSession =  $this->getMock(
-            \Magento\Security\Model\AdminSessionInfo::class,
+            '\Magento\Security\Model\AdminSessionInfo',
             ['isOtherSessionsTerminated'],
             [],
             '',
@@ -75,7 +75,7 @@ class AuthTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->authMock =  $this->getMock(
-            \Magento\Backend\Model\Auth::class,
+            '\Magento\Backend\Model\Auth',
             [],
             [],
             '',
@@ -83,7 +83,7 @@ class AuthTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->model = $this->objectManager->getObject(
-            \Magento\Security\Model\Plugin\Auth::class,
+            '\Magento\Security\Model\Plugin\Auth',
             [
                 'sessionsManager' => $this->sessionsManager,
                 'messageManager' =>$this->messageManager

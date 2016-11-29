@@ -13,10 +13,10 @@ class ExpressTest extends \Magento\TestFramework\TestCase\AbstractController
      */
     public function testReviewAction()
     {
-        $quote = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create(\Magento\Quote\Model\Quote::class);
+        $quote = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create('Magento\Quote\Model\Quote');
         $quote->load('test01', 'reserved_order_id');
         \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->get(
-            \Magento\Checkout\Model\Session::class
+            'Magento\Checkout\Model\Session'
         )->setQuoteId(
             $quote->getId()
         );
@@ -35,11 +35,11 @@ class ExpressTest extends \Magento\TestFramework\TestCase\AbstractController
      */
     public function testCancelAction()
     {
-        $quote = $this->_objectManager->create(\Magento\Quote\Model\Quote::class);
+        $quote = $this->_objectManager->create('Magento\Quote\Model\Quote');
         $quote->load('100000002', 'reserved_order_id');
-        $order = $this->_objectManager->create(\Magento\Sales\Model\Order::class);
+        $order = $this->_objectManager->create('Magento\Sales\Model\Order');
         $order->load('100000002', 'increment_id');
-        $session = $this->_objectManager->get(\Magento\Checkout\Model\Session::class);
+        $session = $this->_objectManager->get('Magento\Checkout\Model\Session');
         $session->setLoadInactive(true);
         $session->setLastRealOrderId(
             $order->getRealOrderId()
@@ -51,7 +51,7 @@ class ExpressTest extends \Magento\TestFramework\TestCase\AbstractController
             $order->getQuoteId()
         );
         /** @var $paypalSession \Magento\Framework\Session\Generic */
-        $paypalSession = $this->_objectManager->get(\Magento\Paypal\Model\Session::class);
+        $paypalSession = $this->_objectManager->get('Magento\Paypal\Model\Session');
         $paypalSession->setExpressCheckoutToken('token');
 
         $this->dispatch('paypal/express/cancel');
@@ -79,18 +79,18 @@ class ExpressTest extends \Magento\TestFramework\TestCase\AbstractController
 
         /** Preconditions */
         /** @var \Magento\Customer\Model\Session $customerSession */
-        $customerSession = $this->_objectManager->get(\Magento\Customer\Model\Session::class);
+        $customerSession = $this->_objectManager->get('Magento\Customer\Model\Session');
         /** @var \Magento\Customer\Api\CustomerRepositoryInterface $customerRepository */
-        $customerRepository = $this->_objectManager->get(\Magento\Customer\Api\CustomerRepositoryInterface::class);
+        $customerRepository = $this->_objectManager->get('Magento\Customer\Api\CustomerRepositoryInterface');
         $customerData = $customerRepository->getById($fixtureCustomerId);
         $customerSession->setCustomerDataObject($customerData);
 
         /** @var \Magento\Quote\Model\Quote $quote */
-        $quote = $this->_objectManager->create(\Magento\Quote\Model\Quote::class);
+        $quote = $this->_objectManager->create('Magento\Quote\Model\Quote');
         $quote->load($fixtureQuoteReserveId, 'reserved_order_id');
 
         /** @var \Magento\Checkout\Model\Session $checkoutSession */
-        $checkoutSession = $this->_objectManager->get(\Magento\Checkout\Model\Session::class);
+        $checkoutSession = $this->_objectManager->get('Magento\Checkout\Model\Session');
         $checkoutSession->setQuoteId($quote->getId());
 
         /** Preconditions check */
@@ -110,7 +110,7 @@ class ExpressTest extends \Magento\TestFramework\TestCase\AbstractController
 
         /** Check if customer data was copied to quote correctly */
         /** @var \Magento\Quote\Model\Quote $updatedQuote */
-        $updatedQuote = $this->_objectManager->create(\Magento\Quote\Model\Quote::class);
+        $updatedQuote = $this->_objectManager->create('Magento\Quote\Model\Quote');
         $updatedQuote->load($fixtureQuoteReserveId, 'reserved_order_id');
         $this->assertEquals(
             $fixtureCustomerEmail,

@@ -41,11 +41,11 @@ class AgreementTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $objectManager = new ObjectManagerHelper($this);
-        $contextMock = $this->getMockBuilder(\Magento\Framework\Model\ResourceModel\Db\Context::class)
+        $contextMock = $this->getMockBuilder('Magento\Framework\Model\ResourceModel\Db\Context')
             ->disableOriginalConstructor()
             ->getMock();
         $this->resourceConnectionMock = $this->getMock(
-            \Magento\Framework\App\ResourceConnection::class,
+            'Magento\Framework\App\ResourceConnection',
             [
                 'getConnection',
                 'getTableName'
@@ -54,21 +54,21 @@ class AgreementTest extends \PHPUnit_Framework_TestCase
             '',
             false
         );
-        $this->collectionMock = $this->getMockBuilder(\Magento\Framework\Data\Collection\AbstractDb::class)
+        $this->collectionMock = $this->getMockBuilder('Magento\Framework\Data\Collection\AbstractDb')
             ->disableOriginalConstructor()
             ->setMethods(['getSelect'])
             ->getMockForAbstractClass();
         $this->connectionMock = $this->getMock(
-            \Magento\Framework\DB\Adapter\Pdo\Mysql::class,
+            'Magento\Framework\DB\Adapter\Pdo\Mysql',
             [],
             [],
             '',
             false
         );
-        $this->selectMock = $this->getMock(\Magento\Framework\DB\Select::class, [], [], '', false);
+        $this->selectMock = $this->getMock('Magento\Framework\DB\Select', [], [], '', false);
         $contextMock->expects($this->once())->method('getResources')->willReturn($this->resourceConnectionMock);
         $this->agreementResource = $objectManager->getObject(
-            \Magento\Paypal\Model\ResourceModel\Billing\Agreement::class,
+            'Magento\Paypal\Model\ResourceModel\Billing\Agreement',
             [
                 'context' => $contextMock,
             ]

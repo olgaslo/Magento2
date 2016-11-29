@@ -12,7 +12,7 @@ class UnitofmeasureTest extends \PHPUnit_Framework_TestCase
     {
         /** @var $model \Magento\Fedex\Model\Source\Unitofmeasure */
         $model = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create(
-            \Magento\Fedex\Model\Source\Unitofmeasure::class
+            'Magento\Fedex\Model\Source\Unitofmeasure'
         );
         $result = $model->toOptionArray();
         $this->assertCount(2, $result);

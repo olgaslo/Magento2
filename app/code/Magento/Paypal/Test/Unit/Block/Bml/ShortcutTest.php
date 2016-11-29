@@ -28,13 +28,13 @@ class ShortcutTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->paymentHelperMock = $this->getMock(\Magento\Payment\Helper\Data::class, [], [], '', false);
-        $this->randomMock = $this->getMock(\Magento\Framework\Math\Random::class);
-        $this->paypalShortcutHelperMock = $this->getMock(\Magento\Paypal\Helper\Shortcut\ValidatorInterface::class);
+        $this->paymentHelperMock = $this->getMock('Magento\Payment\Helper\Data', [], [], '', false);
+        $this->randomMock = $this->getMock('Magento\Framework\Math\Random');
+        $this->paypalShortcutHelperMock = $this->getMock('Magento\Paypal\Helper\Shortcut\ValidatorInterface');
 
         $this->objectManagerHelper = new ObjectManagerHelper($this);
         $this->shortcut = $this->objectManagerHelper->getObject(
-            \Magento\Paypal\Block\Bml\Shortcut::class,
+            'Magento\Paypal\Block\Bml\Shortcut',
             [
                 'paymentData' => $this->paymentHelperMock,
                 'mathRandom' => $this->randomMock,
@@ -80,7 +80,7 @@ class ShortcutTest extends \PHPUnit_Framework_TestCase
         $paymentMethodCode = '';
         $bmlMethodCode = '';
         $this->shortcut->setIsInCatalogProduct($isInCatalog);
-        $expressMethod = $this->getMockBuilder(\Magento\Paypal\Model\Express::class)->disableOriginalConstructor()
+        $expressMethod = $this->getMockBuilder('Magento\Paypal\Model\Express')->disableOriginalConstructor()
             ->setMethods([])->getMock();
 
         $this->paypalShortcutHelperMock->expects($this->once())->method('validate')
@@ -99,7 +99,7 @@ class ShortcutTest extends \PHPUnit_Framework_TestCase
         $bmlMethodCode = '';
         $hash = 'hash';
         $this->shortcut->setIsInCatalogProduct($isInCatalog);
-        $expressMethod = $this->getMockBuilder(\Magento\Paypal\Model\Express::class)->disableOriginalConstructor()
+        $expressMethod = $this->getMockBuilder('Magento\Paypal\Model\Express')->disableOriginalConstructor()
             ->setMethods([])->getMock();
         $expectedData = [
             'is_in_catalog_product' => $isInCatalog,

@@ -41,27 +41,27 @@ class MatchTest extends \PHPUnit_Framework_TestCase
     {
         $helper = new ObjectManager($this);
 
-        $this->scoreBuilder = $this->getMockBuilder(\Magento\Framework\Search\Adapter\Mysql\ScoreBuilder::class)
+        $this->scoreBuilder = $this->getMockBuilder('Magento\Framework\Search\Adapter\Mysql\ScoreBuilder')
             ->setMethods(['addCondition'])
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->resolver = $this->getMockBuilder(\Magento\Framework\Search\Adapter\Mysql\Field\ResolverInterface::class)
+        $this->resolver = $this->getMockBuilder('Magento\Framework\Search\Adapter\Mysql\Field\ResolverInterface')
             ->setMethods(['resolve'])
             ->disableOriginalConstructor()
             ->getMockForAbstractClass();
 
-        $this->fulltextHelper = $this->getMockBuilder(\Magento\Framework\DB\Helper\Mysql\Fulltext::class)
+        $this->fulltextHelper = $this->getMockBuilder('Magento\Framework\DB\Helper\Mysql\Fulltext')
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->preprocessor = $this->getMockBuilder(\Magento\Search\Adapter\Query\Preprocessor\Synonyms::class)
+        $this->preprocessor = $this->getMockBuilder('Magento\Search\Adapter\Query\Preprocessor\Synonyms')
             ->setMethods(['process'])
             ->disableOriginalConstructor()
             ->getMock();
 
         $this->match = $helper->getObject(
-            \Magento\Framework\Search\Adapter\Mysql\Query\Builder\Match::class,
+            'Magento\Framework\Search\Adapter\Mysql\Query\Builder\Match',
             [
                 'resolver' => $this->resolver,
                 'fulltextHelper' => $this->fulltextHelper,
@@ -73,7 +73,7 @@ class MatchTest extends \PHPUnit_Framework_TestCase
     public function testBuild()
     {
         /** @var Select|\PHPUnit_Framework_MockObject_MockObject $select */
-        $select = $this->getMockBuilder(\Magento\Framework\DB\Select::class)
+        $select = $this->getMockBuilder('Magento\Framework\DB\Select')
             ->setMethods(['getMatchQuery', 'match', 'where'])
             ->disableOriginalConstructor()
             ->getMock();
@@ -95,7 +95,7 @@ class MatchTest extends \PHPUnit_Framework_TestCase
             ->willReturnCallback(function ($fieldList) {
                 $resolvedFields = [];
                 foreach ($fieldList as $column) {
-                    $field = $this->getMockBuilder(\Magento\Framework\Search\Adapter\Mysql\Field\FieldInterface::class)
+                    $field = $this->getMockBuilder('\Magento\Framework\Search\Adapter\Mysql\Field\FieldInterface')
                         ->disableOriginalConstructor()
                         ->getMockForAbstractClass();
                     $field->expects($this->any())
@@ -107,7 +107,7 @@ class MatchTest extends \PHPUnit_Framework_TestCase
             });
 
         /** @var \Magento\Framework\Search\Request\Query\Match|\PHPUnit_Framework_MockObject_MockObject $query */
-        $query = $this->getMockBuilder(\Magento\Framework\Search\Request\Query\Match::class)
+        $query = $this->getMockBuilder('Magento\Framework\Search\Request\Query\Match')
             ->setMethods(['getMatches', 'getValue'])
             ->disableOriginalConstructor()
             ->getMock();

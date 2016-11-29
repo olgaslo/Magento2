@@ -15,7 +15,7 @@ class AbstractParserTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->_parserMock = $this->getMockForAbstractClass(
-            \Magento\Setup\Module\I18n\Parser\AbstractParser::class,
+            'Magento\Setup\Module\I18n\Parser\AbstractParser',
             [],
             '',
             false
@@ -31,10 +31,7 @@ class AbstractParserTest extends \PHPUnit_Framework_TestCase
     {
         $this->setExpectedException('InvalidArgumentException', $message);
 
-        $this->_parserMock->addAdapter(
-            'php',
-            $this->getMock(\Magento\Setup\Module\I18n\Parser\AdapterInterface::class)
-        );
+        $this->_parserMock->addAdapter('php', $this->getMock('Magento\Setup\Module\I18n\Parser\AdapterInterface'));
         $this->_parserMock->parse($options);
     }
 

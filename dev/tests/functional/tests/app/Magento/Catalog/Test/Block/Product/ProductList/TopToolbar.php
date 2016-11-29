@@ -28,19 +28,17 @@ class TopToolbar extends Block
      */
     public function getSelectSortType()
     {
-        $selectedOption = $this->_rootElement->find($this->sorter)->getElements('option[selected]')[0]->getText();
-        preg_match('/\w+\s?\w+/', $selectedOption, $matches);
-        return $matches[0];
+        return $this->_rootElement->find("#sorter")->getElements('option[selected]')[0]->getText();
     }
 
     /**
      * Get all available method of sorting product
      *
-     * @return array
+     * @return array|string
      */
     public function getSortType()
     {
-        $content = $this->_rootElement->find($this->sorter)->getText();
+        $content = str_replace("\r", '', $this->_rootElement->find($this->sorter)->getText());
         return explode("\n", $content);
     }
 }

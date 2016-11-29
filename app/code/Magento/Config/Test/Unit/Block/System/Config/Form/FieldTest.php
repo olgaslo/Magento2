@@ -35,7 +35,7 @@ class FieldTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->_storeManagerMock = $this->getMock(
-            \Magento\Store\Model\StoreManager::class,
+            'Magento\Store\Model\StoreManager',
             [],
             [],
             '',
@@ -45,10 +45,10 @@ class FieldTest extends \PHPUnit_Framework_TestCase
 
         $data = [
             'storeManager' => $this->_storeManagerMock,
-            'urlBuilder' => $this->getMock(\Magento\Backend\Model\Url::class, [], [], '', false),
+            'urlBuilder' => $this->getMock('Magento\Backend\Model\Url', [], [], '', false),
         ];
         $helper = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
-        $this->_object = $helper->getObject(\Magento\Config\Block\System\Config\Form\Field::class, $data);
+        $this->_object = $helper->getObject('Magento\Config\Block\System\Config\Form\Field', $data);
 
         $this->_testData = [
             'htmlId' => 'test_field_id',
@@ -58,7 +58,7 @@ class FieldTest extends \PHPUnit_Framework_TestCase
         ];
 
         $this->_elementMock = $this->getMock(
-            \Magento\Framework\Data\Form\Element\Text::class,
+            'Magento\Framework\Data\Form\Element\Text',
             [
                 'getHtmlId',
                 'getName',

@@ -12,7 +12,7 @@ class ResultTest extends \PHPUnit_Framework_TestCase
         $filters = null;
         $expectedQuery = 'filtersData';
 
-        $view = $this->getMock(\Magento\Framework\App\View::class, ['loadLayout', 'renderLayout'], [], '', false);
+        $view = $this->getMock('Magento\Framework\App\View', ['loadLayout', 'renderLayout'], [], '', false);
         $view->expects($this->once())->method('loadLayout')->will(
             $this->returnCallback(
                 function () use (&$filters, $expectedQuery) {
@@ -21,11 +21,11 @@ class ResultTest extends \PHPUnit_Framework_TestCase
             )
         );
 
-        $request = $this->getMock(\Magento\Framework\App\Console\Request::class, ['getQueryValue'], [], '', false);
+        $request = $this->getMock('Magento\Framework\App\Console\Request', ['getQueryValue'], [], '', false);
         $request->expects($this->once())->method('getQueryValue')->will($this->returnValue($expectedQuery));
 
         $catalogSearchAdvanced = $this->getMock(
-            \Magento\CatalogSearch\Model\Advanced::class,
+            'Magento\CatalogSearch\Model\Advanced',
             ['addFilters', '__wakeup'],
             [],
             '',
@@ -41,13 +41,13 @@ class ResultTest extends \PHPUnit_Framework_TestCase
 
         $objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
         $context = $objectManager->getObject(
-            \Magento\Framework\App\Action\Context::class,
+            'Magento\Framework\App\Action\Context',
             ['view' => $view, 'request' => $request]
         );
 
         /** @var \Magento\CatalogSearch\Controller\Advanced\Result $instance */
         $instance = $objectManager->getObject(
-            \Magento\CatalogSearch\Controller\Advanced\Result::class,
+            'Magento\CatalogSearch\Controller\Advanced\Result',
             ['context' => $context, 'catalogSearchAdvanced' => $catalogSearchAdvanced]
         );
         $instance->execute();

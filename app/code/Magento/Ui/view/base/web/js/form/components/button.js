@@ -58,7 +58,7 @@ define([
          */
         applyAction: function (action) {
             var targetName = action.targetName,
-                params = utils.copy(action.params) || [],
+                params = action.params || [],
                 actionName = action.actionName,
                 target;
 

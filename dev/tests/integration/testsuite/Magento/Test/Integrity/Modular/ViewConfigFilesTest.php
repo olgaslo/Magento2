@@ -13,13 +13,7 @@ class ViewConfigFilesTest extends \PHPUnit_Framework_TestCase
      */
     public function testViewConfigFile($file)
     {
-        $validationStateMock = $this->getMock(
-            \Magento\Framework\Config\ValidationStateInterface::class,
-            [],
-            [],
-            '',
-            false
-        );
+        $validationStateMock = $this->getMock('\Magento\Framework\Config\ValidationStateInterface', [], [], '', false);
         $validationStateMock->method('isValidationRequired')
             ->willReturn(true);
         $domConfig = new \Magento\Framework\Config\Dom($file, $validationStateMock);
@@ -42,7 +36,7 @@ class ViewConfigFilesTest extends \PHPUnit_Framework_TestCase
     {
         $result = [];
         $files = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->get(
-            \Magento\Framework\Module\Dir\Reader::class
+            'Magento\Framework\Module\Dir\Reader'
         )->getConfigurationFiles(
             'view.xml'
         );

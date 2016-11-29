@@ -41,22 +41,22 @@ class DirectoryTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->logMock = $this->getMockBuilder(\Magento\Setup\Module\Di\Compiler\Log\Log::class)
+        $this->logMock = $this->getMockBuilder('Magento\Setup\Module\Di\Compiler\Log\Log')
             ->disableOriginalConstructor()
             ->setMethods(['add'])
             ->getMock();
 
-        $this->classesScanner = $this->getMockBuilder(\Magento\Setup\Module\Di\Code\Reader\ClassesScanner::class)
+        $this->classesScanner = $this->getMockBuilder('\Magento\Setup\Module\Di\Code\Reader\ClassesScanner')
             ->disableOriginalConstructor()
             ->setMethods(['getList'])
             ->getMock();
 
-        $this->classReaderMock = $this->getMockBuilder(\Magento\Framework\Code\Reader\ClassReader::class)
+        $this->classReaderMock = $this->getMockBuilder('\Magento\Framework\Code\Reader\ClassReader')
             ->disableOriginalConstructor()
             ->setMethods(['getParents'])
             ->getMock();
 
-        $this->validatorMock = $this->getMockBuilder(\Magento\Framework\Code\Validator::class)
+        $this->validatorMock = $this->getMockBuilder('\Magento\Framework\Code\Validator')
             ->disableOriginalConstructor()
             ->setMethods(['validate'])
             ->getMock();

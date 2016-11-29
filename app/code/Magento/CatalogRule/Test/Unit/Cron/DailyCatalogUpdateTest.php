@@ -27,7 +27,7 @@ class DailyCatalogUpdateTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->ruleProductProcessor = $this->getMock(
-            \Magento\CatalogRule\Model\Indexer\Rule\RuleProductProcessor::class,
+            'Magento\CatalogRule\Model\Indexer\Rule\RuleProductProcessor',
             [],
             [],
             '',
@@ -35,7 +35,7 @@ class DailyCatalogUpdateTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->cron = (new ObjectManager($this))->getObject(
-            \Magento\CatalogRule\Cron\DailyCatalogUpdate::class,
+            'Magento\CatalogRule\Cron\DailyCatalogUpdate',
             [
                 'ruleProductProcessor' => $this->ruleProductProcessor,
             ]

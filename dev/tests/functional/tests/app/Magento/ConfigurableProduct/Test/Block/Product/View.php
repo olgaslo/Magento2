@@ -25,7 +25,7 @@ class View extends \Magento\Catalog\Test\Block\Product\View
     public function getConfigurableOptionsBlock()
     {
         return $this->blockFactory->create(
-            \Magento\ConfigurableProduct\Test\Block\Product\View\ConfigurableOptions::class,
+            'Magento\ConfigurableProduct\Test\Block\Product\View\ConfigurableOptions',
             ['element' => $this->_rootElement]
         );
     }

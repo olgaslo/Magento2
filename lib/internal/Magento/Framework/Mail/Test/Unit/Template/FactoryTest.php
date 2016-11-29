@@ -30,8 +30,8 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->objectManagerHelper = new ObjectManagerHelper($this);
-        $this->objectManagerMock = $this->getMock(\Magento\Framework\ObjectManagerInterface::class);
-        $this->templateMock = $this->getMock(\Magento\Framework\Mail\TemplateInterface::class);
+        $this->objectManagerMock = $this->getMock('\Magento\Framework\ObjectManagerInterface');
+        $this->templateMock = $this->getMock('\Magento\Framework\Mail\TemplateInterface');
     }
 
     /**
@@ -43,7 +43,7 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
     public function testGet($expectedArgument, $namespace)
     {
         $factory = $this->objectManagerHelper->getObject(
-            \Magento\Framework\Mail\Template\Factory::class,
+            'Magento\Framework\Mail\Template\Factory',
             ['objectManager' => $this->objectManagerMock]
         );
 
@@ -52,10 +52,7 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
             ->with($expectedArgument, ['data' => ['template_id' => 'identifier']])
             ->willReturn($this->templateMock);
 
-        $this->assertInstanceOf(
-            \Magento\Framework\Mail\TemplateInterface::class,
-            $factory->get('identifier', $namespace)
-        );
+        $this->assertInstanceOf('\Magento\Framework\Mail\TemplateInterface', $factory->get('identifier', $namespace));
     }
 
     /**
@@ -65,7 +62,7 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
     {
         return [
             [
-                'expectedArgument' => \Magento\Framework\Mail\TemplateInterface::class,
+                'expectedArgument' => 'Magento\Framework\Mail\TemplateInterface',
                 'namespace' => null
             ],
             [

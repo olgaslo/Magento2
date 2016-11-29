@@ -7,10 +7,8 @@
 namespace Magento\Customer\Controller\Account;
 
 use Magento\Customer\Model\AuthenticationInterface;
-use Magento\Customer\Model\Customer\Mapper;
 use Magento\Customer\Model\EmailNotificationInterface;
 use Magento\Framework\App\Config\ScopeConfigInterface;
-use Magento\Framework\App\ObjectManager;
 use Magento\Framework\Data\Form\FormKey\Validator;
 use Magento\Customer\Api\AccountManagementInterface;
 use Magento\Customer\Api\CustomerRepositoryInterface;
@@ -71,11 +69,6 @@ class EditPost extends \Magento\Customer\Controller\AbstractAccount
     private $authentication;
 
     /**
-     * @var Mapper
-     */
-    private $customerMapper;
-
-    /**
      * @param Context $context
      * @param Session $customerSession
      * @param AccountManagementInterface $customerAccountManagement
@@ -108,7 +101,7 @@ class EditPost extends \Magento\Customer\Controller\AbstractAccount
     {
 
         if (!($this->authentication instanceof AuthenticationInterface)) {
-            return ObjectManager::getInstance()->get(
+            return \Magento\Framework\App\ObjectManager::getInstance()->get(
                 \Magento\Customer\Model\AuthenticationInterface::class
             );
         } else {
@@ -125,7 +118,7 @@ class EditPost extends \Magento\Customer\Controller\AbstractAccount
     private function getEmailNotification()
     {
         if (!($this->emailNotification instanceof EmailNotificationInterface)) {
-            return ObjectManager::getInstance()->get(
+            return \Magento\Framework\App\ObjectManager::getInstance()->get(
                 EmailNotificationInterface::class
             );
         } else {
@@ -203,7 +196,7 @@ class EditPost extends \Magento\Customer\Controller\AbstractAccount
     private function getScopeConfig()
     {
         if (!($this->scopeConfig instanceof \Magento\Framework\App\Config\ScopeConfigInterface)) {
-            return ObjectManager::getInstance()->get(
+            return \Magento\Framework\App\ObjectManager::getInstance()->get(
                 \Magento\Framework\App\Config\ScopeConfigInterface::class
             );
         } else {
@@ -248,12 +241,7 @@ class EditPost extends \Magento\Customer\Controller\AbstractAccount
         \Magento\Framework\App\RequestInterface $inputData,
         \Magento\Customer\Api\Data\CustomerInterface $currentCustomerData
     ) {
-        $attributeValues = $this->getCustomerMapper()->toFlatArray($currentCustomerData);
-        $customerDto = $this->customerExtractor->extract(
-            self::FORM_DATA_EXTRACTOR_CODE,
-            $inputData,
-            $attributeValues
-        );
+        $customerDto = $this->customerExtractor->extract(self::FORM_DATA_EXTRACTOR_CODE, $inputData);
         $customerDto->setId($currentCustomerData->getId());
         if (!$customerDto->getAddresses()) {
             $customerDto->setAddresses($currentCustomerData->getAddresses());
@@ -310,20 +298,5 @@ class EditPost extends \Magento\Customer\Controller\AbstractAccount
                 throw new InvalidEmailOrPasswordException(__('The password doesn\'t match this account.'));
             }
         }
-    }
-
-    /**
-     * Get Customer Mapper instance
-     *
-     * @return Mapper
-     *
-     * @deprecated
-     */
-    private function getCustomerMapper()
-    {
-        if ($this->customerMapper === null) {
-            $this->customerMapper = ObjectManager::getInstance()->get(\Magento\Customer\Model\Customer\Mapper::class);
-        }
-        return $this->customerMapper;
     }
 }

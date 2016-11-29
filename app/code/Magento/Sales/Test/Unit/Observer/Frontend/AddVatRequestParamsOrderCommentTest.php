@@ -24,7 +24,7 @@ class AddVatRequestParamsOrderCommentTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->customerAddressHelperMock = $this->getMockBuilder(\Magento\Customer\Helper\Address::class)
+        $this->customerAddressHelperMock = $this->getMockBuilder('Magento\Customer\Helper\Address')
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -51,7 +51,7 @@ class AddVatRequestParamsOrderCommentTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue($configAddressType));
 
         $orderAddressMock = $this->getMock(
-            \Magento\Sales\Model\Order\Address::class,
+            'Magento\Sales\Model\Order\Address',
             ['getVatRequestId', 'getVatRequestDate', '__wakeup'],
             [],
             '',
@@ -64,7 +64,7 @@ class AddVatRequestParamsOrderCommentTest extends \PHPUnit_Framework_TestCase
             ->method('getVatRequestDate')
             ->will($this->returnValue($vatRequestDate));
 
-        $orderMock = $this->getMockBuilder(\Magento\Sales\Model\Order::class)
+        $orderMock = $this->getMockBuilder('Magento\Sales\Model\Order')
             ->disableOriginalConstructor()
             ->setMethods(['getShippingAddress', '__wakeup', 'addStatusHistoryComment', 'getBillingAddress'])
             ->getMock();
@@ -79,7 +79,7 @@ class AddVatRequestParamsOrderCommentTest extends \PHPUnit_Framework_TestCase
                 ->method('addStatusHistoryComment')
                 ->with($orderHistoryComment, false);
         }
-        $observer = $this->getMock(\Magento\Framework\Event\Observer::class, ['getOrder'], [], '', false);
+        $observer = $this->getMock('Magento\Framework\Event\Observer', ['getOrder'], [], '', false);
         $observer->expects($this->once())
             ->method('getOrder')
             ->will($this->returnValue($orderMock));

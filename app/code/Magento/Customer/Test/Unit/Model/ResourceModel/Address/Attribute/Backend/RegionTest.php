@@ -24,9 +24,9 @@ class RegionTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->regionFactory = $this->getMock(\Magento\Directory\Model\RegionFactory::class, ['create'], [], '', false);
+        $this->regionFactory = $this->getMock('Magento\Directory\Model\RegionFactory', ['create'], [], '', false);
         $this->region = $this->getMock(
-            \Magento\Directory\Model\Region::class,
+            'Magento\Directory\Model\Region',
             ['load', 'getId', 'getCountryId', 'getName'],
             [],
             '',
@@ -34,7 +34,7 @@ class RegionTest extends \PHPUnit_Framework_TestCase
         );
         $this->model = new Region($this->regionFactory);
         $this->object = $this->getMock(
-            \Magento\Framework\DataObject::class,
+            'Magento\Framework\DataObject',
             ['getData', 'getCountryId', 'setRegionId', 'setRegion'],
             [],
             '',

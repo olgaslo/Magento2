@@ -20,17 +20,17 @@ class PurchaseorderTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $objectManagerHelper = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
-        $eventManager = $this->getMock(\Magento\Framework\Event\ManagerInterface::class, [], [], '', false);
-        $paymentDataMock = $this->getMock(\Magento\Payment\Helper\Data::class, [], [], '', false);
+        $eventManager = $this->getMock('Magento\Framework\Event\ManagerInterface', [], [], '', false);
+        $paymentDataMock = $this->getMock('Magento\Payment\Helper\Data', [], [], '', false);
         $this->_scopeConfig = $this->getMock(
-            \Magento\Framework\App\Config\ScopeConfigInterface::class,
+            'Magento\Framework\App\Config\ScopeConfigInterface',
             ['getValue', 'isSetFlag'],
             [],
             '',
             false
         );
         $this->_object = $objectManagerHelper->getObject(
-            \Magento\OfflinePayments\Model\Purchaseorder::class,
+            'Magento\OfflinePayments\Model\Purchaseorder',
             [
                 'eventManager' => $eventManager,
                 'paymentData' => $paymentDataMock,
@@ -45,7 +45,7 @@ class PurchaseorderTest extends \PHPUnit_Framework_TestCase
             'po_number' => '12345'
         ]);
 
-        $instance = $this->getMock(\Magento\Payment\Model\Info::class, [], [], '', false);
+        $instance = $this->getMock('Magento\Payment\Model\Info', [], [], '', false);
         $this->_object->setData('info_instance', $instance);
         $this->_object->assignData($data);
     }

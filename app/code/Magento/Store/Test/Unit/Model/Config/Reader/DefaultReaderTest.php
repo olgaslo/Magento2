@@ -26,9 +26,9 @@ class DefaultReaderTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->_initialConfigMock = $this->getMock(\Magento\Framework\App\Config\Initial::class, [], [], '', false);
+        $this->_initialConfigMock = $this->getMock('Magento\Framework\App\Config\Initial', [], [], '', false);
         $this->_collectionFactory = $this->getMock(
-            \Magento\Store\Model\ResourceModel\Config\Collection\ScopedFactory::class,
+            'Magento\Store\Model\ResourceModel\Config\Collection\ScopedFactory',
             ['create'],
             [],
             '',

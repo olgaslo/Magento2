@@ -326,7 +326,7 @@ class DefaultStock extends AbstractIndexer implements StockInterface
     {
         if ($this->stockConfiguration === null) {
             $this->stockConfiguration = \Magento\Framework\App\ObjectManager::getInstance()
-                ->get(\Magento\CatalogInventory\Api\StockConfigurationInterface::class);
+                ->get('Magento\CatalogInventory\Api\StockConfigurationInterface');
         }
         return $this->stockConfiguration;
     }
@@ -338,7 +338,7 @@ class DefaultStock extends AbstractIndexer implements StockInterface
     {
         if (null === $this->queryProcessorComposite) {
             $this->queryProcessorComposite = \Magento\Framework\App\ObjectManager::getInstance()
-                ->get(\Magento\CatalogInventory\Model\ResourceModel\Indexer\Stock\QueryProcessorComposite::class);
+                ->get('Magento\CatalogInventory\Model\ResourceModel\Indexer\Stock\QueryProcessorComposite');
         }
         return $this->queryProcessorComposite;
     }

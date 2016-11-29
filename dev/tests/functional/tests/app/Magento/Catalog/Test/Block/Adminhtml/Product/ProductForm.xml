@@ -50,9 +50,6 @@
                 <selector>[name="product[news_to_date]"]</selector>
                 <strategy>css selector</strategy>
             </news_to_date>
-            <country_of_manufacture>
-                <input>select</input>
-            </country_of_manufacture>
         </fields>
     </product-details>
     <advanced-pricing>
@@ -143,7 +140,7 @@
         </fields>
     </attributes>
     <gallery>
-        <class>\Magento\Catalog\Test\Block\Adminhtml\Product\Edit\Section\BlockGallery</class>
+        <class>\Magento\Ui\Test\Block\Adminhtml\Section</class>
         <selector>[data-index='block_gallery']</selector>
         <strategy>css selector</strategy>
     </gallery>

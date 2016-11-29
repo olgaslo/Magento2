@@ -27,7 +27,7 @@ class CurrencysymbolTest extends \PHPUnit_Framework_TestCase
     public function testPrepareLayout()
     {
         $symbolSystemFactoryMock = $this->getMock(
-            \Magento\CurrencySymbol\Model\System\CurrencysymbolFactory::class,
+            'Magento\CurrencySymbol\Model\System\CurrencysymbolFactory',
             ['create'],
             [],
             '',
@@ -35,7 +35,7 @@ class CurrencysymbolTest extends \PHPUnit_Framework_TestCase
         );
 
         $blockMock = $this->getMock(
-            \Magento\Framework\View\Element\BlockInterface::class,
+            'Magento\Framework\View\Element\BlockInterface',
             ['addChild', 'toHtml'],
             [],
             '',
@@ -44,7 +44,7 @@ class CurrencysymbolTest extends \PHPUnit_Framework_TestCase
 
         /** @var $layoutMock \Magento\Framework\View\LayoutInterface|\PHPUnit_Framework_MockObject_MockObject */
         $layoutMock = $this->getMockForAbstractClass(
-            \Magento\Framework\View\LayoutInterface::class,
+            'Magento\Framework\View\LayoutInterface',
             [],
             '',
             false,
@@ -59,7 +59,7 @@ class CurrencysymbolTest extends \PHPUnit_Framework_TestCase
             ->method('addChild')
             ->with(
                 'save_button',
-                \Magento\Backend\Block\Widget\Button::class,
+                'Magento\Backend\Block\Widget\Button',
                 [
                     'label' => __('Save Currency Symbols'),
                     'class' => 'save primary save-currency-symbols',
@@ -71,7 +71,7 @@ class CurrencysymbolTest extends \PHPUnit_Framework_TestCase
 
         /** @var $block \Magento\CurrencySymbol\Block\Adminhtml\System\Currencysymbol */
         $block = $this->objectManagerHelper->getObject(
-            \Magento\CurrencySymbol\Block\Adminhtml\System\Currencysymbol::class,
+            'Magento\CurrencySymbol\Block\Adminhtml\System\Currencysymbol',
             [
                 'symbolSystemFactory' => $symbolSystemFactoryMock,
                 'layout' => $layoutMock

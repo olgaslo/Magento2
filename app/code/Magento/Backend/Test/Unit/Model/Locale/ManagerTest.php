@@ -36,28 +36,23 @@ class ManagerTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->_session = $this->getMock(\Magento\Backend\Model\Session::class, [], [], '', false);
+        $this->_session = $this->getMock('Magento\Backend\Model\Session', [], [], '', false);
 
         $this->_authSession = $this->getMock(
-            \Magento\Backend\Model\Auth\Session::class,
+            'Magento\Backend\Model\Auth\Session',
             ['getUser'],
             [],
             '',
             false
         );
         
-        $this->_backendConfig = $this->getMockForAbstractClass(
-            \Magento\Backend\App\ConfigInterface::class,
-            [],
-            '',
-            false
-        );
+        $this->_backendConfig = $this->getMockForAbstractClass('Magento\Backend\App\ConfigInterface', [], '', false);
         
         $userMock = new \Magento\Framework\DataObject();
 
         $this->_authSession->expects($this->any())->method('getUser')->will($this->returnValue($userMock));
 
-        $this->_translator = $this->getMock(\Magento\Framework\TranslateInterface::class, [], [], '', false);
+        $this->_translator = $this->getMock('Magento\Framework\TranslateInterface', [], [], '', false);
 
         $this->_translator->expects($this->any())->method('setLocale')->will($this->returnValue($this->_translator));
 

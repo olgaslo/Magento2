@@ -25,19 +25,19 @@ class AuthorizationRoleTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->userResourceModelMock = $this->getMockBuilder(\Magento\User\Model\ResourceModel\User::class)
+        $this->userResourceModelMock = $this->getMockBuilder('Magento\User\Model\ResourceModel\User')
             ->disableOriginalConstructor()
             ->setMethods([])
             ->getMock();
 
-        $this->roleMock = $this->getMockBuilder(\Magento\Authorization\Model\Role::class)
+        $this->roleMock = $this->getMockBuilder('Magento\Authorization\Model\Role')
             ->disableOriginalConstructor()
             ->setMethods([])
             ->getMock();
 
         $objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
         $this->model = $objectManager->getObject(
-            \Magento\User\Model\Plugin\AuthorizationRole::class,
+            'Magento\User\Model\Plugin\AuthorizationRole',
             [
                 'userResourceModel' => $this->userResourceModelMock
             ]
@@ -48,7 +48,7 @@ class AuthorizationRoleTest extends \PHPUnit_Framework_TestCase
     {
         $this->userResourceModelMock->expects($this->once())->method('updateRoleUsersAcl')->with($this->roleMock);
         $this->assertInstanceOf(
-            \Magento\Authorization\Model\Role::class,
+            '\Magento\Authorization\Model\Role',
             $this->model->afterSave($this->roleMock, $this->roleMock)
         );
     }

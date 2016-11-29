@@ -40,28 +40,28 @@ class StockTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->_factoryElementMock = $this->getMock(
-            \Magento\Framework\Data\Form\Element\Factory::class,
+            'Magento\Framework\Data\Form\Element\Factory',
             [],
             [],
             '',
             false
         );
         $this->_collectionFactoryMock = $this->getMock(
-            \Magento\Framework\Data\Form\Element\CollectionFactory::class,
+            'Magento\Framework\Data\Form\Element\CollectionFactory',
             [],
             [],
             '',
             false
         );
         $this->_qtyMock = $this->getMock(
-            \Magento\Framework\Data\Form\Element\Text::class,
+            'Magento\Framework\Data\Form\Element\Text',
             ['setForm', 'setValue', 'setName'],
             [],
             '',
             false
         );
         $this->_factoryTextMock = $this->getMock(
-            \Magento\Framework\Data\Form\Element\TextFactory::class,
+            'Magento\Framework\Data\Form\Element\TextFactory',
             [],
             [],
             '',
@@ -70,7 +70,7 @@ class StockTest extends \PHPUnit_Framework_TestCase
 
         $objectManagerHelper = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
         $this->_block = $objectManagerHelper->getObject(
-            \Magento\CatalogInventory\Block\Adminhtml\Form\Field\Stock::class,
+            'Magento\CatalogInventory\Block\Adminhtml\Form\Field\Stock',
             [
                 'factoryElement' => $this->_factoryElementMock,
                 'factoryCollection' => $this->_collectionFactoryMock,
@@ -87,13 +87,13 @@ class StockTest extends \PHPUnit_Framework_TestCase
         )->method(
             'setForm'
         )->with(
-            $this->isInstanceOf(\Magento\Framework\Data\Form\Element\AbstractElement::class)
+            $this->isInstanceOf('Magento\Framework\Data\Form\Element\AbstractElement')
         );
 
         $objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
         $this->_block->setForm(
             $objectManager->getObject(
-                \Magento\Framework\Data\Form\Element\Text::class,
+                'Magento\Framework\Data\Form\Element\Text',
                 [
                     'factoryElement' => $this->_factoryElementMock,
                     'factoryCollection' => $this->_collectionFactoryMock

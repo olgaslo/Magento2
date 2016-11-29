@@ -36,19 +36,13 @@ class FrontNameResolverTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         /** @var \PHPUnit_Framework_MockObject_MockObject|DeploymentConfig $deploymentConfigMock */
-        $deploymentConfigMock = $this->getMock(\Magento\Framework\App\DeploymentConfig::class, [], [], '', false);
+        $deploymentConfigMock = $this->getMock('Magento\Framework\App\DeploymentConfig', [], [], '', false);
         $deploymentConfigMock->expects($this->once())
             ->method('get')
             ->with(ConfigOptionsList::CONFIG_PATH_BACKEND_FRONTNAME)
             ->will($this->returnValue($this->_defaultFrontName));
-        $this->configMock = $this->getMock(\Magento\Backend\App\Config::class, [], [], '', false);
-        $this->scopeConfigMock = $this->getMock(
-            \Magento\Framework\App\Config\ScopeConfigInterface::class,
-            [],
-            [],
-            '',
-            false
-        );
+        $this->configMock = $this->getMock('Magento\Backend\App\Config', [], [], '', false);
+        $this->scopeConfigMock = $this->getMock('Magento\Framework\App\Config\ScopeConfigInterface', [], [], '', false);
         $this->model = new FrontNameResolver($this->configMock, $deploymentConfigMock, $this->scopeConfigMock);
     }
 

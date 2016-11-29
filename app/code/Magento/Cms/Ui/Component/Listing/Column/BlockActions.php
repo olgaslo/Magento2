@@ -9,8 +9,6 @@ use Magento\Framework\UrlInterface;
 use Magento\Framework\View\Element\UiComponent\ContextInterface;
 use Magento\Framework\View\Element\UiComponentFactory;
 use Magento\Ui\Component\Listing\Columns\Column;
-use Magento\Framework\App\ObjectManager;
-use Magento\Framework\Escaper;
 
 /**
  * Class BlockActions
@@ -28,11 +26,6 @@ class BlockActions extends Column
      * @var UrlInterface
      */
     protected $urlBuilder;
-
-    /**
-     * @var Escaper
-     */
-    private $escaper;
 
     /**
      * Constructor
@@ -55,6 +48,10 @@ class BlockActions extends Column
     }
 
     /**
+     * @param array $items
+     * @return array
+     */
+    /**
      * Prepare Data Source
      *
      * @param array $dataSource
@@ -65,7 +62,6 @@ class BlockActions extends Column
         if (isset($dataSource['data']['items'])) {
             foreach ($dataSource['data']['items'] as & $item) {
                 if (isset($item['block_id'])) {
-                    $title = $this->getEscaper()->escapeHtml($item['title']);
                     $item[$this->getData('name')] = [
                         'edit' => [
                             'href' => $this->urlBuilder->getUrl(
@@ -85,8 +81,8 @@ class BlockActions extends Column
                             ),
                             'label' => __('Delete'),
                             'confirm' => [
-                                'title' => __('Delete %1', $title),
-                                'message' => __('Are you sure you wan\'t to delete a %1 record?', $title)
+                                'title' => __('Delete "${ $.$data.title }"'),
+                                'message' => __('Are you sure you wan\'t to delete a "${ $.$data.title }" record?')
                             ]
                         ]
                     ];
@@ -95,18 +91,5 @@ class BlockActions extends Column
         }
 
         return $dataSource;
-    }
-
-    /**
-     * Get instance of escaper
-     * @return Escaper
-     * @deprecated
-     */
-    private function getEscaper()
-    {
-        if (!$this->escaper) {
-            $this->escaper = ObjectManager::getInstance()->get(Escaper::class);
-        }
-        return $this->escaper;
     }
 }

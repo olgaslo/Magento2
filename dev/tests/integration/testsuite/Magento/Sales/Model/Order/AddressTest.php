@@ -14,7 +14,7 @@ class AddressTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->_model = Bootstrap::getObjectManager()->create(\Magento\Sales\Model\Order\Address::class);
+        $this->_model = Bootstrap::getObjectManager()->create('Magento\Sales\Model\Order\Address');
     }
 
     /**
@@ -25,7 +25,7 @@ class AddressTest extends \PHPUnit_Framework_TestCase
     public function testSave()
     {
         /** @var \Magento\Sales\Model\Order $order */
-        $order = Bootstrap::getObjectManager()->create(\Magento\Sales\Model\Order::class);
+        $order = Bootstrap::getObjectManager()->create('Magento\Sales\Model\Order');
         $order->loadByIncrementId('100000001');
         $this->_model->setOrder($order);
         $this->_model->setEmail('co@co.co');

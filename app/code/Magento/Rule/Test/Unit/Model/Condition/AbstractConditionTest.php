@@ -16,7 +16,7 @@ class AbstractConditionTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->_condition = $this->getMockForAbstractClass(
-            \Magento\Rule\Model\Condition\AbstractCondition::class,
+            '\Magento\Rule\Model\Condition\AbstractCondition',
             [],
             '',
             false,
@@ -118,7 +118,7 @@ class AbstractConditionTest extends \PHPUnit_Framework_TestCase
     public function testValidate($existingValue, $operator, $valueForValidate, $expectedResult)
     {
         $objectMock = $this->getMock(
-            \Magento\Framework\Model\AbstractModel::class,
+            'Magento\Framework\Model\AbstractModel',
             ['hasData', 'load', 'getId', 'getData'],
             [],
             '',

@@ -20,9 +20,7 @@ class StatusTest extends \PHPUnit_Framework_TestCase
     {
         
         $this->objectManagerHelper = new ObjectManagerHelper($this);
-        $this->status = $this->objectManagerHelper->getObject(
-            \Magento\Framework\Search\Request\Aggregation\Status::class
-        );
+        $this->status = $this->objectManagerHelper->getObject('Magento\Framework\Search\Request\Aggregation\Status');
     }
 
     public function testIsEnabled()

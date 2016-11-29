@@ -31,27 +31,46 @@ class CustomerPlugin
     /**
      * Plugin after create customer that updates any newsletter subscription that may have existed.
      *
-     * If we have extension attribute (is_subscribed) we need to subscribe that customer
-     *
      * @param CustomerRepository $subject
-     * @param CustomerInterface $result
      * @param CustomerInterface $customer
      * @return CustomerInterface
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function afterSave(CustomerRepository $subject, CustomerInterface $result, CustomerInterface $customer)
+    public function afterSave(CustomerRepository $subject, CustomerInterface $customer)
     {
-        $this->subscriberFactory->create()->updateSubscription($result->getId());
-        if ($result->getId() && $customer->getExtensionAttributes()) {
-            if ($customer->getExtensionAttributes()->getIsSubscribed() === true) {
-                $this->subscriberFactory->create()->subscribeCustomerById($result->getId());
-            } elseif ($customer->getExtensionAttributes()->getIsSubscribed() === false) {
-                $this->subscriberFactory->create()->unsubscribeCustomerById($result->getId());
-            }
-        }
-        return $result;
+        $this->subscriberFactory->create()->updateSubscription($customer->getId());
+        return $customer;
     }
 
+    /**
+     * Plugin around customer repository save. If we have extension attribute (is_subscribed) we need to subscribe that customer
+     *
+     * @param CustomerRepository $subject
+     * @param \Closure $proceed
+     * @param CustomerInterface $customer
+     * @param null $passwordHash
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     */
+    public function aroundSave(
+        CustomerRepository $subject,
+        \Closure $proceed,
+        CustomerInterface $customer,
+        $passwordHash = null
+    ) {
+        /** @var CustomerInterface $savedCustomer */
+        $savedCustomer = $proceed($customer, $passwordHash);
+
+        if ($savedCustomer->getId() && $customer->getExtensionAttributes()) {
+            if ($customer->getExtensionAttributes()->getIsSubscribed() === true) {
+                $this->subscriberFactory->create()->subscribeCustomerById($savedCustomer->getId());
+            } elseif ($customer->getExtensionAttributes()->getIsSubscribed() === false) {
+                $this->subscriberFactory->create()->unsubscribeCustomerById($savedCustomer->getId());
+            }
+        }
+
+        return $savedCustomer;
+    }
+    
     /**
      * Plugin around delete customer that updates any newsletter subscription that may have existed.
      *
@@ -77,16 +96,21 @@ class CustomerPlugin
     }
 
     /**
-     * Plugin after delete customer that updates any newsletter subscription that may have existed.
+     * Plugin around delete customer that updates any newsletter subscription that may have existed.
      *
      * @param CustomerRepository $subject
-     * @param bool $result
-     * @param CustomerInterface $customer
+     * @param callable $deleteCustomer Function we are wrapping around
+     * @param CustomerInterface $customer Input to the function
      * @return bool
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function afterDelete(CustomerRepository $subject, $result, CustomerInterface $customer)
-    {
+    public function aroundDelete(
+        CustomerRepository $subject,
+        callable $deleteCustomer,
+        $customer
+    ) {
+        $result = $deleteCustomer($customer);
+        /** @var \Magento\Newsletter\Model\Subscriber $subscriber */
         $subscriber = $this->subscriberFactory->create();
         $subscriber->loadByEmail($customer->getEmail());
         if ($subscriber->getId()) {

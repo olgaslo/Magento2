@@ -31,16 +31,16 @@ class ServiceDataAttributesGeneratorTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->configurationScannerMock = $this->getMockBuilder(
-            \Magento\Setup\Module\Di\Code\Scanner\ConfigurationScanner::class
+            'Magento\Setup\Module\Di\Code\Scanner\ConfigurationScanner'
         )->disableOriginalConstructor()
             ->getMock();
         $this->serviceDataAttributesScannerMock = $this->getMockBuilder(
-            \Magento\Setup\Module\Di\Code\Scanner\ServiceDataAttributesScanner::class
+            'Magento\Setup\Module\Di\Code\Scanner\ServiceDataAttributesScanner'
         )->disableOriginalConstructor()
             ->getMock();
         $objectManagerHelper = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
         $this->model = $objectManagerHelper->getObject(
-            \Magento\Setup\Module\Di\App\Task\Operation\ServiceDataAttributesGenerator::class,
+            'Magento\Setup\Module\Di\App\Task\Operation\ServiceDataAttributesGenerator',
             [
                 'serviceDataAttributesScanner' => $this->serviceDataAttributesScannerMock,
                 'configurationScanner' => $this->configurationScannerMock,

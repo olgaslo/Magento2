@@ -32,14 +32,14 @@ class ImportTest extends \PHPUnit_Framework_TestCase
         $this->_objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
 
         $this->_indexerMock = $this->getMock(
-            \Magento\Indexer\Model\Indexer::class,
+            'Magento\Indexer\Model\Indexer',
             ['getId', 'invalidate', 'getPriceIndexer', 'isScheduled'],
             [],
             '',
             false
         );
         $this->indexerRegistryMock = $this->getMock(
-            \Magento\Framework\Indexer\IndexerRegistry::class,
+            'Magento\Framework\Indexer\IndexerRegistry',
             ['get'],
             [],
             '',
@@ -47,7 +47,7 @@ class ImportTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->_model = $this->_objectManager->getObject(
-            \Magento\CatalogImportExport\Model\Indexer\Product\Price\Plugin\Import::class,
+            'Magento\CatalogImportExport\Model\Indexer\Product\Price\Plugin\Import',
             ['indexerRegistry' => $this->indexerRegistryMock]
         );
     }
@@ -66,7 +66,7 @@ class ImportTest extends \PHPUnit_Framework_TestCase
             ->method('isScheduled')
             ->will($this->returnValue(false));
 
-        $importMock = $this->getMock(\Magento\ImportExport\Model\Import::class, [], [], '', false);
+        $importMock = $this->getMock('Magento\ImportExport\Model\Import', [], [], '', false);
         $this->assertEquals('return_value', $this->_model->afterImportSource($importMock, 'return_value'));
     }
 }

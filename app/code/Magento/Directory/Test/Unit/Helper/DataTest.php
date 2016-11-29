@@ -7,9 +7,6 @@ namespace Magento\Directory\Test\Unit\Helper;
 
 use Magento\Directory\Helper\Data;
 
-/**
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
- */
 class DataTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -45,16 +42,16 @@ class DataTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
-        $this->scopeConfigMock = $this->getMock(\Magento\Framework\App\Config\ScopeConfigInterface::class);
-        $context = $this->getMock(\Magento\Framework\App\Helper\Context::class, [], [], '', false);
+        $this->scopeConfigMock = $this->getMock('Magento\Framework\App\Config\ScopeConfigInterface');
+        $context = $this->getMock('Magento\Framework\App\Helper\Context', [], [], '', false);
         $context->expects($this->any())
             ->method('getScopeConfig')
             ->willReturn($this->scopeConfigMock);
 
-        $configCacheType = $this->getMock(\Magento\Framework\App\Cache\Type\Config::class, [], [], '', false);
+        $configCacheType = $this->getMock('Magento\Framework\App\Cache\Type\Config', [], [], '', false);
 
         $this->_countryCollection = $this->getMock(
-            \Magento\Directory\Model\ResourceModel\Country\Collection::class,
+            'Magento\Directory\Model\ResourceModel\Country\Collection',
             [],
             [],
             '',
@@ -62,14 +59,14 @@ class DataTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->_regionCollection = $this->getMock(
-            \Magento\Directory\Model\ResourceModel\Region\Collection::class,
+            'Magento\Directory\Model\ResourceModel\Region\Collection',
             [],
             [],
             '',
             false
         );
         $regCollectionFactory = $this->getMock(
-            \Magento\Directory\Model\ResourceModel\Region\CollectionFactory::class,
+            'Magento\Directory\Model\ResourceModel\Region\CollectionFactory',
             ['create'],
             [],
             '',
@@ -83,13 +80,13 @@ class DataTest extends \PHPUnit_Framework_TestCase
             $this->returnValue($this->_regionCollection)
         );
 
-        $this->jsonHelperMock = $this->getMock(\Magento\Framework\Json\Helper\Data::class, [], [], '', false);
+        $this->jsonHelperMock = $this->getMock('Magento\Framework\Json\Helper\Data', [], [], '', false);
 
-        $this->_store = $this->getMock(\Magento\Store\Model\Store::class, [], [], '', false);
-        $storeManager = $this->getMock(\Magento\Store\Model\StoreManagerInterface::class, [], [], '', false);
+        $this->_store = $this->getMock('Magento\Store\Model\Store', [], [], '', false);
+        $storeManager = $this->getMock('Magento\Store\Model\StoreManagerInterface', [], [], '', false);
         $storeManager->expects($this->any())->method('getStore')->will($this->returnValue($this->_store));
 
-        $currencyFactory = $this->getMock(\Magento\Directory\Model\CurrencyFactory::class, [], [], '', false);
+        $currencyFactory = $this->getMock('Magento\Directory\Model\CurrencyFactory', [], [], '', false);
 
         $arguments = [
             'context' => $context,
@@ -100,7 +97,7 @@ class DataTest extends \PHPUnit_Framework_TestCase
             'storeManager' => $storeManager,
             'currencyFactory' => $currencyFactory,
         ];
-        $this->_object = $objectManager->getObject(\Magento\Directory\Helper\Data::class, $arguments);
+        $this->_object = $objectManager->getObject('Magento\Directory\Helper\Data', $arguments);
     }
 
     public function testGetRegionJson()
@@ -251,7 +248,7 @@ class DataTest extends \PHPUnit_Framework_TestCase
             $this->returnValue(0)
         );
 
-        $store = $this->getMock(\Magento\Store\Model\Store::class, [], [], '', false);
+        $store = $this->getMock('Magento\Store\Model\Store', [], [], '', false);
         $this->_countryCollection->expects(
             $this->once()
         )->method(

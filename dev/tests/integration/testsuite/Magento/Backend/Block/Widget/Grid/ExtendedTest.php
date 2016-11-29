@@ -25,14 +25,14 @@ class ExtendedTest extends \PHPUnit_Framework_TestCase
         parent::setUp();
 
         $this->_layoutMock = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->get(
-            \Magento\Framework\View\LayoutInterface::class
+            'Magento\Framework\View\LayoutInterface'
         );
         $context = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create(
-            \Magento\Backend\Block\Template\Context::class,
+            'Magento\Backend\Block\Template\Context',
             ['layout' => $this->_layoutMock]
         );
         $this->_block = $this->_layoutMock->createBlock(
-            \Magento\Backend\Block\Widget\Grid\Extended::class,
+            'Magento\Backend\Block\Widget\Grid\Extended',
             'grid',
             ['context' => $context]
         );
@@ -47,7 +47,7 @@ class ExtendedTest extends \PHPUnit_Framework_TestCase
     public function testAddColumnAddsChildToColumnSet()
     {
         $this->assertInstanceOf(
-            \Magento\Backend\Block\Widget\Grid\Column::class,
+            'Magento\Backend\Block\Widget\Grid\Column',
             $this->_block->getColumnSet()->getChildBlock('column1')
         );
         $this->assertCount(2, $this->_block->getColumnSet()->getChildNames());

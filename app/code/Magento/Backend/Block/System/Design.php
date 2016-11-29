@@ -16,7 +16,7 @@ class Design extends \Magento\Backend\Block\Template
 
         $this->getToolbar()->addChild(
             'add_new_button',
-            \Magento\Backend\Block\Widget\Button::class,
+            'Magento\Backend\Block\Widget\Button',
             [
                 'label' => __('Add Design Change'),
                 'onclick' => "setLocation('" . $this->getUrl('adminhtml/*/new') . "')",

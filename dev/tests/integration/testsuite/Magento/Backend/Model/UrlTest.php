@@ -21,7 +21,7 @@ class UrlTest extends \PHPUnit_Framework_TestCase
     {
         parent::setUp();
         $this->_model = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create(
-            \Magento\Backend\Model\UrlInterface::class
+            'Magento\Backend\Model\UrlInterface'
         );
     }
 
@@ -48,7 +48,7 @@ class UrlTest extends \PHPUnit_Framework_TestCase
     {
         /** @var $request \Magento\Framework\App\RequestInterface */
         $request = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()
-            ->create(\Magento\Framework\App\RequestInterface::class);
+            ->create('Magento\Framework\App\RequestInterface');
         $request->setControllerName(
             'default_controller'
         )->setActionName(
@@ -59,7 +59,7 @@ class UrlTest extends \PHPUnit_Framework_TestCase
 
         $this->_model->setRequest($request);
         \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->get(
-            \Magento\Framework\Session\SessionManagerInterface::class
+            'Magento\Framework\Session\SessionManagerInterface'
         )->setData(
             '_form_key',
             'salt'
@@ -75,7 +75,7 @@ class UrlTest extends \PHPUnit_Framework_TestCase
         $objectManager = \Magento\TestFramework\Helper\Bootstrap::getObjectManager();
 
         /** @var $encryptor \Magento\Framework\Encryption\EncryptorInterface */
-        $encryptor = $objectManager->get(\Magento\Framework\Encryption\EncryptorInterface::class);
+        $encryptor = $objectManager->get('Magento\Framework\Encryption\EncryptorInterface');
 
         return [
             [
@@ -132,16 +132,16 @@ class UrlTest extends \PHPUnit_Framework_TestCase
         $objectManager = \Magento\TestFramework\Helper\Bootstrap::getObjectManager();
 
         /** @var $encryptor \Magento\Framework\Encryption\EncryptorInterface */
-        $encryptor = $objectManager->get(\Magento\Framework\Encryption\EncryptorInterface::class);
+        $encryptor = $objectManager->get('Magento\Framework\Encryption\EncryptorInterface');
 
         /** @var $request \Magento\Framework\App\Request\Http */
         $request = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()
-            ->create(\Magento\Framework\App\RequestInterface::class);
+            ->create('Magento\Framework\App\RequestInterface');
         $request->setControllerName('controller')->setActionName('action');
         $request->initForward()->setControllerName(uniqid())->setActionName(uniqid());
         $this->_model->setRequest($request);
         \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->get(
-            \Magento\Framework\Session\SessionManagerInterface::class
+            'Magento\Framework\Session\SessionManagerInterface'
         )->setData(
             '_form_key',
             'salt'

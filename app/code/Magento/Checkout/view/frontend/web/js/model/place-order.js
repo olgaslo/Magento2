@@ -19,9 +19,6 @@ define(
             ).fail(
                 function (response) {
                     errorProcessor.process(response, messageContainer);
-                }
-            ).always(
-                function () {
                     fullScreenLoader.stopLoader();
                 }
             );

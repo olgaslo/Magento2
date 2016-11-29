@@ -50,22 +50,15 @@ class InfoTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->contextMock
-            = $this->getMock(\Magento\Backend\Block\Template\Context::class, ['getAuthorization'], [], '', false);
-        $this->authorizationMock = $this->getMock(\Magento\Framework\AuthorizationInterface::class, [], [], '', false);
+            = $this->getMock('Magento\Backend\Block\Template\Context', ['getAuthorization'], [], '', false);
+        $this->authorizationMock = $this->getMock('Magento\Framework\AuthorizationInterface', [], [], '', false);
         $this->contextMock
             ->expects($this->any())->method('getAuthorization')->will($this->returnValue($this->authorizationMock));
-        $this->groupRepositoryMock = $this->getMockForAbstractClass(
-            \Magento\Customer\Api\GroupRepositoryInterface::class
-        );
-        $this->coreRegistryMock = $this->getMock(\Magento\Framework\Registry::class, [], [], '', false);
+        $this->groupRepositoryMock = $this->getMockForAbstractClass('Magento\Customer\Api\GroupRepositoryInterface');
+        $this->coreRegistryMock = $this->getMock('Magento\Framework\Registry', [], [], '', false);
         $methods = ['getCustomerGroupId', '__wakeUp'];
-        $this->orderMock = $this->getMock(\Magento\Sales\Model\Order::class, $methods, [], '', false);
-        $this->groupMock = $this->getMockForAbstractClass(
-            \Magento\Customer\Api\Data\GroupInterface::class,
-            [],
-            '',
-            false
-        );
+        $this->orderMock = $this->getMock('\Magento\Sales\Model\Order', $methods, [], '', false);
+        $this->groupMock = $this->getMockForAbstractClass('Magento\Customer\Api\Data\GroupInterface', [], '', false);
         $arguments = [
             'context' => $this->contextMock,
             'groupRepository' => $this->groupRepositoryMock,
@@ -74,25 +67,19 @@ class InfoTest extends \PHPUnit_Framework_TestCase
 
         $helper = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
         /** @var \Magento\Sales\Block\Adminhtml\Order\View\Info $block */
-        $this->block = $helper->getObject(\Magento\Sales\Block\Adminhtml\Order\View\Info::class, $arguments);
+        $this->block = $helper->getObject('Magento\Sales\Block\Adminhtml\Order\View\Info', $arguments);
     }
 
     public function testGetAddressEditLink()
     {
-        $contextMock = $this->getMock(
-            \Magento\Backend\Block\Template\Context::class,
-            ['getAuthorization'],
-            [],
-            '',
-            false
-        );
-        $authorizationMock = $this->getMock(\Magento\Framework\AuthorizationInterface::class, [], [], '', false);
+        $contextMock = $this->getMock('Magento\Backend\Block\Template\Context', ['getAuthorization'], [], '', false);
+        $authorizationMock = $this->getMock('Magento\Framework\AuthorizationInterface', [], [], '', false);
         $contextMock->expects($this->any())->method('getAuthorization')->will($this->returnValue($authorizationMock));
         $arguments = ['context' => $contextMock];
 
         $helper = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
         /** @var \Magento\Sales\Block\Adminhtml\Order\View\Info $block */
-        $block = $helper->getObject(\Magento\Sales\Block\Adminhtml\Order\View\Info::class, $arguments);
+        $block = $helper->getObject('Magento\Sales\Block\Adminhtml\Order\View\Info', $arguments);
 
         $authorizationMock->expects($this->atLeastOnce())
             ->method('isAllowed')

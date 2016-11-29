@@ -7,7 +7,6 @@
 namespace Magento\Catalog\Test\Block\Adminhtml\Product;
 
 use Magento\Ui\Test\Block\Adminhtml\DataGrid;
-use Magento\Mtf\Fixture\FixtureInterface;
 
 /**
  * Backend catalog product grid.
@@ -73,17 +72,12 @@ class Grid extends DataGrid
     /**
      * Update attributes for selected items.
      *
-     * @param array $items
+     * @param array $items [optional]
      * @return void
      */
     public function updateAttributes(array $items = [])
     {
-        $products = [];
-        /** @var FixtureInterface $product */
-        foreach ($items as $product) {
-            $products[] = ["sku" => $product->getSku()];
-        }
-        $this->massaction($products, 'Update attributes');
+        $this->massaction($items, 'Update attributes');
     }
 
     /**

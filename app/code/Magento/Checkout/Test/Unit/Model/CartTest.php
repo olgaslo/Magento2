@@ -84,8 +84,8 @@ class CartTest extends \PHPUnit_Framework_TestCase
         $this->scopeConfigMock = $this->getMock(\Magento\Framework\App\Config\ScopeConfigInterface::class);
         $this->quoteMock = $this->getMock(\Magento\Quote\Model\Quote::class, [], [], '', false);
         $this->eventManagerMock = $this->getMock(\Magento\Framework\Event\ManagerInterface::class);
-        $this->storeManagerMock = $this->getMock(\Magento\Store\Model\StoreManagerInterface::class);
-        $this->productRepository = $this->getMock(\Magento\Catalog\Api\ProductRepositoryInterface::class);
+        $this->storeManagerMock = $this->getMockForAbstractClass(\Magento\Store\Model\StoreManagerInterface::class);
+        $this->productRepository = $this->getMockForAbstractClass(\Magento\Catalog\Api\ProductRepositoryInterface::class);
         $this->stockRegistry = $this->getMockBuilder(\Magento\CatalogInventory\Model\StockRegistry::class)
             ->disableOriginalConstructor()
             ->setMethods(['getStockItem', '__wakeup'])
@@ -106,7 +106,8 @@ class CartTest extends \PHPUnit_Framework_TestCase
         );
         $this->storeMock =
             $this->getMock(\Magento\Store\Model\Store::class, ['getWebsiteId', 'getId', '__wakeup'], [], '', false);
-        $this->requestInfoFilterMock = $this->getMock(\Magento\Checkout\Model\Cart\RequestInfoFilterInterface::class);
+        $this->requestInfoFilterMock =
+            $this->getMockForAbstractClass(\Magento\Checkout\Model\Cart\RequestInfoFilterInterface::class);
 
         $this->stockRegistry->expects($this->any())
             ->method('getStockItem')

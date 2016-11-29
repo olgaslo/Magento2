@@ -26,25 +26,17 @@ class AccountManagement
     protected $securityManager;
 
     /**
-     * @var int
-     */
-    protected $passwordRequestEvent;
-
-    /**
      * AccountManagement constructor.
      *
      * @param \Magento\Framework\App\RequestInterface $request
      * @param SecurityManager $securityManager
-     * @param int $passwordRequestEvent
      */
     public function __construct(
         \Magento\Framework\App\RequestInterface $request,
-        \Magento\Security\Model\SecurityManager $securityManager,
-        $passwordRequestEvent = PasswordResetRequestEvent::CUSTOMER_PASSWORD_RESET_REQUEST
+        \Magento\Security\Model\SecurityManager $securityManager
     ) {
         $this->request = $request;
         $this->securityManager = $securityManager;
-        $this->passwordRequestEvent = $passwordRequestEvent;
     }
 
     /**
@@ -64,7 +56,7 @@ class AccountManagement
         $websiteId = null
     ) {
         $this->securityManager->performSecurityCheck(
-            $this->passwordRequestEvent,
+            PasswordResetRequestEvent::CUSTOMER_PASSWORD_RESET_REQUEST,
             $email
         );
         return [$email, $template, $websiteId];

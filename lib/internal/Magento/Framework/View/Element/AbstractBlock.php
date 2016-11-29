@@ -168,11 +168,6 @@ abstract class AbstractBlock extends \Magento\Framework\DataObject implements Bl
     protected $_scopeConfig;
 
     /**
-     * @var \Magento\Framework\App\CacheInterface
-     */
-    protected $_cache;
-
-    /**
      * Constructor
      *
      * @param \Magento\Framework\View\Element\Context $context
@@ -670,18 +665,6 @@ abstract class AbstractBlock extends \Magento\Framework\DataObject implements Bl
         }
         $html = $this->_afterToHtml($html);
 
-        /** @var \Magento\Framework\DataObject */
-        $transportObject = new \Magento\Framework\DataObject(
-            [
-                'html' => $html,
-            ]
-        );
-        $this->_eventManager->dispatch('view_block_abstract_to_html_after', [
-            'block' => $this,
-            'transport' => $transportObject
-        ]);
-        $html = $transportObject->getHtml();
-
         return $html;
     }
 
@@ -877,7 +860,7 @@ abstract class AbstractBlock extends \Magento\Framework\DataObject implements Bl
     }
 
     /**
-     * Escape HTML entities
+     * Escape html entities
      *
      * @param string|array $data
      * @param array|null $allowedTags
@@ -886,40 +869,6 @@ abstract class AbstractBlock extends \Magento\Framework\DataObject implements Bl
     public function escapeHtml($data, $allowedTags = null)
     {
         return $this->_escaper->escapeHtml($data, $allowedTags);
-    }
-
-    /**
-     * Escape string for the JavaScript context
-     *
-     * @param string $string
-     * @return string
-     */
-    public function escapeJs($string)
-    {
-        return $this->_escaper->escapeJs($string);
-    }
-
-    /**
-     * Escape a string for the HTML attribute context
-     *
-     * @param string $string
-     * @param boolean $escapeSingleQuote
-     * @return string
-     */
-    public function escapeHtmlAttr($string, $escapeSingleQuote = true)
-    {
-        return $this->_escaper->escapeHtmlAttr($string, $escapeSingleQuote);
-    }
-
-    /**
-     * Escape string for the CSS context
-     *
-     * @param string $string
-     * @return string
-     */
-    public function escapeCss($string)
-    {
-        return $this->_escaper->escapeCss($string);
     }
 
     /**
@@ -939,14 +888,14 @@ abstract class AbstractBlock extends \Magento\Framework\DataObject implements Bl
     }
 
     /**
-     * Escape URL
+     * Escape html entities in url
      *
-     * @param string $string
+     * @param string $data
      * @return string
      */
-    public function escapeUrl($string)
+    public function escapeUrl($data)
     {
-        return $this->_escaper->escapeUrl($string);
+        return $this->_escaper->escapeUrl($data);
     }
 
     /**
@@ -954,7 +903,6 @@ abstract class AbstractBlock extends \Magento\Framework\DataObject implements Bl
      *
      * @param string $data
      * @return string
-     * @deprecated
      */
     public function escapeXssInUrl($data)
     {
@@ -969,7 +917,6 @@ abstract class AbstractBlock extends \Magento\Framework\DataObject implements Bl
      * @param  string $data
      * @param  bool $addSlashes
      * @return string
-     * @deprecated
      */
     public function escapeQuote($data, $addSlashes = false)
     {
@@ -982,7 +929,6 @@ abstract class AbstractBlock extends \Magento\Framework\DataObject implements Bl
      * @param string|array $data
      * @param string $quote
      * @return string|array
-     * @deprecated
      */
     public function escapeJsQuote($data, $quote = '\'')
     {
@@ -1058,20 +1004,14 @@ abstract class AbstractBlock extends \Magento\Framework\DataObject implements Bl
     /**
      * Get block cache life time
      *
-     * @return int|bool|null
+     * @return int
      */
     protected function getCacheLifetime()
     {
         if (!$this->hasData('cache_lifetime')) {
             return null;
         }
-
-        $cacheLifetime = $this->getData('cache_lifetime');
-        if (false === $cacheLifetime || null === $cacheLifetime) {
-            return $cacheLifetime;
-        }
-
-        return (int)$cacheLifetime;
+        return $this->getData('cache_lifetime');
     }
 
     /**

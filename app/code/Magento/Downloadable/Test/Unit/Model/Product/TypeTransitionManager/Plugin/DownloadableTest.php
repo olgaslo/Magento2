@@ -39,22 +39,16 @@ class DownloadableTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->requestMock = $this->getMock(\Magento\Framework\App\Request\Http::class, [], [], '', false);
+        $this->requestMock = $this->getMock('Magento\Framework\App\Request\Http', [], [], '', false);
         $this->productMock = $this->getMock(
-            \Magento\Catalog\Model\Product::class,
+            'Magento\Catalog\Model\Product',
             ['getTypeId', 'setTypeId'],
             [],
             '',
             false
         );
-        $this->weightResolver = $this->getMock(\Magento\Catalog\Model\Product\Edit\WeightResolver::class);
-        $this->subjectMock = $this->getMock(
-            \Magento\Catalog\Model\Product\TypeTransitionManager::class,
-            [],
-            [],
-            '',
-            false
-        );
+        $this->weightResolver = $this->getMock('Magento\Catalog\Model\Product\Edit\WeightResolver');
+        $this->subjectMock = $this->getMock('Magento\Catalog\Model\Product\TypeTransitionManager', [], [], '', false);
         $this->closureMock = function () {
         };
         $this->model = new \Magento\Downloadable\Model\Product\TypeTransitionManager\Plugin\Downloadable(

@@ -98,36 +98,36 @@ class LayoutTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->structureMock = $this->getMockBuilder(\Magento\Framework\View\Layout\Data\Structure::class)
+        $this->structureMock = $this->getMockBuilder('Magento\Framework\View\Layout\Data\Structure')
             ->disableOriginalConstructor()
             ->getMock();
         $this->processorFactoryMock = $this->getMock(
-            \Magento\Framework\View\Layout\ProcessorFactory::class,
+            'Magento\Framework\View\Layout\ProcessorFactory',
             ['create'],
             [],
             '',
             false
         );
         $this->themeResolverMock = $this->getMockForAbstractClass(
-            \Magento\Framework\View\Design\Theme\ResolverInterface::class
+            'Magento\Framework\View\Design\Theme\ResolverInterface'
         );
-        $this->processorMock = $this->getMock(\Magento\Framework\View\Model\Layout\Merge::class, [], [], '', false);
-        $this->eventManagerMock = $this->getMock(\Magento\Framework\Event\ManagerInterface::class);
-        $this->generatorBlockMock = $this->getMockBuilder(\Magento\Framework\View\Layout\Generator\Block::class)
+        $this->processorMock = $this->getMock('Magento\Framework\View\Model\Layout\Merge', [], [], '', false);
+        $this->eventManagerMock = $this->getMock('Magento\Framework\Event\ManagerInterface');
+        $this->generatorBlockMock = $this->getMockBuilder('Magento\Framework\View\Layout\Generator\Block')
             ->disableOriginalConstructor()->getMock();
-        $this->generatorContainerMock = $this->getMockBuilder(\Magento\Framework\View\Layout\Generator\Container::class)
+        $this->generatorContainerMock = $this->getMockBuilder('Magento\Framework\View\Layout\Generator\Container')
             ->disableOriginalConstructor()->getMock();
-        $this->cacheMock = $this->getMockBuilder(\Magento\Framework\Cache\FrontendInterface::class)
+        $this->cacheMock = $this->getMockBuilder('Magento\Framework\Cache\FrontendInterface')
             ->disableOriginalConstructor()
             ->getMock();
-        $this->readerPoolMock = $this->getMockBuilder(\Magento\Framework\View\Layout\ReaderPool::class)
+        $this->readerPoolMock = $this->getMockBuilder('Magento\Framework\View\Layout\ReaderPool')
             ->disableOriginalConstructor()
             ->getMock();
-        $this->messageManagerMock = $this->getMockBuilder(\Magento\Framework\Message\ManagerInterface::class)
+        $this->messageManagerMock = $this->getMockBuilder('Magento\Framework\Message\ManagerInterface')
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->generatorPoolMock = $this->getMockBuilder(\Magento\Framework\View\Layout\GeneratorPool::class)
+        $this->generatorPoolMock = $this->getMockBuilder('Magento\Framework\View\Layout\GeneratorPool')
             ->disableOriginalConstructor()->getMock();
         $this->generatorPoolMock->expects($this->any())
             ->method('getGenerator')
@@ -138,21 +138,21 @@ class LayoutTest extends \PHPUnit_Framework_TestCase
                 ])
             );
 
-        $this->readerContextFactoryMock = $this->getMockBuilder(
-            \Magento\Framework\View\Layout\Reader\ContextFactory::class
-        )->disableOriginalConstructor()->getMock();
-        $this->readerContextMock = $this->getMockBuilder(\Magento\Framework\View\Layout\Reader\Context::class)
+        $this->readerContextFactoryMock = $this->getMockBuilder('Magento\Framework\View\Layout\Reader\ContextFactory')
+            ->disableOriginalConstructor()
+            ->getMock();
+        $this->readerContextMock = $this->getMockBuilder('Magento\Framework\View\Layout\Reader\Context')
             ->disableOriginalConstructor()
             ->getMock();
         $this->generatorContextFactoryMock = $this->getMockBuilder(
-            \Magento\Framework\View\Layout\Generator\ContextFactory::class
+            'Magento\Framework\View\Layout\Generator\ContextFactory'
         )
             ->disableOriginalConstructor()
             ->getMock();
-        $this->appStateMock = $this->getMockBuilder(\Magento\Framework\App\State::class)
+        $this->appStateMock = $this->getMockBuilder('Magento\Framework\App\State')
             ->disableOriginalConstructor()
             ->getMock();
-        $this->loggerMock = $this->getMockBuilder(\Psr\Log\LoggerInterface::class)
+        $this->loggerMock = $this->getMockBuilder('Psr\Log\LoggerInterface')
             ->getMock();
 
         $this->model = new \Magento\Framework\View\Layout(
@@ -174,7 +174,7 @@ class LayoutTest extends \PHPUnit_Framework_TestCase
 
     public function testCreateBlockSuccess()
     {
-        $blockMock = $this->getMockBuilder(\Magento\Framework\View\Element\AbstractBlock::class)
+        $blockMock = $this->getMockBuilder('Magento\Framework\View\Element\AbstractBlock')
             ->disableOriginalConstructor()
             ->getMockForAbstractClass();
         $this->structureMock->expects($this->once())
@@ -182,21 +182,18 @@ class LayoutTest extends \PHPUnit_Framework_TestCase
             ->with(
                 'blockname',
                 \Magento\Framework\View\Layout\Element::TYPE_BLOCK,
-                \Magento\Framework\View\Element\AbstractBlock::class
+                'Magento\Framework\View\Element\AbstractBlock'
             )->willReturn('blockname');
         $this->generatorBlockMock->expects($this->once())->method('createBlock')->will($this->returnValue($blockMock));
 
-        $this->model->createBlock(\Magento\Framework\View\Element\AbstractBlock::class, 'blockname', []);
-        $this->assertInstanceOf(
-            \Magento\Framework\View\Element\AbstractBlock::class,
-            $this->model->getBlock('blockname')
-        );
+        $this->model->createBlock('Magento\Framework\View\Element\AbstractBlock', 'blockname', []);
+        $this->assertInstanceOf('Magento\Framework\View\Element\AbstractBlock', $this->model->getBlock('blockname'));
         $this->assertFalse($this->model->getBlock('not_exist'));
     }
 
     public function testGetUpdate()
     {
-        $themeMock = $this->getMockForAbstractClass(\Magento\Framework\View\Design\ThemeInterface::class);
+        $themeMock = $this->getMockForAbstractClass('Magento\Framework\View\Design\ThemeInterface');
 
         $this->themeResolverMock->expects($this->once())
             ->method('get')
@@ -213,7 +210,7 @@ class LayoutTest extends \PHPUnit_Framework_TestCase
 
     public function testGenerateXml()
     {
-        $themeMock = $this->getMockForAbstractClass(\Magento\Framework\View\Design\ThemeInterface::class);
+        $themeMock = $this->getMockForAbstractClass('Magento\Framework\View\Design\ThemeInterface');
 
         $this->themeResolverMock->expects($this->once())
             ->method('get')
@@ -226,7 +223,7 @@ class LayoutTest extends \PHPUnit_Framework_TestCase
 
         $xmlString = '<?xml version="1.0"?><layout xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">'
             . '<some_update>123</some_update></layout>';
-        $xml = simplexml_load_string($xmlString, \Magento\Framework\View\Layout\Element::class);
+        $xml = simplexml_load_string($xmlString, 'Magento\Framework\View\Layout\Element');
         $this->processorMock->expects($this->once())
             ->method('asSimplexml')
             ->will($this->returnValue($xml));
@@ -245,7 +242,7 @@ class LayoutTest extends \PHPUnit_Framework_TestCase
         $customBlockParentName = 'custom_block_parent';
         $customBlockAlias = 'custom_block_alias';
 
-        $blockMock = $this->getMockBuilder(\Magento\Framework\View\Element\Template::class)
+        $blockMock = $this->getMockBuilder('Magento\Framework\View\Element\Template')
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -266,7 +263,7 @@ class LayoutTest extends \PHPUnit_Framework_TestCase
 
         $this->model->setBlock($customBlockName, $blockMock);
         $this->assertInstanceOf(
-            \Magento\Framework\View\Element\AbstractBlock::class,
+            'Magento\Framework\View\Element\AbstractBlock',
             $this->model->getChildBlock($customBlockParentName, $customBlockAlias)
         );
     }
@@ -323,7 +320,7 @@ class LayoutTest extends \PHPUnit_Framework_TestCase
             ->with($this->equalTo($parentName))
             ->will($this->returnValue($childrenArray));
 
-        $blockMock = $this->getMockBuilder(\Magento\Framework\View\Element\AbstractBlock::class)
+        $blockMock = $this->getMockBuilder('Magento\Framework\View\Element\AbstractBlock')
             ->disableOriginalConstructor()
             ->getMockForAbstractClass();
         $this->structureMock->expects($this->once())
@@ -331,13 +328,13 @@ class LayoutTest extends \PHPUnit_Framework_TestCase
             ->with(
                 'block_name',
                 \Magento\Framework\View\Layout\Element::TYPE_BLOCK,
-                \Magento\Framework\View\Element\AbstractBlock::class
+                'Magento\Framework\View\Element\AbstractBlock'
             )->willReturn('block_name');
         $this->generatorBlockMock->expects($this->once())->method('createBlock')->will($this->returnValue($blockMock));
 
         $this->assertSame(
             $blockMock,
-            $this->model->createBlock(\Magento\Framework\View\Element\AbstractBlock::class, 'block_name', [])
+            $this->model->createBlock('Magento\Framework\View\Element\AbstractBlock', 'block_name', [])
         );
         $this->assertSame(['value1' => $blockMock], $this->model->getChildBlocks($parentName));
     }
@@ -481,7 +478,7 @@ class LayoutTest extends \PHPUnit_Framework_TestCase
     public function testSetGetBlock()
     {
         $blockName = 'some_name';
-        $blockMock = $this->getMockBuilder(\Magento\Framework\View\Element\AbstractBlock::class)
+        $blockMock = $this->getMockBuilder('Magento\Framework\View\Element\AbstractBlock')
             ->disableOriginalConstructor()
             ->getMockForAbstractClass();
         $this->assertSame($this->model, $this->model->setBlock($blockName, $blockMock));
@@ -498,7 +495,7 @@ class LayoutTest extends \PHPUnit_Framework_TestCase
     {
         $oldName = 'old_name';
         $newName = 'new_name';
-        $blockMock = $this->getMockBuilder(\Magento\Framework\View\Element\AbstractBlock::class)
+        $blockMock = $this->getMockBuilder('Magento\Framework\View\Element\AbstractBlock')
             ->disableOriginalConstructor()
             ->getMockForAbstractClass();
 
@@ -579,7 +576,8 @@ class LayoutTest extends \PHPUnit_Framework_TestCase
     {
         return [
             [
-                'some_type', \Magento\Framework\View\Element\Template::class,
+                'some_type',
+                'Magento\Framework\View\Element\Template',
                 true,
             ],
         ];
@@ -674,7 +672,7 @@ class LayoutTest extends \PHPUnit_Framework_TestCase
      */
     public function testIsCacheable($xmlString, $result)
     {
-        $xml = simplexml_load_string($xmlString, \Magento\Framework\View\Layout\Element::class);
+        $xml = simplexml_load_string($xmlString, 'Magento\Framework\View\Layout\Element');
         $this->assertSame($this->model, $this->model->setXml($xml));
         $this->assertSame($result, $this->model->isCacheable());
     }
@@ -706,10 +704,10 @@ class LayoutTest extends \PHPUnit_Framework_TestCase
         $layoutCacheId = 'layout_cache_id';
         $handles = ['default', 'another'];
         /** @var \Magento\Framework\View\Layout\Element $xml */
-        $xml = simplexml_load_string('<layout/>', \Magento\Framework\View\Layout\Element::class);
+        $xml = simplexml_load_string('<layout/>', 'Magento\Framework\View\Layout\Element');
         $this->model->setXml($xml);
 
-        $themeMock = $this->getMockForAbstractClass(\Magento\Framework\View\Design\ThemeInterface::class);
+        $themeMock = $this->getMockForAbstractClass('Magento\Framework\View\Design\ThemeInterface');
         $this->themeResolverMock->expects($this->once())
             ->method('get')
             ->willReturn($themeMock);
@@ -740,7 +738,7 @@ class LayoutTest extends \PHPUnit_Framework_TestCase
             ->with(serialize($this->readerContextMock), 'structure_' . $layoutCacheId, $handles)
             ->willReturn(true);
 
-        $generatorContextMock = $this->getMockBuilder(\Magento\Framework\View\Layout\Generator\Context::class)
+        $generatorContextMock = $this->getMockBuilder('Magento\Framework\View\Layout\Generator\Context')
             ->disableOriginalConstructor()
             ->getMock();
         $this->generatorContextFactoryMock->expects($this->once())
@@ -771,10 +769,10 @@ class LayoutTest extends \PHPUnit_Framework_TestCase
     {
         $layoutCacheId = 'layout_cache_id';
         /** @var \Magento\Framework\View\Layout\Element $xml */
-        $xml = simplexml_load_string('<layout/>', \Magento\Framework\View\Layout\Element::class);
+        $xml = simplexml_load_string('<layout/>', 'Magento\Framework\View\Layout\Element');
         $this->model->setXml($xml);
 
-        $themeMock = $this->getMockForAbstractClass(\Magento\Framework\View\Design\ThemeInterface::class);
+        $themeMock = $this->getMockForAbstractClass('Magento\Framework\View\Design\ThemeInterface');
         $this->themeResolverMock->expects($this->once())
             ->method('get')
             ->willReturn($themeMock);
@@ -787,7 +785,7 @@ class LayoutTest extends \PHPUnit_Framework_TestCase
             ->method('getCacheId')
             ->willReturn($layoutCacheId);
 
-        $readerContextMock = $this->getMockBuilder(\Magento\Framework\View\Layout\Reader\Context::class)
+        $readerContextMock = $this->getMockBuilder('Magento\Framework\View\Layout\Reader\Context')
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -801,7 +799,7 @@ class LayoutTest extends \PHPUnit_Framework_TestCase
         $this->cacheMock->expects($this->never())
             ->method('save');
 
-        $generatorContextMock = $this->getMockBuilder(\Magento\Framework\View\Layout\Generator\Context::class)
+        $generatorContextMock = $this->getMockBuilder('Magento\Framework\View\Layout\Generator\Context')
             ->disableOriginalConstructor()
             ->getMock();
         $this->generatorContextFactoryMock->expects($this->once())
@@ -867,7 +865,7 @@ class LayoutTest extends \PHPUnit_Framework_TestCase
             ->with($name)
             ->willReturn($children);
 
-        $block = $this->getMock(\Magento\Framework\View\Element\AbstractBlock::class, [], [], '', false);
+        $block = $this->getMock('Magento\Framework\View\Element\AbstractBlock', [], [], '', false);
         $block->expects($this->once())->method('toHtml')->willReturn($blockHtml);
 
         $renderingOutput = new \Magento\Framework\DataObject();

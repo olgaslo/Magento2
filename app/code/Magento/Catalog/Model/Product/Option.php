@@ -187,7 +187,7 @@ class Option extends AbstractExtensibleModel implements ProductCustomOptionInter
      */
     protected function _construct()
     {
-        $this->_init(\Magento\Catalog\Model\ResourceModel\Product\Option::class);
+        $this->_init('Magento\Catalog\Model\ResourceModel\Product\Option');
         parent::_construct();
     }
 
@@ -896,7 +896,7 @@ class Option extends AbstractExtensibleModel implements ProductCustomOptionInter
     {
         if (null === $this->optionRepository) {
             $this->optionRepository = \Magento\Framework\App\ObjectManager::getInstance()
-                ->get(\Magento\Catalog\Model\Product\Option\Repository::class);
+                ->get('Magento\Catalog\Model\Product\Option\Repository');
         }
         return $this->optionRepository;
     }
@@ -908,7 +908,7 @@ class Option extends AbstractExtensibleModel implements ProductCustomOptionInter
     {
         if (null === $this->metadataPool) {
             $this->metadataPool = \Magento\Framework\App\ObjectManager::getInstance()
-                ->get(\Magento\Framework\EntityManager\MetadataPool::class);
+                ->get('Magento\Framework\EntityManager\MetadataPool');
         }
         return $this->metadataPool;
     }

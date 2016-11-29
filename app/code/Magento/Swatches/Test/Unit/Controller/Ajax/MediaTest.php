@@ -29,7 +29,7 @@ class MediaTest extends \PHPUnit_Framework_TestCase
     /** @var \Magento\Framework\App\Action\Context|\PHPUnit_Framework_MockObject_MockObject */
     protected $contextMock;
 
-    /** @var \Magento\Framework\App\RequestInterface|\PHPUnit_Framework_MockObject_MockObject */
+    /** @var \Magento\Framework\App\Request|\PHPUnit_Framework_MockObject_MockObject */
     protected $requestMock;
 
     /** @var \Magento\Framework\Controller\ResultFactory|\PHPUnit_Framework_MockObject_MockObject */
@@ -55,25 +55,19 @@ class MediaTest extends \PHPUnit_Framework_TestCase
 
         $this->objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
 
-        $this->swatchHelperMock = $this->getMock(\Magento\Swatches\Helper\Data::class, [], [], '', false);
+        $this->swatchHelperMock = $this->getMock('\Magento\Swatches\Helper\Data', [], [], '', false);
         $this->productModelFactoryMock = $this->getMock(
-            \Magento\Catalog\Model\ProductFactory::class,
+            '\Magento\Catalog\Model\ProductFactory',
             ['create'],
             [],
             '',
             false
         );
-        $this->productMock = $this->getMock(\Magento\Catalog\Model\Product::class, [], [], '', false);
-        $this->attributeMock = $this->getMock(
-            \Magento\Catalog\Model\ResourceModel\Eav\Attribute::class,
-            [],
-            [],
-            '',
-            false
-        );
-        $this->contextMock = $this->getMock(\Magento\Framework\App\Action\Context::class, [], [], '', false);
+        $this->productMock = $this->getMock('\Magento\Catalog\Model\Product', [], [], '', false);
+        $this->attributeMock = $this->getMock('\Magento\Catalog\Model\ResourceModel\Eav\Attribute', [], [], '', false);
+        $this->contextMock = $this->getMock('\Magento\Framework\App\Action\Context', [], [], '', false);
 
-        $this->requestMock = $this->getMock(\Magento\Framework\App\RequestInterface::class);
+        $this->requestMock = $this->getMock('\Magento\Framework\App\Request', ['getParam'], [], '', false);
         $this->requestMock->expects($this->any())->method('getParam')->withConsecutive(
             ['product_id'],
             ['attributes'],
@@ -84,20 +78,14 @@ class MediaTest extends \PHPUnit_Framework_TestCase
             ['color' => 43]
         );
         $this->contextMock->method('getRequest')->willReturn($this->requestMock);
-        $this->resultFactory = $this->getMock(
-            \Magento\Framework\Controller\ResultFactory::class,
-            ['create'],
-            [],
-            '',
-            false
-        );
+        $this->resultFactory = $this->getMock('\Magento\Framework\Controller\ResultFactory', ['create'], [], '', false);
         $this->contextMock->method('getResultFactory')->willReturn($this->resultFactory);
 
-        $this->jsonMock = $this->getMock(\Magento\Framework\Controller\Result\Json::class, [], [], '', false);
+        $this->jsonMock = $this->getMock('\Magento\Framework\Controller\Result\Json', [], [], '', false);
         $this->resultFactory->expects($this->once())->method('create')->with('json')->willReturn($this->jsonMock);
 
         $this->controller = $this->objectManager->getObject(
-            \Magento\Swatches\Controller\Ajax\Media::class,
+            '\Magento\Swatches\Controller\Ajax\Media',
             [
                 'context' => $this->contextMock,
                 'swatchHelper' => $this->swatchHelperMock,
@@ -151,7 +139,7 @@ class MediaTest extends \PHPUnit_Framework_TestCase
 
         $result = $this->controller->execute();
 
-        $this->assertInstanceOf(\Magento\Framework\Controller\Result\Json::class, $result);
+        $this->assertInstanceOf('\Magento\Framework\Controller\Result\Json', $result);
     }
 
     public function testExecuteNullProduct()
@@ -193,6 +181,6 @@ class MediaTest extends \PHPUnit_Framework_TestCase
 
         $result = $this->controller->execute();
 
-        $this->assertInstanceOf(\Magento\Framework\Controller\Result\Json::class, $result);
+        $this->assertInstanceOf('\Magento\Framework\Controller\Result\Json', $result);
     }
 }

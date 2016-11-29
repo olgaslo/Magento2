@@ -17,10 +17,7 @@ class ConnectionFactoryTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $serviceLocatorMock = $this->getMockForAbstractClass(
-            \Zend\ServiceManager\ServiceLocatorInterface::class,
-            ['get']
-        );
+        $serviceLocatorMock = $this->getMockForAbstractClass('Zend\ServiceManager\ServiceLocatorInterface', ['get']);
         $this->connectionFactory = new ConnectionFactory($serviceLocatorMock);
     }
 

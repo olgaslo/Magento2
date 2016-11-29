@@ -114,12 +114,6 @@ class Mysql extends \Magento\Framework\Model\ResourceModel\Type\Db implements Co
             }
         }
 
-        if (isset($config['port'])) {
-            throw new \InvalidArgumentException(
-                "Port must be configured within host (like '$config[host]:$config[port]') parameter, not within port"
-            );
-        }
-
         $config['active'] = !(
             $config['active'] === 'false'
             || $config['active'] === false

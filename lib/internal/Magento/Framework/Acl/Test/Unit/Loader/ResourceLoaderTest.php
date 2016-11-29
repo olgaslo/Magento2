@@ -15,16 +15,16 @@ class ResourceLoaderTest extends \PHPUnit_Framework_TestCase
     public function testPopulateAclOnValidObjects()
     {
         /** @var $aclResource \Magento\Framework\Acl\AclResource */
-        $aclResource = $this->getMock(\Magento\Framework\Acl\AclResource::class, [], [], '', false);
+        $aclResource = $this->getMock('Magento\Framework\Acl\AclResource', [], [], '', false);
 
         /** @var $acl \Magento\Framework\Acl */
-        $acl = $this->getMock(\Magento\Framework\Acl::class, ['addResource'], [], '', false);
+        $acl = $this->getMock('Magento\Framework\Acl', ['addResource'], [], '', false);
         $acl->expects($this->exactly(2))->method('addResource');
         $acl->expects($this->at(0))->method('addResource')->with($aclResource, null)->will($this->returnSelf());
         $acl->expects($this->at(1))->method('addResource')->with($aclResource, $aclResource)->will($this->returnSelf());
 
         $factoryObject = $this->getMock(
-            \Magento\Framework\Acl\AclResourceFactory::class,
+            'Magento\Framework\Acl\AclResourceFactory',
             ['createResource'],
             [],
             '',
@@ -33,7 +33,7 @@ class ResourceLoaderTest extends \PHPUnit_Framework_TestCase
         $factoryObject->expects($this->any())->method('createResource')->will($this->returnValue($aclResource));
 
         /** @var $resourceProvider \Magento\Framework\Acl\AclResource\ProviderInterface */
-        $resourceProvider = $this->getMock(\Magento\Framework\Acl\AclResource\ProviderInterface::class);
+        $resourceProvider = $this->getMock('Magento\Framework\Acl\AclResource\ProviderInterface');
         $resourceProvider->expects($this->once())
             ->method('getAclResources')
             ->will(
@@ -71,9 +71,9 @@ class ResourceLoaderTest extends \PHPUnit_Framework_TestCase
     public function testPopulateAclWithException()
     {
         /** @var $aclResource \Magento\Framework\Acl\AclResource */
-        $aclResource = $this->getMock(\Magento\Framework\Acl\AclResource::class, [], [], '', false);
+        $aclResource = $this->getMock('Magento\Framework\Acl\AclResource', [], [], '', false);
 
-        $factoryObject = $this->getMockBuilder(\Magento\Framework\Acl\AclResourceFactory::class)
+        $factoryObject = $this->getMockBuilder('Magento\Framework\Acl\AclResourceFactory')
             ->setMethods(['createResource'])
             ->disableOriginalConstructor()
             ->getMock();
@@ -81,7 +81,7 @@ class ResourceLoaderTest extends \PHPUnit_Framework_TestCase
         $factoryObject->expects($this->any())->method('createResource')->will($this->returnValue($aclResource));
 
         /** @var $resourceProvider \Magento\Framework\Acl\AclResource\ProviderInterface */
-        $resourceProvider = $this->getMock(\Magento\Framework\Acl\AclResource\ProviderInterface::class);
+        $resourceProvider = $this->getMock('Magento\Framework\Acl\AclResource\ProviderInterface');
         $resourceProvider->expects($this->once())
             ->method('getAclResources')
             ->will(
@@ -104,7 +104,7 @@ class ResourceLoaderTest extends \PHPUnit_Framework_TestCase
             );
 
         /** @var $acl \Magento\Framework\Acl */
-        $acl = $this->getMock(\Magento\Framework\Acl::class, ['addResource'], [], '', false);
+        $acl = $this->getMock('Magento\Framework\Acl', ['addResource'], [], '', false);
 
         /** @var $loaderResource \Magento\Framework\Acl\Loader\ResourceLoader */
         $loaderResource = new \Magento\Framework\Acl\Loader\ResourceLoader($resourceProvider, $factoryObject);

@@ -24,13 +24,13 @@ class ValueCheckerTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->fallbackResolver = $this->getMockForAbstractClass(
-            \Magento\Framework\App\ScopeFallbackResolverInterface::class,
+            'Magento\Framework\App\ScopeFallbackResolverInterface',
             [],
             '',
             false
         );
-        $this->appConfig = $this->getMock(\Magento\Framework\App\Config::class, [], [], '', false);
-        $this->valueProcessor = $this->getMockBuilder(\Magento\Theme\Model\Design\Config\ValueProcessor::class)
+        $this->appConfig = $this->getMock('Magento\Framework\App\Config', [], [], '', false);
+        $this->valueProcessor = $this->getMockBuilder('Magento\Theme\Model\Design\Config\ValueProcessor')
             ->disableOriginalConstructor()
             ->getMock();
 

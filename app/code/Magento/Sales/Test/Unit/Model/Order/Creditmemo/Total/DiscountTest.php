@@ -39,14 +39,14 @@ class DiscountTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->orderMock = $this->getMock(
-            \Magento\Sales\Model\Order::class,
+            'Magento\Sales\Model\Order',
             ['getBaseShippingDiscountAmount', 'getBaseShippingAmount', 'getShippingAmount'],
             [],
             '',
             false
         );
         $this->orderItemMock = $this->getMock(
-            \Magento\Sales\Model\Order::class,
+            'Magento\Sales\Model\Order',
             [
                 'isDummy', 'getDiscountInvoiced', 'getBaseDiscountInvoiced', 'getQtyInvoiced', 'getQty',
                 'getDiscountRefunded', 'getQtyRefunded'
@@ -56,7 +56,7 @@ class DiscountTest extends \PHPUnit_Framework_TestCase
             false
         );
         $this->creditmemoMock = $this->getMock(
-            \Magento\Sales\Model\Order\Creditmemo::class,
+            '\Magento\Sales\Model\Order\Creditmemo',
             [
                 'setBaseCost', 'getAllItems', 'getOrder', 'getBaseShippingAmount', 'roundPrice',
                 'setDiscountAmount', 'setBaseDiscountAmount'
@@ -66,7 +66,7 @@ class DiscountTest extends \PHPUnit_Framework_TestCase
             false
         );
         $this->creditmemoItemMock = $this->getMock(
-            \Magento\Sales\Model\Order\Creditmemo\Item::class,
+            '\Magento\Sales\Model\Order\Creditmemo\Item',
             [
                 'getHasChildren', 'getBaseCost', 'getQty', 'getOrderItem', 'setDiscountAmount',
                 'setBaseDiscountAmount', 'isLast'

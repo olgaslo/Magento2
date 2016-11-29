@@ -49,9 +49,9 @@ class GuestBillingAddressManagementTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
-        $this->addressMock = $this->getMock(\Magento\Quote\Model\Quote\Address::class, [], [], '', false);
+        $this->addressMock = $this->getMock('\Magento\Quote\Model\Quote\Address', [], [], '', false);
         $this->billingAddressManagementMock = $this->getMock(
-            \Magento\Quote\Api\BillingAddressManagementInterface::class,
+            'Magento\Quote\Api\BillingAddressManagementInterface',
             [],
             [],
             '',
@@ -68,7 +68,7 @@ class GuestBillingAddressManagementTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->model = $objectManager->getObject(
-            \Magento\Quote\Model\GuestCart\GuestBillingAddressManagement::class,
+            'Magento\Quote\Model\GuestCart\GuestBillingAddressManagement',
             [
                 'quoteIdMaskFactory' => $this->quoteIdMaskFactoryMock,
                 'billingAddressManagement' => $this->billingAddressManagementMock

@@ -16,7 +16,6 @@ class SequenceTest extends \PHPUnit_Framework_TestCase
      * @var \Magento\Framework\DB\Adapter\AdapterInterface | \PHPUnit_Framework_MockObject_MockObject
      */
     private $connectionMock;
-
     /**
      * @var \Magento\Framework\App\ResourceConnection | \PHPUnit_Framework_MockObject_MockObject
      */
@@ -40,28 +39,28 @@ class SequenceTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->meta = $this->getMock(
-            \Magento\SalesSequence\Model\Meta::class,
+            'Magento\SalesSequence\Model\Meta',
             ['getSequenceTable', 'getActiveProfile'],
             [],
             '',
             false
         );
         $this->profile = $this->getMock(
-            \Magento\SalesSequence\Model\Profile::class,
+            'Magento\SalesSequence\Model\Profile',
             ['getSuffix', 'getPrefix', 'getStep', 'getStartValue'],
             [],
             '',
             false
         );
         $this->resource = $this->getMock(
-            \Magento\Framework\App\ResourceConnection::class,
+            'Magento\Framework\App\ResourceConnection',
             ['getConnection'],
             [],
             '',
             false
         );
         $this->connectionMock = $this->getMockForAbstractClass(
-            \Magento\Framework\DB\Adapter\AdapterInterface::class,
+            'Magento\Framework\DB\Adapter\AdapterInterface',
             [],
             '',
             false,
@@ -71,13 +70,10 @@ class SequenceTest extends \PHPUnit_Framework_TestCase
         );
         $this->resource->expects($this->any())->method('getConnection')->willReturn($this->connectionMock);
         $helper = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
-        $this->sequence = $helper->getObject(
-            \Magento\SalesSequence\Model\Sequence::class,
-            [
-                'meta' => $this->meta,
-                'resource' => $this->resource,
-            ]
-        );
+        $this->sequence = $helper->getObject('Magento\SalesSequence\Model\Sequence', [
+            'meta' => $this->meta,
+            'resource' => $this->resource,
+        ]);
     }
 
     public function testSequenceInitialNull()

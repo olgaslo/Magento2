@@ -34,7 +34,7 @@ class SnapshotTest extends \PHPUnit_Framework_TestCase
     {
         $objectManager = new ObjectManager($this);
         $this->model = $this->getMock(
-            \Magento\Framework\Model\AbstractModel::class,
+            'Magento\Framework\Model\AbstractModel',
             ['getId'],
             [],
             '',
@@ -42,7 +42,7 @@ class SnapshotTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->entityMetadata = $this->getMock(
-            \Magento\Framework\Model\ResourceModel\Db\VersionControl\Metadata::class,
+            'Magento\Framework\Model\ResourceModel\Db\VersionControl\Metadata',
             ['getFields'],
             [],
             '',
@@ -50,7 +50,7 @@ class SnapshotTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->entitySnapshot = $objectManager->getObject(
-            \Magento\Framework\Model\ResourceModel\Db\VersionControl\Snapshot::class,
+            'Magento\Framework\Model\ResourceModel\Db\VersionControl\Snapshot',
             ['metadata' => $this->entityMetadata]
         );
     }

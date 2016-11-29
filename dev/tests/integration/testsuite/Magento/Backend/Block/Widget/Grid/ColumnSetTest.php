@@ -30,13 +30,13 @@ class ColumnSetTest extends \PHPUnit_Framework_TestCase
         parent::setUp();
 
         $this->_columnMock = $this->getMock(
-            \Magento\Backend\Block\Widget\Grid\Column::class,
+            'Magento\Backend\Block\Widget\Grid\Column',
             ['setSortable', 'setRendererType', 'setFilterType', 'addHeaderCssClass', 'setGrid'],
             [],
             '',
             false
         );
-        $this->_layoutMock = $this->getMock(\Magento\Framework\View\Layout::class, [], [], '', false);
+        $this->_layoutMock = $this->getMock('Magento\Framework\View\Layout', [], [], '', false);
         $this->_layoutMock->expects(
             $this->any()
         )->method(
@@ -46,13 +46,13 @@ class ColumnSetTest extends \PHPUnit_Framework_TestCase
         );
 
         $context = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create(
-            \Magento\Framework\View\Element\Template\Context::class,
+            'Magento\Framework\View\Element\Template\Context',
             ['layout' => $this->_layoutMock]
         );
         $this->_block = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->get(
-            \Magento\Framework\View\LayoutInterface::class
+            'Magento\Framework\View\LayoutInterface'
         )->createBlock(
-            \Magento\Backend\Block\Widget\Grid\ColumnSet::class,
+            'Magento\Backend\Block\Widget\Grid\ColumnSet',
             '',
             ['context' => $context]
         );

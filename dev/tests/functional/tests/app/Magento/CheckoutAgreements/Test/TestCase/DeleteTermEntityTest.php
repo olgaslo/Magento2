@@ -19,13 +19,14 @@ use Magento\Mtf\TestCase\Scenario;
  * 3. Click on 'Delete' button.
  * 4. Perform all assertions.
  *
- * @group Terms_and_Conditions
+ * @group Terms_and_Conditions_(CS)
  * @ZephyrId MAGETWO-29687
  */
 class DeleteTermEntityTest extends Scenario
 {
     /* tags */
     const MVP = 'yes';
+    const DOMAIN = 'CS';
     /* end tags */
 
     /**

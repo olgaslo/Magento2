@@ -74,24 +74,24 @@ class SaveTest extends \PHPUnit_Framework_TestCase
     {
         $this->objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
 
-        $this->contextMock = $this->getMock(\Magento\Backend\App\Action\Context::class, [], [], '', false);
+        $this->contextMock = $this->getMock('Magento\Backend\App\Action\Context', [], [], '', false);
 
-        $this->resultRedirectFactory = $this->getMockBuilder(\Magento\Backend\Model\View\Result\RedirectFactory::class)
+        $this->resultRedirectFactory = $this->getMockBuilder('Magento\Backend\Model\View\Result\RedirectFactory')
             ->disableOriginalConstructor()
             ->setMethods(['create'])
             ->getMock();
-        $this->resultRedirect = $this->getMockBuilder(\Magento\Backend\Model\View\Result\Redirect::class)
+        $this->resultRedirect = $this->getMockBuilder('Magento\Backend\Model\View\Result\Redirect')
             ->disableOriginalConstructor()
             ->getMock();
         $this->resultRedirectFactory->expects($this->atLeastOnce())
             ->method('create')
             ->willReturn($this->resultRedirect);
 
-        $this->dataPersistorMock = $this->getMockBuilder(\Magento\Framework\App\Request\DataPersistorInterface::class)
+        $this->dataPersistorMock = $this->getMockBuilder('Magento\Framework\App\Request\DataPersistorInterface')
             ->getMock();
 
         $this->requestMock = $this->getMockForAbstractClass(
-            \Magento\Framework\App\RequestInterface::class,
+            'Magento\Framework\App\RequestInterface',
             [],
             '',
             false,
@@ -100,20 +100,12 @@ class SaveTest extends \PHPUnit_Framework_TestCase
             ['getParam', 'getPostValue']
         );
 
-        $this->blockMock = $this->getMockBuilder(
-            \Magento\Cms\Model\Block::class
-        )->disableOriginalConstructor()->getMock();
+        $this->blockMock = $this->getMockBuilder('Magento\Cms\Model\Block')->disableOriginalConstructor()->getMock();
 
-        $this->messageManagerMock = $this->getMock(
-            \Magento\Framework\Message\ManagerInterface::class,
-            [],
-            [],
-            '',
-            false
-        );
+        $this->messageManagerMock = $this->getMock('Magento\Framework\Message\ManagerInterface', [], [], '', false);
 
         $this->eventManagerMock = $this->getMockForAbstractClass(
-            \Magento\Framework\Event\ManagerInterface::class,
+            'Magento\Framework\Event\ManagerInterface',
             [],
             '',
             false,
@@ -122,7 +114,7 @@ class SaveTest extends \PHPUnit_Framework_TestCase
             ['dispatch']
         );
 
-        $this->objectManagerMock = $this->getMockBuilder(\Magento\Framework\ObjectManager\ObjectManager::class)
+        $this->objectManagerMock = $this->getMockBuilder('Magento\Framework\ObjectManager\ObjectManager')
             ->disableOriginalConstructor()
             ->setMethods(['get', 'create'])
             ->getMock();
@@ -136,7 +128,7 @@ class SaveTest extends \PHPUnit_Framework_TestCase
             ->willReturn($this->resultRedirectFactory);
 
         $this->saveController = $this->objectManager->getObject(
-            \Magento\Cms\Controller\Adminhtml\Block\Save::class,
+            'Magento\Cms\Controller\Adminhtml\Block\Save',
             [
                 'context' => $this->contextMock,
                 'dataPersistor' => $this->dataPersistorMock,
@@ -166,7 +158,7 @@ class SaveTest extends \PHPUnit_Framework_TestCase
 
         $this->objectManagerMock->expects($this->atLeastOnce())
             ->method('create')
-            ->with($this->equalTo(\Magento\Cms\Model\Block::class))
+            ->with($this->equalTo('Magento\Cms\Model\Block'))
             ->willReturn($this->blockMock);
 
         $this->blockMock->expects($this->any())
@@ -212,7 +204,7 @@ class SaveTest extends \PHPUnit_Framework_TestCase
 
         $this->objectManagerMock->expects($this->atLeastOnce())
             ->method('create')
-            ->with($this->equalTo(\Magento\Cms\Model\Block::class))
+            ->with($this->equalTo('Magento\Cms\Model\Block'))
             ->willReturn($this->blockMock);
 
         $this->blockMock->expects($this->any())
@@ -245,7 +237,7 @@ class SaveTest extends \PHPUnit_Framework_TestCase
 
         $this->objectManagerMock->expects($this->atLeastOnce())
             ->method('create')
-            ->with($this->equalTo(\Magento\Cms\Model\Block::class))
+            ->with($this->equalTo('Magento\Cms\Model\Block'))
             ->willReturn($this->blockMock);
 
         $this->blockMock->expects($this->any())
@@ -287,7 +279,7 @@ class SaveTest extends \PHPUnit_Framework_TestCase
 
         $this->objectManagerMock->expects($this->atLeastOnce())
             ->method('create')
-            ->with($this->equalTo(\Magento\Cms\Model\Block::class))
+            ->with($this->equalTo('Magento\Cms\Model\Block'))
             ->willReturn($this->blockMock);
 
         $this->blockMock->expects($this->any())

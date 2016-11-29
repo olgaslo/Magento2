@@ -43,24 +43,24 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->cacheMock = $this->getMockBuilder(\Magento\Framework\App\CacheInterface::class)
+        $this->cacheMock = $this->getMockBuilder('Magento\Framework\App\CacheInterface')
             ->disableOriginalConstructor()
             ->setMethods(['load', 'getFrontend', 'save', 'remove', 'clean'])
             ->getMock();
-        $this->typeFactoryMock = $this->getMockBuilder(\Magento\Eav\Model\Entity\TypeFactory::class)
+        $this->typeFactoryMock = $this->getMockBuilder('Magento\Eav\Model\Entity\TypeFactory')
             ->setMethods(['create'])
             ->disableOriginalConstructor()
             ->getMock();
         $this->collectionFactoryMock =
-            $this->getMockBuilder(\Magento\Eav\Model\ResourceModel\Entity\Type\CollectionFactory::class)
+            $this->getMockBuilder('Magento\Eav\Model\ResourceModel\Entity\Type\CollectionFactory')
             ->setMethods(['create'])
             ->disableOriginalConstructor()
             ->getMock();
-        $this->stateMock = $this->getMockBuilder(\Magento\Framework\App\Cache\StateInterface::class)
+        $this->stateMock = $this->getMockBuilder('Magento\Framework\App\Cache\StateInterface')
             ->setMethods(['isEnabled', 'setEnabled', 'persist'])
             ->disableOriginalConstructor()
             ->getMock();
-        $this->universalFactoryMock = $this->getMockBuilder(\Magento\Framework\Validator\UniversalFactory::class)
+        $this->universalFactoryMock = $this->getMockBuilder('Magento\Framework\Validator\UniversalFactory')
             ->setMethods(['create'])
             ->disableOriginalConstructor()
             ->getMock();
@@ -83,9 +83,8 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetAttributeCache($cacheEnabled, $loadCalls, $cachedValue)
     {
-        $attributeCollectionMock = $this->getMockBuilder(
-            \Magento\Eav\Model\ResourceModel\Entity\Attribute\Collection::class
-        )->disableOriginalConstructor()
+        $attributeCollectionMock = $this->getMockBuilder('Magento\Eav\Model\ResourceModel\Entity\Attribute\Collection')
+            ->disableOriginalConstructor()
             ->setMethods(['getData', 'setEntityTypeFilter'])
             ->getMock();
         $attributeCollectionMock
@@ -96,13 +95,13 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
             ->expects($this->any())
             ->method('getData')
             ->willReturn([]);
-        $entityAttributeMock = $this->getMockBuilder(\Magento\Eav\Model\Entity\Attribute::class)
+        $entityAttributeMock = $this->getMockBuilder('Magento\Eav\Model\Entity\Attribute')
             ->setMethods(['setData'])
             ->disableOriginalConstructor()
             ->getMock();
         $factoryCalls = [
-            [\Magento\Eav\Model\ResourceModel\Entity\Attribute\Collection::class, [], $attributeCollectionMock],
-            [\Magento\Eav\Model\Entity\Attribute::class, [], $entityAttributeMock],
+            ['Magento\Eav\Model\ResourceModel\Entity\Attribute\Collection', [], $attributeCollectionMock],
+            ['Magento\Eav\Model\Entity\Attribute', [], $entityAttributeMock],
         ];
 
         $this->stateMock
@@ -134,7 +133,7 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
             ->method('create')
             ->will($this->returnValueMap($factoryCalls));
 
-        $entityType = $this->getMockBuilder(\Magento\Eav\Model\Entity\Type::class)
+        $entityType = $this->getMockBuilder('\Magento\Eav\Model\Entity\Type')
             ->setMethods(['getEntity', 'setData', 'getData'])
             ->disableOriginalConstructor()
             ->getMock();

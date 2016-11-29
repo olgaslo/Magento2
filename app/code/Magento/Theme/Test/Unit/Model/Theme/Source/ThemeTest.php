@@ -18,7 +18,7 @@ class ThemeTest extends \PHPUnit_Framework_TestCase
     public function testGetAllOptions()
     {
         $expects = ['labels'];
-        $label = $this->getMockBuilder(\Magento\Framework\View\Design\Theme\Label::class)
+        $label = $this->getMockBuilder('Magento\Framework\View\Design\Theme\Label')
             ->disableOriginalConstructor()
             ->getMock();
         $label->expects($this->once())

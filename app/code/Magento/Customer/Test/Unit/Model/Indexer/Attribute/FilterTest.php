@@ -33,33 +33,23 @@ class FilterTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->resource = $this->getMock(\Magento\Framework\App\ResourceConnection::class, [], [], '', false);
+        $this->resource = $this->getMock('Magento\Framework\App\ResourceConnection', [], [], '', false);
         $this->connection = $this->getMockForAbstractClass(
-            \Magento\Framework\DB\Adapter\AdapterInterface::class,
+            'Magento\Framework\DB\Adapter\AdapterInterface',
             [],
             '',
             false
         );
         $this->flatScopeResolver = $this->getMock(
-            \Magento\Framework\Indexer\ScopeResolver\FlatScopeResolver::class,
+            'Magento\Framework\Indexer\ScopeResolver\FlatScopeResolver',
             [],
             [],
             '',
             false
         );
-        $this->indexerRegistry = $this->getMock(\Magento\Framework\Indexer\IndexerRegistry::class, [], [], '', false);
-        $this->indexer = $this->getMockForAbstractClass(
-            \Magento\Framework\Indexer\IndexerInterface::class,
-            [],
-            '',
-            false
-        );
-        $this->indexerState = $this->getMockForAbstractClass(
-            \Magento\Framework\Indexer\StateInterface::class,
-            [],
-            '',
-            false
-        );
+        $this->indexerRegistry = $this->getMock('Magento\Framework\Indexer\IndexerRegistry', [], [], '', false);
+        $this->indexer = $this->getMockForAbstractClass('Magento\Framework\Indexer\IndexerInterface', [], '', false);
+        $this->indexerState = $this->getMockForAbstractClass('Magento\Framework\Indexer\StateInterface', [], '', false);
 
         $this->model = new Filter(
             $this->resource,

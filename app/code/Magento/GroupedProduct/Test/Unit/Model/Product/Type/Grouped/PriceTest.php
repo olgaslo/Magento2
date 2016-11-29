@@ -19,11 +19,11 @@ class PriceTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->productMock = $this->getMock(\Magento\Catalog\Model\Product::class, [], [], '', false);
+        $this->productMock = $this->getMock('Magento\Catalog\Model\Product', [], [], '', false);
 
         $helper = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
         $this->finalPriceModel = $helper->getObject(
-            \Magento\GroupedProduct\Model\Product\Type\Grouped\Price::class,
+            'Magento\GroupedProduct\Model\Product\Type\Grouped\Price',
             []
         );
     }
@@ -103,7 +103,7 @@ class PriceTest extends \PHPUnit_Framework_TestCase
         $this->productMock->expects($this->once())->method('hasCustomOptions')->will($this->returnValue(true));
 
         $productTypeMock = $this->getMock(
-            \Magento\GroupedProduct\Model\Product\Type\Grouped::class,
+            'Magento\GroupedProduct\Model\Product\Type\Grouped',
             [],
             [],
             '',
@@ -154,7 +154,7 @@ class PriceTest extends \PHPUnit_Framework_TestCase
     public function getFinalPriceDataProvider()
     {
         $optionMock = $this->getMock(
-            \Magento\Catalog\Model\Product\Option::class,
+            'Magento\Catalog\Model\Product\Option',
             ['getValue', '__wakeup'],
             [],
             '',
@@ -191,7 +191,7 @@ class PriceTest extends \PHPUnit_Framework_TestCase
     protected function generateAssociatedProducts()
     {
         $childProductMock = $this->getMock(
-            \Magento\Catalog\Model\Product::class,
+            'Magento\Catalog\Model\Product',
             ['getId', 'getFinalPrice', '__wakeup'],
             [],
             '',

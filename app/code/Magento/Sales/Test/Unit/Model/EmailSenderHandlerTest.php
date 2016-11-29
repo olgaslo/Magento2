@@ -52,7 +52,7 @@ class EmailSenderHandlerTest extends \PHPUnit_Framework_TestCase
         $objectManager = new ObjectManager($this);
 
         $this->emailSender = $this->getMock(
-            \Magento\Sales\Model\Order\Email\Sender::class,
+            'Magento\Sales\Model\Order\Email\Sender',
             ['send'],
             [],
             '',
@@ -60,7 +60,7 @@ class EmailSenderHandlerTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->entityResource = $this->getMockForAbstractClass(
-            \Magento\Sales\Model\ResourceModel\EntityAbstract::class,
+            'Magento\Sales\Model\ResourceModel\EntityAbstract',
             [],
             '',
             false,
@@ -70,7 +70,7 @@ class EmailSenderHandlerTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->entityCollection = $this->getMockForAbstractClass(
-            \Magento\Sales\Model\ResourceModel\Collection\AbstractCollection::class,
+            'Magento\Sales\Model\ResourceModel\Collection\AbstractCollection',
             [],
             '',
             false,
@@ -80,7 +80,7 @@ class EmailSenderHandlerTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->globalConfig = $this->getMock(
-            \Magento\Framework\App\Config::class,
+            'Magento\Framework\App\Config',
             [],
             [],
             '',
@@ -88,7 +88,7 @@ class EmailSenderHandlerTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->object = $objectManager->getObject(
-            \Magento\Sales\Model\EmailSenderHandler::class,
+            'Magento\Sales\Model\EmailSenderHandler',
             [
                 'emailSender' => $this->emailSender,
                 'entityResource' => $this->entityResource,
@@ -165,7 +165,7 @@ class EmailSenderHandlerTest extends \PHPUnit_Framework_TestCase
     public function executeDataProvider()
     {
         $entityModel = $this->getMockForAbstractClass(
-            \Magento\Sales\Model\AbstractModel::class,
+            'Magento\Sales\Model\AbstractModel',
             [],
             '',
             false,

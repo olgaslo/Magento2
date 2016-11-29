@@ -32,10 +32,10 @@ class TaxTest extends \PHPUnit_Framework_TestCase
     {
         $this->objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
         /** @var \Magento\Sales\Model\Order\Invoice\Total\Tax $model */
-        $this->model = $this->objectManager->getObject(\Magento\Sales\Model\Order\Invoice\Total\Tax::class);
+        $this->model = $this->objectManager->getObject('Magento\Sales\Model\Order\Invoice\Total\Tax');
 
         $this->order = $this->getMock(
-            \Magento\Sales\Model\Order::class,
+            '\Magento\Sales\Model\Order',
             [
                 'getInvoiceCollection',
                 '__wakeup'
@@ -46,7 +46,7 @@ class TaxTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->invoice = $this->getMock(
-            \Magento\Sales\Model\Order\Invoice::class,
+            '\Magento\Sales\Model\Order\Invoice',
             [
                 'getAllItems',
                 'getOrder',
@@ -78,7 +78,7 @@ class TaxTest extends \PHPUnit_Framework_TestCase
         /** @var \Magento\Sales\Model\Order\Invoice[] $previousInvoices */
         $previousInvoices = [];
         foreach ($orderData['previous_invoices'] as $previousInvoiceData) {
-            $previousInvoice = $this->getMockBuilder(\Magento\Sales\Model\Order\Invoice::class)
+            $previousInvoice = $this->getMockBuilder('\Magento\Sales\Model\Order\Invoice')
                 ->disableOriginalConstructor()
                 ->setMethods(['isCanceled', '__wakeup'])
                 ->getMock();
@@ -368,7 +368,7 @@ class TaxTest extends \PHPUnit_Framework_TestCase
     {
         /** @var \Magento\Sales\Model\Order\Item|\PHPUnit_Framework_MockObject_MockObject $orderItem */
         $orderItem = $this->getMock(
-            \Magento\Sales\Model\Order\Item::class,
+            '\Magento\Sales\Model\Order\Item',
             [
                 'isDummy',
                 '__wakeup'
@@ -383,7 +383,7 @@ class TaxTest extends \PHPUnit_Framework_TestCase
 
         /** @var \Magento\Sales\Model\Order\Invoice\Item|\PHPUnit_Framework_MockObject_MockObject $invoiceItem */
         $invoiceItem = $this->getMock(
-            \Magento\Sales\Model\Order\Invoice\Item::class,
+            '\Magento\Sales\Model\Order\Invoice\Item',
             [
                 'getOrderItem',
                 'isLast',

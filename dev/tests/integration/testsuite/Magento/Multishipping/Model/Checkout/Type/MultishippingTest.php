@@ -27,10 +27,10 @@ class MultishippingTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->_multishippingCheckout = Bootstrap::getObjectManager()->create(
-            \Magento\Multishipping\Model\Checkout\Type\Multishipping::class
+            'Magento\Multishipping\Model\Checkout\Type\Multishipping'
         );
         $this->addressRepository = Bootstrap::getObjectManager()->create(
-            \Magento\Customer\Api\AddressRepositoryInterface::class
+            'Magento\Customer\Api\AddressRepositoryInterface'
         );
         parent::setUp();
     }
@@ -55,9 +55,7 @@ class MultishippingTest extends \PHPUnit_Framework_TestCase
         $secondFixtureAddressId = 2;
         $secondFixtureAddressStreet = ['Black str, 48'];
         /** @var \Magento\Customer\Model\Customer $customer */
-        $customer = Bootstrap::getObjectManager()->create(
-            \Magento\Customer\Model\Customer::class
-        )->load($fixtureCustomerId);
+        $customer = Bootstrap::getObjectManager()->create('Magento\Customer\Model\Customer')->load($fixtureCustomerId);
         if ($addressType == self::ADDRESS_TYPE_SHIPPING) {
             $customer->setDefaultShipping($secondFixtureAddressId)->save();
         } else {
@@ -65,7 +63,7 @@ class MultishippingTest extends \PHPUnit_Framework_TestCase
             $customer->setDefaultBilling($secondFixtureAddressId)->save();
         }
         /** @var \Magento\Customer\Model\Session $customerSession */
-        $customerSession = Bootstrap::getObjectManager()->get(\Magento\Customer\Model\Session::class);
+        $customerSession = Bootstrap::getObjectManager()->get('Magento\Customer\Model\Session');
         $customerSession->setCustomer($customer);
 
         /** Execute SUT */
@@ -78,7 +76,7 @@ class MultishippingTest extends \PHPUnit_Framework_TestCase
         $address = $this->addressRepository->getById($addressId);
 
         $this->assertInstanceOf(
-            \Magento\Customer\Api\Data\AddressInterface::class,
+            '\Magento\Customer\Api\Data\AddressInterface',
             $address,
             "Address was not loaded."
         );
@@ -124,9 +122,7 @@ class MultishippingTest extends \PHPUnit_Framework_TestCase
         $firstFixtureAddressId = 1;
         $firstFixtureAddressStreet = ['Green str, 67'];
         /** @var \Magento\Customer\Model\Customer $customer */
-        $customer = Bootstrap::getObjectManager()->create(
-            \Magento\Customer\Model\Customer::class
-        )->load($fixtureCustomerId);
+        $customer = Bootstrap::getObjectManager()->create('Magento\Customer\Model\Customer')->load($fixtureCustomerId);
         if ($addressType == self::ADDRESS_TYPE_SHIPPING) {
             $customer->setDefaultShipping(null)->save();
         } else {
@@ -134,7 +130,7 @@ class MultishippingTest extends \PHPUnit_Framework_TestCase
             $customer->setDefaultBilling(null)->save();
         }
         /** @var \Magento\Customer\Model\Session $customerSession */
-        $customerSession = Bootstrap::getObjectManager()->get(\Magento\Customer\Model\Session::class);
+        $customerSession = Bootstrap::getObjectManager()->get('Magento\Customer\Model\Session');
         $customerSession->setCustomer($customer);
 
         /** Execute SUT */
@@ -146,11 +142,7 @@ class MultishippingTest extends \PHPUnit_Framework_TestCase
         }
         $address = $this->addressRepository->getById($addressId);
 
-        $this->assertInstanceOf(
-            \Magento\Customer\Api\Data\AddressInterface::class,
-            $address,
-            "Address was not loaded."
-        );
+        $this->assertInstanceOf('\Magento\Customer\Api\Data\AddressInterface', $address, "Address was not loaded.");
         $this->assertEquals($firstFixtureAddressId, $address->getId(), "Invalid address loaded.");
         $this->assertEquals(
             $firstFixtureAddressStreet,
@@ -176,12 +168,10 @@ class MultishippingTest extends \PHPUnit_Framework_TestCase
          */
         $fixtureCustomerId = 1;
         /** @var \Magento\Customer\Model\Customer $customer */
-        $customer = Bootstrap::getObjectManager()->create(
-            \Magento\Customer\Model\Customer::class
-        )->load($fixtureCustomerId);
+        $customer = Bootstrap::getObjectManager()->create('Magento\Customer\Model\Customer')->load($fixtureCustomerId);
         $customer->setDefaultShipping(null)->setDefaultBilling(null)->save();
         /** @var \Magento\Customer\Model\Session $customerSession */
-        $customerSession = Bootstrap::getObjectManager()->get(\Magento\Customer\Model\Session::class);
+        $customerSession = Bootstrap::getObjectManager()->get('Magento\Customer\Model\Session');
         $customerSession->setCustomer($customer);
 
         /** Execute SUT */

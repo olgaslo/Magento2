@@ -42,12 +42,12 @@ class IntegrationServiceTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->_integrationFactory = $this->getMockBuilder(\Magento\Integration\Model\IntegrationFactory::class)
+        $this->_integrationFactory = $this->getMockBuilder('Magento\Integration\Model\IntegrationFactory')
             ->disableOriginalConstructor()
             ->setMethods(['create'])
             ->getMock();
         $this->_integrationMock = $this->getMockBuilder(
-            \Magento\Integration\Model\Integration::class
+            'Magento\Integration\Model\Integration'
         )->disableOriginalConstructor()->setMethods(
             [
                 'getData',
@@ -78,10 +78,10 @@ class IntegrationServiceTest extends \PHPUnit_Framework_TestCase
         );
 
         $oauthConsumerHelper = $this->getMockBuilder(
-            \Magento\Integration\Api\OauthServiceInterface::class
+            'Magento\Integration\Api\OauthServiceInterface'
         )->disableOriginalConstructor()->getMock();
         $oauthConsumer = $this->getMockBuilder(
-            \Magento\Integration\Model\Oauth\Consumer::class
+            'Magento\Integration\Model\Oauth\Consumer'
         )->disableOriginalConstructor()->getMock();
         $oauthConsumerHelper->expects(
             $this->any()
@@ -97,7 +97,7 @@ class IntegrationServiceTest extends \PHPUnit_Framework_TestCase
             $oauthConsumerHelper
         );
         $this->_emptyIntegrationMock = $this->getMockBuilder(
-            \Magento\Integration\Model\Integration::class
+            'Magento\Integration\Model\Integration'
         )->disableOriginalConstructor()->setMethods(
             [
                 'getData',
@@ -479,7 +479,7 @@ class IntegrationServiceTest extends \PHPUnit_Framework_TestCase
         $integrationId = self::VALUE_INTEGRATION_ID
     ) {
         $integrationMock = $this->getMockBuilder(
-            \Magento\Integration\Model\Integration::class
+            'Magento\Integration\Model\Integration'
         )->disableOriginalConstructor()->setMethods(
             [
                 'getData',

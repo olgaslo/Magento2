@@ -27,7 +27,7 @@ class StaticCallsTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->tokens = $this->getMockBuilder(
-            \Magento\TestFramework\Integrity\Library\PhpParser\Tokens::class
+            'Magento\TestFramework\Integrity\Library\PhpParser\Tokens'
         )->disableOriginalConstructor()->getMock();
     }
 
@@ -75,7 +75,7 @@ class StaticCallsTest extends \PHPUnit_Framework_TestCase
         }
 
         $uses = $this->getMockBuilder(
-            \Magento\TestFramework\Integrity\Library\PhpParser\Uses::class
+            'Magento\TestFramework\Integrity\Library\PhpParser\Uses'
         )->disableOriginalConstructor()->getMock();
 
         $uses->expects($this->once())->method('hasUses')->will($this->returnValue(true));

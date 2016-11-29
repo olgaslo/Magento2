@@ -41,13 +41,13 @@ class Factory
         );
         /** @var \Magento\Framework\Validator\Builder $builder */
         $builder = $this->_validatorBuilderFactory->create(
-            \Magento\Framework\Validator\Builder::class,
+            'Magento\Framework\Validator\Builder',
             [
                 'constraints' => [
                     [
                         'alias' => 'Regex',
                         'type' => '',
-                        'class' => \Magento\Framework\Validator\Regex::class,
+                        'class' => 'Magento\Framework\Validator\Regex',
                         'options' => [
                             'arguments' => ['pattern' => '/^[0-9a-f]{6}$/i'],
                             'methods' => [
@@ -77,13 +77,13 @@ class Factory
         $message = __('Conversion Id value is not valid "%1". Conversion Id should be an integer.', $currentId);
         /** @var \Magento\Framework\Validator\Builder $builder */
         $builder = $this->_validatorBuilderFactory->create(
-            \Magento\Framework\Validator\Builder::class,
+            'Magento\Framework\Validator\Builder',
             [
                 'constraints' => [
                     [
                         'alias' => 'Int',
                         'type' => '',
-                        'class' => \Magento\Framework\Validator\IntUtils::class,
+                        'class' => 'Magento\Framework\Validator\IntUtils',
                         'options' => [
                             'methods' => [
                                 [

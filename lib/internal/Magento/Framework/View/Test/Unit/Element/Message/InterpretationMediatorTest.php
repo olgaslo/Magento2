@@ -29,12 +29,12 @@ class InterpretationMediatorTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->interpretationStrategy = $this->getMockBuilder(
-            \Magento\Framework\View\Element\Message\InterpretationStrategy::class
+            'Magento\Framework\View\Element\Message\InterpretationStrategy'
         )
             ->disableOriginalConstructor()
             ->getMock();
         $this->messageMock = $this->getMock(
-            \Magento\Framework\Message\MessageInterface::class
+            'Magento\Framework\Message\MessageInterface'
         );
 
         $this->interpretationMediator = new InterpretationMediator(

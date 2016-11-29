@@ -29,9 +29,9 @@ class ModuleTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->rule = $this->getMockForAbstractClass(\Magento\Framework\View\Design\Fallback\Rule\RuleInterface::class);
+        $this->rule = $this->getMockForAbstractClass('\Magento\Framework\View\Design\Fallback\Rule\RuleInterface');
         $this->componentRegistrar = $this->getMockForAbstractClass(
-            \Magento\Framework\Component\ComponentRegistrarInterface::class
+            '\Magento\Framework\Component\ComponentRegistrarInterface'
         );
         $this->model = new Module($this->rule, $this->componentRegistrar);
     }

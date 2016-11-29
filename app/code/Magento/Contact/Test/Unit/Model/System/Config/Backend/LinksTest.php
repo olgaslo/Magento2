@@ -16,9 +16,7 @@ class LinksTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->_model = (new ObjectManager($this))->getObject(
-            \Magento\Contact\Model\System\Config\Backend\Links::class
-        );
+        $this->_model = (new ObjectManager($this))->getObject('Magento\Contact\Model\System\Config\Backend\Links');
     }
 
     public function testGetIdentities()

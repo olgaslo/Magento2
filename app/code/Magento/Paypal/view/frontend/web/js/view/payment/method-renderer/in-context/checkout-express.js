@@ -25,9 +25,6 @@ define(
     ) {
         'use strict';
 
-        // State of PayPal module initialization
-        var clientInit = false;
-
         return Component.extend({
 
             defaults: {
@@ -96,26 +93,15 @@ define(
              * @returns {Object}
              */
             initClient: function () {
-                var selector = '#' + this.getButtonId();
-
                 _.each(this.clientConfig, function (fn, name) {
                     if (typeof fn === 'function') {
                         this.clientConfig[name] = fn.bind(this);
                     }
                 }, this);
 
-                if (!clientInit) {
-                    domObserver.get(selector, function () {
-                        paypalExpressCheckout.checkout.setup(this.merchantId, this.clientConfig);
-                        clientInit = true;
-                        domObserver.off(selector);
-                    }.bind(this));
-                } else {
-                    domObserver.get(selector, function () {
-                        $(selector).on('click', this.clientConfig.click);
-                        domObserver.off(selector);
-                    }.bind(this));
-                }
+                domObserver.get('#' + this.getButtonId(), function () {
+                    paypalExpressCheckout.checkout.setup(this.merchantId, this.clientConfig);
+                }.bind(this));
 
                 return this;
             },

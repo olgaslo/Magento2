@@ -7,8 +7,6 @@ namespace Magento\Catalog\Test\Unit\Block\Adminhtml\Product\Edit\Tab;
 
 /**
  * Class InventoryTest
- *
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
 class InventoryTest extends \PHPUnit_Framework_TestCase
 {
@@ -67,54 +65,54 @@ class InventoryTest extends \PHPUnit_Framework_TestCase
         $objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
 
         $this->contextMock = $this->getMock(
-            \Magento\Backend\Block\Template\Context::class,
+            'Magento\Backend\Block\Template\Context',
             ['getRequest', 'getStoreManager'],
             [],
             '',
             false
         );
         $this->stockConfigurationMock = $this->getMockForAbstractClass(
-            \Magento\CatalogInventory\Api\StockConfigurationInterface::class,
+            'Magento\CatalogInventory\Api\StockConfigurationInterface',
             [],
             '',
             false
         );
         $this->stockRegistryMock =  $this->getMockForAbstractClass(
-            \Magento\CatalogInventory\Api\StockRegistryInterface::class,
+            'Magento\CatalogInventory\Api\StockRegistryInterface',
             [],
             '',
             false
         );
         $this->backordersMock = $this->getMock(
-            \Magento\CatalogInventory\Model\Source\Backorders::class,
+            'Magento\CatalogInventory\Model\Source\Backorders',
             [],
             [],
             '',
             false
         );
         $this->stockMock = $this->getMock(
-            \Magento\CatalogInventory\Model\Source\Stock::class,
+            'Magento\CatalogInventory\Model\Source\Stock',
             [],
             [],
             '',
             false
         );
         $this->coreRegistryMock = $this->getMock(
-            \Magento\Framework\Registry::class,
+            'Magento\Framework\Registry',
             [],
             [],
             '',
             false
         );
         $this->moduleManager = $this->getMock(
-            \Magento\Framework\Module\Manager::class,
+            'Magento\Framework\Module\Manager',
             [],
             [],
             '',
             false
         );
         $this->storeManagerMock = $this->getMockForAbstractClass(
-            \Magento\Store\Model\StoreManagerInterface::class,
+            'Magento\Store\Model\StoreManagerInterface',
             [],
             '',
             false
@@ -125,7 +123,7 @@ class InventoryTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue($this->storeManagerMock));
 
         $this->inventory = $objectManager->getObject(
-            \Magento\Catalog\Block\Adminhtml\Product\Edit\Tab\Inventory::class,
+            'Magento\Catalog\Block\Adminhtml\Product\Edit\Tab\Inventory',
             [
                 'context' => $this->contextMock,
                 'backorders' => $this->backordersMock,
@@ -212,14 +210,14 @@ class InventoryTest extends \PHPUnit_Framework_TestCase
         $productId = 10;
         $websiteId = 15;
         $productMock = $this->getMock(
-            \Magento\Catalog\Model\Product::class,
+            'Magento\Catalog\Model\Product',
             ['getId', 'getStore'],
             [],
             '',
             false
         );
         $storeMock = $this->getMock(
-            \Magento\Store\Model\Store::class,
+            'Magento\Store\Model\Store',
             ['getWebsiteId'],
             [],
             '',
@@ -264,7 +262,7 @@ class InventoryTest extends \PHPUnit_Framework_TestCase
         $fieldName = 'field';
 
         $stockItemMock = $this->getMockForAbstractClass(
-            \Magento\CatalogInventory\Api\Data\StockItemInterface::class,
+            'Magento\CatalogInventory\Api\Data\StockItemInterface',
             [],
             '',
             false,
@@ -273,14 +271,14 @@ class InventoryTest extends \PHPUnit_Framework_TestCase
             $methods
         );
         $productMock = $this->getMock(
-            \Magento\Catalog\Model\Product::class,
+            'Magento\Catalog\Model\Product',
             [],
             [],
             '',
             false
         );
         $storeMock = $this->getMock(
-            \Magento\Store\Model\Store::class,
+            'Magento\Store\Model\Store',
             [],
             [],
             '',
@@ -339,7 +337,7 @@ class InventoryTest extends \PHPUnit_Framework_TestCase
         $fieldName = 'field';
 
         $stockItemMock = $this->getMockForAbstractClass(
-            \Magento\CatalogInventory\Api\Data\StockItemInterface::class,
+            'Magento\CatalogInventory\Api\Data\StockItemInterface',
             [],
             '',
             false,
@@ -348,14 +346,14 @@ class InventoryTest extends \PHPUnit_Framework_TestCase
             $methods
         );
         $productMock = $this->getMock(
-            \Magento\Catalog\Model\Product::class,
+            'Magento\Catalog\Model\Product',
             [],
             [],
             '',
             false
         );
         $storeMock = $this->getMock(
-            \Magento\Store\Model\Store::class,
+            'Magento\Store\Model\Store',
             [],
             [],
             '',
@@ -421,7 +419,7 @@ class InventoryTest extends \PHPUnit_Framework_TestCase
     public function testIsReadonly()
     {
         $productMock = $this->getMock(
-            \Magento\Catalog\Model\Product::class,
+            'Magento\Catalog\Model\Product',
             ['getInventoryReadonly'],
             [],
             '',
@@ -452,7 +450,7 @@ class InventoryTest extends \PHPUnit_Framework_TestCase
     public function testIsNew($id, $result)
     {
         $productMock = $this->getMock(
-            \Magento\Catalog\Model\Product::class,
+            'Magento\Catalog\Model\Product',
             ['getId'],
             [],
             '',
@@ -489,14 +487,14 @@ class InventoryTest extends \PHPUnit_Framework_TestCase
     public function testCanUseQtyDecimals()
     {
         $productMock = $this->getMock(
-            \Magento\Catalog\Model\Product::class,
+            'Magento\Catalog\Model\Product',
             ['getTypeInstance'],
             [],
             '',
             false
         );
         $typeMock = $this->getMockForAbstractClass(
-            \Magento\Catalog\Model\Product\Type\AbstractType::class,
+            'Magento\Catalog\Model\Product\Type\AbstractType',
             [],
             '',
             false,
@@ -527,7 +525,7 @@ class InventoryTest extends \PHPUnit_Framework_TestCase
     public function testIsVirtual()
     {
         $productMock = $this->getMock(
-            \Magento\Catalog\Model\Product::class,
+            'Magento\Catalog\Model\Product',
             ['getIsVirtual'],
             [],
             '',

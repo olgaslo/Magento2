@@ -46,29 +46,27 @@ class EsiTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->layoutMock = $this->getMockBuilder(\Magento\Framework\View\Layout::class)
+        $this->layoutMock = $this->getMockBuilder('Magento\Framework\View\Layout')
             ->disableOriginalConstructor()->getMock();
 
         $contextMock =
-            $this->getMockBuilder(\Magento\Framework\App\Action\Context::class)
-                ->disableOriginalConstructor()->getMock();
+            $this->getMockBuilder('Magento\Framework\App\Action\Context')->disableOriginalConstructor()->getMock();
 
-        $this->requestMock = $this->getMockBuilder(\Magento\Framework\App\Request\Http::class)
+        $this->requestMock = $this->getMockBuilder('Magento\Framework\App\Request\Http')
             ->disableOriginalConstructor()->getMock();
-        $this->responseMock = $this->getMockBuilder(\Magento\Framework\App\Response\Http::class)
+        $this->responseMock = $this->getMockBuilder('Magento\Framework\App\Response\Http')
             ->disableOriginalConstructor()->getMock();
-        $this->viewMock = $this->getMockBuilder(\Magento\Framework\App\View::class)
-            ->disableOriginalConstructor()->getMock();
+        $this->viewMock = $this->getMockBuilder('Magento\Framework\App\View')->disableOriginalConstructor()->getMock();
 
         $contextMock->expects($this->any())->method('getRequest')->will($this->returnValue($this->requestMock));
         $contextMock->expects($this->any())->method('getResponse')->will($this->returnValue($this->responseMock));
         $contextMock->expects($this->any())->method('getView')->will($this->returnValue($this->viewMock));
 
-        $this->translateInline = $this->getMock(\Magento\Framework\Translate\InlineInterface::class);
+        $this->translateInline = $this->getMock('Magento\Framework\Translate\InlineInterface');
 
         $helperObjectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
         $this->action = $helperObjectManager->getObject(
-            \Magento\PageCache\Controller\Block\Esi::class,
+            'Magento\PageCache\Controller\Block\Esi',
             ['context' => $contextMock, 'translateInline' => $this->translateInline]
         );
     }
@@ -131,8 +129,8 @@ class EsiTest extends \PHPUnit_Framework_TestCase
     public function executeDataProvider()
     {
         return [
-            [\Magento\PageCache\Test\Unit\Block\Controller\StubBlock::class, true],
-            [\Magento\Framework\View\Element\AbstractBlock::class, false],
+            ['Magento\PageCache\Test\Unit\Block\Controller\StubBlock', true],
+            ['Magento\Framework\View\Element\AbstractBlock', false],
         ];
     }
 

@@ -20,13 +20,14 @@ use Magento\Customer\Test\Page\CustomerAccountForgotPassword;
  * 3. Click forgot password button.
  * 4. Check forgot password message.
  *
- * @group Customer
+ * @group Customer_(CS)
  * @ZephyrId MAGETWO-37145
  */
 class ForgotPasswordOnFrontendTest extends Injectable
 {
     /* tags */
     const MVP = 'yes';
+    const DOMAIN = 'CS';
     /* end tags */
 
     /**

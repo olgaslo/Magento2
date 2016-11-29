@@ -866,9 +866,7 @@ class Config extends AbstractConfig
      */
     public function getExpressCheckoutStartUrl($token)
     {
-        return sprintf('https://www.%spaypal.com/checkoutnow%s',
-            $this->getValue('sandboxFlag') ? 'sandbox.' : '',
-            '?token=' . urlencode($token));
+        return $this->getPaypalUrl(['cmd' => '_express-checkout', 'token' => $token]);
     }
 
     /**
@@ -1301,7 +1299,7 @@ class Config extends AbstractConfig
     public function getWppPeCcTypesAsOptionArray()
     {
         return $this->_cctypeFactory->create()->setAllowedTypes(
-            ['VI', 'MC', 'SM', 'SO', 'AE']
+            ['VI', 'MC', 'SM', 'SO', 'OT', 'AE']
         )->toOptionArray();
     }
 
@@ -1312,7 +1310,7 @@ class Config extends AbstractConfig
      */
     public function getPayflowproCcTypesAsOptionArray()
     {
-        return $this->_cctypeFactory->create()->setAllowedTypes(['AE', 'VI', 'MC', 'JCB', 'DI', 'DN'])->toOptionArray();
+        return $this->_cctypeFactory->create()->setAllowedTypes(['AE', 'VI', 'MC', 'JCB', 'DI'])->toOptionArray();
     }
 
     /**

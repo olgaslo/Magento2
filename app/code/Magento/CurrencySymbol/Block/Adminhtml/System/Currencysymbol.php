@@ -39,6 +39,7 @@ class Currencysymbol extends \Magento\Backend\Block\Widget\Form
      */
     protected function _construct()
     {
+        $this->_blockGroup = 'Magento\CurrencySymbol\System';
         $this->_controller = 'adminhtml_system_currencysymbol';
         parent::_construct();
     }
@@ -59,7 +60,7 @@ class Currencysymbol extends \Magento\Backend\Block\Widget\Form
     {
         $this->getToolbar()->addChild(
             'save_button',
-            \Magento\Backend\Block\Widget\Button::class,
+            'Magento\Backend\Block\Widget\Button',
             [
                 'label' => __('Save Currency Symbols'),
                 'class' => 'save primary save-currency-symbols',

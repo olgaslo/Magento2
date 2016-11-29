@@ -27,16 +27,8 @@ class ThemePackageListTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->registrar = $this->getMockForAbstractClass(
-            \Magento\Framework\Component\ComponentRegistrarInterface::class
-        );
-        $this->factory = $this->getMock(
-            \Magento\Framework\View\Design\Theme\ThemePackageFactory::class,
-            [],
-            [],
-            '',
-            false
-        );
+        $this->registrar = $this->getMockForAbstractClass('\Magento\Framework\Component\ComponentRegistrarInterface');
+        $this->factory = $this->getMock('Magento\Framework\View\Design\Theme\ThemePackageFactory', [], [], '', false);
         $this->object = new ThemePackageList($this->registrar, $this->factory);
     }
 
@@ -64,7 +56,7 @@ class ThemePackageListTest extends \PHPUnit_Framework_TestCase
             ->method('getPath')
             ->with(ComponentRegistrar::THEME, $themeKey)
             ->willReturn($themePath);
-        $themePackage = $this->getMock(\Magento\Framework\View\Design\Theme\ThemePackage::class, [], [], '', false);
+        $themePackage = $this->getMock('\Magento\Framework\View\Design\Theme\ThemePackage', [], [], '', false);
         $this->factory->expects($this->once())
             ->method('create')
             ->with($themeKey, $themePath)
@@ -78,7 +70,7 @@ class ThemePackageListTest extends \PHPUnit_Framework_TestCase
             ->method('getPaths')
             ->with(ComponentRegistrar::THEME)
             ->willReturn(['theme1' => 'path1', 'theme2' => 'path2']);
-        $themePackage = $this->getMock(\Magento\Framework\View\Design\Theme\ThemePackage::class, [], [], '', false);
+        $themePackage = $this->getMock('\Magento\Framework\View\Design\Theme\ThemePackage', [], [], '', false);
         $this->factory->expects($this->exactly(2))
             ->method('create')
             ->withConsecutive(

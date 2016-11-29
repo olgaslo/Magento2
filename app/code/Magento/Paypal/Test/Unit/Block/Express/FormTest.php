@@ -12,9 +12,6 @@ use Magento\Paypal\Helper\Data;
 use Magento\Paypal\Model\Config;
 use Magento\Paypal\Model\Express\Checkout;
 
-/**
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
- */
 class FormTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -40,7 +37,7 @@ class FormTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->_paypalData = $this->getMock(
-            \Magento\Paypal\Helper\Data::class,
+            'Magento\Paypal\Helper\Data',
             [],
             [],
             '',
@@ -48,7 +45,7 @@ class FormTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->_paypalConfig = $this->getMock(
-            \Magento\Paypal\Model\Config::class,
+            'Magento\Paypal\Model\Config',
             [],
             [],
             '',
@@ -59,7 +56,7 @@ class FormTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnSelf());
 
         $paypalConfigFactory = $this->getMock(
-            \Magento\Paypal\Model\ConfigFactory::class,
+            'Magento\Paypal\Model\ConfigFactory',
             ['create'],
             [],
             '',
@@ -70,7 +67,7 @@ class FormTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue($this->_paypalConfig));
 
         $mark = $this->getMock(
-            \Magento\Framework\View\Element\Template::class,
+            'Magento\Framework\View\Element\Template',
             [],
             [],
             '',
@@ -83,20 +80,20 @@ class FormTest extends \PHPUnit_Framework_TestCase
             ->method('__call')
             ->will($this->returnSelf());
         $layout = $this->getMockForAbstractClass(
-            \Magento\Framework\View\LayoutInterface::class
+            'Magento\Framework\View\LayoutInterface'
         );
         $layout->expects($this->once())
             ->method('createBlock')
-            ->with(\Magento\Framework\View\Element\Template::class)
+            ->with('Magento\Framework\View\Element\Template')
             ->will($this->returnValue($mark));
 
         $this->currentCustomer = $this
-            ->getMockBuilder(\Magento\Customer\Helper\Session\CurrentCustomer::class)
+            ->getMockBuilder('\Magento\Customer\Helper\Session\CurrentCustomer')
             ->disableOriginalConstructor()
             ->getMock();
 
         $localeResolver = $this->getMock(
-            \Magento\Framework\Locale\ResolverInterface::class,
+            'Magento\Framework\Locale\ResolverInterface',
             [],
             [],
             '',
@@ -106,7 +103,7 @@ class FormTest extends \PHPUnit_Framework_TestCase
 
         $helper = new ObjectManager($this);
         $this->_model = $helper->getObject(
-            \Magento\Paypal\Block\Express\Form::class,
+            'Magento\Paypal\Block\Express\Form',
             [
                 'paypalData' => $this->_paypalData,
                 'paypalConfigFactory' => $paypalConfigFactory,

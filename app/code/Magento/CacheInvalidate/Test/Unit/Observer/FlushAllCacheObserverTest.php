@@ -25,19 +25,19 @@ class FlushAllCacheObserverTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->configMock = $this->getMock(
-            \Magento\PageCache\Model\Config::class,
+            'Magento\PageCache\Model\Config',
             ['getType', 'isEnabled'],
             [],
             '',
             false
         );
-        $this->purgeCache = $this->getMock(\Magento\CacheInvalidate\Model\PurgeCache::class, [], [], '', false);
+        $this->purgeCache = $this->getMock('Magento\CacheInvalidate\Model\PurgeCache', [], [], '', false);
         $this->model = new \Magento\CacheInvalidate\Observer\FlushAllCacheObserver(
             $this->configMock,
             $this->purgeCache
         );
         $this->observerMock = $this->getMock(
-            \Magento\Framework\Event\Observer::class,
+            'Magento\Framework\Event\Observer',
             ['getEvent'],
             [],
             '',

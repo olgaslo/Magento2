@@ -17,7 +17,7 @@ class InputMismatchExceptionTest extends \PHPUnit_Framework_TestCase
      */
     public function testConstructor()
     {
-        $instanceClass = \Magento\Framework\Exception\State\InputMismatchException::class;
+        $instanceClass = 'Magento\Framework\Exception\State\InputMismatchException';
         $message =  'message %1 %2';
         $params = [
             'parameter1',

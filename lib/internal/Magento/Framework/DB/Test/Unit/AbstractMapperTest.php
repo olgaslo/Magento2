@@ -63,7 +63,7 @@ class AbstractMapperTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->resourceMock = $this->getMockForAbstractClass(
-            \Magento\Framework\Model\ResourceModel\Db\AbstractDb::class,
+            'Magento\Framework\Model\ResourceModel\Db\AbstractDb',
             [],
             '',
             false,
@@ -72,7 +72,7 @@ class AbstractMapperTest extends \PHPUnit_Framework_TestCase
             []
         );
         $this->connectionMock = $this->getMockForAbstractClass(
-            \Magento\Framework\DB\Adapter\AdapterInterface::class,
+            'Magento\Framework\DB\Adapter\AdapterInterface',
             [],
             '',
             false,
@@ -81,15 +81,15 @@ class AbstractMapperTest extends \PHPUnit_Framework_TestCase
             []
         );
         $this->selectMock = $this->getMock(
-            \Magento\Framework\DB\Select::class,
+            'Magento\Framework\DB\Select',
             [],
             [],
             '',
             false
         );
-        $this->loggerMock = $this->getMock(\Psr\Log\LoggerInterface::class);
+        $this->loggerMock = $this->getMock('Psr\Log\LoggerInterface');
         $this->fetchStrategyMock = $this->getMockForAbstractClass(
-            \Magento\Framework\Data\Collection\Db\FetchStrategyInterface::class,
+            'Magento\Framework\Data\Collection\Db\FetchStrategyInterface',
             [],
             '',
             false,
@@ -98,14 +98,14 @@ class AbstractMapperTest extends \PHPUnit_Framework_TestCase
             []
         );
         $this->objectFactoryMock = $this->getMock(
-            \Magento\Framework\Data\ObjectFactory::class,
+            'Magento\Framework\Data\ObjectFactory',
             [],
             [],
             '',
             false
         );
         $this->mapperFactoryMock = $this->getMock(
-            \Magento\Framework\DB\MapperFactory::class,
+            'Magento\Framework\DB\MapperFactory',
             [],
             [],
             '',
@@ -126,7 +126,7 @@ class AbstractMapperTest extends \PHPUnit_Framework_TestCase
     {
         /** @var \Magento\Framework\DB\AbstractMapper|\PHPUnit_Framework_MockObject_MockObject $mapper */
         $mapper = $this->getMockForAbstractClass(
-            \Magento\Framework\DB\AbstractMapper::class,
+            'Magento\Framework\DB\AbstractMapper',
             [
                 'logger' => $this->loggerMock,
                 'fetchStrategy' => $this->fetchStrategyMock,
@@ -141,7 +141,7 @@ class AbstractMapperTest extends \PHPUnit_Framework_TestCase
             $mapperMethods
         );
         $criteriaMock = $this->getMockForAbstractClass(
-            \Magento\Framework\Api\CriteriaInterface::class,
+            'Magento\Framework\Api\CriteriaInterface',
             [],
             '',
             false,
@@ -173,7 +173,7 @@ class AbstractMapperTest extends \PHPUnit_Framework_TestCase
         ];
         /** @var \Magento\Framework\DB\AbstractMapper|\PHPUnit_Framework_MockObject_MockObject $mapper */
         $mapper = $this->getMockForAbstractClass(
-            \Magento\Framework\DB\AbstractMapper::class,
+            'Magento\Framework\DB\AbstractMapper',
             [
                 'logger' => $this->loggerMock,
                 'fetchStrategy' => $this->fetchStrategyMock,
@@ -210,7 +210,7 @@ class AbstractMapperTest extends \PHPUnit_Framework_TestCase
 
         /** @var \Magento\Framework\DB\AbstractMapper|\PHPUnit_Framework_MockObject_MockObject $mapper */
         $mapper = $this->getMockForAbstractClass(
-            \Magento\Framework\DB\AbstractMapper::class,
+            'Magento\Framework\DB\AbstractMapper',
             [
                 'logger' => $this->loggerMock,
                 'fetchStrategy' => $this->fetchStrategyMock,
@@ -225,7 +225,7 @@ class AbstractMapperTest extends \PHPUnit_Framework_TestCase
             ['getConnection']
         );
         $connectionMock = $this->getMockForAbstractClass(
-            \Magento\Framework\DB\Adapter\AdapterInterface::class,
+            'Magento\Framework\DB\Adapter\AdapterInterface',
             [],
             '',
             true,

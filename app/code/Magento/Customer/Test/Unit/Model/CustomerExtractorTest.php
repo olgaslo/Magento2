@@ -45,7 +45,7 @@ class CustomerExtractorTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->formFactory = $this->getMockForAbstractClass(
-            \Magento\Customer\Model\Metadata\FormFactory::class,
+            'Magento\Customer\Model\Metadata\FormFactory',
             [],
             '',
             false,
@@ -54,7 +54,7 @@ class CustomerExtractorTest extends \PHPUnit_Framework_TestCase
             ['create']
         );
         $this->customerFactory = $this->getMockForAbstractClass(
-            \Magento\Customer\Api\Data\CustomerInterfaceFactory::class,
+            'Magento\Customer\Api\Data\CustomerInterfaceFactory',
             [],
             '',
             false,
@@ -63,34 +63,34 @@ class CustomerExtractorTest extends \PHPUnit_Framework_TestCase
             ['create']
         );
         $this->storeManager = $this->getMockForAbstractClass(
-            \Magento\Store\Model\StoreManagerInterface::class,
+            'Magento\Store\Model\StoreManagerInterface',
             [],
             '',
             false
         );
         $this->customerGroupManagement = $this->getMockForAbstractClass(
-            \Magento\Customer\Api\GroupManagementInterface::class,
+            'Magento\Customer\Api\GroupManagementInterface',
             [],
             '',
             false
         );
-        $this->dataObjectHelper = $this->getMock(\Magento\Framework\Api\DataObjectHelper::class, [], [], '', false);
-        $this->request = $this->getMockForAbstractClass(\Magento\Framework\App\RequestInterface::class, [], '', false);
-        $this->customerForm = $this->getMock(\Magento\Customer\Model\Metadata\Form::class, [], [], '', false);
+        $this->dataObjectHelper = $this->getMock('Magento\Framework\Api\DataObjectHelper', [], [], '', false);
+        $this->request = $this->getMockForAbstractClass('Magento\Framework\App\RequestInterface', [], '', false);
+        $this->customerForm = $this->getMock('Magento\Customer\Model\Metadata\Form', [], [], '', false);
         $this->customerData = $this->getMockForAbstractClass(
-            \Magento\Customer\Api\Data\CustomerInterface::class,
+            'Magento\Customer\Api\Data\CustomerInterface',
             [],
             '',
             false
         );
         $this->store = $this->getMockForAbstractClass(
-            \Magento\Store\Api\Data\StoreInterface::class,
+            'Magento\Store\Api\Data\StoreInterface',
             [],
             '',
             false
         );
         $this->customerGroup = $this->getMockForAbstractClass(
-            \Magento\Customer\Api\Data\GroupInterface::class,
+            'Magento\Customer\Api\Data\GroupInterface',
             [],
             '',
             false
@@ -121,10 +121,6 @@ class CustomerExtractorTest extends \PHPUnit_Framework_TestCase
             ->with($this->request)
             ->willReturn($customerData);
         $this->customerForm->expects($this->once())
-            ->method('compactData')
-            ->with($customerData)
-            ->willReturn($customerData);
-        $this->customerForm->expects($this->once())
             ->method('getAllowedAttributes')
             ->willReturn(['group_id' => 'attribute object']);
         $this->customerFactory->expects($this->once())
@@ -132,7 +128,7 @@ class CustomerExtractorTest extends \PHPUnit_Framework_TestCase
             ->willReturn($this->customerData);
         $this->dataObjectHelper->expects($this->once())
             ->method('populateWithArray')
-            ->with($this->customerData, $customerData, \Magento\Customer\Api\Data\CustomerInterface::class)
+            ->with($this->customerData, $customerData, '\Magento\Customer\Api\Data\CustomerInterface')
             ->willReturn($this->customerData);
         $this->storeManager->expects($this->once())
             ->method('getStore')

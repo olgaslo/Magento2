@@ -21,14 +21,14 @@ use Magento\Customer\Test\Fixture\Customer;
  * 3. Click "Add to Cart"
  * 4. Perform asserts
  *
- * @group Wishlist
+ * @group Wishlist_(CS)
  * @ZephyrId MAGETWO-25268
  */
 class AddProductsToCartFromCustomerWishlistOnFrontendTest extends AbstractWishlistTest
 {
     /* tags */
     const MVP = 'no';
-    const STABLE = 'no';
+    const DOMAIN = 'CS';
     /* end tags */
 
     /**

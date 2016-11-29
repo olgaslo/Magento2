@@ -110,7 +110,9 @@ class ReadHandler implements ExtensionInterface
     public function getAttribute()
     {
         if (!$this->attribute) {
-            $this->attribute = $this->attributeRepository->get('media_gallery');
+            $this->attribute = $this->attributeRepository->get(
+                'media_gallery'
+            );
         }
 
         return $this->attribute;

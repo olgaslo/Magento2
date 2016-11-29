@@ -29,15 +29,14 @@ class CatalogPriceRulesFixture extends Fixture
         $this->fixtureModel->resetObjectManager();
 
         /** @var \Magento\Store\Model\StoreManager $storeManager */
-        $storeManager = $this->fixtureModel->getObjectManager()->create(\Magento\Store\Model\StoreManager::class);
+        $storeManager = $this->fixtureModel->getObjectManager()->create('Magento\Store\Model\StoreManager');
         /** @var $category \Magento\Catalog\Model\Category */
-        $category = $this->fixtureModel->getObjectManager()->get(\Magento\Catalog\Model\Category::class);
+        $category = $this->fixtureModel->getObjectManager()->get('Magento\Catalog\Model\Category');
         /** @var $model  \Magento\CatalogRule\Model\Rule*/
-        $model = $this->fixtureModel->getObjectManager()->get(\Magento\CatalogRule\Model\Rule::class);
+        $model = $this->fixtureModel->getObjectManager()->get('Magento\CatalogRule\Model\Rule');
         /** @var \Magento\Framework\EntityManager\MetadataPool $metadataPool */
-        $metadataPool = $this->fixtureModel->getObjectManager()
-            ->get(\Magento\Framework\EntityManager\MetadataPool::class);
-        $metadata = $metadataPool->getMetadata(\Magento\CatalogRule\Api\Data\RuleInterface::class);
+        $metadataPool = $this->fixtureModel->getObjectManager()->get('Magento\Framework\EntityManager\MetadataPool');
+        $metadata = $metadataPool->getMetadata('Magento\CatalogRule\Api\Data\RuleInterface');
 
         //Get all websites
         $categoriesArray = [];
@@ -86,13 +85,13 @@ class CatalogPriceRulesFixture extends Fixture
                 'rule'                  => [
                     'conditions' => [
                         1 => [
-                            'type' => \Magento\CatalogRule\Model\Rule\Condition\Combine::class,
+                            'type' => 'Magento\\CatalogRule\\Model\\Rule\\Condition\\Combine',
                             'aggregator' => 'all',
                             'value' => '1',
                             'new_child' => '',
                         ],
                         '1--1' => [
-                            'type' => \Magento\CatalogRule\Model\Rule\Condition\Product::class,
+                            'type' => 'Magento\\CatalogRule\\Model\\Rule\\Condition\\Product',
                             'attribute' => 'category_ids',
                             'operator' => '==',
                             'value' => $categoriesArray[$i % count($categoriesArray)][0],

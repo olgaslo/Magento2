@@ -44,8 +44,8 @@ class VatValidatorTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->customerAddressMock = $this->getMock(\Magento\Customer\Helper\Address::class, [], [], '', false);
-        $this->customerVatMock = $this->getMock(\Magento\Customer\Model\Vat::class, [], [], '', false);
+        $this->customerAddressMock = $this->getMock('Magento\Customer\Helper\Address', [], [], '', false);
+        $this->customerVatMock = $this->getMock('Magento\Customer\Model\Vat', [], [], '', false);
         $this->customerVatMock->expects($this->any())
             ->method('getMerchantCountryCode')
             ->willReturn('merchantCountryCode');
@@ -53,10 +53,10 @@ class VatValidatorTest extends \PHPUnit_Framework_TestCase
             ->method('getMerchantVatNumber')
             ->willReturn('merchantVatNumber');
 
-        $this->storeMock = $this->getMock(\Magento\Store\Model\Store::class, [], [], '', false);
+        $this->storeMock = $this->getMock('Magento\Store\Model\Store', [], [], '', false);
 
         $this->quoteAddressMock = $this->getMock(
-            \Magento\Quote\Model\Quote\Address::class,
+            'Magento\Quote\Model\Quote\Address',
             [
                 'getCountryId',
                 'getVatId',

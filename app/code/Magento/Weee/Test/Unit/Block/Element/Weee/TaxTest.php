@@ -21,7 +21,7 @@ class TaxTest extends \PHPUnit_Framework_TestCase
         ];
 
         $collectionFactory = $this->getMock(
-            \Magento\Framework\Data\Form\Element\CollectionFactory::class,
+            'Magento\Framework\Data\Form\Element\CollectionFactory',
             ['create'],
             [],
             '',
@@ -29,7 +29,7 @@ class TaxTest extends \PHPUnit_Framework_TestCase
         );
 
         $storeManager = $this->getMock(
-            \Magento\Store\Model\StoreManager::class,
+            '\Magento\Store\Model\StoreManager',
             [],
             [],
             '',
@@ -37,7 +37,7 @@ class TaxTest extends \PHPUnit_Framework_TestCase
         );
 
         $localeCurrency = $this->getMock(
-            \Magento\Framework\Locale\Currency::class,
+            '\Magento\Framework\Locale\Currency',
             [],
             [],
             '',
@@ -45,7 +45,7 @@ class TaxTest extends \PHPUnit_Framework_TestCase
         );
         
         $currency = $this->getMock(
-            \Magento\Framework\Currency::class,
+            '\Magento\Framework\Currency',
             [],
             [],
             '',
@@ -65,7 +65,7 @@ class TaxTest extends \PHPUnit_Framework_TestCase
         )->willReturn($currency);
 
         $store = $this->getMock(
-            \Magento\Store\Model\Store::class,
+            '\Magento\Store\Model\Store',
             [],
             [],
             '',
@@ -78,10 +78,10 @@ class TaxTest extends \PHPUnit_Framework_TestCase
             'getStore'
         )->willReturn($store);
 
-        $factory = $this->getMock(\Magento\Framework\Data\Form\Element\Factory::class, [], [], '', false);
+        $factory = $this->getMock('Magento\Framework\Data\Form\Element\Factory', [], [], '', false);
 
         $this->model = $objectManager->getObject(
-            \Magento\Weee\Block\Element\Weee\Tax::class,
+            'Magento\Weee\Block\Element\Weee\Tax',
             [
                 'factoryElement' => $factory,
                 'factoryCollection' => $collectionFactory,
@@ -89,6 +89,7 @@ class TaxTest extends \PHPUnit_Framework_TestCase
                 'localeCurrency' => $localeCurrency
             ]
         );
+
 
         $this->model->setValue($inputValue);
         $this->model->setEntityAttribute(new \Magento\Framework\DataObject(['store_id' => 1]));

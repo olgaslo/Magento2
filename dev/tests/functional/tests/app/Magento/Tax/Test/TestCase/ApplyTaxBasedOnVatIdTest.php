@@ -31,13 +31,14 @@ use Magento\Customer\Test\TestCase\AbstractApplyVatIdTest;
  * 5. In 'Estimate Shipping and Tax' section specify destination and click 'Get a Quote' button.
  * 6. Perform assertions.
  *
- * @group VAT_ID
+ * @group VAT_ID_(CS)
  * @ZephyrId MAGETWO-13436
  */
 class ApplyTaxBasedOnVatIdTest extends AbstractApplyVatIdTest
 {
     /* tags */
     const MVP = 'no';
+    const DOMAIN = 'CS';
     const TEST_TYPE = '3rd_party_test';
     /* end tags */
 
@@ -81,7 +82,7 @@ class ApplyTaxBasedOnVatIdTest extends AbstractApplyVatIdTest
         // Preconditions
         $this->configData = $configData;
         $this->objectManager->create(
-            \Magento\Config\Test\TestStep\SetupConfigurationStep::class,
+            'Magento\Config\Test\TestStep\SetupConfigurationStep',
             ['configData' => $this->configData]
         )->run();
         $taxRule->persist();
@@ -98,11 +99,11 @@ class ApplyTaxBasedOnVatIdTest extends AbstractApplyVatIdTest
         // Steps
         $order->persist();
         $this->objectManager->create(
-            \Magento\Customer\Test\TestStep\LoginCustomerOnFrontendStep::class,
+            'Magento\Customer\Test\TestStep\LoginCustomerOnFrontendStep',
             ['customer' => $this->customer]
         )->run();
         $this->objectManager->create(
-            \Magento\Checkout\Test\TestStep\AddProductsToTheCartStep::class,
+            'Magento\Checkout\Test\TestStep\AddProductsToTheCartStep',
             $order->getEntityId()
         )->run();
         $this->checkoutCart->open();
@@ -127,6 +128,6 @@ class ApplyTaxBasedOnVatIdTest extends AbstractApplyVatIdTest
     public function tearDown()
     {
         parent::tearDown();
-        $this->objectManager->create(\Magento\Tax\Test\TestStep\DeleteAllTaxRulesStep::class)->run();
+        $this->objectManager->create('Magento\Tax\Test\TestStep\DeleteAllTaxRulesStep')->run();
     }
 }

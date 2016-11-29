@@ -32,15 +32,15 @@ class OtherComponentsGridTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->composerInformation = $this->getMock(
-            \Magento\Framework\Composer\ComposerInformation::class,
+            'Magento\Framework\Composer\ComposerInformation',
             [],
             [],
             '',
             false
         );
-        $this->infoCommand = $this->getMock(\Magento\Composer\InfoCommand::class, [], [], '', false);
+        $this->infoCommand = $this->getMock('Magento\Composer\InfoCommand', [], [], '', false);
         $magentoComposerApplicationFactory = $this->getMock(
-            \Magento\Framework\Composer\MagentoComposerApplicationFactory::class,
+            'Magento\Framework\Composer\MagentoComposerApplicationFactory',
             [],
             [],
             '',
@@ -80,7 +80,7 @@ class OtherComponentsGridTest extends \PHPUnit_Framework_TestCase
                 ]
             ]);
         $jsonModel = $this->controller->componentsAction();
-        $this->assertInstanceOf(\Zend\View\Model\JsonModel::class, $jsonModel);
+        $this->assertInstanceOf('Zend\View\Model\JsonModel', $jsonModel);
         $variables = $jsonModel->getVariables();
         $this->assertArrayHasKey('responseType', $variables);
         $this->assertEquals(ResponseTypeInterface::RESPONSE_TYPE_SUCCESS, $variables['responseType']);
@@ -120,7 +120,7 @@ class OtherComponentsGridTest extends \PHPUnit_Framework_TestCase
             ->method('getInstalledMagentoPackages')
             ->will($this->throwException(new \Exception("Test error message")));
         $jsonModel = $this->controller->componentsAction();
-        $this->assertInstanceOf(\Zend\View\Model\JsonModel::class, $jsonModel);
+        $this->assertInstanceOf('Zend\View\Model\JsonModel', $jsonModel);
         $variables = $jsonModel->getVariables();
         $this->assertArrayHasKey('responseType', $variables);
         $this->assertEquals(ResponseTypeInterface::RESPONSE_TYPE_ERROR, $variables['responseType']);
@@ -129,6 +129,6 @@ class OtherComponentsGridTest extends \PHPUnit_Framework_TestCase
     public function testIndexAction()
     {
         $model = $this->controller->indexAction();
-        $this->assertInstanceOf(\Zend\View\Model\ViewModel::class, $model);
+        $this->assertInstanceOf('Zend\View\Model\ViewModel', $model);
     }
 }

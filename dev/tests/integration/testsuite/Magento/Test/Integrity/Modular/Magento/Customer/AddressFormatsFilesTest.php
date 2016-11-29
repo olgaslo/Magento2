@@ -16,7 +16,7 @@ class AddressFormatsFilesTest extends \PHPUnit_Framework_TestCase
     {
         /** @var \Magento\Customer\Model\Address\Config\SchemaLocator $schemaLocator */
         $schemaLocator = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->get(
-            \Magento\Customer\Model\Address\Config\SchemaLocator::class
+            'Magento\Customer\Model\Address\Config\SchemaLocator'
         );
         $this->_schemaFile = $schemaLocator->getSchema();
     }
@@ -27,13 +27,7 @@ class AddressFormatsFilesTest extends \PHPUnit_Framework_TestCase
      */
     public function testFileFormat($file)
     {
-        $validationStateMock = $this->getMock(
-            \Magento\Framework\Config\ValidationStateInterface::class,
-            [],
-            [],
-            '',
-            false
-        );
+        $validationStateMock = $this->getMock('\Magento\Framework\Config\ValidationStateInterface', [], [], '', false);
         $validationStateMock->method('isValidationRequired')
             ->willReturn(true);
         $dom = new \Magento\Framework\Config\Dom(file_get_contents($file), $validationStateMock);

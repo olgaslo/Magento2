@@ -21,10 +21,10 @@ class GroupTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->groupModel = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create(
-            \Magento\Customer\Model\Group::class
+            'Magento\Customer\Model\Group'
         );
         $this->groupFactory = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create(
-            \Magento\Customer\Api\Data\GroupInterfaceFactory::class
+            'Magento\Customer\Api\Data\GroupInterfaceFactory'
         );
     }
 

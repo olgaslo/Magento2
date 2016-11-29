@@ -33,9 +33,9 @@ class RelatedProductsTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetRelatedProductIds($optionValue, $productId, $expectedResult)
     {
-        $quoteItemMock = $this->getMock(\Magento\Quote\Model\Quote\Item::class, [], [], '', false);
+        $quoteItemMock = $this->getMock('\Magento\Quote\Model\Quote\Item', [], [], '', false);
         $itemOptionMock = $this->getMock(
-            \Magento\Quote\Model\Quote\Item\Option::class,
+            '\Magento\Quote\Model\Quote\Item\Option',
             ['getValue', 'getProductId', '__wakeup'],
             [],
             '',
@@ -79,7 +79,7 @@ class RelatedProductsTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetRelatedProductIdsNoOptions()
     {
-        $quoteItemMock = $this->getMock(\Magento\Quote\Model\Quote\Item::class, [], [], '', false);
+        $quoteItemMock = $this->getMock('\Magento\Quote\Model\Quote\Item', [], [], '', false);
 
         $quoteItemMock->expects(
             $this->once()

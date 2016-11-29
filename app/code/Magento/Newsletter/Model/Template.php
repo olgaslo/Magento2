@@ -127,7 +127,7 @@ class Template extends \Magento\Email\Model\AbstractTemplate
      */
     protected function _construct()
     {
-        $this->_init(\Magento\Newsletter\Model\ResourceModel\Template::class);
+        $this->_init('Magento\Newsletter\Model\ResourceModel\Template');
     }
 
     /**
@@ -174,8 +174,7 @@ class Template extends \Magento\Email\Model\AbstractTemplate
     public function beforeSave()
     {
         $this->validate();
-        parent::beforeSave();
-        return $this;
+        return parent::beforeSave();
     }
 
     /**
@@ -239,6 +238,9 @@ class Template extends \Magento\Email\Model\AbstractTemplate
      */
     public function isValidForSend()
     {
-        return $this->getTemplateSenderName() && $this->getTemplateSenderEmail() && $this->getTemplateSubject();
+        return !$this->scopeConfig->isSetFlag(
+            \Magento\Email\Model\Template::XML_PATH_SYSTEM_SMTP_DISABLE,
+            \Magento\Store\Model\ScopeInterface::SCOPE_STORE
+        ) && $this->getTemplateSenderName() && $this->getTemplateSenderEmail() && $this->getTemplateSubject();
     }
 }

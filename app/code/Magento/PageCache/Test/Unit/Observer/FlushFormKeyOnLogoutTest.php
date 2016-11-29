@@ -14,12 +14,12 @@ class FlushFormKeyOnLogoutTest extends \PHPUnit_Framework_TestCase
     {
         /** @var FormKey | \PHPUnit_Framework_MockObject_MockObject $cookieFormKey */
         $cookieFormKey = $this->getMockBuilder(
-            \Magento\Framework\App\PageCache\FormKey::class
+            'Magento\Framework\App\PageCache\FormKey'
         )
             ->disableOriginalConstructor()
             ->getMock();
 
-        $observerObject = $this->getMock(\Magento\Framework\Event\Observer::class);
+        $observerObject = $this->getMock('Magento\Framework\Event\Observer');
 
         $observer = new FlushFormKeyOnLogout($cookieFormKey);
 

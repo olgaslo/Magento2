@@ -44,29 +44,27 @@ class DiscountCalculatorTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->productMock = $this->getMock(
-            \Magento\Catalog\Model\Product::class,
+            'Magento\Catalog\Model\Product',
             [],
             [],
             '',
             false
         );
         $this->priceInfoMock = $this->getMock(
-            \Magento\Framework\Pricing\PriceInfo\Base::class,
+            'Magento\Framework\Pricing\PriceInfo\Base',
             ['getPrice', 'getPrices'],
             [],
             '',
             false
         );
         $this->finalPriceMock = $this->getMock(
-            \Magento\Catalog\Pricing\Price\FinalPrice::class,
+            'Magento\Catalog\Pricing\Price\FinalPrice',
             [],
             [],
             '',
             false
         );
-        $this->priceMock = $this->getMockForAbstractClass(
-            \Magento\Bundle\Pricing\Price\DiscountProviderInterface::class
-        );
+        $this->priceMock = $this->getMockForAbstractClass('Magento\Bundle\Pricing\Price\DiscountProviderInterface');
         $this->calculator = new \Magento\Bundle\Pricing\Price\DiscountCalculator();
     }
 

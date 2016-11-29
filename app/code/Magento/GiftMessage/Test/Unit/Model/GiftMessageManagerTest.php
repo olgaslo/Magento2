@@ -51,10 +51,9 @@ class GiftMessageManagerTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->messageFactoryMock =
-            $this->getMock(\Magento\GiftMessage\Model\MessageFactory::class, ['create', '__wakeup'], [], '', false);
+            $this->getMock('\Magento\GiftMessage\Model\MessageFactory', ['create', '__wakeup'], [], '', false);
 
-        $this->quoteMock = $this->getMock(
-            \Magento\Quote\Model\Quote::class,
+        $this->quoteMock = $this->getMock('\Magento\Quote\Model\Quote',
             [
                 'setGiftMessageId',
                 'getGiftMessageId',
@@ -69,8 +68,7 @@ class GiftMessageManagerTest extends \PHPUnit_Framework_TestCase
             [],
             '',
             false);
-        $this->quoteItemMock = $this->getMock(
-            \Magento\Quote\Model\Quote\Item::class,
+        $this->quoteItemMock = $this->getMock('\Magento\Quote\Model\Quote\Item',
             [
                 'setGiftMessageId',
                 'getGiftMessageId',
@@ -81,8 +79,7 @@ class GiftMessageManagerTest extends \PHPUnit_Framework_TestCase
             '',
             false);
 
-        $this->quoteAddressMock = $this->getMock(
-            \Magento\Quote\Model\Quote\Address::class,
+        $this->quoteAddressMock = $this->getMock('Magento\Quote\Model\Quote\Address',
             [
                 'getGiftMessageId',
                 'setGiftMessageId',
@@ -95,7 +92,7 @@ class GiftMessageManagerTest extends \PHPUnit_Framework_TestCase
             false);
 
         $this->quoteAddressItemMock = $this->getMock(
-            \Magento\Quote\Model\Quote\Address\Item::class,
+            '\Magento\Quote\Model\Quote\Address\Item',
             [
                 'getGiftMessageId',
                 'setGiftMessageId',
@@ -106,8 +103,7 @@ class GiftMessageManagerTest extends \PHPUnit_Framework_TestCase
             '',
             false);
 
-        $this->giftMessageMock = $this->getMock(
-            \Magento\GiftMessage\Model\Message::class,
+        $this->giftMessageMock = $this->getMock('\Magento\GiftMessage\Model\Message',
             [
                 'setSender',
                 'setRecipient',

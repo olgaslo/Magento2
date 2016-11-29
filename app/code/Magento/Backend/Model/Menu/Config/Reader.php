@@ -26,7 +26,7 @@ class Reader extends \Magento\Framework\Config\Reader\Filesystem
         \Magento\Framework\Config\ValidationStateInterface $validationState,
         $fileName = 'menu.xml',
         $idAttributes = [],
-        $domDocumentClass = \Magento\Backend\Model\Menu\Config\Menu\Dom::class,
+        $domDocumentClass = 'Magento\Backend\Model\Menu\Config\Menu\Dom',
         $defaultScope = 'global'
     ) {
         parent::__construct(

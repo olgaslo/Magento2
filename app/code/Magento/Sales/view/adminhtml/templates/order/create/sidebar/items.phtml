@@ -66,13 +66,7 @@
                         <?php endif; ?>
 
                         <?php if ($block->canDisplayPrice()): ?>
-                            <td class="col-price">
-                                <?php if ($block->getDataId() == 'cart'): ?>
-                                    <?php /* @noEscape */ echo $block->getItemPrice($_item->getProduct()) ?>
-                                <?php else: ?>
-                                    <?php /* @noEscape */ echo $block->getItemPrice($_item) ?>
-                                <?php endif; ?>
-                            </td>
+                            <td class="col-price"><?php /* @escapeNotVerified */ echo $block->convertPrice($_item->getPrice()) ?></td>
                         <?php endif; ?>
 
                         <?php if ($block->canRemoveItems()): ?>

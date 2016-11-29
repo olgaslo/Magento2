@@ -44,34 +44,34 @@ class AfterAddressSaveTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
-        $this->observerMock = $this->getMockBuilder(\Magento\Framework\Event\Observer::class)
+        $this->observerMock = $this->getMockBuilder('Magento\Framework\Event\Observer')
             ->disableOriginalConstructor()
             ->setMethods([
                 'getCustomerAddress', 'getData'
             ])
             ->getMock();
 
-        $this->customerSessionMock = $this->getMockBuilder(\Magento\Customer\Model\Session::class)
+        $this->customerSessionMock = $this->getMockBuilder('Magento\Customer\Model\Session')
             ->disableOriginalConstructor()
             ->setMethods([
                 'setDefaultTaxBillingAddress', 'setDefaultTaxShippingAddress', 'setWebsiteId'
             ])
             ->getMock();
 
-        $this->moduleManagerMock = $this->getMockBuilder(\Magento\Framework\Module\Manager::class)
+        $this->moduleManagerMock = $this->getMockBuilder('Magento\Framework\Module\Manager')
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->cacheConfigMock = $this->getMockBuilder(\Magento\PageCache\Model\Config::class)
+        $this->cacheConfigMock = $this->getMockBuilder('Magento\PageCache\Model\Config')
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->weeeHelperMock = $this->getMockBuilder(\Magento\Weee\Helper\Data::class)
+        $this->weeeHelperMock = $this->getMockBuilder('Magento\Weee\Helper\Data')
             ->disableOriginalConstructor()
             ->getMock();
 
         $this->session = $this->objectManager->getObject(
-            \Magento\Weee\Observer\AfterAddressSave::class,
+            'Magento\Weee\Observer\AfterAddressSave',
             [
                 'customerSession' => $this->customerSessionMock,
                 'weeeHelper' => $this->weeeHelperMock,
@@ -96,7 +96,7 @@ class AfterAddressSaveTest extends \PHPUnit_Framework_TestCase
             ->method('isEnabled')
             ->willReturn(true);
 
-        $address = $this->objectManager->getObject(\Magento\Customer\Model\Address::class);
+        $address = $this->objectManager->getObject('Magento\Customer\Model\Address');
         $address->setIsDefaultShipping(true);
         $address->setIsDefaultBilling(true);
         $address->setIsPrimaryBilling(true);

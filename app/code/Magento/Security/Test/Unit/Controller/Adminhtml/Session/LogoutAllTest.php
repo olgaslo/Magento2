@@ -68,11 +68,11 @@ class LogoutAllTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->objectManager = new ObjectManager($this);
-        $this->contextMock = $this->getMockBuilder(\Magento\Backend\App\Action\Context::class)
+        $this->contextMock = $this->getMockBuilder('Magento\Backend\App\Action\Context')
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->messageManager = $this->getMockBuilder(\Magento\Framework\Message\ManagerInterface::class)
+        $this->messageManager = $this->getMockBuilder('\Magento\Framework\Message\ManagerInterface')
             ->disableOriginalConstructor()
             ->setMethods(['addSuccess', 'addError', 'addException'])
             ->getMockForAbstractClass();
@@ -80,7 +80,7 @@ class LogoutAllTest extends \PHPUnit_Framework_TestCase
             ->method('getMessageManager')
             ->willReturn($this->messageManager);
 
-        $this->session = $this->getMockBuilder(\Magento\Backend\Model\Session::class)
+        $this->session = $this->getMockBuilder('\Magento\Backend\Model\Session')
             ->disableOriginalConstructor()
             ->setMethods(['setIsUrlNotice'])
             ->getMock();
@@ -89,14 +89,14 @@ class LogoutAllTest extends \PHPUnit_Framework_TestCase
             ->willReturn($this->session);
 
         $this->sessionsManager =  $this->getMock(
-            \Magento\Security\Model\AdminSessionsManager::class,
+            '\Magento\Security\Model\AdminSessionsManager',
             ['logoutOtherUserSessions'],
             [],
             '',
             false
         );
 
-        $this->actionFlagMock = $this->getMockBuilder(\Magento\Framework\App\ActionFlag::class)
+        $this->actionFlagMock = $this->getMockBuilder('\Magento\Framework\App\ActionFlag')
             ->disableOriginalConstructor()
             ->setMethods(['get'])
             ->getMock();
@@ -104,7 +104,7 @@ class LogoutAllTest extends \PHPUnit_Framework_TestCase
             ->method('getActionFlag')
             ->willReturn($this->actionFlagMock);
 
-        $this->responseMock = $this->getMockBuilder(\Magento\Framework\App\ResponseInterface::class)
+        $this->responseMock = $this->getMockBuilder('Magento\Framework\App\ResponseInterface')
             ->disableOriginalConstructor()
             ->setMethods(['setRedirect'])
             ->getMockForAbstractClass();
@@ -113,7 +113,7 @@ class LogoutAllTest extends \PHPUnit_Framework_TestCase
             ->willReturn($this->responseMock);
 
         $this->backendHelperMock = $this->getMock(
-            \Magento\Backend\Helper\Data::class,
+            '\Magento\Backend\Helper\Data',
             ['getUrl'],
             [],
             '',
@@ -124,7 +124,7 @@ class LogoutAllTest extends \PHPUnit_Framework_TestCase
             ->willReturn($this->backendHelperMock);
 
         $this->controller = $this->objectManager->getObject(
-            \Magento\Security\Controller\Adminhtml\Session\LogoutAll::class,
+            '\Magento\Security\Controller\Adminhtml\Session\LogoutAll',
             [
                 'context' => $this->contextMock,
                 'sessionsManager' => $this->sessionsManager

@@ -20,7 +20,7 @@ class StoreTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->indexerRegistryMock = $this->getMockBuilder(\Magento\Framework\Indexer\IndexerRegistry::class)
+        $this->indexerRegistryMock = $this->getMockBuilder('Magento\Framework\Indexer\IndexerRegistry')
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -32,7 +32,7 @@ class StoreTest extends \PHPUnit_Framework_TestCase
         $subjectId = 0;
 
         /** @var \Magento\Store\Model\Store|\PHPUnit_Framework_MockObject_MockObject $subjectMock */
-        $subjectMock = $this->getMockBuilder(\Magento\Store\Model\Store::class)
+        $subjectMock = $this->getMockBuilder('Magento\Store\Model\Store')
             ->disableOriginalConstructor()
             ->getMock();
         $subjectMock->expects($this->once())
@@ -44,7 +44,7 @@ class StoreTest extends \PHPUnit_Framework_TestCase
         };
 
         /** @var IndexerInterface|\PHPUnit_Framework_MockObject_MockObject $indexerMock */
-        $indexerMock = $this->getMockBuilder(\Magento\Framework\Indexer\IndexerInterface::class)
+        $indexerMock = $this->getMockBuilder('Magento\Framework\Indexer\IndexerInterface')
             ->getMockForAbstractClass();
         $indexerMock->expects($this->once())
             ->method('invalidate');
@@ -62,7 +62,7 @@ class StoreTest extends \PHPUnit_Framework_TestCase
         $subjectId = 1;
 
         /** @var \Magento\Store\Model\Store|\PHPUnit_Framework_MockObject_MockObject $subjectMock */
-        $subjectMock = $this->getMockBuilder(\Magento\Store\Model\Store::class)
+        $subjectMock = $this->getMockBuilder('Magento\Store\Model\Store')
             ->disableOriginalConstructor()
             ->getMock();
         $subjectMock->expects($this->once())
@@ -82,12 +82,12 @@ class StoreTest extends \PHPUnit_Framework_TestCase
     public function testAfterDelete()
     {
         /** @var \Magento\Store\Model\Store|\PHPUnit_Framework_MockObject_MockObject $subjectMock */
-        $subjectMock = $this->getMockBuilder(\Magento\Store\Model\Store::class)
+        $subjectMock = $this->getMockBuilder('Magento\Store\Model\Store')
             ->disableOriginalConstructor()
             ->getMock();
 
         /** @var IndexerInterface|\PHPUnit_Framework_MockObject_MockObject $indexerMock */
-        $indexerMock = $this->getMockBuilder(\Magento\Framework\Indexer\IndexerInterface::class)
+        $indexerMock = $this->getMockBuilder('Magento\Framework\Indexer\IndexerInterface')
             ->getMockForAbstractClass();
         $indexerMock->expects($this->once())
             ->method('invalidate');

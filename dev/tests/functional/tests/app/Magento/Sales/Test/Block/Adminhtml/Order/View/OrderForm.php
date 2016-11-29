@@ -29,7 +29,7 @@ class OrderForm extends FormTabs
     public function getOrderInfoBlock()
     {
         return $this->blockFactory->create(
-            \Magento\Sales\Test\Block\Adminhtml\Order\View\Tab\Info::class,
+            'Magento\Sales\Test\Block\Adminhtml\Order\View\Tab\Info',
             ['element' => $this->_rootElement->find($this->orderInfoBlock)]
         );
     }

@@ -18,15 +18,12 @@ class ResourceFactoryTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $serviceLocatorMock = $this->getMockForAbstractClass(
-            \Zend\ServiceManager\ServiceLocatorInterface::class,
-            ['get']
-        );
+        $serviceLocatorMock = $this->getMockForAbstractClass('Zend\ServiceManager\ServiceLocatorInterface', ['get']);
         $connectionFactory = new ConnectionFactory($serviceLocatorMock);
         $serviceLocatorMock
             ->expects($this->once())
             ->method('get')
-            ->with(\Magento\Setup\Module\ConnectionFactory::class)
+            ->with('Magento\Setup\Module\ConnectionFactory')
             ->will($this->returnValue($connectionFactory));
         $this->resourceFactory = new ResourceFactory($serviceLocatorMock);
     }
@@ -34,8 +31,8 @@ class ResourceFactoryTest extends \PHPUnit_Framework_TestCase
     public function testCreate()
     {
         $resource = $this->resourceFactory->create(
-            $this->getMock(\Magento\Framework\App\DeploymentConfig::class, [], [], '', false)
+            $this->getMock('Magento\Framework\App\DeploymentConfig', [], [], '', false)
         );
-        $this->assertInstanceOf(\Magento\Framework\App\ResourceConnection::class, $resource);
+        $this->assertInstanceOf('Magento\Framework\App\ResourceConnection', $resource);
     }
 }

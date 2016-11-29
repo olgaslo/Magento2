@@ -26,10 +26,7 @@ class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\Ab
      */
     protected function _construct()
     {
-        $this->_init(
-            \Magento\ImportExport\Model\History::class,
-            \Magento\ImportExport\Model\ResourceModel\History::class
-        );
+        $this->_init('Magento\ImportExport\Model\History', 'Magento\ImportExport\Model\ResourceModel\History');
         $this->_linkTable = $this->getTable('admin_user');
     }
 

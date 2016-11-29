@@ -70,32 +70,32 @@ class CurrentCustomerTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->customerSessionMock = $this->getMock(\Magento\Customer\Model\Session::class, [], [], '', false);
-        $this->layoutMock = $this->getMock(\Magento\Framework\View\Layout::class, [], [], '', false);
+        $this->customerSessionMock = $this->getMock('Magento\Customer\Model\Session', [], [], '', false);
+        $this->layoutMock = $this->getMock('Magento\Framework\View\Layout', [], [], '', false);
         $this->customerInterfaceFactoryMock = $this->getMock(
-            \Magento\Customer\Api\Data\CustomerInterfaceFactory::class,
+            'Magento\Customer\Api\Data\CustomerInterfaceFactory',
             ['create', 'setGroupId'],
             [],
             '',
             false
         );
         $this->customerDataMock = $this->getMock(
-            \Magento\Customer\Api\Data\CustomerInterface::class,
+            'Magento\Customer\Api\Data\CustomerInterface',
             [],
             [],
             '',
             false
         );
         $this->customerRepositoryMock = $this->getMock(
-            \Magento\Customer\Api\CustomerRepositoryInterface::class,
+            'Magento\Customer\Api\CustomerRepositoryInterface',
             [],
             [],
             '',
             false
         );
-        $this->requestMock = $this->getMock(\Magento\Framework\App\Request\Http::class, [], [], '', false);
-        $this->moduleManagerMock = $this->getMock(\Magento\Framework\Module\Manager::class, [], [], '', false);
-        $this->viewMock = $this->getMock(\Magento\Framework\App\View::class, [], [], '', false);
+        $this->requestMock = $this->getMock('Magento\Framework\App\Request\Http', [], [], '', false);
+        $this->moduleManagerMock = $this->getMock('Magento\Framework\Module\Manager', [], [], '', false);
+        $this->viewMock = $this->getMock('Magento\Framework\App\View', [], [], '', false);
 
         $this->currentCustomer = new \Magento\Customer\Helper\Session\CurrentCustomer(
             $this->customerSessionMock,

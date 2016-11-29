@@ -24,12 +24,12 @@ class TreeTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->_helperStorage = $this->getMock(\Magento\Theme\Helper\Storage::class, [], [], '', false);
-        $this->_urlBuilder = $this->getMock(\Magento\Backend\Model\Url::class, [], [], '', false);
+        $this->_helperStorage = $this->getMock('Magento\Theme\Helper\Storage', [], [], '', false);
+        $this->_urlBuilder = $this->getMock('Magento\Backend\Model\Url', [], [], '', false);
 
         $objectManagerHelper = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
         $this->_filesTree = $objectManagerHelper->getObject(
-            \Magento\Theme\Block\Adminhtml\Wysiwyg\Files\Tree::class,
+            'Magento\Theme\Block\Adminhtml\Wysiwyg\Files\Tree',
             ['urlBuilder' => $this->_urlBuilder, 'storageHelper' => $this->_helperStorage]
         );
     }

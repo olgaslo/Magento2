@@ -47,8 +47,8 @@ class InitParamListener implements ListenerAggregateInterface, FactoryInterface
      * @var array
      */
     private $controllersToSkip = [
-        \Magento\Setup\Controller\Session::class,
-        \Magento\Setup\Controller\Success::class
+        'Magento\Setup\Controller\Session',
+        'Magento\Setup\Controller\Success'
     ];
 
     /**
@@ -58,7 +58,7 @@ class InitParamListener implements ListenerAggregateInterface, FactoryInterface
     {
         $sharedEvents = $events->getSharedManager();
         $this->listeners[] = $sharedEvents->attach(
-            \Zend\Mvc\Application::class,
+            'Zend\Mvc\Application',
             MvcEvent::EVENT_BOOTSTRAP,
             [$this, 'onBootstrap']
         );
@@ -89,8 +89,8 @@ class InitParamListener implements ListenerAggregateInterface, FactoryInterface
         $initParams = $application->getServiceManager()->get(self::BOOTSTRAP_PARAM);
         $directoryList = $this->createDirectoryList($initParams);
         $serviceManager = $application->getServiceManager();
-        $serviceManager->setService(\Magento\Framework\App\Filesystem\DirectoryList::class, $directoryList);
-        $serviceManager->setService(\Magento\Framework\Filesystem::class, $this->createFilesystem($directoryList));
+        $serviceManager->setService('Magento\Framework\App\Filesystem\DirectoryList', $directoryList);
+        $serviceManager->setService('Magento\Framework\Filesystem', $this->createFilesystem($directoryList));
 
         if (!($application->getRequest() instanceof Request)) {
             $eventManager = $application->getEventManager();
@@ -99,7 +99,7 @@ class InitParamListener implements ListenerAggregateInterface, FactoryInterface
     }
 
     /**
-     * Check if user logged-in and has permissions
+     * Check if user login
      *
      * @param \Zend\Mvc\MvcEvent $event
      * @return false|\Zend\Http\Response
@@ -115,15 +115,14 @@ class InitParamListener implements ListenerAggregateInterface, FactoryInterface
             /** @var Application $application */
             $application = $event->getApplication();
             $serviceManager = $application->getServiceManager();
-
-            if ($serviceManager->get(\Magento\Framework\App\DeploymentConfig::class)->isAvailable()) {
+            if ($serviceManager->get('Magento\Framework\App\DeploymentConfig')->isAvailable()) {
                 /** @var \Magento\Setup\Model\ObjectManagerProvider $objectManagerProvider */
-                $objectManagerProvider = $serviceManager->get(\Magento\Setup\Model\ObjectManagerProvider::class);
+                $objectManagerProvider = $serviceManager->get('Magento\Setup\Model\ObjectManagerProvider');
                 /** @var \Magento\Framework\ObjectManagerInterface $objectManager */
                 $objectManager = $objectManagerProvider->get();
                 /** @var \Magento\Framework\App\State $adminAppState */
-                $adminAppState = $objectManager->get(\Magento\Framework\App\State::class);
-                $adminAppState->setAreaCode(\Magento\Framework\App\Area::AREA_ADMINHTML);
+                $adminAppState = $objectManager->get('Magento\Framework\App\State');
+                $adminAppState->setAreaCode(\Magento\Framework\App\Area::AREA_ADMIN);
                 /** @var \Magento\Backend\Model\Session\AdminConfig $sessionConfig */
                 $sessionConfig = $objectManager->get(\Magento\Backend\Model\Session\AdminConfig::class);
                 $cookiePath = $this->getSetupCookiePath($objectManager);
@@ -136,6 +135,7 @@ class InitParamListener implements ListenerAggregateInterface, FactoryInterface
                         'appState' => $adminAppState
                     ]
                 );
+
                 /** @var \Magento\Backend\Model\Auth $auth */
                 $authentication = $objectManager->get(\Magento\Backend\Model\Auth::class);
 

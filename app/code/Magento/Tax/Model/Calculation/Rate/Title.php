@@ -32,7 +32,7 @@ class Title extends \Magento\Framework\Model\AbstractExtensibleModel implements 
      */
     protected function _construct()
     {
-        $this->_init(\Magento\Tax\Model\ResourceModel\Calculation\Rate\Title::class);
+        $this->_init('Magento\Tax\Model\ResourceModel\Calculation\Rate\Title');
     }
 
     /**
@@ -61,7 +61,6 @@ class Title extends \Magento\Framework\Model\AbstractExtensibleModel implements 
     {
         return $this->getData(self::KEY_VALUE_ID);
     }
-
     /**
      * Set store id
      *

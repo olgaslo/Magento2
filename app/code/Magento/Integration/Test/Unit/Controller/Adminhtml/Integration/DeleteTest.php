@@ -25,7 +25,7 @@ class DeleteTest extends \Magento\Integration\Test\Unit\Controller\Adminhtml\Int
 
         $this->integrationController = $this->_createIntegrationController('Delete');
 
-        $resultRedirect = $this->getMockBuilder(\Magento\Backend\Model\View\Result\Redirect::class)
+        $resultRedirect = $this->getMockBuilder('Magento\Backend\Model\View\Result\Redirect')
             ->disableOriginalConstructor()
             ->getMock();
         $resultRedirect->expects($this->any())

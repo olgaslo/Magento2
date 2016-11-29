@@ -19,20 +19,20 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->_objectManager = $this->getMock(\Magento\Framework\ObjectManagerInterface::class);
+        $this->_objectManager = $this->getMock('Magento\Framework\ObjectManagerInterface');
         $this->_model = new \Magento\Catalog\Model\ResourceModel\Category\Collection\Factory($this->_objectManager);
     }
 
     public function testCreate()
     {
-        $objectOne = $this->getMock(\Magento\Catalog\Model\ResourceModel\Category\Collection::class, [], [], '', false);
-        $objectTwo = $this->getMock(\Magento\Catalog\Model\ResourceModel\Category\Collection::class, [], [], '', false);
+        $objectOne = $this->getMock('Magento\Catalog\Model\ResourceModel\Category\Collection', [], [], '', false);
+        $objectTwo = $this->getMock('Magento\Catalog\Model\ResourceModel\Category\Collection', [], [], '', false);
         $this->_objectManager->expects(
             $this->exactly(2)
         )->method(
             'create'
         )->with(
-            \Magento\Catalog\Model\ResourceModel\Category\Collection::class,
+            'Magento\Catalog\Model\ResourceModel\Category\Collection',
             []
         )->will(
             $this->onConsecutiveCalls($objectOne, $objectTwo)

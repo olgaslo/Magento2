@@ -27,7 +27,7 @@ class WebsiteTest extends \PHPUnit_Framework_TestCase
         $this->_objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
 
         $this->_priceProcessorMock = $this->getMock(
-            \Magento\Catalog\Model\Indexer\Product\Price\Processor::class,
+            'Magento\Catalog\Model\Indexer\Product\Price\Processor',
             ['markIndexerAsInvalid'],
             [],
             '',
@@ -35,7 +35,7 @@ class WebsiteTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->_model = $this->_objectManager->getObject(
-            \Magento\Catalog\Model\Indexer\Product\Price\Plugin\Website::class,
+            'Magento\Catalog\Model\Indexer\Product\Price\Plugin\Website',
             ['processor' => $this->_priceProcessorMock]
         );
     }
@@ -44,7 +44,7 @@ class WebsiteTest extends \PHPUnit_Framework_TestCase
     {
         $this->_priceProcessorMock->expects($this->once())->method('markIndexerAsInvalid');
 
-        $websiteMock = $this->getMock(\Magento\Store\Model\ResourceModel\Website::class, [], [], '', false);
+        $websiteMock = $this->getMock('Magento\Store\Model\ResourceModel\Website', [], [], '', false);
         $this->assertEquals('return_value', $this->_model->afterDelete($websiteMock, 'return_value'));
     }
 }

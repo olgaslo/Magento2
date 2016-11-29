@@ -34,18 +34,12 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $readFactoryMock = $this->getMock(
-            \Magento\Framework\Filesystem\Directory\ReadFactory::class,
-            [],
-            [],
-            '',
-            false
-        );
-        $this->_coreConfigMock = $this->getMock(\Magento\Framework\App\Config\ScopeConfigInterface::class);
-        $this->_cacheState = $this->getMockForAbstractClass(\Magento\Framework\App\Cache\StateInterface::class);
+        $readFactoryMock = $this->getMock('Magento\Framework\Filesystem\Directory\ReadFactory', [], [], '', false);
+        $this->_coreConfigMock = $this->getMock('Magento\Framework\App\Config\ScopeConfigInterface');
+        $this->_cacheState = $this->getMockForAbstractClass('Magento\Framework\App\Cache\StateInterface');
 
         $modulesDirectoryMock = $this->getMock(
-            \Magento\Framework\Filesystem\Directory\Write::class,
+            'Magento\Framework\Filesystem\Directory\Write',
             [],
             [],
             '',
@@ -100,7 +94,7 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
             )
         );
 
-        $this->moduleReader = $this->getMock(\Magento\Framework\Module\Dir\Reader::class, [], [], '', false);
+        $this->moduleReader = $this->getMock('Magento\Framework\Module\Dir\Reader', [], [], '', false);
         $this->_model = new \Magento\PageCache\Model\Config(
             $readFactoryMock,
             $this->_coreConfigMock,

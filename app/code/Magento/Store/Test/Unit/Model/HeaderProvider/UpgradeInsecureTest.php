@@ -33,12 +33,12 @@ class UpgradeInsecureTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->scopeConfigMock = $this->getMockBuilder(\Magento\Framework\App\Config::class)
+        $this->scopeConfigMock = $this->getMockBuilder('\Magento\Framework\App\Config')
             ->disableOriginalConstructor()
             ->getMock();
         $objectManager = new ObjectManagerHelper($this);
         $this->object = $objectManager->getObject(
-            \Magento\Store\Model\HeaderProvider\UpgradeInsecure::class,
+            '\Magento\Store\Model\HeaderProvider\UpgradeInsecure',
             ['scopeConfig' => $this->scopeConfigMock]
         );
     }

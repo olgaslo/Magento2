@@ -25,8 +25,7 @@ class ResponseValidator extends GeneralResponseValidator
             [
                 function ($response) {
                     return [
-                        $response instanceof Successful
-                        && isset($response->transaction)
+                        isset($response->transaction)
                         && in_array(
                             $response->transaction->status,
                             [Transaction::AUTHORIZED, Transaction::SUBMITTED_FOR_SETTLEMENT, Transaction::SETTLING]

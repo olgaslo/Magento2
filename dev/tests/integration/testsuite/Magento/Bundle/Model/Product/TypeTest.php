@@ -40,10 +40,10 @@ class TypeTest extends \PHPUnit_Framework_TestCase
         $this->objectManager = \Magento\TestFramework\Helper\Bootstrap::getObjectManager();
 
         /** @var \Magento\Framework\Indexer\IndexerRegistry $indexerRegistry */
-        $indexerRegistry = $this->objectManager->create(\Magento\Framework\Indexer\IndexerRegistry::class);
+        $indexerRegistry = $this->objectManager->create('\Magento\Framework\Indexer\IndexerRegistry');
         $this->indexer =  $indexerRegistry->get('catalogsearch_fulltext');
 
-        $this->resource = $this->objectManager->get(\Magento\Framework\App\ResourceConnection::class);
+        $this->resource = $this->objectManager->get('Magento\Framework\App\ResourceConnection');
         $this->connectionMock = $this->resource->getConnection();
     }
 
@@ -69,7 +69,7 @@ class TypeTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetOptionsCollection()
     {
-        $productRepository = $this->objectManager->create(\Magento\Catalog\Api\ProductRepositoryInterface::class);
+        $productRepository = $this->objectManager->create('Magento\Catalog\Api\ProductRepositoryInterface');
         /** @var \Magento\Catalog\Model\Product $bundleProduct */
         $bundleProduct = $productRepository->get('bundle-product');
         $bundleType = $bundleProduct->getTypeInstance();

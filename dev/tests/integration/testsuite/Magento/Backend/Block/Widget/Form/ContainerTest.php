@@ -15,41 +15,22 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
         $objectManager = \Magento\TestFramework\Helper\Bootstrap::getObjectManager();
         /** @var $layout \Magento\Framework\View\Layout */
         $layout = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->get(
-            \Magento\Framework\View\LayoutInterface::class
+            'Magento\Framework\View\LayoutInterface'
         );
         // Create block with blocking _prepateLayout(), which is used by block to instantly add 'form' child
         /** @var $block \Magento\Backend\Block\Widget\Form\Container */
         $block = $this->getMock(
-            \Magento\Backend\Block\Widget\Form\Container::class,
+            'Magento\Backend\Block\Widget\Form\Container',
             ['_prepareLayout'],
-            [$objectManager->create(\Magento\Backend\Block\Widget\Context::class)]
+            [$objectManager->create('Magento\Backend\Block\Widget\Context')]
         );
 
         $layout->addBlock($block, 'block');
-        $form = $layout->addBlock(\Magento\Framework\View\Element\Text::class, 'form', 'block');
+        $form = $layout->addBlock('Magento\Framework\View\Element\Text', 'form', 'block');
 
         $expectedHtml = '<b>html</b>';
         $this->assertNotEquals($expectedHtml, $block->getFormHtml());
         $form->setText($expectedHtml);
         $this->assertEquals($expectedHtml, $block->getFormHtml());
-    }
-
-    public function testPseudoConstruct()
-    {
-        /** @var $block \Magento\Backend\Block\Widget\Form\Container */
-        $block = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->get(
-            \Magento\Framework\View\LayoutInterface::class
-        )->createBlock(
-            \Magento\Backend\Block\Widget\Form\Container::class,
-            '',
-            [
-                'data' => [
-                    \Magento\Backend\Block\Widget\Container::PARAM_CONTROLLER => 'user',
-                    \Magento\Backend\Block\Widget\Form\Container::PARAM_MODE => 'edit',
-                    \Magento\Backend\Block\Widget\Form\Container::PARAM_BLOCK_GROUP => 'Magento_User'
-                ]
-            ]
-        );
-        $this->assertInstanceOf(\Magento\User\Block\User\Edit\Form::class, $block->getChildBlock('form'));
     }
 }

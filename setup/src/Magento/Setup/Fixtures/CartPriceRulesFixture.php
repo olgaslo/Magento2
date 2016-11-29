@@ -50,11 +50,11 @@ class CartPriceRulesFixture extends Fixture
         );
 
         /** @var \Magento\Store\Model\StoreManager $storeManager */
-        $storeManager = $this->fixtureModel->getObjectManager()->create(\Magento\Store\Model\StoreManager::class);
+        $storeManager = $this->fixtureModel->getObjectManager()->create('Magento\Store\Model\StoreManager');
         /** @var $category \Magento\Catalog\Model\Category */
-        $category = $this->fixtureModel->getObjectManager()->get(\Magento\Catalog\Model\Category::class);
+        $category = $this->fixtureModel->getObjectManager()->get('Magento\Catalog\Model\Category');
         /** @var $model  \Magento\SalesRule\Model\RuleFactory */
-        $modelFactory = $this->fixtureModel->getObjectManager()->get(\Magento\SalesRule\Model\RuleFactory::class);
+        $modelFactory = $this->fixtureModel->getObjectManager()->get('Magento\SalesRule\Model\RuleFactory');
 
         //Get all websites
         $categoriesArray = [];
@@ -97,25 +97,25 @@ class CartPriceRulesFixture extends Fixture
         return [
             'conditions' => [
                 1 => [
-                    'type' => \Magento\SalesRule\Model\Rule\Condition\Combine::class,
+                    'type' => 'Magento\\SalesRule\\Model\\Rule\\Condition\\Combine',
                     'aggregator' => 'all',
                     'value' => '1',
                     'new_child' => '',
                 ],
                 '1--1' => [
-                    'type' => \Magento\SalesRule\Model\Rule\Condition\Address::class,
+                    'type' => 'Magento\\SalesRule\\Model\\Rule\\Condition\\Address',
                     'attribute' => 'total_qty',
                     'operator' => '>=',
                     'value' => $this->cartPriceRulesProductsFloor + $ruleId,
                 ],
                 '1--2' => [
-                    'type' => \Magento\SalesRule\Model\Rule\Condition\Product\Found::class,
+                    'type' => 'Magento\\SalesRule\\Model\\Rule\\Condition\\Product\\Found',
                     'value' => '1',
                     'aggregator' => 'all',
                     'new_child' => '',
                 ],
                 '1--2--1' => [
-                    'type' => \Magento\SalesRule\Model\Rule\Condition\Product::class,
+                    'type' => 'Magento\\SalesRule\\Model\\Rule\\Condition\\Product',
                     'attribute' => 'category_ids',
                     'operator' => '==',
                     'value' => $categoriesArray[$ruleId % count($categoriesArray)][0],
@@ -123,7 +123,7 @@ class CartPriceRulesFixture extends Fixture
             ],
             'actions' => [
                 1 => [
-                    'type' => \Magento\SalesRule\Model\Rule\Condition\Product\Combine::class,
+                    'type' => 'Magento\\SalesRule\\Model\\Rule\\Condition\\Product\\Combine',
                     'aggregator' => 'all',
                     'value' => '1',
                     'new_child' => '',
@@ -228,7 +228,7 @@ class CartPriceRulesFixture extends Fixture
         if ($ruleId < ($this->cartPriceRulesCount - 200)) {
             // Category
             $firstCondition = [
-                'type'      => \Magento\SalesRule\Model\Rule\Condition\Product::class,
+                'type'      => 'Magento\\SalesRule\\Model\\Rule\\Condition\\Product',
                 'attribute' => 'category_ids',
                 'operator'  => '==',
                 'value'     => $categoriesArray[($ruleId / 4 ) % count($categoriesArray)][0],
@@ -237,7 +237,7 @@ class CartPriceRulesFixture extends Fixture
             $subtotal = [0, 5, 10, 15];
             // Subtotal
             $secondCondition = [
-                'type'      => \Magento\SalesRule\Model\Rule\Condition\Address::class,
+                'type'      => 'Magento\\SalesRule\\Model\\Rule\\Condition\\Address',
                 'attribute' => 'base_subtotal',
                 'operator'  => '>=',
                 'value'     => $subtotal[$ruleId % 4],
@@ -246,13 +246,13 @@ class CartPriceRulesFixture extends Fixture
             return [
                 'conditions' => [
                     1 => [
-                        'type' => \Magento\SalesRule\Model\Rule\Condition\Combine::class,
+                        'type' => 'Magento\\SalesRule\\Model\\Rule\\Condition\\Combine',
                         'aggregator' => 'all',
                         'value' => '1',
                         'new_child' => '',
                     ],
                     '1--1'=> [
-                        'type' => \Magento\SalesRule\Model\Rule\Condition\Product\Found::class,
+                        'type' => 'Magento\\SalesRule\\Model\\Rule\\Condition\\Product\\Found',
                         'aggregator' => 'all',
                         'value' => '1',
                         'new_child' => '',
@@ -262,7 +262,7 @@ class CartPriceRulesFixture extends Fixture
                 ],
                 'actions' => [
                     1 => [
-                        'type' => \Magento\SalesRule\Model\Rule\Condition\Product\Combine::class,
+                        'type' => 'Magento\\SalesRule\\Model\\Rule\\Condition\\Product\\Combine',
                         'aggregator' => 'all',
                         'value' => '1',
                         'new_child' => '',
@@ -280,7 +280,7 @@ class CartPriceRulesFixture extends Fixture
                         'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia',
                         'Wisconsin', 'Wyoming'];
             $firstCondition = [
-                'type'      => \Magento\SalesRule\Model\Rule\Condition\Address::class,
+                'type'      => 'Magento\\SalesRule\\Model\\Rule\\Condition\\Address',
                 'attribute' => 'region',
                 'operator'  => '==',
                 'value'     => $regions[($ruleId / 4) % 50],
@@ -289,7 +289,7 @@ class CartPriceRulesFixture extends Fixture
             $subtotals = [0, 5, 10, 15];
             // Subtotal
             $secondCondition = [
-                'type'      => \Magento\SalesRule\Model\Rule\Condition\Address::class,
+                'type'      => 'Magento\\SalesRule\\Model\\Rule\\Condition\\Address',
                 'attribute' => 'base_subtotal',
                 'operator'  => '>=',
                 'value'     => $subtotals[$ruleId % 4],
@@ -297,7 +297,7 @@ class CartPriceRulesFixture extends Fixture
             return [
                 'conditions' => [
                     1 => [
-                        'type' => \Magento\SalesRule\Model\Rule\Condition\Combine::class,
+                        'type' => 'Magento\\SalesRule\\Model\\Rule\\Condition\\Combine',
                         'aggregator' => 'all',
                         'value' => '1',
                         'new_child' => '',
@@ -307,7 +307,7 @@ class CartPriceRulesFixture extends Fixture
                 ],
                 'actions' => [
                     1 => [
-                        'type' => \Magento\SalesRule\Model\Rule\Condition\Product\Combine::class,
+                        'type' => 'Magento\\SalesRule\\Model\\Rule\\Condition\\Product\\Combine',
                         'aggregator' => 'all',
                         'value' => '1',
                         'new_child' => '',

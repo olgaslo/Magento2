@@ -44,11 +44,11 @@ class JavascriptTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->contextMock = $this->getMockBuilder(\Magento\Framework\View\Element\Template\Context::class)
+        $this->contextMock = $this->getMockBuilder('Magento\Framework\View\Element\Template\Context')
             ->disableOriginalConstructor()
             ->getMock();
         $this->requestMock = $this->getMock(
-            \Magento\Framework\App\RequestInterface::class,
+            'Magento\Framework\App\RequestInterface',
             [
                 'getRouteName',
                 'getControllerName',
@@ -68,13 +68,13 @@ class JavascriptTest extends \PHPUnit_Framework_TestCase
             '',
             false
         );
-        $this->layoutMock = $this->getMockBuilder(\Magento\Framework\View\LayoutInterface::class)
+        $this->layoutMock = $this->getMockBuilder('Magento\Framework\View\LayoutInterface')
             ->disableOriginalConstructor()
             ->getMock();
-        $this->layoutUpdateMock = $this->getMockBuilder(\Magento\Framework\View\Layout\ProcessorInterface::class)
+        $this->layoutUpdateMock = $this->getMockBuilder('Magento\Framework\View\Layout\ProcessorInterface')
             ->disableOriginalConstructor()
             ->getMock();
-        $this->urlBuilderMock = $this->getMockBuilder(\Magento\Framework\UrlInterface::class)
+        $this->urlBuilderMock = $this->getMockBuilder('Magento\Framework\UrlInterface')
             ->disableOriginalConstructor()
             ->getMock();
         $this->contextMock->expects($this->any())
@@ -91,7 +91,7 @@ class JavascriptTest extends \PHPUnit_Framework_TestCase
             ->willReturn($this->layoutUpdateMock);
         $objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
         $this->blockJavascript = $objectManager->getObject(
-            \Magento\PageCache\Block\Javascript::class,
+            'Magento\PageCache\Block\Javascript',
             [
                 'context' => $this->contextMock
             ]

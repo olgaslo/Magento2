@@ -40,7 +40,7 @@ class Collection extends \Magento\Framework\Data\Collection implements ListInter
      *
      * @var string
      */
-    protected $_itemObjectClass = \Magento\Theme\Model\Theme::class;
+    protected $_itemObjectClass = 'Magento\Theme\Model\Theme';
 
     /**
      * @var \Magento\Framework\Config\ThemeFactory $themeConfigFactory

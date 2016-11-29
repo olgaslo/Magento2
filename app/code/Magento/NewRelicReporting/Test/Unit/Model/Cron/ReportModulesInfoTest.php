@@ -49,22 +49,22 @@ class ReportModulesInfoTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->config = $this->getMockBuilder(\Magento\NewRelicReporting\Model\Config::class)
+        $this->config = $this->getMockBuilder('Magento\NewRelicReporting\Model\Config')
             ->disableOriginalConstructor()
             ->setMethods(['isNewRelicEnabled'])
             ->getMock();
-        $this->collectMock = $this->getMockBuilder(\Magento\NewRelicReporting\Model\Module\Collect::class)
+        $this->collectMock = $this->getMockBuilder('Magento\NewRelicReporting\Model\Module\Collect')
             ->disableOriginalConstructor()
             ->setMethods(['getModuleData'])
             ->getMock();
-        $this->systemFactoryMock = $this->getMockBuilder(\Magento\NewRelicReporting\Model\SystemFactory::class)
+        $this->systemFactoryMock = $this->getMockBuilder('Magento\NewRelicReporting\Model\SystemFactory')
             ->disableOriginalConstructor()
             ->setMethods(['create'])
             ->getMock();
-        $this->systemModelMock = $this->getMockBuilder(\Magento\NewRelicReporting\Model\System::class)
+        $this->systemModelMock = $this->getMockBuilder('Magento\NewRelicReporting\Model\System')
             ->disableOriginalConstructor()
             ->getMock();
-        $this->jsonEncoderMock = $this->getMockBuilder(\Magento\Framework\Json\EncoderInterface::class)
+        $this->jsonEncoderMock = $this->getMockBuilder('Magento\Framework\Json\EncoderInterface')
             ->getMock();
 
         $this->systemFactoryMock->expects($this->any())

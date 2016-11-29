@@ -32,15 +32,9 @@ class ShareTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->customerSessionMock = $this->getMock(\Magento\Customer\Model\Session::class, [], [], '', false);
-        $this->contextMock = $this->getMock(\Magento\Framework\App\Action\Context::class, [], [], '', false);
-        $this->resultFactoryMock = $this->getMock(
-            \Magento\Framework\Controller\ResultFactory::class,
-            [],
-            [],
-            '',
-            false
-        );
+        $this->customerSessionMock = $this->getMock('\Magento\Customer\Model\Session', [], [], '', false);
+        $this->contextMock = $this->getMock('\Magento\Framework\App\Action\Context', [], [], '', false);
+        $this->resultFactoryMock = $this->getMock('\Magento\Framework\Controller\ResultFactory', [], [], '', false);
 
         $this->contextMock->expects($this->any())->method('getResultFactory')->willReturn($this->resultFactoryMock);
 
@@ -52,7 +46,7 @@ class ShareTest extends \PHPUnit_Framework_TestCase
 
     public function testExecute()
     {
-        $resultMock = $this->getMock(\Magento\Framework\Controller\ResultInterface::class, [], [], '', false);
+        $resultMock = $this->getMock('\Magento\Framework\Controller\ResultInterface', [], [], '', false);
 
         $this->customerSessionMock->expects($this->once())->method('authenticate')
             ->willReturn(true);

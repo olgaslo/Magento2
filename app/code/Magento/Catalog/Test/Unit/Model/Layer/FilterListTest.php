@@ -39,12 +39,12 @@ class FilterListTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->objectManagerMock = $this->getMock(\Magento\Framework\ObjectManagerInterface::class);
+        $this->objectManagerMock = $this->getMock('\Magento\Framework\ObjectManagerInterface');
         $this->attributeListMock = $this->getMock(
-            \Magento\Catalog\Model\Layer\Category\FilterableAttributeList::class, [], [], '', false
+            'Magento\Catalog\Model\Layer\Category\FilterableAttributeList', [], [], '', false
         );
         $this->attributeMock = $this->getMock(
-            \Magento\Catalog\Model\ResourceModel\Eav\Attribute::class, [], [], '', false
+            '\Magento\Catalog\Model\ResourceModel\Eav\Attribute', [], [], '', false
         );
         $filters = [
             FilterList::CATEGORY_FILTER => 'CategoryFilterClass',
@@ -53,7 +53,7 @@ class FilterListTest extends \PHPUnit_Framework_TestCase
             FilterList::ATTRIBUTE_FILTER => 'AttributeFilterClass',
 
         ];
-        $this->layerMock = $this->getMock(\Magento\Catalog\Model\Layer::class, [], [], '', false);
+        $this->layerMock = $this->getMock('\Magento\Catalog\Model\Layer', [], [], '', false);
 
         $this->model = new FilterList($this->objectManagerMock, $this->attributeListMock, $filters);
     }

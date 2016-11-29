@@ -57,16 +57,15 @@ class ShippingMethodConverterTest extends \PHPUnit_Framework_TestCase
     {
         $objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
         $this->shippingMethodDataFactoryMock = $this->getMock(
-            \Magento\Quote\Api\Data\ShippingMethodInterfaceFactory::class,
+            '\Magento\Quote\Api\Data\ShippingMethodInterfaceFactory',
             ['create'],
             [],
             '',
             false
         );
-        $this->storeManagerMock = $this->getMock(\Magento\Store\Model\StoreManagerInterface::class);
-        $this->currencyMock = $this->getMock(\Magento\Directory\Model\Currency::class, [], [], '', false);
-        $this->shippingMethodMock = $this->getMock(
-            \Magento\Quote\Model\Cart\ShippingMethod::class,
+        $this->storeManagerMock = $this->getMock('\Magento\Store\Model\StoreManagerInterface');
+        $this->currencyMock = $this->getMock('\Magento\Directory\Model\Currency', [], [], '', false);
+        $this->shippingMethodMock = $this->getMock('\Magento\Quote\Model\Cart\ShippingMethod',
             [
                 'create',
                 'setCarrierCode',
@@ -82,8 +81,7 @@ class ShippingMethodConverterTest extends \PHPUnit_Framework_TestCase
             [],
             '',
             false);
-        $this->rateModelMock = $this->getMock(
-            \Magento\Quote\Model\Quote\Address\Rate::class,
+        $this->rateModelMock = $this->getMock('\Magento\Quote\Model\Quote\Address\Rate',
             [
                 'getPrice',
                 'getCarrier',
@@ -96,11 +94,11 @@ class ShippingMethodConverterTest extends \PHPUnit_Framework_TestCase
             [],
             '',
             false);
-        $this->storeMock = $this->getMock(\Magento\Store\Model\Store::class, [], [], '', false);
-        $this->taxHelper = $this->getMock(\Magento\Tax\Helper\Data::class, [], [], '', false);
+        $this->storeMock = $this->getMock('\Magento\Store\Model\Store', [], [], '', false);
+        $this->taxHelper = $this->getMock('\Magento\Tax\Helper\Data', [], [], '', false);
 
         $this->converter = $objectManager->getObject(
-            \Magento\Quote\Model\Cart\ShippingMethodConverter::class,
+            'Magento\Quote\Model\Cart\ShippingMethodConverter',
             [
                 'shippingMethodDataFactory' => $this->shippingMethodDataFactoryMock,
                 'storeManager' => $this->storeManagerMock,
@@ -136,8 +134,8 @@ class ShippingMethodConverterTest extends \PHPUnit_Framework_TestCase
         $this->rateModelMock->expects($this->once())
             ->method('getMethodTitle')->will($this->returnValue('METHOD_TITLE'));
 
-        $quoteMock = $this->getMock(\Magento\Quote\Model\Quote::class, [], [], '', false);
-        $addressMock = $this->getMock(\Magento\Quote\Model\Quote\Address::class, [], [], '', false);
+        $quoteMock = $this->getMock('\Magento\Quote\Model\Quote', [], [], '', false);
+        $addressMock = $this->getMock('\Magento\Quote\Model\Quote\Address', [], [], '', false);
         $this->rateModelMock->expects($this->exactly(4))->method('getAddress')->willReturn($addressMock);
 
         $addressMock->expects($this->exactly(2))->method('getQuote')->willReturn($quoteMock);

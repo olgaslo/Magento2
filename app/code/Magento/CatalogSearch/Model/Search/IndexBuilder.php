@@ -99,7 +99,6 @@ class IndexBuilder implements IndexBuilderInterface
      *
      * @param RequestInterface $request
      * @return Select
-     * @throws \LogicException
      */
     public function build(RequestInterface $request)
     {
@@ -124,7 +123,7 @@ class IndexBuilder implements IndexBuilderInterface
             ScopeInterface::SCOPE_STORE
         );
         if ($isShowOutOfStock === false) {
-            $select->joinInner(
+            $select->joinLeft(
                 ['stock_index' => $this->resource->getTableName('cataloginventory_stock_status')],
                 'search_index.entity_id = stock_index.product_id'
                 . $this->resource->getConnection()->quoteInto(
@@ -133,7 +132,7 @@ class IndexBuilder implements IndexBuilderInterface
                 ),
                 []
             );
-            $select->where('stock_index.stock_status = ?', Stock::STOCK_IN_STOCK);
+            $select->where('stock_index.stock_status = ?', Stock::DEFAULT_STOCK_ID);
         }
 
         return $select;
@@ -148,7 +147,7 @@ class IndexBuilder implements IndexBuilderInterface
     {
         if ($this->stockConfiguration === null) {
             $this->stockConfiguration = \Magento\Framework\App\ObjectManager::getInstance()
-                ->get(\Magento\CatalogInventory\Api\StockConfigurationInterface::class);
+                ->get('Magento\CatalogInventory\Api\StockConfigurationInterface');
         }
         return $this->stockConfiguration;
     }

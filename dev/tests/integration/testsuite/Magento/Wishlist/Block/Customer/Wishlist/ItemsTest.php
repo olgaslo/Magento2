@@ -11,13 +11,13 @@ class ItemsTest extends \PHPUnit_Framework_TestCase
     {
         $objectManager = \Magento\TestFramework\Helper\Bootstrap::getObjectManager();
         $layout = $objectManager->get(
-            \Magento\Framework\View\LayoutInterface::class
+            'Magento\Framework\View\LayoutInterface'
         );
-        $block = $layout->addBlock(\Magento\Wishlist\Block\Customer\Wishlist\Items::class, 'test');
+        $block = $layout->addBlock('Magento\Wishlist\Block\Customer\Wishlist\Items', 'test');
         $child = $this->getMock(
-            \Magento\Wishlist\Block\Customer\Wishlist\Item\Column::class,
+            'Magento\Wishlist\Block\Customer\Wishlist\Item\Column',
             ['isEnabled'],
-            [$objectManager->get(\Magento\Framework\View\Element\Context::class)],
+            [$objectManager->get('Magento\Framework\View\Element\Context')],
             '',
             false
         );

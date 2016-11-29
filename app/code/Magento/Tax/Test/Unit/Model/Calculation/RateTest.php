@@ -24,7 +24,7 @@ class RateTest extends \PHPUnit_Framework_TestCase
     {
         $this->objectHelper = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
         $this->resourceMock = $this->getMock(
-            \Magento\Framework\Model\ResourceModel\AbstractResource::class,
+            'Magento\Framework\Model\ResourceModel\AbstractResource',
             ['_construct', 'getConnection', 'getIdFieldName', 'beginTransaction',
                 'rollBack'],
             [],
@@ -44,9 +44,9 @@ class RateTest extends \PHPUnit_Framework_TestCase
      */
     public function testExceptionOfValidation($exceptionMessage, $data)
     {
-        $this->setExpectedException(\Magento\Framework\Exception\LocalizedException::class, $exceptionMessage);
+        $this->setExpectedException('\Magento\Framework\Exception\LocalizedException', $exceptionMessage);
         $rate = $this->objectHelper->getObject(
-            \Magento\Tax\Model\Calculation\Rate::class,
+            'Magento\Tax\Model\Calculation\Rate',
             ['resource' => $this->resourceMock]
         );
         foreach ($data as $key => $value) {

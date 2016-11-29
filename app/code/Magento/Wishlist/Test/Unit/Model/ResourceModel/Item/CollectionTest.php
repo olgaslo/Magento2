@@ -10,9 +10,6 @@ use Magento\Catalog\Api\Data\ProductInterface;
 use Magento\Framework\EntityManager\MetadataPool;
 use Magento\Wishlist\Model\ResourceModel\Item\Collection;
 
-/**
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
- */
 class CollectionTest extends \PHPUnit_Framework_TestCase
 {
     use \Magento\Framework\TestFramework\Unit\Helper\SelectRendererTrait;
@@ -55,7 +52,7 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
     {
         $this->objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
         $connection = $this->getMock(
-            \Magento\Framework\DB\Adapter\Pdo\Mysql::class,
+            'Magento\Framework\DB\Adapter\Pdo\Mysql',
             ['quote', 'select'],
             [],
             '',
@@ -71,7 +68,7 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
             ->method('select')
             ->willReturn($select);
         $resource = $this->getMock(
-            \Magento\Wishlist\Model\ResourceModel\Item::class,
+            'Magento\Wishlist\Model\ResourceModel\Item',
             ['getConnection', 'getMainTable', 'getTableName', 'getTable'],
             [],
             '',
@@ -96,7 +93,7 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue('testMainTableName'));
 
         $catalogConfFactory = $this->getMock(
-            \Magento\Catalog\Model\ResourceModel\ConfigFactory::class,
+            'Magento\Catalog\Model\ResourceModel\ConfigFactory',
             ['create'],
             [],
             '',
@@ -104,7 +101,7 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
         );
 
         $catalogConf = $this->getMock(
-            \Magento\Catalog\Model\ResourceModel\Config::class,
+            'Magento\Catalog\Model\ResourceModel\Config',
             ['getEntityTypeId'],
             [],
             '',
@@ -121,7 +118,7 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue($catalogConf));
 
         $attribute = $this->getMock(
-            \Magento\Catalog\Model\Entity\Attribute::class,
+            'Magento\Catalog\Model\Entity\Attribute',
             ['loadByCode', 'getBackendTable', 'getId'],
             [],
             '',
@@ -142,7 +139,7 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue($this->attrId));
 
         $catalogAttrFactory = $this->getMock(
-            \Magento\Catalog\Model\Entity\AttributeFactory::class,
+            'Magento\Catalog\Model\Entity\AttributeFactory',
             ['create'],
             [],
             '',
@@ -155,7 +152,7 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue($attribute));
 
         $store = $this->getMock(
-            \Magento\Store\Model\Store::class,
+            'Magento\Store\Model\Store',
             ['getId'],
             [],
             '',
@@ -167,7 +164,7 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue($this->storeId));
 
         $storeManager = $this->getMock(
-            \Magento\Store\Model\StoreManager::class,
+            'Magento\Store\Model\StoreManager',
             ['getStore'],
             [],
             '',
@@ -179,7 +176,7 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue($store));
 
         $this->collection = $this->objectManager->getObject(
-            \Magento\Wishlist\Model\ResourceModel\Item\Collection::class,
+            'Magento\Wishlist\Model\ResourceModel\Item\Collection',
             [
                 'resource' => $resource,
                 'catalogConfFactory' => $catalogConfFactory,
@@ -188,7 +185,7 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
             ]
         );
 
-        $this->metadataPool = $this->getMockBuilder(\Magento\Framework\EntityManager\MetadataPool::class)
+        $this->metadataPool = $this->getMockBuilder('Magento\Framework\EntityManager\MetadataPool')
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -200,7 +197,7 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
 
     public function testAddProductNameFilter()
     {
-        $entityMetadata = $this->getMockBuilder(\Magento\Framework\EntityManager\EntityMetadata::class)
+        $entityMetadata = $this->getMockBuilder('Magento\Framework\EntityManager\EntityMetadata')
             ->disableOriginalConstructor()
             ->getMock();
         $entityMetadata->expects($this->once())

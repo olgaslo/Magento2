@@ -9,9 +9,6 @@ use Magento\CheckoutAgreements\Model\CheckoutAgreementsRepository;
 use Magento\Store\Model\ScopeInterface;
 use Magento\Framework\TestFramework\Unit\Helper\ObjectManager;
 
-/**
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
- */
 class CheckoutAgreementsRepositoryTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -69,23 +66,23 @@ class CheckoutAgreementsRepositoryTest extends \PHPUnit_Framework_TestCase
         $this->objectManager = new ObjectManager($this);
 
         $this->factoryMock = $this->getMock(
-            \Magento\CheckoutAgreements\Model\ResourceModel\Agreement\CollectionFactory::class,
+            'Magento\CheckoutAgreements\Model\ResourceModel\Agreement\CollectionFactory',
             ['create'],
             [],
             '',
             false
         );
-        $this->storeManagerMock = $this->getMock(\Magento\Store\Model\StoreManagerInterface::class);
-        $this->scopeConfigMock = $this->getMock(\Magento\Framework\App\Config\ScopeConfigInterface::class);
+        $this->storeManagerMock = $this->getMock('Magento\Store\Model\StoreManagerInterface');
+        $this->scopeConfigMock = $this->getMock('Magento\Framework\App\Config\ScopeConfigInterface');
         $this->resourceMock = $this->getMock(
-            \Magento\CheckoutAgreements\Model\ResourceModel\Agreement::class,
+            'Magento\CheckoutAgreements\Model\ResourceModel\Agreement',
             [],
             [],
             '',
             false
         );
         $this->agrFactoryMock = $this->getMock(
-            \Magento\CheckoutAgreements\Model\AgreementFactory::class,
+            'Magento\CheckoutAgreements\Model\AgreementFactory',
             ['create'],
             [],
             '',
@@ -93,10 +90,10 @@ class CheckoutAgreementsRepositoryTest extends \PHPUnit_Framework_TestCase
         );
         $methods = ['addData', 'getData', 'setStores', 'getAgreementId', 'getId'];
         $this->agreementMock =
-            $this->getMock(\Magento\CheckoutAgreements\Model\Agreement::class, $methods, [], '', false);
-        $this->storeMock = $this->getMock(\Magento\Store\Model\Store::class, [], [], '', false);
+            $this->getMock('\Magento\CheckoutAgreements\Model\Agreement', $methods, [], '', false);
+        $this->storeMock = $this->getMock('Magento\Store\Model\Store', [], [], '', false);
         $this->extensionAttributesJoinProcessorMock = $this->getMock(
-            \Magento\Framework\Api\ExtensionAttribute\JoinProcessor::class,
+            '\Magento\Framework\Api\ExtensionAttribute\JoinProcessor',
             ['process'],
             [],
             '',
@@ -129,7 +126,7 @@ class CheckoutAgreementsRepositoryTest extends \PHPUnit_Framework_TestCase
     {
         $this->extensionAttributesJoinProcessorMock->expects($this->once())
             ->method('process')
-            ->with($this->isInstanceOf(\Magento\CheckoutAgreements\Model\ResourceModel\Agreement\Collection::class));
+            ->with($this->isInstanceOf('Magento\CheckoutAgreements\Model\ResourceModel\Agreement\Collection'));
 
         $this->scopeConfigMock->expects($this->once())
             ->method('isSetFlag')
@@ -137,12 +134,12 @@ class CheckoutAgreementsRepositoryTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue(true));
 
         $storeId = 1;
-        $storeMock = $this->getMock(\Magento\Store\Model\Store::class, [], [], '', false);
+        $storeMock = $this->getMock('Magento\Store\Model\Store', [], [], '', false);
         $storeMock->expects($this->any())->method('getId')->will($this->returnValue($storeId));
         $this->storeManagerMock->expects($this->any())->method('getStore')->will($this->returnValue($storeMock));
 
         $collectionMock = $this->objectManager->getCollectionMock(
-            \Magento\CheckoutAgreements\Model\ResourceModel\Agreement\Collection::class,
+            'Magento\CheckoutAgreements\Model\ResourceModel\Agreement\Collection',
             [$this->agreementMock]
         );
         $this->factoryMock->expects($this->once())->method('create')->will($this->returnValue($collectionMock));

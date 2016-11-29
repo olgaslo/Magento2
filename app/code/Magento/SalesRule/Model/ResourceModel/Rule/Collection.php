@@ -4,6 +4,8 @@
  * See COPYING.txt for license details.
  */
 
+// @codingStandardsIgnoreFile
+
 namespace Magento\SalesRule\Model\ResourceModel\Rule;
 
 use Magento\Quote\Model\Quote\Address;
@@ -61,7 +63,7 @@ class Collection extends \Magento\Rule\Model\ResourceModel\Rule\Collection\Abstr
      */
     protected function _construct()
     {
-        $this->_init(\Magento\SalesRule\Model\Rule::class, \Magento\SalesRule\Model\ResourceModel\Rule::class);
+        $this->_init('Magento\SalesRule\Model\Rule', 'Magento\SalesRule\Model\ResourceModel\Rule');
         $this->_map['fields']['rule_id'] = 'main_table.rule_id';
     }
 
@@ -151,12 +153,11 @@ class Collection extends \Magento\Rule\Model\ResourceModel\Rule\Collection\Abstr
                     ['code']
                 );
 
-                $noCouponWhereCondition = $connection->quoteInto(
-                    'main_table.coupon_type = ? ',
-                    \Magento\SalesRule\Model\Rule::COUPON_TYPE_NO_COUPON
-                );
-
                 $orWhereConditions = [
+                    $connection->quoteInto(
+                        'main_table.coupon_type = ? ',
+                        \Magento\SalesRule\Model\Rule::COUPON_TYPE_NO_COUPON
+                    ),
                     $connection->quoteInto(
                         '(main_table.coupon_type = ? AND rule_coupons.type = 0)',
                         \Magento\SalesRule\Model\Rule::COUPON_TYPE_AUTO
@@ -185,9 +186,7 @@ class Collection extends \Magento\Rule\Model\ResourceModel\Rule\Collection\Abstr
                 $orWhereCondition = implode(' OR ', $orWhereConditions);
                 $andWhereCondition = implode(' AND ', $andWhereConditions);
 
-                $select->where(
-                    $noCouponWhereCondition . ' OR ((' . $orWhereCondition . ') AND ' . $andWhereCondition . ')'
-                );
+                $select->where('(' . $orWhereCondition . ') AND ' . $andWhereCondition);
             } else {
                 $this->addFieldToFilter(
                     'main_table.coupon_type',
@@ -215,7 +214,7 @@ class Collection extends \Magento\Rule\Model\ResourceModel\Rule\Collection\Abstr
     public function addWebsiteGroupDateFilter($websiteId, $customerGroupId, $now = null)
     {
         if (!$this->getFlag('website_group_date_filter')) {
-            if ($now === null) {
+            if (is_null($now)) {
                 $now = $this->_date->date()->format('Y-m-d');
             }
 
@@ -278,11 +277,7 @@ class Collection extends \Magento\Rule\Model\ResourceModel\Rule\Collection\Abstr
         $field = $this->_getMappedField('actions_serialized');
         $aCond = $this->_getConditionSql($field, ['like' => $match]);
 
-        $this->getSelect()->where(
-            sprintf('(%s OR %s)', $cCond, $aCond),
-            null,
-            \Magento\Framework\DB\Select::TYPE_CONDITION
-        );
+        $this->getSelect()->where(sprintf('(%s OR %s)', $cCond, $aCond), null, \Magento\Framework\DB\Select::TYPE_CONDITION);
 
         return $this;
     }
@@ -330,7 +325,7 @@ class Collection extends \Magento\Rule\Model\ResourceModel\Rule\Collection\Abstr
     {
         if (!$this->_associatedEntitiesMap) {
             $this->_associatedEntitiesMap = \Magento\Framework\App\ObjectManager::getInstance()
-                ->get(\Magento\SalesRule\Model\ResourceModel\Rule\AssociatedEntityMap::class)
+                ->get('Magento\SalesRule\Model\ResourceModel\Rule\AssociatedEntityMap')
                 ->getData();
         }
         return $this->_associatedEntitiesMap;

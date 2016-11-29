@@ -8,7 +8,6 @@ namespace Magento\Customer\Model;
 use Magento\Customer\Api\Data\OptionInterfaceFactory;
 use Magento\Customer\Api\Data\ValidationRuleInterfaceFactory;
 use Magento\Customer\Api\Data\AttributeMetadataInterfaceFactory;
-use Magento\Eav\Api\Data\AttributeDefaultValueInterface;
 
 /**
  * Converter for AttributeMetadata
@@ -34,7 +33,6 @@ class AttributeMetadataConverter
      * @var \Magento\Framework\Api\DataObjectHelper
      */
     protected $dataObjectHelper;
-
     /**
      * Initialize the Converter
      *
@@ -76,7 +74,7 @@ class AttributeMetadataConverter
                         $this->dataObjectHelper->populateWithArray(
                             $optionObject,
                             $optionArrayValues,
-                            \Magento\Customer\Api\Data\OptionInterface::class
+                            '\Magento\Customer\Api\Data\OptionInterface'
                         );
                         $optionArray[] = $optionObject;
                     }
@@ -94,13 +92,8 @@ class AttributeMetadataConverter
             $validationRules[] = $validationRule;
         }
 
-        $attributeMetaData = $this->attributeMetadataFactory->create();
 
-        if ($attributeMetaData instanceof AttributeDefaultValueInterface) {
-            $attributeMetaData->setDefaultValue($attribute->getDefaultValue());
-        }
-
-        return $attributeMetaData->setAttributeCode($attribute->getAttributeCode())
+        return $this->attributeMetadataFactory->create()->setAttributeCode($attribute->getAttributeCode())
             ->setFrontendInput($attribute->getFrontendInput())
             ->setInputFilter((string)$attribute->getInputFilter())
             ->setStoreLabel($attribute->getStoreLabel())

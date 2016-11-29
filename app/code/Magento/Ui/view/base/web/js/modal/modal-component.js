@@ -18,7 +18,6 @@ define([
             title: '',
             subTitle: '',
             options: {
-                modalClass: '',
                 title: '',
                 subTitle: '',
                 buttons: [],

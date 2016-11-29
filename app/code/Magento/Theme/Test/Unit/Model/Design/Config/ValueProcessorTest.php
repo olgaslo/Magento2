@@ -20,10 +20,10 @@ class ValueProcessorTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->backendModelFactory = $this->getMockBuilder(\Magento\Theme\Model\Design\BackendModelFactory::class)
+        $this->backendModelFactory = $this->getMockBuilder('Magento\Theme\Model\Design\BackendModelFactory')
             ->disableOriginalConstructor()
             ->getMock();
-        $this->backendModel = $this->getMockBuilder(\Magento\Framework\App\Config\Value::class)
+        $this->backendModel = $this->getMockBuilder('Magento\Framework\App\Config\Value')
             ->disableOriginalConstructor()
             ->setMethods(['getValue', 'afterLoad'])
             ->getMock();

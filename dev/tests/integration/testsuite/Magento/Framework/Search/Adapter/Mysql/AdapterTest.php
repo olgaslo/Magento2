@@ -15,7 +15,6 @@ use Magento\TestFramework\Helper\Bootstrap;
  * @magentoDbIsolation disabled
  * @magentoAppIsolation enabled
  * @magentoDataFixture Magento/Framework/Search/_files/products.php
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
 class AdapterTest extends \PHPUnit_Framework_TestCase
 {
@@ -44,18 +43,18 @@ class AdapterTest extends \PHPUnit_Framework_TestCase
         $this->objectManager = Bootstrap::getObjectManager();
 
         /** @var \Magento\Framework\Search\Request\Config\Converter $converter */
-        $converter = $this->objectManager->create(\Magento\Framework\Search\Request\Config\Converter::class);
+        $converter = $this->objectManager->create('Magento\Framework\Search\Request\Config\Converter');
 
         $document = new \DOMDocument();
         $document->load($this->getRequestConfigPath());
         $requestConfig = $converter->convert($document);
 
         /** @var \Magento\Framework\Search\Request\Config $config */
-        $config = $this->objectManager->create(\Magento\Framework\Search\Request\Config::class);
+        $config = $this->objectManager->create('Magento\Framework\Search\Request\Config');
         $config->merge($requestConfig);
 
         $this->requestBuilder = $this->objectManager->create(
-            \Magento\Framework\Search\Request\Builder::class,
+            'Magento\Framework\Search\Request\Builder',
             ['config' => $config]
         );
 
@@ -64,7 +63,7 @@ class AdapterTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Get request config path
-     *
+     * 
      * @return string
      */
     protected function getRequestConfigPath()
@@ -77,7 +76,7 @@ class AdapterTest extends \PHPUnit_Framework_TestCase
      */
     protected function assertPreConditions()
     {
-        $currentEngine = $this->objectManager->get(\Magento\Framework\App\Config\MutableScopeConfigInterface::class)
+        $currentEngine = $this->objectManager->get('Magento\Framework\App\Config\MutableScopeConfigInterface')
             ->getValue(EngineInterface::CONFIG_ENGINE_PATH, \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
         $this->assertEquals($this->searchEngine, $currentEngine);
     }
@@ -87,7 +86,7 @@ class AdapterTest extends \PHPUnit_Framework_TestCase
      */
     protected function createAdapter()
     {
-        return $this->objectManager->create(\Magento\Framework\Search\Adapter\Mysql\Adapter::class);
+        return $this->objectManager->create('Magento\Framework\Search\Adapter\Mysql\Adapter');
     }
 
     /**
@@ -371,17 +370,17 @@ class AdapterTest extends \PHPUnit_Framework_TestCase
     public function testCustomFilterableAttribute()
     {
         /** @var \Magento\Catalog\Model\ResourceModel\Eav\Attribute $attribute */
-        $attribute = $this->objectManager->get(\Magento\Catalog\Model\ResourceModel\Eav\Attribute::class)
+        $attribute = $this->objectManager->get('Magento\Catalog\Model\ResourceModel\Eav\Attribute')
             ->loadByCode(\Magento\Catalog\Model\Product::ENTITY, 'select_attribute');
         /** @var \Magento\Eav\Model\ResourceModel\Entity\Attribute\Option\Collection $selectOptions */
         $selectOptions = $this->objectManager
-            ->create(\Magento\Eav\Model\ResourceModel\Entity\Attribute\Option\Collection::class)
+            ->create('Magento\Eav\Model\ResourceModel\Entity\Attribute\Option\Collection')
             ->setAttributeFilter($attribute->getId());
 
         $attribute->loadByCode(\Magento\Catalog\Model\Product::ENTITY, 'multiselect_attribute');
         /** @var \Magento\Eav\Model\ResourceModel\Entity\Attribute\Option\Collection $multiselectOptions */
         $multiselectOptions = $this->objectManager
-            ->create(\Magento\Eav\Model\ResourceModel\Entity\Attribute\Option\Collection::class)
+            ->create('Magento\Eav\Model\ResourceModel\Entity\Attribute\Option\Collection')
             ->setAttributeFilter($attribute->getId());
 
         $this->requestBuilder->bind('select_attribute', $selectOptions->getLastItem()->getId());
@@ -412,37 +411,6 @@ class AdapterTest extends \PHPUnit_Framework_TestCase
 
         $queryResponse = $this->executeQuery();
         $this->assertEquals($expectedRecordsCount, $queryResponse->count());
-    }
-
-    /**
-     * @magentoDataFixture Magento/Framework/Search/_files/product_configurable.php
-     * @magentoConfigFixture current_store catalog/search/engine mysql
-     */
-    public function testAdvancedSearchCompositeProductWithOutOfStockOption()
-    {
-        /** @var \Magento\Catalog\Model\ResourceModel\Eav\Attribute $attribute */
-        $attribute = $this->objectManager->get(\Magento\Catalog\Model\ResourceModel\Eav\Attribute::class)
-            ->loadByCode(\Magento\Catalog\Model\Product::ENTITY, 'test_configurable');
-        /** @var \Magento\Eav\Model\ResourceModel\Entity\Attribute\Option\Collection $selectOptions */
-        $selectOptions = $this->objectManager
-            ->create(\Magento\Eav\Model\ResourceModel\Entity\Attribute\Option\Collection::class)
-            ->setAttributeFilter($attribute->getId());
-
-        $firstOption = $selectOptions->getFirstItem();
-        $firstOptionId = $firstOption->getId();
-        $this->requestBuilder->bind('test_configurable', $firstOptionId);
-        $this->requestBuilder->setRequestName('filter_out_of_stock_child');
-
-        $queryResponse = $this->executeQuery();
-        $this->assertEquals(0, $queryResponse->count());
-
-        $secondOption = $selectOptions->getLastItem();
-        $secondOptionId = $secondOption->getId();
-        $this->requestBuilder->bind('test_configurable', $secondOptionId);
-        $this->requestBuilder->setRequestName('filter_out_of_stock_child');
-
-        $queryResponse = $this->executeQuery();
-        $this->assertEquals(1, $queryResponse->count());
     }
 
     public function dateDataProvider()

@@ -28,13 +28,13 @@ class TitleTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->scopeConfigMock = $this->getMockBuilder(\Magento\Framework\App\Config\ScopeConfigInterface::class)
+        $this->scopeConfigMock = $this->getMockBuilder('Magento\Framework\App\Config\ScopeConfigInterface')
             ->disableOriginalConstructor()
             ->getMock();
 
         $objectManagerHelper = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
         $this->title = $objectManagerHelper->getObject(
-            \Magento\Framework\View\Page\Title::class,
+            'Magento\Framework\View\Page\Title',
             ['scopeConfig' => $this->scopeConfigMock]
         );
     }

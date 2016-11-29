@@ -80,7 +80,7 @@ class ClearProductUrlsObserverTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->importProduct = $this->getMock(
-            \Magento\CatalogImportExport\Model\Import\Product::class,
+            '\Magento\CatalogImportExport\Model\Import\Product',
             [
                 'getNewSku',
                 'getProductCategories',
@@ -93,18 +93,18 @@ class ClearProductUrlsObserverTest extends \PHPUnit_Framework_TestCase
             false
         );
 
-        $this->event = $this->getMock(\Magento\Framework\Event::class, ['getAdapter', 'getBunch'], [], '', false);
+        $this->event = $this->getMock('\Magento\Framework\Event', ['getAdapter', 'getBunch'], [], '', false);
         $this->event->expects($this->any())->method('getAdapter')->willReturn($this->importProduct);
         $this->event->expects($this->any())->method('getBunch')->willReturn($this->products);
-        $this->observer = $this->getMock(\Magento\Framework\Event\Observer::class, ['getEvent'], [], '', false);
+        $this->observer = $this->getMock('\Magento\Framework\Event\Observer', ['getEvent'], [], '', false);
         $this->observer->expects($this->any())->method('getEvent')->willReturn($this->event);
-        $this->urlPersist = $this->getMockBuilder(\Magento\UrlRewrite\Model\UrlPersistInterface::class)
+        $this->urlPersist = $this->getMockBuilder('\Magento\UrlRewrite\Model\UrlPersistInterface')
             ->disableOriginalConstructor()
             ->getMock();
 
         $this->objectManagerHelper = new ObjectManagerHelper($this);
         $this->clearProductUrlsObserver = $this->objectManagerHelper->getObject(
-            \Magento\CatalogUrlRewrite\Observer\ClearProductUrlsObserver::class,
+            '\Magento\CatalogUrlRewrite\Observer\ClearProductUrlsObserver',
             [
                 'urlPersist' => $this->urlPersist,
             ]

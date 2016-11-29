@@ -25,6 +25,13 @@ class CategoryUrlRewriteGeneratorTest extends \PHPUnit_Framework_TestCase
         $this->objectManager = \Magento\TestFramework\Helper\Bootstrap::getObjectManager();
     }
 
+    public function tearDown()
+    {
+        $category = $this->objectManager->create('Magento\Catalog\Model\Category');
+        $category->load(3);
+        $category->delete();
+    }
+
     /**
      * @magentoDataFixture Magento/CatalogUrlRewrite/_files/categories.php
      * @magentoDbIsolation enabled
@@ -33,7 +40,7 @@ class CategoryUrlRewriteGeneratorTest extends \PHPUnit_Framework_TestCase
     public function testGenerateUrlRewritesWithoutSaveHistory()
     {
         /** @var \Magento\Catalog\Model\Category $category */
-        $category = $this->objectManager->create(\Magento\Catalog\Model\Category::class);
+        $category = $this->objectManager->create('Magento\Catalog\Model\Category');
         $category->load(3);
         $category->setData('save_rewrites_history', false);
         $category->setUrlKey('new-url');
@@ -61,7 +68,7 @@ class CategoryUrlRewriteGeneratorTest extends \PHPUnit_Framework_TestCase
     public function testGenerateUrlRewritesWithSaveHistory()
     {
         /** @var \Magento\Catalog\Model\Category $category */
-        $category = $this->objectManager->create(\Magento\Catalog\Model\Category::class);
+        $category = $this->objectManager->create('Magento\Catalog\Model\Category');
         $category->load(3);
         $category->setData('save_rewrites_history', true);
         $category->setUrlKey('new-url');
@@ -90,44 +97,13 @@ class CategoryUrlRewriteGeneratorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @magentoDataFixture Magento/CatalogUrlRewrite/_files/categories.php
-     * @magentoDbIsolation enabled
-     * @magentoAppIsolation enabled
-     * @param string $urlKey
-     * @dataProvider incorrectUrlRewritesDataProvider
-     */
-    public function testGenerateUrlRewritesWithIncorrectUrlKey($urlKey)
-    {
-        $this->setExpectedException(
-            \Magento\Framework\Exception\LocalizedException::class,
-            'Invalid URL key'
-        );
-        /** @var \Magento\Catalog\Api\CategoryRepositoryInterface $repository */
-        $repository = $this->objectManager->get(\Magento\Catalog\Api\CategoryRepositoryInterface::class);
-        $category = $repository->get(3);
-        $category->setUrlKey($urlKey);
-        $repository->save($category);
-    }
-
-    /**
-     * @return array
-     */
-    public function incorrectUrlRewritesDataProvider()
-    {
-        return [
-            ['#'],
-            ['//']
-        ];
-    }
-
-    /**
      * @param array $filter
      * @return array
      */
     protected function getActualResults(array $filter)
     {
         /** @var \Magento\UrlRewrite\Model\UrlFinderInterface $urlFinder */
-        $urlFinder = $this->objectManager->get(\Magento\UrlRewrite\Model\UrlFinderInterface::class);
+        $urlFinder = $this->objectManager->get('\Magento\UrlRewrite\Model\UrlFinderInterface');
         $actualResults = [];
         foreach ($urlFinder->findAllByData($filter) as $url) {
             $actualResults[] = [

@@ -46,7 +46,7 @@ class BundleTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->requestMock = $this->getMock(\Magento\Framework\App\Request\Http::class, [], [], '', false);
+        $this->requestMock = $this->getMock('Magento\Framework\App\Request\Http', [], [], '', false);
         $methods = [
             'getCompositeReadonly',
             'setBundleOptionsData',
@@ -58,24 +58,24 @@ class BundleTest extends \PHPUnit_Framework_TestCase
             'setCanSaveBundleSelections',
             '__wakeup',
         ];
-        $this->productMock = $this->getMock(\Magento\Catalog\Model\Product::class, $methods, [], '', false);
-        $optionInterfaceFactory = $this->getMockBuilder(\Magento\Bundle\Api\Data\OptionInterfaceFactory::class)
+        $this->productMock = $this->getMock('\Magento\Catalog\Model\Product', $methods, [], '', false);
+        $optionInterfaceFactory = $this->getMockBuilder('Magento\Bundle\Api\Data\OptionInterfaceFactory')
             ->disableOriginalConstructor()
             ->getMock();
-        $linkInterfaceFactory = $this->getMockBuilder(\Magento\Bundle\Api\Data\LinkInterfaceFactory::class)
+        $linkInterfaceFactory = $this->getMockBuilder('Magento\Bundle\Api\Data\LinkInterfaceFactory')
             ->disableOriginalConstructor()
             ->getMock();
-        $productRepository = $this->getMockBuilder(\Magento\Catalog\Api\ProductRepositoryInterface::class)
+        $productRepository = $this->getMockBuilder('Magento\Catalog\Api\ProductRepositoryInterface')
             ->disableOriginalConstructor()
             ->getMockForAbstractClass();
-        $storeManager = $this->getMockBuilder(\Magento\Store\Model\StoreManagerInterface::class)
+        $storeManager = $this->getMockBuilder('Magento\Store\Model\StoreManagerInterface')
             ->disableOriginalConstructor()
             ->getMockForAbstractClass();
-        $customOptionFactory = $this->getMockBuilder(
-            \Magento\Catalog\Api\Data\ProductCustomOptionInterfaceFactory::class
-        )->disableOriginalConstructor()->getMock();
+        $customOptionFactory = $this->getMockBuilder('Magento\Catalog\Api\Data\ProductCustomOptionInterfaceFactory')
+            ->disableOriginalConstructor()
+            ->getMock();
         $this->subjectMock = $this->getMock(
-            \Magento\Catalog\Controller\Adminhtml\Product\Initialization\Helper::class,
+            'Magento\Catalog\Controller\Adminhtml\Product\Initialization\Helper',
             [],
             [],
             '',

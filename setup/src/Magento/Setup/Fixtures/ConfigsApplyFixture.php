@@ -30,7 +30,7 @@ class ConfigsApplyFixture extends Fixture
         foreach ($configs['config'] as $config) {
             $backendModel = isset($config['backend_model'])
                 ?
-                $config['backend_model'] : \Magento\Framework\App\Config\Value::class;
+                $config['backend_model'] : 'Magento\Framework\App\Config\Value';
             /**
              * @var \Magento\Framework\App\Config\ValueInterface $configData
              */
@@ -41,7 +41,7 @@ class ConfigsApplyFixture extends Fixture
                 ->setValue($config['value'])
                 ->save();
         }
-        $this->fixtureModel->getObjectManager()->get(\Magento\Framework\App\CacheInterface::class)
+        $this->fixtureModel->getObjectManager()->get('Magento\Framework\App\CacheInterface')
             ->clean([\Magento\Framework\App\Config::CACHE_TAG]);
     }
 

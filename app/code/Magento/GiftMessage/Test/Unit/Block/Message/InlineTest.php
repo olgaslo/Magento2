@@ -39,23 +39,23 @@ class InlineTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->context = $this->getMockBuilder(\Magento\Framework\View\Element\Template\Context::class)
+        $this->context = $this->getMockBuilder('Magento\Framework\View\Element\Template\Context')
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->session = $this->getMockBuilder(\Magento\Customer\Model\Session::class)
+        $this->session = $this->getMockBuilder('Magento\Customer\Model\Session')
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->messageHelper = $this->getMockBuilder(\Magento\GiftMessage\Helper\Message::class)
+        $this->messageHelper = $this->getMockBuilder('Magento\GiftMessage\Helper\Message')
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->imageBuilder = $this->getMockBuilder(\Magento\Catalog\Block\Product\ImageBuilder::class)
+        $this->imageBuilder = $this->getMockBuilder('Magento\Catalog\Block\Product\ImageBuilder')
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->httpContext = $this->getMockBuilder(\Magento\Framework\App\Http\Context::class)
+        $this->httpContext = $this->getMockBuilder('Magento\Framework\App\Http\Context')
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -73,11 +73,11 @@ class InlineTest extends \PHPUnit_Framework_TestCase
         $imageId = 'test_image_id';
         $attributes = [];
 
-        $productMock = $this->getMockBuilder(\Magento\Catalog\Model\Product::class)
+        $productMock = $this->getMockBuilder('Magento\Catalog\Model\Product')
             ->disableOriginalConstructor()
             ->getMock();
 
-        $imageMock = $this->getMockBuilder(\Magento\Catalog\Block\Product\Image::class)
+        $imageMock = $this->getMockBuilder('Magento\Catalog\Block\Product\Image')
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -98,7 +98,7 @@ class InlineTest extends \PHPUnit_Framework_TestCase
             ->willReturn($imageMock);
 
         $this->assertInstanceOf(
-            \Magento\Catalog\Block\Product\Image::class,
+            'Magento\Catalog\Block\Product\Image',
             $this->block->getImage($productMock, $imageId, $attributes)
         );
     }

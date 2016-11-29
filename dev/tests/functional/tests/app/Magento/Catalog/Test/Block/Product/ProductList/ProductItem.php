@@ -101,7 +101,7 @@ class ProductItem extends Block
     public function getPriceBlock()
     {
         return $this->blockFactory->create(
-            \Magento\Catalog\Test\Block\Product\Price::class,
+            'Magento\Catalog\Test\Block\Product\Price',
             ['element' => $this->_rootElement->find($this->priceBox)]
         );
     }

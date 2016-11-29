@@ -4,80 +4,58 @@
  */
 
 define([
-    'Magento_Ui/js/dynamic-rows/dynamic-rows-grid',
-    'underscore',
+    'Magento_Ui/js/dynamic-rows/dynamic-rows',
     'mageUtils'
-], function (DynamicRows, _, utils) {
+], function (DynamicRows, utils) {
     'use strict';
-
-    var maxId = 0,
-
-    /**
-     * Stores max option_id value of the options from recordData once on initialization
-     * @param {Array} data - array with records data
-     */
-    initMaxId = function (data) {
-        if (data && data.length) {
-            maxId = ~~_.max(data, function (record) {
-                return ~~record['option_id'];
-            })['option_id'];
-        }
-    };
 
     return DynamicRows.extend({
         defaults: {
-            mappingSettings: {
-                enabled: false,
-                distinct: false
-            },
-            update: true,
-            map: {
-                'option_id': 'option_id'
-            },
-            identificationProperty: 'option_id',
-            identificationDRProperty: 'option_id'
+            dataProvider: '',
+            insertData: [],
+            listens: {
+                'insertData': 'processingInsertData'
+            }
         },
 
-        /** @inheritdoc */
-        initialize: function () {
-            this._super();
-            initMaxId(this.recordData());
+        /**
+         * Calls 'initObservable' of parent
+         *
+         * @returns {Object} Chainable.
+         */
+        initObservable: function () {
+            this._super()
+                .observe([
+                    'insertData'
+                ]);
 
             return this;
         },
 
-        /** @inheritdoc */
+        /**
+         * Parsed data
+         *
+         * @param {Array} data - array with data
+         * about selected records
+         */
         processingInsertData: function (data) {
-            var options = [],
-                currentOption;
-
-            if (!data) {
-                return;
+            if (!data.length) {
+                return false;
             }
-            data.each(function (item) {
-                if (!item.options) {
-                    return;
-                }
-                item.options.each(function (option) {
-                    currentOption = utils.copy(option);
 
-                    if (currentOption.hasOwnProperty('sort_order')) {
-                        delete currentOption['sort_order'];
+            data.each(function (options) {
+                options.options.each(function (option) {
+                    var path = this.dataScope + '.' + this.index + '.' + this.recordIterator,
+                        curOption = utils.copy(option);
+
+                    if (curOption.hasOwnProperty('sort_order')) {
+                        delete curOption['sort_order'];
                     }
-                    currentOption['option_id'] = ++maxId;
-                    options.push(currentOption);
-                });
-            });
 
-            if (!options.length) {
-                return;
-            }
-            this.cacheGridData = options;
-            options.each(function (opt) {
-                this.mappingValue(opt);
+                    this.source.set(path, curOption);
+                    this.addChild(curOption, false);
+                }, this);
             }, this);
-
-            this.insertData([]);
         },
 
         /**
@@ -85,27 +63,6 @@ define([
          */
         clearDataProvider: function () {
             this.source.set(this.dataProvider, []);
-        },
-
-        /** @inheritdoc */
-        processingAddChild: function (ctx, index, prop) {
-            if (ctx && !_.isNumber(ctx['option_id'])) {
-                ctx['option_id'] = ++maxId;
-            } else if (!ctx) {
-                this.showSpinner(true);
-                this.addChild(ctx, index, prop);
-
-                return;
-            }
-
-            this._super(ctx, index, prop);
-        },
-
-        /**
-         * Mutes parent method
-         */
-        updateInsertData: function () {
-            return false;
         }
     });
 });

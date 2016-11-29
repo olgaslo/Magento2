@@ -51,34 +51,34 @@ class StoreTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
-        $this->processorMock = $this->getMockBuilder(\Magento\Framework\View\Element\UiComponent\Processor::class)
+        $this->processorMock = $this->getMockBuilder('Magento\Framework\View\Element\UiComponent\Processor')
             ->disableOriginalConstructor()
             ->setMethods([])
             ->getMock();
-        $this->contextMock = $this->getMockBuilder(\Magento\Framework\View\Element\UiComponent\ContextInterface::class)
+        $this->contextMock = $this->getMockBuilder('Magento\Framework\View\Element\UiComponent\ContextInterface')
             ->disableOriginalConstructor()
             ->setMethods([])
             ->getMock();
-        $this->uiComponentFactoryMock = $this->getMockBuilder(\Magento\Framework\View\Element\UiComponentFactory::class)
+        $this->uiComponentFactoryMock = $this->getMockBuilder('Magento\Framework\View\Element\UiComponentFactory')
             ->disableOriginalConstructor()
             ->setMethods([])
             ->getMock();
-        $this->systemStoreMock = $this->getMockBuilder(\Magento\Store\Model\System\Store::class)
+        $this->systemStoreMock = $this->getMockBuilder('Magento\Store\Model\System\Store')
             ->disableOriginalConstructor()
             ->setMethods([])
             ->getMock();
-        $this->escaperMock = $this->getMockBuilder(\Magento\Framework\Escaper::class)
+        $this->escaperMock = $this->getMockBuilder('Magento\Framework\Escaper')
             ->disableOriginalConstructor()
             ->setMethods([])
             ->getMock();
         $this->contextMock->expects($this->atLeastOnce())->method('getProcessor')->willReturn($this->processorMock);
         $this->processorMock->expects($this->atLeastOnce())->method('register');
-        $this->storeManagerMock = $this->getMockBuilder(\Magento\Store\Model\StoreManagerInterface::class)
+        $this->storeManagerMock = $this->getMockBuilder('Magento\Store\Model\StoreManagerInterface')
             ->disableOriginalConstructor()
             ->setMethods([])
             ->getMock();
         $this->model = $objectManager->getObject(
-            \Magento\Store\Ui\Component\Listing\Column\Store::class,
+            'Magento\Store\Ui\Component\Listing\Column\Store',
             [
                 'context' => $this->contextMock,
                 'uiComponent' => $this->uiComponentFactoryMock,

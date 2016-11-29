@@ -32,11 +32,11 @@ class GeneratorTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->serviceMetadata = $this->getMockBuilder(
-            \Magento\Webapi\Model\ServiceMetadata::class
+            'Magento\Webapi\Model\ServiceMetadata'
         )->disableOriginalConstructor()->getMock();
 
         $_wsdlMock = $this->getMockBuilder(
-            \Magento\Webapi\Model\Soap\Wsdl::class
+            'Magento\Webapi\Model\Soap\Wsdl'
         )->disableOriginalConstructor()->setMethods(
             [
                 'addSchemaTypeSection',
@@ -54,20 +54,20 @@ class GeneratorTest extends \PHPUnit_Framework_TestCase
             ]
         )->getMock();
         $this->_wsdlFactoryMock = $this->getMockBuilder(
-            \Magento\Webapi\Model\Soap\WsdlFactory::class
+            'Magento\Webapi\Model\Soap\WsdlFactory'
         )->setMethods(
             ['create']
         )->disableOriginalConstructor()->getMock();
         $this->_wsdlFactoryMock->expects($this->any())->method('create')->will($this->returnValue($_wsdlMock));
 
         $this->_cacheMock = $this->getMockBuilder(
-            \Magento\Webapi\Model\Cache\Type\Webapi::class
+            'Magento\Webapi\Model\Cache\Type\Webapi'
         )->disableOriginalConstructor()->getMock();
         $this->_cacheMock->expects($this->any())->method('load')->will($this->returnValue(false));
         $this->_cacheMock->expects($this->any())->method('save')->will($this->returnValue(true));
 
         $this->_typeProcessor = $this->getMock(
-            \Magento\Framework\Reflection\TypeProcessor::class,
+            'Magento\Framework\Reflection\TypeProcessor',
             [],
             [],
             '',
@@ -75,7 +75,7 @@ class GeneratorTest extends \PHPUnit_Framework_TestCase
         );
 
         /** @var \Magento\Framework\Webapi\Authorization|\PHPUnit_Framework_MockObject_MockObject $authorizationMock */
-        $authorizationMock = $this->getMockBuilder(\Magento\Framework\Webapi\Authorization::class)
+        $authorizationMock = $this->getMockBuilder('Magento\Framework\Webapi\Authorization')
             ->disableOriginalConstructor()
             ->getMock();
         $authorizationMock->expects($this->any())->method('isAllowed')->willReturn(true);
@@ -83,10 +83,10 @@ class GeneratorTest extends \PHPUnit_Framework_TestCase
         $objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
 
         $this->customAttributeTypeLocator = $objectManager
-            ->getObject(\Magento\Eav\Model\EavCustomAttributeTypeLocator::class);
+            ->getObject('Magento\Eav\Model\EavCustomAttributeTypeLocator');
 
         $this->_wsdlGenerator = $objectManager->getObject(
-            \Magento\Webapi\Model\Soap\Wsdl\Generator::class,
+            'Magento\Webapi\Model\Soap\Wsdl\Generator',
             [
                 'wsdlFactory' => $this->_wsdlFactoryMock,
                 'cache' => $this->_cacheMock,

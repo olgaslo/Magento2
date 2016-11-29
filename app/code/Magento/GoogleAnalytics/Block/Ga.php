@@ -77,11 +77,12 @@ class Ga extends \Magento\Framework\View\Element\Template
         $pageName = trim($this->getPageName());
         $optPageURL = '';
         if ($pageName && substr($pageName, 0, 1) == '/' && strlen($pageName) > 1) {
-            $optPageURL = ", '" . $this->escapeHtmlAttr($pageName, false) . "'";
+            $optPageURL = ", '{$this->escapeJsQuote($pageName)}'";
         }
 
-        return "\nga('create', '" . $this->escapeHtmlAttr($accountId, false)
-            . ", 'auto');\nga('send', 'pageview'{$optPageURL});\n";
+        return "\nga('create', '{$this->escapeJsQuote(
+            $accountId
+        )}', 'auto');\nga('send', 'pageview'{$optPageURL});\n";
     }
 
     /**
@@ -120,8 +121,8 @@ class Ga extends \Magento\Framework\View\Element\Template
                         'price': '%s',
                         'quantity': %s
                     });",
-                    $this->escapeJs($item->getSku()),
-                    $this->escapeJs($item->getName()),
+                    $this->escapeJsQuote($item->getSku()),
+                    $this->escapeJsQuote($item->getName()),
                     $item->getBasePrice(),
                     $item->getQtyOrdered()
                 );
@@ -136,7 +137,7 @@ class Ga extends \Magento\Framework\View\Element\Template
                     'shipping': '%s'
                 });",
                 $order->getIncrementId(),
-                $this->escapeJs($this->_storeManager->getStore()->getFrontendName()),
+                $this->escapeJsQuote($this->_storeManager->getStore()->getFrontendName()),
                 $order->getBaseGrandTotal(),
                 $order->getBaseTaxAmount(),
                 $order->getBaseShippingAmount()

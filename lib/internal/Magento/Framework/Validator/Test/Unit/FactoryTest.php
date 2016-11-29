@@ -42,9 +42,9 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->_defaultTranslator = \Magento\Framework\Validator\AbstractValidator::getDefaultTranslator();
-        $this->_objectManager = $this->getMock(\Magento\Framework\ObjectManagerInterface::class);
+        $this->_objectManager = $this->getMock('Magento\Framework\ObjectManagerInterface');
         $this->_validatorConfig = $this->getMockBuilder(
-            \Magento\Framework\Validator\Config::class
+            'Magento\Framework\Validator\Config'
         )->setMethods(
             ['createValidatorBuilder', 'createValidator']
         )->disableOriginalConstructor()->getMock();
@@ -54,7 +54,7 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
         )->method(
             'create'
         )->with(
-            \Magento\Framework\Translate\Adapter::class
+            'Magento\Framework\Translate\Adapter'
         )->will(
             $this->returnValue(new \Magento\Framework\Translate\Adapter())
         );
@@ -64,7 +64,7 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
         )->method(
             'create'
         )->with(
-            \Magento\Framework\Validator\Config::class,
+            'Magento\Framework\Validator\Config',
             ['configFiles' => ['/tmp/moduleOne/etc/validation.xml']]
         )->will(
             $this->returnValue($this->_validatorConfig)
@@ -72,7 +72,7 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
 
         // Config mock
         $this->_config = $this->getMockBuilder(
-            \Magento\Framework\Module\Dir\Reader::class
+            'Magento\Framework\Module\Dir\Reader'
         )->setMethods(
             ['getConfigurationFiles']
         )->disableOriginalConstructor()->getMock();
@@ -88,7 +88,7 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
 
         // Translate adapter mock
         $this->_translateAdapter = $this->getMockBuilder(
-            \Magento\Framework\TranslateInterface::class
+            'Magento\Framework\TranslateInterface'
         )->disableOriginalConstructor()->getMock();
 
         $this->cache = $this->getMockBuilder(\Magento\Framework\Cache\FrontendInterface::class)
@@ -116,7 +116,7 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
         );
         $actualConfig = $factory->getValidatorConfig();
         $this->assertInstanceOf(
-            \Magento\Framework\Validator\Config::class,
+            'Magento\Framework\Validator\Config',
             $actualConfig,
             'Object of incorrect type was created'
         );
@@ -124,7 +124,7 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
         // Check that validator translator was correctly instantiated
         $validatorTranslator = \Magento\Framework\Validator\AbstractValidator::getDefaultTranslator();
         $this->assertInstanceOf(
-            \Magento\Framework\Translate\Adapter::class,
+            'Magento\Framework\Translate\Adapter',
             $validatorTranslator,
             'Default validator translate adapter was not set correctly'
         );
@@ -146,7 +146,7 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
             []
         )->will(
             $this->returnValue(
-                $objectManager->getObject(\Magento\Framework\Validator\Builder::class, ['constraints' => []])
+                $objectManager->getObject('Magento\Framework\Validator\Builder', ['constraints' => []])
             )
         );
         $factory = new \Magento\Framework\Validator\Factory(
@@ -155,7 +155,7 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
             $this->cache
         );
         $this->assertInstanceOf(
-            \Magento\Framework\Validator\Builder::class,
+            'Magento\Framework\Validator\Builder',
             $factory->createValidatorBuilder('test', 'class', [])
         );
     }
@@ -181,6 +181,6 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
             $this->_config,
             $this->cache
         );
-        $this->assertInstanceOf(\Magento\Framework\Validator::class, $factory->createValidator('test', 'class', []));
+        $this->assertInstanceOf('Magento\Framework\Validator', $factory->createValidator('test', 'class', []));
     }
 }

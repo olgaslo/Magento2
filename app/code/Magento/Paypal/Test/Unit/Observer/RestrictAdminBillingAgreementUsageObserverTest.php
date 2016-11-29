@@ -43,7 +43,7 @@ class RestrictAdminBillingAgreementUsageObserverTest extends \PHPUnit_Framework_
         $this->_observer = new \Magento\Framework\Event\Observer();
         $this->_observer->setEvent($this->_event);
 
-        $this->_authorization = $this->getMockForAbstractClass(\Magento\Framework\AuthorizationInterface::class);
+        $this->_authorization = $this->getMockForAbstractClass('Magento\Framework\AuthorizationInterface');
 
         $this->_model = new \Magento\Paypal\Observer\RestrictAdminBillingAgreementUsageObserver($this->_authorization);
     }
@@ -54,7 +54,7 @@ class RestrictAdminBillingAgreementUsageObserverTest extends \PHPUnit_Framework_
             [new \stdClass(), false, true],
             [
                 $this->getMockForAbstractClass(
-                    \Magento\Paypal\Model\Payment\Method\Billing\AbstractAgreement::class,
+                    'Magento\Paypal\Model\Payment\Method\Billing\AbstractAgreement',
                     [],
                     '',
                     false
@@ -64,7 +64,7 @@ class RestrictAdminBillingAgreementUsageObserverTest extends \PHPUnit_Framework_
             ],
             [
                 $this->getMockForAbstractClass(
-                    \Magento\Paypal\Model\Payment\Method\Billing\AbstractAgreement::class,
+                    'Magento\Paypal\Model\Payment\Method\Billing\AbstractAgreement',
                     [],
                     '',
                     false

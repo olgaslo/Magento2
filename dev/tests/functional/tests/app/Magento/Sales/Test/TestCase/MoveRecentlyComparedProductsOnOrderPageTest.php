@@ -31,7 +31,7 @@ use Magento\Mtf\TestCase\Injectable;
  * 5. Click 'Update Changes'.
  * 6. Perform all assertions.
  *
- * @group Order_Management
+ * @group Order_Management_(CS)
  * @ZephyrId MAGETWO-28109
  *
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
@@ -40,6 +40,7 @@ class MoveRecentlyComparedProductsOnOrderPageTest extends Injectable
 {
     /* tags */
     const MVP = 'yes';
+    const DOMAIN = 'CS';
     /* end tags */
 
     /**
@@ -103,7 +104,7 @@ class MoveRecentlyComparedProductsOnOrderPageTest extends Injectable
         $customer->persist();
         // Login under customer
         $this->objectManager
-            ->create(\Magento\Customer\Test\TestStep\LoginCustomerOnFrontendStep::class, ['customer' => $customer])
+            ->create('Magento\Customer\Test\TestStep\LoginCustomerOnFrontendStep', ['customer' => $customer])
             ->run();
         $this->browser = $browser;
 
@@ -149,7 +150,7 @@ class MoveRecentlyComparedProductsOnOrderPageTest extends Injectable
         // Preconditions
         // Create product
         $products = $this->objectManager->create(
-            \Magento\Catalog\Test\TestStep\CreateProductsStep::class,
+            '\Magento\Catalog\Test\TestStep\CreateProductsStep',
             ['products' => $products]
         )->run()['products'];
         foreach ($products as $itemProduct) {

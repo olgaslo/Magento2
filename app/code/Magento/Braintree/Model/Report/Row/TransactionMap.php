@@ -115,13 +115,9 @@ class TransactionMap implements DocumentInterface
      */
     public function getCustomAttributes()
     {
-        $shouldBeLocalized = ['paymentInstrumentType', 'type', 'status'];
         $output = [];
         foreach ($this->getMappedValues() as $key => $value) {
             $attribute = $this->attributeValueFactory->create();
-            if(in_array($key, $shouldBeLocalized)) {
-                $value = __($value);
-            }
             $output[] = $attribute->setAttributeCode($key)->setValue($value);
         }
         return $output;

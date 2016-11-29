@@ -20,12 +20,12 @@ class ViewTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->context = $this->getMockBuilder(\Magento\Framework\App\Helper\Context::class)
+        $this->context = $this->getMockBuilder('Magento\Framework\App\Helper\Context')
             ->disableOriginalConstructor()
             ->getMock();
-        $this->customerMetadataService = $this->getMock(\Magento\Customer\Api\CustomerMetadataInterface::class);
+        $this->customerMetadataService = $this->getMock('Magento\Customer\Api\CustomerMetadataInterface');
 
-        $attributeMetadata = $this->getMock(\Magento\Customer\Api\Data\AttributeMetadataInterface::class);
+        $attributeMetadata = $this->getMock('Magento\Customer\Api\Data\AttributeMetadataInterface');
         $attributeMetadata->expects($this->any())->method('isVisible')->will($this->returnValue(true));
         $this->customerMetadataService->expects($this->any())
             ->method('getAttributeMetadata')
@@ -39,7 +39,7 @@ class ViewTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetCustomerName($prefix, $firstName, $middleName, $lastName, $suffix, $result)
     {
-        $customerData = $this->getMockBuilder(\Magento\Customer\Api\Data\CustomerInterface::class)
+        $customerData = $this->getMockBuilder('Magento\Customer\Api\Data\CustomerInterface')
             ->disableOriginalConstructor()
             ->getMock();
         $customerData->expects($this->any())

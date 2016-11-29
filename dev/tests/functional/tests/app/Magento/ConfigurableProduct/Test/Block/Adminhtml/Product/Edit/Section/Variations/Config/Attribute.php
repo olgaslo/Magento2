@@ -206,7 +206,7 @@ class Attribute extends Form
     public function getAttributesGrid()
     {
         return $this->blockFactory->create(
-            \Magento\ConfigurableProduct\Test\Block\Adminhtml\Product\AttributesGrid::class,
+            'Magento\ConfigurableProduct\Test\Block\Adminhtml\Product\AttributesGrid',
             ['element' => $this->browser->find('#variation-steps-wizard_step1 .admin__data-grid-outer-wrap')]
         );
     }
@@ -220,7 +220,7 @@ class Attribute extends Form
     protected function createNewVariationSet(array $attribute)
     {
         $attributeFixture = ObjectManager::getInstance()->create(
-            \Magento\Catalog\Test\Fixture\CatalogProductAttribute::class,
+            'Magento\Catalog\Test\Fixture\CatalogProductAttribute',
             ['data' => $attribute]
         );
 
@@ -341,7 +341,7 @@ class Attribute extends Form
     protected function getNewAttributeForm()
     {
         return $this->blockFactory->create(
-            \Magento\ConfigurableProduct\Test\Block\Adminhtml\Product\Edit\NewConfigurableAttributeForm::class,
+            'Magento\ConfigurableProduct\Test\Block\Adminhtml\Product\Edit\NewConfigurableAttributeForm',
             ['element' => $this->browser->find($this->newAttribute)]
         );
     }
@@ -356,7 +356,7 @@ class Attribute extends Form
         return $this->_rootElement->find(
             $this->variationSearchBlock,
             Locator::SELECTOR_CSS,
-            \Magento\ConfigurableProduct\Test\Block\Adminhtml\Product\Edit\Section\Variations\Config\Attribute::class
+            'Magento\ConfigurableProduct\Test\Block\Adminhtml\Product\Edit\Section\Variations\Config\Attribute'
             . '\AttributeSelector'
         );
     }
@@ -464,7 +464,7 @@ class Attribute extends Form
     protected function getTemplateBlock()
     {
         return $this->blockFactory->create(
-            \Magento\Backend\Test\Block\Template::class,
+            'Magento\Backend\Test\Block\Template',
             ['element' => $this->_rootElement->find($this->templateBlock, Locator::SELECTOR_XPATH)]
         );
     }

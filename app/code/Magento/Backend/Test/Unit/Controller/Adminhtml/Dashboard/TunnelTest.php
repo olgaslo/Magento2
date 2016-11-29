@@ -5,9 +5,6 @@
  */
 namespace Magento\Backend\Test\Unit\Controller\Adminhtml\Dashboard;
 
-/**
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
- */
 class TunnelTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -32,9 +29,9 @@ class TunnelTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->_request = $this->getMock(\Magento\Framework\App\Request\Http::class, [], [], '', false);
-        $this->_response = $this->getMock(\Magento\Framework\App\Response\Http::class, [], [], '', false);
-        $this->_objectManager = $this->getMock(\Magento\Framework\ObjectManagerInterface::class);
+        $this->_request = $this->getMock('Magento\Framework\App\Request\Http', [], [], '', false);
+        $this->_response = $this->getMock('Magento\Framework\App\Response\Http', [], [], '', false);
+        $this->_objectManager = $this->getMock('Magento\Framework\ObjectManagerInterface');
     }
 
     protected function tearDown()
@@ -52,14 +49,14 @@ class TunnelTest extends \PHPUnit_Framework_TestCase
             ->with('ga')
             ->will($this->returnValue(urlencode(base64_encode(json_encode([1])))));
         $this->_request->expects($this->at(1))->method('getParam')->with('h')->will($this->returnValue($fixture));
-        $tunnelResponse = $this->getMock(\Magento\Framework\App\Response\Http::class, [], [], '', false);
+        $tunnelResponse = $this->getMock('Magento\Framework\App\Response\Http', [], [], '', false);
         $httpClient = $this->getMock(
-            \Magento\Framework\HTTP\ZendClient::class,
+            'Magento\Framework\HTTP\ZendClient',
             ['setUri', 'setParameterGet', 'setConfig', 'request', 'getHeaders']
         );
         /** @var $helper \Magento\Backend\Helper\Dashboard\Data|\PHPUnit_Framework_MockObject_MockObject */
         $helper = $this->getMock(
-            \Magento\Backend\Helper\Dashboard\Data::class,
+            'Magento\Backend\Helper\Dashboard\Data',
             ['getChartDataHash'],
             [],
             '',
@@ -70,11 +67,11 @@ class TunnelTest extends \PHPUnit_Framework_TestCase
 
         $this->_objectManager->expects($this->at(0))
             ->method('get')
-            ->with(\Magento\Backend\Helper\Dashboard\Data::class)
+            ->with('Magento\Backend\Helper\Dashboard\Data')
             ->will($this->returnValue($helper));
         $this->_objectManager->expects($this->at(1))
             ->method('create')
-            ->with(\Magento\Framework\HTTP\ZendClient::class)
+            ->with('Magento\Framework\HTTP\ZendClient')
             ->will($this->returnValue($httpClient));
         $httpClient->expects($this->once())->method('setUri')->will($this->returnValue($httpClient));
         $httpClient->expects($this->once())->method('setParameterGet')->will($this->returnValue($httpClient));
@@ -128,7 +125,7 @@ class TunnelTest extends \PHPUnit_Framework_TestCase
         $this->_request->expects($this->at(1))->method('getParam')->with('h')->will($this->returnValue($fixture));
         /** @var $helper \Magento\Backend\Helper\Dashboard\Data|\PHPUnit_Framework_MockObject_MockObject */
         $helper = $this->getMock(
-            \Magento\Backend\Helper\Dashboard\Data::class,
+            'Magento\Backend\Helper\Dashboard\Data',
             ['getChartDataHash'],
             [],
             '',
@@ -139,18 +136,18 @@ class TunnelTest extends \PHPUnit_Framework_TestCase
 
         $this->_objectManager->expects($this->at(0))
             ->method('get')
-            ->with(\Magento\Backend\Helper\Dashboard\Data::class)
+            ->with('Magento\Backend\Helper\Dashboard\Data')
             ->will($this->returnValue($helper));
         $exceptionMock = new \Exception();
         $this->_objectManager->expects($this->at(1))
             ->method('create')
-            ->with(\Magento\Framework\HTTP\ZendClient::class)
+            ->with('Magento\Framework\HTTP\ZendClient')
             ->will($this->throwException($exceptionMock));
-        $loggerMock = $this->getMock(\Psr\Log\LoggerInterface::class);
+        $loggerMock = $this->getMock('Psr\Log\LoggerInterface');
         $loggerMock->expects($this->once())->method('critical')->with($exceptionMock);
         $this->_objectManager->expects($this->at(2))
             ->method('get')
-            ->with(\Psr\Log\LoggerInterface::class)
+            ->with('Psr\Log\LoggerInterface')
             ->will($this->returnValue($loggerMock));
 
         $controller = $this->_factory($this->_request, $this->_response);
@@ -181,11 +178,11 @@ class TunnelTest extends \PHPUnit_Framework_TestCase
     {
         if (!$response) {
             /** @var $response \Magento\Framework\App\ResponseInterface|\PHPUnit_Framework_MockObject_MockObject */
-            $response = $this->getMock(\Magento\Framework\App\Response\Http::class, [], [], '', false);
+            $response = $this->getMock('Magento\Framework\App\Response\Http', [], [], '', false);
             $response->headersSentThrowsException = false;
         }
         $helper = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
-        $varienFront = $helper->getObject(\Magento\Framework\App\FrontController::class);
+        $varienFront = $helper->getObject('Magento\Framework\App\FrontController');
 
         $arguments = [
             'request' => $request,
@@ -193,18 +190,18 @@ class TunnelTest extends \PHPUnit_Framework_TestCase
             'objectManager' => $this->_objectManager,
             'frontController' => $varienFront,
         ];
-        $this->resultRaw = $this->getMockBuilder(\Magento\Framework\Controller\Result\Raw::class)
+        $this->resultRaw = $this->getMockBuilder('Magento\Framework\Controller\Result\Raw')
             ->disableOriginalConstructor()
             ->getMock();
 
-        $resultRawFactory = $this->getMockBuilder(\Magento\Framework\Controller\Result\RawFactory::class)
+        $resultRawFactory = $this->getMockBuilder('Magento\Framework\Controller\Result\RawFactory')
             ->disableOriginalConstructor()
             ->setMethods(['create'])
             ->getMock();
         $resultRawFactory->expects($this->atLeastOnce())
             ->method('create')
             ->willReturn($this->resultRaw);
-        $context = $helper->getObject(\Magento\Backend\App\Action\Context::class, $arguments);
+        $context = $helper->getObject('Magento\Backend\App\Action\Context', $arguments);
         return new \Magento\Backend\Controller\Adminhtml\Dashboard\Tunnel($context, $resultRawFactory);
     }
 }

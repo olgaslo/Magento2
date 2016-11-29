@@ -20,7 +20,7 @@ class StoreManagementTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->storesFactoryMock = $this->getMock(
-            \Magento\Store\Model\ResourceModel\Store\CollectionFactory::class,
+            'Magento\Store\Model\ResourceModel\Store\CollectionFactory',
             ['create'],
             [],
             '',
@@ -33,7 +33,7 @@ class StoreManagementTest extends \PHPUnit_Framework_TestCase
 
     public function testGetCount()
     {
-        $storesMock = $this->getMock(\Magento\Store\Model\ResourceModel\Store\Collection::class, [], [], '', false);
+        $storesMock = $this->getMock('\Magento\Store\Model\ResourceModel\Store\Collection', [], [], '', false);
 
         $this->storesFactoryMock
             ->expects($this->once())

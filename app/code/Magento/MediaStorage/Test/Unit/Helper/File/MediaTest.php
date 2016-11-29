@@ -26,24 +26,24 @@ class MediaTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
-        $this->dirMock = $this->getMockBuilder(\Magento\Framework\Filesystem\Directory\ReadInterface::class)
+        $this->dirMock = $this->getMockBuilder('Magento\Framework\Filesystem\Directory\ReadInterface')
             ->disableOriginalConstructor()
             ->getMock();
-        $filesystemMock = $this->getMockBuilder(\Magento\Framework\Filesystem::class)
+        $filesystemMock = $this->getMockBuilder('Magento\Framework\Filesystem')
             ->disableOriginalConstructor()
             ->getMock();
         $filesystemMock->expects($this->any())
             ->method('getDirectoryRead')
             ->with(DirectoryList::MEDIA)
             ->will($this->returnValue($this->dirMock));
-        $dateMock = $this->getMockBuilder(\Magento\Framework\Stdlib\DateTime\DateTime::class)
+        $dateMock = $this->getMockBuilder('Magento\Framework\Stdlib\DateTime\DateTime')
             ->disableOriginalConstructor()
             ->getMock();
         $dateMock->expects($this->any())
             ->method('date')
             ->will($this->returnValue(self::UPDATE_TIME));
         $this->helper = $this->objectManager->getObject(
-            \Magento\MediaStorage\Helper\File\Media::class,
+            'Magento\MediaStorage\Helper\File\Media',
             ['filesystem' => $filesystemMock, 'date' => $dateMock]
         );
     }

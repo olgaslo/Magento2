@@ -15,11 +15,6 @@ class Move
     protected $categoryUrlPathGenerator;
 
     /**
-     * @var ChildrenCategoriesProvider
-     */
-    private $childrenCategoriesProvider;
-
-    /**
      * @param CategoryUrlPathGenerator $categoryUrlPathGenerator
      * @param ChildrenCategoriesProvider $childrenCategoriesProvider
      */
@@ -32,23 +27,22 @@ class Move
     }
 
     /**
-     * Perform url updating for children categories
-     *
      * @param \Magento\Catalog\Model\ResourceModel\Category $subject
-     * @param \Magento\Catalog\Model\ResourceModel\Category $result
+     * @param callable $proceed
      * @param Category $category
      * @param Category $newParent
      * @param null|int $afterCategoryId
-     * @return \Magento\Catalog\Model\ResourceModel\Category
+     * @return callable
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function afterChangeParent(
+    public function aroundChangeParent(
         \Magento\Catalog\Model\ResourceModel\Category $subject,
-        \Magento\Catalog\Model\ResourceModel\Category $result,
-        Category $category,
-        Category $newParent,
+        \Closure $proceed,
+        $category,
+        $newParent,
         $afterCategoryId
     ) {
+        $result = $proceed($category, $newParent, $afterCategoryId);
         $category->setUrlPath($this->categoryUrlPathGenerator->getUrlPath($category));
         $category->getResource()->saveAttribute($category, 'url_path');
         $this->updateUrlPathForChildren($category);

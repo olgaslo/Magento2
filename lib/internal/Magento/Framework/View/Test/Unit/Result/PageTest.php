@@ -64,16 +64,16 @@ class PageTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->layout = $this->getMockBuilder(\Magento\Framework\View\Layout::class)
+        $this->layout = $this->getMockBuilder('Magento\Framework\View\Layout')
             ->setMethods(['addHandle', 'getUpdate', 'isLayoutDefined'])
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->layoutFactory = $this->getMockBuilder(\Magento\Framework\View\LayoutFactory::class)
+        $this->layoutFactory = $this->getMockBuilder('Magento\Framework\View\LayoutFactory')
             ->disableOriginalConstructor()
             ->getMock();
         $this->layoutFactory->expects($this->any())->method('create')->will($this->returnValue($this->layout));
-        $this->layoutMerge = $this->getMockBuilder(\Magento\Framework\View\Model\Layout\Merge::class)
+        $this->layoutMerge = $this->getMockBuilder('Magento\Framework\View\Model\Layout\Merge')
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -81,36 +81,33 @@ class PageTest extends \PHPUnit_Framework_TestCase
             ->method('getUpdate')
             ->will($this->returnValue($this->layoutMerge));
 
-        $this->request = $this->getMockBuilder(\Magento\Framework\App\Request\Http::class)
+        $this->request = $this->getMockBuilder('Magento\Framework\App\Request\Http')
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->pageConfig = $this->getMockBuilder(\Magento\Framework\View\Page\Config::class)
+        $this->pageConfig = $this->getMockBuilder('Magento\Framework\View\Page\Config')
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->viewFileSystem = $this->getMockBuilder(\Magento\Framework\View\FileSystem::class)
+        $this->viewFileSystem = $this->getMockBuilder('Magento\Framework\View\FileSystem')
             ->disableOriginalConstructor()
             ->getMock();
 
         $objectManagerHelper = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
-        $this->context = $objectManagerHelper->getObject(
-            \Magento\Framework\View\Element\Template\Context::class,
-            [
-                'layout' => $this->layout,
-                'request' => $this->request,
-                'viewFileSystem' => $this->viewFileSystem,
-                'pageConfig' => $this->pageConfig
-            ]
-        );
+        $this->context = $objectManagerHelper->getObject('Magento\Framework\View\Element\Template\Context', [
+            'layout' => $this->layout,
+            'request' => $this->request,
+            'viewFileSystem' => $this->viewFileSystem,
+            'pageConfig' => $this->pageConfig
+        ]);
 
-        $this->translateInline = $this->getMock(\Magento\Framework\Translate\InlineInterface::class);
+        $this->translateInline = $this->getMock('Magento\Framework\Translate\InlineInterface');
 
-        $this->pageConfigRenderer = $this->getMockBuilder(\Magento\Framework\View\Page\Config\Renderer::class)
+        $this->pageConfigRenderer = $this->getMockBuilder('Magento\Framework\View\Page\Config\Renderer')
             ->disableOriginalConstructor()
             ->getMock();
 
-        $pageConfigRendererFactory = $this->getMockBuilder(\Magento\Framework\View\Page\Config\RendererFactory::class)
+        $pageConfigRendererFactory = $this->getMockBuilder('Magento\Framework\View\Page\Config\RendererFactory')
             ->disableOriginalConstructor()
             ->setMethods(['create'])
             ->getMock();
@@ -121,7 +118,7 @@ class PageTest extends \PHPUnit_Framework_TestCase
 
         $objectManagerHelper = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
         $this->page = $objectManagerHelper->getObject(
-            \Magento\Framework\View\Result\Page::class,
+            'Magento\Framework\View\Result\Page',
             [
                 'isIsolated' => true,
                 'layoutFactory' => $this->layoutFactory,

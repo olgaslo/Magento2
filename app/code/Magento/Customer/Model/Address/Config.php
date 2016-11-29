@@ -16,7 +16,7 @@ use Magento\Store\Model\ScopeInterface;
  */
 class Config extends ConfigData
 {
-    const DEFAULT_ADDRESS_RENDERER = \Magento\Customer\Block\Address\Renderer\DefaultRenderer::class;
+    const DEFAULT_ADDRESS_RENDERER = 'Magento\Customer\Block\Address\Renderer\DefaultRenderer';
 
     const XML_PATH_ADDRESS_TEMPLATE = 'customer/address_templates/';
 

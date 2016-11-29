@@ -39,13 +39,7 @@ abstract class AbstractMergedConfigTest extends \PHPUnit_Framework_TestCase
         $invalidFiles = [];
 
         $files = $this->getConfigFiles();
-        $validationStateMock = $this->getMock(
-            \Magento\Framework\Config\ValidationStateInterface::class,
-            [],
-            [],
-            '',
-            false
-        );
+        $validationStateMock = $this->getMock('\Magento\Framework\Config\ValidationStateInterface', [], [], '', false);
         $validationStateMock->method('isValidationRequired')
             ->willReturn(false);
         $mergedConfig = new \Magento\Framework\Config\Dom(
@@ -58,7 +52,7 @@ abstract class AbstractMergedConfigTest extends \PHPUnit_Framework_TestCase
             $content = file_get_contents($file[0]);
             try {
                 $validationStateMock = $this->getMock(
-                    \Magento\Framework\Config\ValidationStateInterface::class,
+                    '\Magento\Framework\Config\ValidationStateInterface',
                     [],
                     [],
                     '',

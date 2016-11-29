@@ -24,9 +24,9 @@ class EventFactoryTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->_objectManagerMock = $this->getMock(\Magento\Framework\ObjectManagerInterface::class);
+        $this->_objectManagerMock = $this->getMock('Magento\Framework\ObjectManagerInterface');
         $this->_model = new \Magento\Framework\EventFactory($this->_objectManagerMock);
-        $this->_expectedObject = $this->getMockBuilder(\Magento\Framework\Event::class)->getMock();
+        $this->_expectedObject = $this->getMockBuilder('Magento\Framework\Event')->getMock();
     }
 
     public function testCreate()
@@ -37,7 +37,7 @@ class EventFactoryTest extends \PHPUnit_Framework_TestCase
         )->method(
             'create'
         )->with(
-            \Magento\Framework\Event::class,
+            'Magento\Framework\Event',
             $arguments
         )->will(
             $this->returnValue($this->_expectedObject)

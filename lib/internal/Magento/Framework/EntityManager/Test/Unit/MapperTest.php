@@ -15,8 +15,8 @@ class MapperTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $config = [
-            \Magento\Customer\Api\Data\CustomerInterface::class => ['entity_id' => 'id'],
-            \Magento\Customer\Api\Data\AddressInterface::class => ['parent_id' => 'customer_id', 'invalid' => '']
+            'Magento\Customer\Api\Data\CustomerInterface' => ['entity_id' => 'id'],
+            'Magento\Customer\Api\Data\AddressInterface' => ['parent_id' => 'customer_id', 'invalid' => '']
         ];
         $this->mapper = new \Magento\Framework\EntityManager\Mapper($config);
     }
@@ -32,10 +32,7 @@ class MapperTest extends \PHPUnit_Framework_TestCase
         $expectedOutput['entity_id'] = 123;
         unset($expectedOutput['id']);
 
-        $actualOutput = $this->mapper->entityToDatabase(
-            \Magento\Customer\Api\Data\CustomerInterface::class,
-            $inputData
-        );
+        $actualOutput = $this->mapper->entityToDatabase('Magento\Customer\Api\Data\CustomerInterface', $inputData);
 
         $this->assertEquals($expectedOutput, $actualOutput);
     }
@@ -50,7 +47,7 @@ class MapperTest extends \PHPUnit_Framework_TestCase
             'group_id' => 1,
             'extension_attributes' => ['extension_attribute' => ['value' => 'some value']],
         ];
-        $this->mapper->entityToDatabase(\Magento\Customer\Api\Data\AddressInterface::class, $inputData);
+        $this->mapper->entityToDatabase('Magento\Customer\Api\Data\AddressInterface', $inputData);
     }
 
     public function testDatabaseToEntity()
@@ -64,10 +61,7 @@ class MapperTest extends \PHPUnit_Framework_TestCase
         $expectedOutput['id'] = 123;
         unset($expectedOutput['entity_id']);
 
-        $actualOutput = $this->mapper->databaseToEntity(
-            \Magento\Customer\Api\Data\CustomerInterface::class,
-            $inputData
-        );
+        $actualOutput = $this->mapper->databaseToEntity('Magento\Customer\Api\Data\CustomerInterface', $inputData);
 
         $this->assertEquals($expectedOutput, $actualOutput);
     }
@@ -83,6 +77,6 @@ class MapperTest extends \PHPUnit_Framework_TestCase
             'extension_attributes' => ['extension_attribute' => ['value' => 'some value']],
             'invalid' => 123
         ];
-        $this->mapper->databaseToEntity(\Magento\Customer\Api\Data\AddressInterface::class, $inputData);
+        $this->mapper->databaseToEntity('Magento\Customer\Api\Data\AddressInterface', $inputData);
     }
 }

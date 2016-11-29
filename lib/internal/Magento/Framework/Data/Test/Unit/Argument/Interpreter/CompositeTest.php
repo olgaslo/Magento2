@@ -26,8 +26,8 @@ class CompositeTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->_interpreterOne = $this->getMock(\Magento\Framework\Data\Argument\InterpreterInterface::class);
-        $this->_interpreterTwo = $this->getMock(\Magento\Framework\Data\Argument\InterpreterInterface::class);
+        $this->_interpreterOne = $this->getMock('Magento\Framework\Data\Argument\InterpreterInterface');
+        $this->_interpreterTwo = $this->getMock('Magento\Framework\Data\Argument\InterpreterInterface');
         $this->_model = new Composite(
             ['one' => $this->_interpreterOne, 'two' => $this->_interpreterTwo],
             'interpreter'
@@ -41,8 +41,8 @@ class CompositeTest extends \PHPUnit_Framework_TestCase
     public function testConstructWrongInterpreter()
     {
         $interpreters = [
-            'correct' => $this->getMock(\Magento\Framework\Data\Argument\InterpreterInterface::class),
-            'wrong' => $this->getMock(\Magento\Framework\ObjectManagerInterface::class),
+            'correct' => $this->getMock('Magento\Framework\Data\Argument\InterpreterInterface'),
+            'wrong' => $this->getMock('Magento\Framework\ObjectManagerInterface'),
         ];
         new Composite($interpreters, 'interpreter');
     }
@@ -90,7 +90,7 @@ class CompositeTest extends \PHPUnit_Framework_TestCase
     public function testAddInterpreter()
     {
         $input = ['interpreter' => 'new', 'value' => 'test'];
-        $newInterpreter = $this->getMock(\Magento\Framework\Data\Argument\InterpreterInterface::class);
+        $newInterpreter = $this->getMock('Magento\Framework\Data\Argument\InterpreterInterface');
         $this->_model->addInterpreter('new', $newInterpreter);
         $newInterpreter->expects($this->once())->method('evaluate')->with(['value' => 'test']);
         $this->_model->evaluate($input);
@@ -103,7 +103,7 @@ class CompositeTest extends \PHPUnit_Framework_TestCase
      */
     public function testAddInterpreterException()
     {
-        $newInterpreter = $this->getMock(\Magento\Framework\Data\Argument\InterpreterInterface::class);
+        $newInterpreter = $this->getMock('Magento\Framework\Data\Argument\InterpreterInterface');
         $this->_model->addInterpreter('one', $newInterpreter);
     }
 }

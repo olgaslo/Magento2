@@ -38,7 +38,7 @@ class CountryTest extends \PHPUnit_Framework_TestCase
     {
         $helper = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
         $this->_element = $this->getMockForAbstractClass(
-            \Magento\Framework\Data\Form\Element\AbstractElement::class,
+            'Magento\Framework\Data\Form\Element\AbstractElement',
             [],
             '',
             false,
@@ -55,11 +55,11 @@ class CountryTest extends \PHPUnit_Framework_TestCase
         $this->_element->expects($this->any())
             ->method('getName')
             ->will($this->returnValue('name'));
-        $this->_request = $this->getMockForAbstractClass(\Magento\Framework\App\RequestInterface::class);
-        $this->_jsHelper = $this->getMock(\Magento\Framework\View\Helper\Js::class, [], [], '', false);
-        $this->_url = $this->getMock(\Magento\Backend\Model\Url::class, [], [], '', false);
+        $this->_request = $this->getMockForAbstractClass('Magento\Framework\App\RequestInterface');
+        $this->_jsHelper = $this->getMock('Magento\Framework\View\Helper\Js', [], [], '', false);
+        $this->_url = $this->getMock('Magento\Backend\Model\Url', [], [], '', false);
         $this->_model = $helper->getObject(
-            \Magento\Paypal\Block\Adminhtml\System\Config\Field\Country::class,
+            'Magento\Paypal\Block\Adminhtml\System\Config\Field\Country',
             ['request' => $this->_request, 'jsHelper' => $this->_jsHelper, 'url' => $this->_url]
         );
     }

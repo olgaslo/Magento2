@@ -82,7 +82,7 @@ class History extends AbstractModel implements OrderStatusHistoryInterface
      */
     protected function _construct()
     {
-        $this->_init(\Magento\Sales\Model\ResourceModel\Order\Status\History::class);
+        $this->_init('Magento\Sales\Model\ResourceModel\Order\Status\History');
     }
 
     /**
@@ -178,7 +178,6 @@ class History extends AbstractModel implements OrderStatusHistoryInterface
     }
 
     //@codeCoverageIgnoreStart
-
     /**
      * Returns comment
      *

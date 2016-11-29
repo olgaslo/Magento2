@@ -7,9 +7,6 @@ namespace Magento\Catalog\Test\Unit\Helper\Product\Flat;
 
 use Magento\Framework\App\ResourceConnection;
 
-/**
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
- */
 class IndexerTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -44,10 +41,10 @@ class IndexerTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $contextMock = $this->getMock(\Magento\Framework\App\Helper\Context::class, [], [], '', false);
+        $contextMock = $this->getMock('Magento\Framework\App\Helper\Context', [], [], '', false);
 
         $this->_resourceMock = $this->getMock(
-            \Magento\Framework\App\ResourceConnection::class,
+            'Magento\Framework\App\ResourceConnection',
             [],
             [],
             '',
@@ -56,7 +53,7 @@ class IndexerTest extends \PHPUnit_Framework_TestCase
         $this->_resourceMock->expects($this->any())->method('getTableName')->will($this->returnArgument(0));
 
         $flatHelperMock = $this->getMock(
-            \Magento\Catalog\Helper\Product\Flat\Indexer::class,
+            'Magento\Catalog\Helper\Product\Flat\Indexer',
             ['isAddChildData'],
             [],
             '',
@@ -64,24 +61,24 @@ class IndexerTest extends \PHPUnit_Framework_TestCase
         );
         $flatHelperMock->expects($this->any())->method('isAddChildData')->will($this->returnValue(true));
 
-        $eavConfigMock = $this->getMock(\Magento\Eav\Model\Config::class, [], [], '', false);
+        $eavConfigMock = $this->getMock('Magento\Eav\Model\Config', [], [], '', false);
 
-        $attributeConfigMock = $this->getMock(\Magento\Catalog\Model\Attribute\Config::class, [], [], '', false);
+        $attributeConfigMock = $this->getMock('Magento\Catalog\Model\Attribute\Config', [], [], '', false);
 
         $resourceConfigFactoryMock = $this->getMock(
-            \Magento\Catalog\Model\ResourceModel\ConfigFactory::class,
+            'Magento\Catalog\Model\ResourceModel\ConfigFactory',
             ['create'],
             [],
             '',
             false
         );
 
-        $eavFactoryMock = $this->getMock(\Magento\Eav\Model\Entity\AttributeFactory::class, ['create'], [], '', false);
+        $eavFactoryMock = $this->getMock('Magento\Eav\Model\Entity\AttributeFactory', ['create'], [], '', false);
 
-        $this->_storeManagerMock = $this->getMock(\Magento\Store\Model\StoreManagerInterface::class);
+        $this->_storeManagerMock = $this->getMock('Magento\Store\Model\StoreManagerInterface');
 
         $this->_connectionMock = $this->getMock(
-            \Magento\Framework\DB\Adapter\Pdo\Mysql::class,
+            'Magento\Framework\DB\Adapter\Pdo\Mysql',
             ['getTables', 'dropTable'],
             [],
             '',
@@ -89,7 +86,7 @@ class IndexerTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->_changelogMock = $this->getMock(
-            \Magento\Framework\Mview\View\Changelog::class,
+            'Magento\Framework\Mview\View\Changelog',
             ['getName'],
             [],
             '',
@@ -98,7 +95,7 @@ class IndexerTest extends \PHPUnit_Framework_TestCase
 
         $this->_objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
         $this->_model = $this->_objectManager->getObject(
-            \Magento\Catalog\Helper\Product\Flat\Indexer::class,
+            'Magento\Catalog\Helper\Product\Flat\Indexer',
             [
                 'context' => $contextMock,
                 'resource' => $this->_resourceMock,
@@ -260,7 +257,7 @@ class IndexerTest extends \PHPUnit_Framework_TestCase
         $stores = [];
         foreach ($storeIds as $storeId) {
             $store = $this->getMock(
-                \Magento\Store\Model\Store::class,
+                'Magento\Store\Model\Store',
                 ['getId', '__sleep', '__wakeup'],
                 [],
                 '',

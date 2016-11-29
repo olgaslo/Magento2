@@ -261,10 +261,11 @@ define([
          */
         initResizableElement: function (column) {
             var model = ko.dataFor(column),
-                templateDragElement = '<div class="' + this.resizableElementClass + '"></div>';
+                ctx = ko.contextFor(column),
+                tempalteDragElement = '<div class="' + ctx.$parent.resizeConfig.classResize + '"></div>';
 
             if (_.isUndefined(model.resizeEnabled) || model.resizeEnabled) {
-                $(column).append(templateDragElement);
+                $(column).append(tempalteDragElement);
 
                 return true;
             }

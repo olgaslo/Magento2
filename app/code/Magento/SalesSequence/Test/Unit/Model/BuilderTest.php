@@ -58,7 +58,7 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->connectionMock = $this->getMockForAbstractClass(
-            \Magento\Framework\DB\Adapter\AdapterInterface::class,
+            'Magento\Framework\DB\Adapter\AdapterInterface',
             [],
             '',
             false,
@@ -67,42 +67,42 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
             ['query']
         );
         $this->resourceSequenceMeta = $this->getMock(
-            \Magento\SalesSequence\Model\ResourceModel\Meta::class,
+            'Magento\SalesSequence\Model\ResourceModel\Meta',
             ['loadByEntityTypeAndStore', 'save', 'createSequence'],
             [],
             '',
             false
         );
         $this->meta = $this->getMock(
-            \Magento\SalesSequence\Model\Meta::class,
+            'Magento\SalesSequence\Model\Meta',
             ['getId', 'setData', 'save', 'getSequenceTable'],
             [],
             '',
             false
         );
         $this->sequence = $this->getMock(
-            \Magento\Framework\DB\Ddl\Sequence::class,
+            'Magento\Framework\DB\Ddl\Sequence',
             [],
             [],
             '',
             false
         );
         $this->resourceMock = $this->getMock(
-            \Magento\Framework\App\ResourceConnection::class,
+            'Magento\Framework\App\ResourceConnection',
             [],
             [],
             '',
             false
         );
         $this->profile = $this->getMock(
-            \Magento\SalesSequence\Model\Profile::class,
+            'Magento\SalesSequence\Model\Profile',
             ['getId', 'setData', 'getStartValue'],
             [],
             '',
             false
         );
         $this->metaFactory = $this->getMock(
-            \Magento\SalesSequence\Model\MetaFactory::class,
+            'Magento\SalesSequence\Model\MetaFactory',
             ['create'],
             [],
             '',
@@ -110,7 +110,7 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
         );
         $this->metaFactory->expects($this->any())->method('create')->willReturn($this->meta);
         $this->profileFactory = $this->getMock(
-            \Magento\SalesSequence\Model\ProfileFactory::class,
+            'Magento\SalesSequence\Model\ProfileFactory',
             ['create'],
             [],
             '',
@@ -123,7 +123,7 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
 
         $helper = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
         $this->sequenceBuilder = $helper->getObject(
-            \Magento\SalesSequence\Model\Builder::class,
+            'Magento\SalesSequence\Model\Builder',
             [
                 'resourceMetadata' => $this->resourceSequenceMeta,
                 'metaFactory' => $this->metaFactory,

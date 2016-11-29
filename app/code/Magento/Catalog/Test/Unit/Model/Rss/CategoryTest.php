@@ -42,21 +42,21 @@ class CategoryTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->categoryLayer = $this->getMock(
-            \Magento\Catalog\Model\Layer\Category::class,
+            'Magento\Catalog\Model\Layer\Category',
             ['setStore', '__wakeup'],
             [],
             '',
             false
         );
         $this->collectionFactory = $this->getMock(
-            \Magento\Catalog\Model\ResourceModel\Product\CollectionFactory::class,
+            'Magento\Catalog\Model\ResourceModel\Product\CollectionFactory',
             ['create'],
             [],
             '',
             false
         );
         $this->visibility = $this->getMock(
-            \Magento\Catalog\Model\Product\Visibility::class,
+            'Magento\Catalog\Model\Product\Visibility',
             [
                 'getVisibleInCatalogIds',
                 '__wakeup'
@@ -67,7 +67,7 @@ class CategoryTest extends \PHPUnit_Framework_TestCase
         );
 
         /** @var \PHPUnit_Framework_MockObject_MockObject|\Magento\Catalog\Model\Layer\Resolver $layerResolver */
-        $layerResolver = $this->getMockBuilder(\Magento\Catalog\Model\Layer\Resolver::class)
+        $layerResolver = $this->getMockBuilder('\Magento\Catalog\Model\Layer\Resolver')
             ->disableOriginalConstructor()
             ->setMethods(['get', 'create'])
             ->getMock();
@@ -78,7 +78,7 @@ class CategoryTest extends \PHPUnit_Framework_TestCase
         $this->objectManagerHelper = new ObjectManagerHelper($this);
         /** @var \Magento\Catalog\Model\Rss\Category model */
         $this->model = $this->objectManagerHelper->getObject(
-            \Magento\Catalog\Model\Rss\Category::class,
+            'Magento\Catalog\Model\Rss\Category',
             [
                 'layerResolver' => $layerResolver,
                 'collectionFactory' => $this->collectionFactory,
@@ -101,7 +101,7 @@ class CategoryTest extends \PHPUnit_Framework_TestCase
             ->method('getVisibleInCatalogIds')
             ->will($this->returnValue($visibleInCatalogIds));
         $products = $this->getMock(
-            \Magento\Catalog\Model\ResourceModel\Product\Collection::class,
+            'Magento\Catalog\Model\ResourceModel\Product\Collection',
             [
                 'setStoreId',
                 'addAttributeToSort',
@@ -115,7 +115,7 @@ class CategoryTest extends \PHPUnit_Framework_TestCase
             false
         );
         $resourceCollection = $this->getMock(
-            \Magento\Catalog\Model\ResourceModel\Collection\AbstractCollection::class,
+            'Magento\Catalog\Model\ResourceModel\Collection\AbstractCollection',
             [
                 'addAttributeToSelect',
                 'addAttributeToFilter',
@@ -165,7 +165,7 @@ class CategoryTest extends \PHPUnit_Framework_TestCase
             ->method('create')
             ->will($this->returnValue($products));
         $category = $this->getMock(
-            \Magento\Catalog\Model\Category::class,
+            'Magento\Catalog\Model\Category',
             [
                 'getResourceCollection',
                 'getChildren',
@@ -186,7 +186,7 @@ class CategoryTest extends \PHPUnit_Framework_TestCase
             ->method('getProductCollection')
             ->will($this->returnValue($products));
         $layer = $this->getMock(
-            \Magento\Catalog\Model\Layer::class,
+            'Magento\Catalog\Model\Layer',
             [
                 'setCurrentCategory',
                 'prepareProductCollection',
@@ -206,7 +206,7 @@ class CategoryTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue($products));
 
         /** @var \PHPUnit_Framework_MockObject_MockObject|\Magento\Catalog\Model\Layer\Resolver $layerResolver */
-        $layerResolver = $this->getMockBuilder(\Magento\Catalog\Model\Layer\Resolver::class)
+        $layerResolver = $this->getMockBuilder('\Magento\Catalog\Model\Layer\Resolver')
             ->disableOriginalConstructor()
             ->setMethods(['get', 'create'])
             ->getMock();

@@ -15,10 +15,10 @@ class WysiwygPlugin extends \Magento\Variable\Controller\Adminhtml\System\Variab
      */
     public function execute()
     {
-        $customVariables = $this->_objectManager->create(\Magento\Variable\Model\Variable::class)
+        $customVariables = $this->_objectManager->create('Magento\Variable\Model\Variable')
             ->getVariablesOptionArray(true);
         $storeContactVariabls = $this->_objectManager->create(
-            \Magento\Email\Model\Source\Variables::class
+            'Magento\Email\Model\Source\Variables'
         )->toOptionArray(
             true
         );

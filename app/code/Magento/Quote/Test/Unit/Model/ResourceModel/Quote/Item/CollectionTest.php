@@ -58,38 +58,26 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->entityFactoryMock = $this->getMock(
-            \Magento\Framework\Data\Collection\EntityFactory::class,
-            [],
-            [],
-            '',
-            false
-        );
+        $this->entityFactoryMock = $this->getMock('Magento\Framework\Data\Collection\EntityFactory', [], [], '', false);
         $this->fetchStrategyMock = $this->getMockForAbstractClass(
-            \Magento\Framework\Data\Collection\Db\FetchStrategyInterface::class
+            'Magento\Framework\Data\Collection\Db\FetchStrategyInterface'
         );
-        $this->eventManagerMock = $this->getMock(\Magento\Framework\Event\ManagerInterface::class, [], [], '', false);
+        $this->eventManagerMock = $this->getMock('Magento\Framework\Event\ManagerInterface', [], [], '', false);
 
-        $this->selectMock = $this->getMock(\Magento\Framework\DB\Select::class, [], [], '', false);
-        $this->connectionMock = $this->getMock(\Magento\Framework\DB\Adapter\Pdo\Mysql::class, [], [], '', false);
+        $this->selectMock = $this->getMock('Magento\Framework\DB\Select', [], [], '', false);
+        $this->connectionMock = $this->getMock('Magento\Framework\DB\Adapter\Pdo\Mysql', [], [], '', false);
         $this->connectionMock->expects($this->atLeastOnce())
             ->method('select')
             ->will($this->returnValue($this->selectMock));
 
-        $this->resourceMock = $this->getMock(
-            \Magento\Framework\Model\ResourceModel\Db\AbstractDb::class,
-            [],
-            [],
-            '',
-            false
-        );
+        $this->resourceMock = $this->getMock('Magento\Framework\Model\ResourceModel\Db\AbstractDb', [], [], '', false);
         $this->resourceMock->expects($this->any())->method('getConnection')->will(
             $this->returnValue($this->connectionMock)
         );
 
         $objectManager = new ObjectManager($this);
         $this->collection = $objectManager->getObject(
-            \Magento\Quote\Model\ResourceModel\Quote\Item\Collection::class,
+            'Magento\Quote\Model\ResourceModel\Quote\Item\Collection',
             [
                 'entityFactory' => $this->entityFactoryMock,
                 'fetchStrategy' => $this->fetchStrategyMock,
@@ -102,7 +90,7 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
     public function testInstanceOf()
     {
         $this->assertInstanceOf(
-            \Magento\Framework\Model\ResourceModel\Db\VersionControl\Collection::class,
+            'Magento\Framework\Model\ResourceModel\Db\VersionControl\Collection',
             $this->collection
         );
     }

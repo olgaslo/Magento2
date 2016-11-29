@@ -325,13 +325,13 @@ class Carrier extends AbstractCarrierOnline implements CarrierInterface
             $destCountry = self::GUAM_COUNTRY_ID;
         }
 
-        $country = $this->_countryFactory->create()->load($destCountry);
-        $rowRequest->setDestCountry($country->getData('iso2_code') ?: $destCountry);
+        $rowRequest->setDestCountry($this->_countryFactory->create()->load($destCountry)->getData('iso2_code'));
 
         $rowRequest->setDestRegionCode($request->getDestRegionCode());
 
         if ($request->getDestPostcode()) {
             $rowRequest->setDestPostal($request->getDestPostcode());
+        } else {
         }
 
         $weight = $this->getTotalNumOfBoxes($request->getPackageWeight());

@@ -77,7 +77,7 @@ class TypeProcessor
     {
         if ($this->nameFinder === null) {
             $this->nameFinder = \Magento\Framework\App\ObjectManager::getInstance()
-                ->get(\Magento\Framework\Reflection\NameFinder::class);
+                ->get('\Magento\Framework\Reflection\NameFinder');
         }
         return $this->nameFinder;
     }
@@ -192,7 +192,7 @@ class TypeProcessor
             $this->_types[$typeName]['documentation'] = $docBlock ? $this->getDescription($docBlock) : '';
             /** @var MethodReflection $methodReflection */
             foreach ($reflection->getMethods(\ReflectionMethod::IS_PUBLIC) as $methodReflection) {
-                if ($methodReflection->class === \Magento\Framework\Model\AbstractModel::class) {
+                if ($methodReflection->class === "Magento\Framework\Model\AbstractModel") {
                     continue;
                 }
                 $this->_processMethod($methodReflection, $typeName);

@@ -18,7 +18,7 @@ class ListPerPageTest extends \PHPUnit_Framework_TestCase
     {
         $helper = new ObjectManager($this);
         $this->model = $helper->getObject(
-            \Magento\Catalog\Model\Config\Source\ListPerPage::class,
+            'Magento\Catalog\Model\Config\Source\ListPerPage',
             ['options' => 'some,test,options']
         );
     }

@@ -43,9 +43,9 @@ class RepositoryTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->objectManager = Bootstrap::getObjectManager();
-        $this->taxClassRepository = $this->objectManager->create(\Magento\Tax\Api\TaxClassRepositoryInterface::class);
-        $this->taxClassFactory = $this->objectManager->create(\Magento\Tax\Api\Data\TaxClassInterfaceFactory::class);
-        $this->taxClassModel = $this->objectManager->create(\Magento\Tax\Model\ClassModel::class);
+        $this->taxClassRepository = $this->objectManager->create('Magento\Tax\Api\TaxClassRepositoryInterface');
+        $this->taxClassFactory = $this->objectManager->create('Magento\Tax\Api\Data\TaxClassInterfaceFactory');
+        $this->taxClassModel = $this->objectManager->create('Magento\Tax\Model\ClassModel');
         $this->predefinedTaxClasses = [
             TaxClassManagementInterface::TYPE_PRODUCT => 'Taxable Goods',
             TaxClassManagementInterface::TYPE_CUSTOMER => 'Retail Customer',
@@ -123,15 +123,13 @@ class RepositoryTest extends \PHPUnit_Framework_TestCase
             ->setClassType(TaxClassManagementInterface::TYPE_CUSTOMER);
         $taxClassId = $this->taxClassRepository->save($taxClassDataObject);
         /** @var \Magento\Framework\Api\SearchCriteriaBuilder $searchCriteriaBuilder */
-        $searchCriteriaBuilder = Bootstrap::getObjectManager()->create(
-            \Magento\Framework\Api\SearchCriteriaBuilder::class
-        );
+        $searchCriteriaBuilder = Bootstrap::getObjectManager()->create('Magento\Framework\Api\SearchCriteriaBuilder');
         /** @var \Magento\Tax\Api\Data\TaxClassSearchResultsInterface */
         $searchResult = $this->taxClassRepository->getList($searchCriteriaBuilder->create());
         $items = $searchResult->getItems();
         /** @var \Magento\Tax\Api\Data\TaxClassInterface */
         $taxClass = array_pop($items);
-        $this->assertInstanceOf(\Magento\Tax\Api\Data\TaxClassInterface::class, $taxClass);
+        $this->assertInstanceOf('Magento\Tax\Api\Data\TaxClassInterface', $taxClass);
         $this->assertEquals($taxClassName, $taxClass->getClassName());
         $this->assertEquals($taxClassId, $taxClass->getClassId());
         $this->assertEquals(TaxClassManagementInterface::TYPE_CUSTOMER, $taxClass->getClassType());
@@ -161,7 +159,7 @@ class RepositoryTest extends \PHPUnit_Framework_TestCase
 
         // Verify if the tax class is deleted
         $this->setExpectedException(
-            \Magento\Framework\Exception\NoSuchEntityException::class,
+            'Magento\Framework\Exception\NoSuchEntityException',
             "No such entity with class_id = $taxClassId"
         );
         $this->taxClassRepository->deleteById($taxClassId);

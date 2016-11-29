@@ -10,4 +10,5 @@ namespace Magento\Sales\Api\Exception;
  */
 interface DocumentValidationExceptionInterface
 {
+
 }

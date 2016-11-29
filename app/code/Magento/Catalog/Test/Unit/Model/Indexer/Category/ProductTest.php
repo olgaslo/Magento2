@@ -40,7 +40,7 @@ class ProductTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->fullMock = $this->getMock(
-            \Magento\Catalog\Model\Indexer\Category\Product\Action\FullFactory::class,
+            'Magento\Catalog\Model\Indexer\Category\Product\Action\FullFactory',
             ['create'],
             [],
             '',
@@ -48,7 +48,7 @@ class ProductTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->rowsMock = $this->getMock(
-            \Magento\Catalog\Model\Indexer\Category\Product\Action\RowsFactory::class,
+            'Magento\Catalog\Model\Indexer\Category\Product\Action\RowsFactory',
             ['create'],
             [],
             '',
@@ -56,7 +56,7 @@ class ProductTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->indexerMock = $this->getMockForAbstractClass(
-            \Magento\Framework\Indexer\IndexerInterface::class,
+            'Magento\Framework\Indexer\IndexerInterface',
             [],
             '',
             false,
@@ -66,7 +66,7 @@ class ProductTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->indexerRegistryMock = $this->getMock(
-            \Magento\Framework\Indexer\IndexerRegistry::class,
+            'Magento\Framework\Indexer\IndexerRegistry',
             ['get'],
             [],
             '',
@@ -97,7 +97,7 @@ class ProductTest extends \PHPUnit_Framework_TestCase
         $this->prepareIndexer();
 
         $rowMock = $this->getMock(
-            \Magento\Catalog\Model\Indexer\Category\Product\Action\Rows::class,
+            'Magento\Catalog\Model\Indexer\Category\Product\Action\Rows',
             ['execute'],
             [],
             '',
@@ -119,7 +119,7 @@ class ProductTest extends \PHPUnit_Framework_TestCase
         $this->prepareIndexer();
 
         $rowMock = $this->getMock(
-            \Magento\Catalog\Model\Indexer\Category\Product\Action\Rows::class,
+            'Magento\Catalog\Model\Indexer\Category\Product\Action\Rows',
             ['execute'],
             [],
             '',

@@ -34,20 +34,14 @@ class StateTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->_contextMock = $this->getMock(
-            \Magento\Framework\Model\Context::class,
-            ['getEventDispatcher'],
-            [],
-            '',
-            false
-        );
-        $eventManagerMock = $this->getMock(\Magento\Framework\Event\ManagerInterface::class);
+        $this->_contextMock = $this->getMock('\Magento\Framework\Model\Context', ['getEventDispatcher'], [], '', false);
+        $eventManagerMock = $this->getMock('\Magento\Framework\Event\ManagerInterface');
         $this->_contextMock->expects($this->any())->method('getEventDispatcher')->willReturn($eventManagerMock);
-        $this->_registryMock = $this->getMock(\Magento\Framework\Registry::class, [], [], '', false);
+        $this->_registryMock = $this->getMock('\Magento\Framework\Registry', [], [], '', false);
         $this->_resourceMock =
-            $this->getMock(\Magento\Indexer\Model\ResourceModel\Mview\View\State::class, [], [], '', false);
+            $this->getMock('\Magento\Indexer\Model\ResourceModel\Mview\View\State', [], [], '', false);
         $this->_resourceCollectionMock = $this->getMock(
-            \Magento\Indexer\Model\ResourceModel\Mview\View\State\Collection::class,
+            '\Magento\Indexer\Model\ResourceModel\Mview\View\State\Collection',
             [],
             [],
             '',

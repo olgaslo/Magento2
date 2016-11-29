@@ -36,10 +36,10 @@ class UpSellTest extends \PHPUnit_Framework_TestCase
     {
         $this->_model = new \Magento\Catalog\Model\Product\CopyConstructor\UpSell();
 
-        $this->_productMock = $this->getMock(\Magento\Catalog\Model\Product::class, [], [], '', false);
+        $this->_productMock = $this->getMock('\Magento\Catalog\Model\Product', [], [], '', false);
 
         $this->_duplicateMock = $this->getMock(
-            \Magento\Catalog\Model\Product::class,
+            '\Magento\Catalog\Model\Product',
             ['setUpSellLinkData', '__wakeup'],
             [],
             '',
@@ -47,7 +47,7 @@ class UpSellTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->_linkMock = $this->getMock(
-            \Magento\Catalog\Model\Product\Link::class,
+            '\Magento\Catalog\Model\Product\Link',
             ['__wakeup', 'getAttributes', 'getUpSellLinkCollection', 'useUpSellLinks'],
             [],
             '',
@@ -75,7 +75,7 @@ class UpSellTest extends \PHPUnit_Framework_TestCase
         $this->_linkMock->expects($this->once())->method('getAttributes')->will($this->returnValue($attributes));
 
         $productLinkMock = $this->getMock(
-            \Magento\Catalog\Model\ResourceModel\Product\Link::class,
+            '\Magento\Catalog\Model\ResourceModel\Product\Link',
             ['__wakeup', 'getLinkedProductId', 'toArray'],
             [],
             '',
@@ -94,7 +94,7 @@ class UpSellTest extends \PHPUnit_Framework_TestCase
         );
 
         $collectionMock = $helper->getCollectionMock(
-            \Magento\Catalog\Model\ResourceModel\Product\Link\Collection::class,
+            '\Magento\Catalog\Model\ResourceModel\Product\Link\Collection',
             [$productLinkMock]
         );
         $this->_productMock->expects(

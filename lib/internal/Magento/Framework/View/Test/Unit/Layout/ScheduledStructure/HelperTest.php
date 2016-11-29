@@ -45,18 +45,18 @@ class HelperTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->scheduledStructureMock = $this->getMockBuilder(\Magento\Framework\View\Layout\ScheduledStructure::class)
+        $this->scheduledStructureMock = $this->getMockBuilder('Magento\Framework\View\Layout\ScheduledStructure')
             ->disableOriginalConstructor()
             ->getMock();
-        $this->dataStructureMock = $this->getMockBuilder(\Magento\Framework\View\Layout\Data\Structure::class)
+        $this->dataStructureMock = $this->getMockBuilder('Magento\Framework\View\Layout\Data\Structure')
             ->disableOriginalConstructor()
             ->getMock();
-        $this->loggerMock = $this->getMock(\Psr\Log\LoggerInterface::class);
-        $this->stateMock = $this->getMock(\Magento\Framework\App\State::class, [], [], '', false);
+        $this->loggerMock = $this->getMock('Psr\Log\LoggerInterface');
+        $this->stateMock = $this->getMock('Magento\Framework\App\State', [], [], '', false);
 
         $helperObjectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
         $this->helper = $helperObjectManager->getObject(
-            \Magento\Framework\View\Layout\ScheduledStructure\Helper::class,
+            'Magento\Framework\View\Layout\ScheduledStructure\Helper',
             [
                 'logger' => $this->loggerMock,
                 'state' => $this->stateMock
@@ -181,7 +181,7 @@ class HelperTest extends \PHPUnit_Framework_TestCase
             ->method('getMode')
             ->willReturn($stateMode);
         $this->loggerMock->expects($loggerExpects)
-            ->method('info')
+            ->method('critical')
             ->with(
                 "Broken reference: the '{$key}' element cannot be added as child to '{$parentName}', " .
                 'because the latter doesn\'t exist'

@@ -10,7 +10,6 @@ use Magento\Framework\Flag;
 class TransactionTest extends \PHPUnit_Framework_TestCase
 {
     protected $objectManager;
-
     /**
      * @var \Magento\Framework\DB\Transaction
      */
@@ -20,7 +19,7 @@ class TransactionTest extends \PHPUnit_Framework_TestCase
     {
         $this->objectManager = \Magento\TestFramework\Helper\Bootstrap::getObjectManager();
         $this->_model = $this->objectManager
-            ->create(\Magento\Framework\DB\Transaction::class);
+            ->create('Magento\Framework\DB\Transaction');
     }
 
     /**

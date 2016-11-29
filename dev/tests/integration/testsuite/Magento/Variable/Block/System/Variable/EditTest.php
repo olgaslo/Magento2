@@ -24,16 +24,14 @@ class EditTest extends \PHPUnit_Framework_TestCase
         ];
         /** @var $objectManager \Magento\TestFramework\ObjectManager */
         $objectManager = \Magento\TestFramework\Helper\Bootstrap::getObjectManager();
-        $variable = $objectManager->create(\Magento\Variable\Model\Variable::class)->setData($data)->save();
+        $variable = $objectManager->create('Magento\Variable\Model\Variable')->setData($data)->save();
 
-        $objectManager->get(\Magento\Framework\Registry::class)->register('current_variable', $variable);
-        $objectManager->get(
-            \Magento\Framework\App\RequestInterface::class
-        )->setParam('variable_id', $variable->getId());
+        $objectManager->get('Magento\Framework\Registry')->register('current_variable', $variable);
+        $objectManager->get('Magento\Framework\App\RequestInterface')->setParam('variable_id', $variable->getId());
         $block = $objectManager->get(
-            \Magento\Framework\View\LayoutInterface::class
+            'Magento\Framework\View\LayoutInterface'
         )->createBlock(
-            \Magento\Variable\Block\System\Variable\Edit::class,
+            'Magento\Variable\Block\System\Variable\Edit',
             'variable'
         );
         $this->assertArrayHasKey('variable-delete_button', $block->getLayout()->getAllBlocks());

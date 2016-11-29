@@ -64,11 +64,11 @@ class CleanCacheTest extends \PHPUnit_Framework_TestCase
             $this->contextMock,
             $this->eventManagerMock
         );
-        $this->objectManager->setBackwardCompatibleProperty(
-            $this->plugin,
-            'cache',
-            $this->cacheMock
-        );
+
+        $reflection = new \ReflectionClass(get_class($this->plugin));
+        $reflectionProperty = $reflection->getProperty('cache');
+        $reflectionProperty->setAccessible(true);
+        $reflectionProperty->setValue($this->plugin, $this->cacheMock);
     }
 
     /**

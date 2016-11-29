@@ -25,7 +25,7 @@ class EavAbstractTest extends \PHPUnit_Framework_TestCase
     {
         parent::setUp();
         $this->_model = $this->getMockForAbstractClass(
-            \Magento\ImportExport\Model\Import\Entity\AbstractEav::class,
+            'Magento\ImportExport\Model\Import\Entity\AbstractEav',
             [],
             '',
             false
@@ -41,7 +41,7 @@ class EavAbstractTest extends \PHPUnit_Framework_TestCase
 
         /** @var $attributeCollection \Magento\Customer\Model\ResourceModel\Attribute\Collection */
         $attributeCollection = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create(
-            \Magento\Customer\Model\ResourceModel\Attribute\Collection::class
+            'Magento\Customer\Model\ResourceModel\Attribute\Collection'
         );
         $attributeCollection->addFieldToFilter(
             'attribute_code',
@@ -52,17 +52,11 @@ class EavAbstractTest extends \PHPUnit_Framework_TestCase
             $index = $attribute->getAttributeCode() == $indexAttributeCode ? 'value' : 'label';
             $expectedOptions = [];
             foreach ($attribute->getSource()->getAllOptions(false) as $option) {
-                if (is_array($option['value'])) {
-                    foreach ($option['value'] as $value) {
-                        $expectedOptions[strtolower($value[$index])] = $value['value'];
-                    }
-                } else {
-                    $expectedOptions[strtolower($option[$index])] = $option['value'];
-                }
+                $expectedOptions[strtolower($option[$index])] = $option['value'];
             }
             $actualOptions = $this->_model->getAttributeOptions($attribute, [$indexAttributeCode]);
-            asort($expectedOptions);
-            asort($actualOptions);
+            sort($expectedOptions);
+            sort($actualOptions);
             $this->assertEquals($expectedOptions, $actualOptions);
         }
     }

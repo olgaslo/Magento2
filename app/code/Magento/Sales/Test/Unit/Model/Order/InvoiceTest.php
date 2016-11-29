@@ -15,7 +15,6 @@ use Magento\Sales\Model\ResourceModel\OrderFactory;
  * Class InvoiceTest
  *
  * @package Magento\Sales\Model\Order
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
 class InvoiceTest extends \PHPUnit_Framework_TestCase
 {
@@ -64,7 +63,7 @@ class InvoiceTest extends \PHPUnit_Framework_TestCase
     {
         $this->helperManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
         $this->orderMock = $this->getMockBuilder(
-            \Magento\Sales\Model\Order::class
+            'Magento\Sales\Model\Order'
         )->disableOriginalConstructor()->setMethods(
             [
                 'getPayment', '__wakeup', 'load', 'setHistoryEntityName', 'getStore', 'getBillingAddress',
@@ -77,15 +76,15 @@ class InvoiceTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnSelf());
 
         $this->paymentMock = $this->getMockBuilder(
-            \Magento\Sales\Model\Order\Payment::class
+            'Magento\Sales\Model\Order\Payment'
         )->disableOriginalConstructor()->setMethods(
             ['canVoid', '__wakeup', 'canCapture', 'capture', 'pay']
         )->getMock();
 
-        $this->orderFactory = $this->getMock(\Magento\Sales\Model\OrderFactory::class, ['create'], [], '', false);
+        $this->orderFactory = $this->getMock('Magento\Sales\Model\OrderFactory', ['create'], [], '', false);
 
-        $this->eventManagerMock = $this->getMock(\Magento\Framework\Event\ManagerInterface::class, [], [], '', false);
-        $contextMock = $this->getMock(\Magento\Framework\Model\Context::class, [], [], '', false);
+        $this->eventManagerMock = $this->getMock('\Magento\Framework\Event\ManagerInterface', [], [], '', false);
+        $contextMock = $this->getMock('\Magento\Framework\Model\Context', [], [], '', false);
         $contextMock->expects($this->any())
             ->method('getEventDispatcher')
             ->willReturn($this->eventManagerMock);
@@ -94,47 +93,44 @@ class InvoiceTest extends \PHPUnit_Framework_TestCase
             'context' => $contextMock,
             'orderFactory' => $this->orderFactory,
             'orderResourceFactory' => $this->getMock(
-                \Magento\Sales\Model\ResourceModel\OrderFactory::class,
+                'Magento\Sales\Model\ResourceModel\OrderFactory',
                 [],
                 [],
                 '',
                 false
             ),
             'calculatorFactory' => $this->getMock(
-                \Magento\Framework\Math\CalculatorFactory::class,
+                    'Magento\Framework\Math\CalculatorFactory',
                     [],
                     [],
                     '',
                     false
                 ),
             'invoiceItemCollectionFactory' => $this->getMock(
-                \Magento\Sales\Model\ResourceModel\Order\Invoice\Item\CollectionFactory::class,
+                'Magento\Sales\Model\ResourceModel\Order\Invoice\Item\CollectionFactory',
                 [],
                 [],
                 '',
                 false
             ),
             'invoiceCommentFactory' => $this->getMock(
-                \Magento\Sales\Model\Order\Invoice\CommentFactory::class,
+                'Magento\Sales\Model\Order\Invoice\CommentFactory',
                 [],
                 [],
                 '',
                 false
             ),
             'commentCollectionFactory' => $this->getMock(
-                \Magento\Sales\Model\ResourceModel\Order\Invoice\Comment\CollectionFactory::class,
+                'Magento\Sales\Model\ResourceModel\Order\Invoice\Comment\CollectionFactory',
                 [],
                 [],
                 '',
                 false
             ),
         ];
-        $this->model = $this->helperManager->getObject(\Magento\Sales\Model\Order\Invoice::class, $arguments);
+        $this->model = $this->helperManager->getObject('Magento\Sales\Model\Order\Invoice', $arguments);
         $this->model->setOrder($this->orderMock);
-        $this->modelWithoutOrder = $this->helperManager->getObject(
-            \Magento\Sales\Model\Order\Invoice::class,
-            $arguments
-        );
+        $this->modelWithoutOrder = $this->helperManager->getObject('Magento\Sales\Model\Order\Invoice', $arguments);
     }
 
     /**
@@ -226,7 +222,7 @@ class InvoiceTest extends \PHPUnit_Framework_TestCase
 
     public function testGetStore()
     {
-        $store = $this->helperManager->getObject(\Magento\Store\Model\Store::class, []);
+        $store = $this->helperManager->getObject('\Magento\Store\Model\Store', []);
         $this->orderMock->expects($this->once())->method('getStore')->willReturn($store);
         $this->assertEquals($store, $this->model->getStore());
 
@@ -234,7 +230,7 @@ class InvoiceTest extends \PHPUnit_Framework_TestCase
 
     public function testGetShippingAddress()
     {
-        $address = $this->helperManager->getObject(\Magento\Sales\Model\Order\Address::class, []);
+        $address = $this->helperManager->getObject('\Magento\Sales\Model\Order\Address', []);
         $this->orderMock->expects($this->once())->method('getShippingAddress')->willReturn($address);
         $this->assertEquals($address, $this->model->getShippingAddress());
 

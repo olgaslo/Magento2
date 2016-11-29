@@ -17,13 +17,11 @@ class TaxRuleCollectionTest extends \PHPUnit_Framework_TestCase
     public function testCreateTaxRuleCollectionItem()
     {
         /** @var \Magento\Tax\Model\ResourceModel\Calculation\Rule\Collection $collection */
-        $collection = Bootstrap::getObjectManager()->get(
-            \Magento\Tax\Model\ResourceModel\Calculation\Rule\Collection::class
-        );
+        $collection = Bootstrap::getObjectManager()->get('Magento\Tax\Model\ResourceModel\Calculation\Rule\Collection');
         $dbTaxRulesQty = $collection->count();
 
         /** @var \Magento\Tax\Model\Calculation\Rule $firstTaxRuleFixture */
-        $firstTaxRuleFixture = Bootstrap::getObjectManager()->get(\Magento\Framework\Registry::class)
+        $firstTaxRuleFixture = Bootstrap::getObjectManager()->get('Magento\Framework\Registry')
             ->registry('_fixture/Magento_Tax_Model_Calculation_Rule');
         $expectedFirstTaxRuleId = $firstTaxRuleFixture->getId();
 
@@ -32,7 +30,7 @@ class TaxRuleCollectionTest extends \PHPUnit_Framework_TestCase
         }
         /** @var \Magento\Tax\Model\TaxRuleCollection $taxRulesCollection */
         $taxRulesCollection = Bootstrap::getObjectManager()
-            ->create(\Magento\Tax\Model\TaxRuleCollection::class);
+            ->create('Magento\Tax\Model\TaxRuleCollection');
         $collectionTaxRulesQty = $taxRulesCollection->count();
         $this->assertEquals($dbTaxRulesQty, $collectionTaxRulesQty, 'Tax rules quantity is invalid.');
         $taxRule = $taxRulesCollection->getFirstItem()->getData();

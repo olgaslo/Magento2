@@ -22,10 +22,10 @@ class ScopeDefinerTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->_requestMock = $this->getMock(\Magento\Framework\App\RequestInterface::class, [], [], '', false);
+        $this->_requestMock = $this->getMock('Magento\Framework\App\RequestInterface', [], [], '', false);
         $objectManager = new ObjectManager($this);
         $this->_model = $objectManager->getObject(
-            \Magento\Config\Model\Config\ScopeDefiner::class,
+            'Magento\Config\Model\Config\ScopeDefiner',
             ['request' => $this->_requestMock]
         );
     }

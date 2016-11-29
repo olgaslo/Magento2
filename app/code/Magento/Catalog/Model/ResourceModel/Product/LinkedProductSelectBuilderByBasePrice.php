@@ -7,7 +7,6 @@ namespace Magento\Catalog\Model\ResourceModel\Product;
 
 use Magento\Catalog\Api\Data\ProductInterface;
 use Magento\Catalog\Model\Product;
-use Magento\Framework\App\ObjectManager;
 use Magento\Framework\DB\Select;
 use Magento\Store\Model\Store;
 
@@ -39,33 +38,24 @@ class LinkedProductSelectBuilderByBasePrice implements LinkedProductSelectBuilde
     private $metadataPool;
 
     /**
-     * @var BaseSelectProcessorInterface
-     */
-    private $baseSelectProcessor;
-
-    /**
      * @param \Magento\Store\Model\StoreManagerInterface $storeManager
      * @param \Magento\Framework\App\ResourceConnection $resourceConnection
      * @param \Magento\Eav\Model\Config $eavConfig
      * @param \Magento\Catalog\Helper\Data $catalogHelper
      * @param \Magento\Framework\EntityManager\MetadataPool $metadataPool
-     * @param BaseSelectProcessorInterface $baseSelectProcessor
      */
     public function __construct(
         \Magento\Store\Model\StoreManagerInterface $storeManager,
         \Magento\Framework\App\ResourceConnection $resourceConnection,
         \Magento\Eav\Model\Config $eavConfig,
         \Magento\Catalog\Helper\Data $catalogHelper,
-        \Magento\Framework\EntityManager\MetadataPool $metadataPool,
-        BaseSelectProcessorInterface $baseSelectProcessor = null
+        \Magento\Framework\EntityManager\MetadataPool $metadataPool
     ) {
         $this->storeManager = $storeManager;
         $this->resource = $resourceConnection;
         $this->eavConfig = $eavConfig;
         $this->catalogHelper = $catalogHelper;
         $this->metadataPool = $metadataPool;
-        $this->baseSelectProcessor = (null !== $baseSelectProcessor)
-            ? $baseSelectProcessor : ObjectManager::getInstance()->get(BaseSelectProcessorInterface::class);
     }
 
     /**
@@ -84,19 +74,18 @@ class LinkedProductSelectBuilderByBasePrice implements LinkedProductSelectBuilde
                 "link.parent_id = parent.$linkField",
                 []
             )->joinInner(
-                [BaseSelectProcessorInterface::PRODUCT_TABLE_ALIAS => $productTable],
-                sprintf('%s.entity_id = link.child_id', BaseSelectProcessorInterface::PRODUCT_TABLE_ALIAS, $linkField),
+                ['child' => $productTable],
+                "child.entity_id = link.child_id",
                 ['entity_id']
             )->joinInner(
                 ['t' => $priceAttribute->getBackendTable()],
-                sprintf('t.%s = %s.%1$s', $linkField, BaseSelectProcessorInterface::PRODUCT_TABLE_ALIAS),
+                "t.$linkField = child.$linkField",
                 []
-            )->where('parent.entity_id = ?', $productId)
+            )->where('parent.entity_id = ? ', $productId)
             ->where('t.attribute_id = ?', $priceAttribute->getAttributeId())
             ->where('t.value IS NOT NULL')
             ->order('t.value ' . Select::SQL_ASC)
             ->limit(1);
-        $priceSelect = $this->baseSelectProcessor->process($priceSelect);
 
         $priceSelectDefault = clone $priceSelect;
         $priceSelectDefault->where('t.store_id = ?', Store::DEFAULT_STORE_ID);

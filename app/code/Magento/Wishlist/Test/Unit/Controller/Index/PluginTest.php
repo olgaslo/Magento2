@@ -35,7 +35,7 @@ class PluginTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->customerSession = $this->getMockBuilder(\Magento\Customer\Model\Session::class)
+        $this->customerSession = $this->getMockBuilder('Magento\Customer\Model\Session')
             ->disableOriginalConstructor()
             ->setMethods([
                 'authenticate',
@@ -50,16 +50,10 @@ class PluginTest extends \PHPUnit_Framework_TestCase
             ])
             ->getMock();
 
-        $this->authenticationState = $this->getMock(
-            \Magento\Wishlist\Model\AuthenticationState::class,
-            [],
-            [],
-            '',
-            false
-        );
-        $this->config = $this->getMock(\Magento\Framework\App\Config::class, [], [], '', false);
-        $this->redirector = $this->getMock(\Magento\Store\App\Response\Redirect::class, [], [], '', false);
-        $this->request = $this->getMock(\Magento\Framework\App\Request\Http::class, [], [], '', false);
+        $this->authenticationState = $this->getMock('Magento\Wishlist\Model\AuthenticationState', [], [], '', false);
+        $this->config = $this->getMock('Magento\Framework\App\Config', [], [], '', false);
+        $this->redirector = $this->getMock('\Magento\Store\App\Response\Redirect', [], [], '', false);
+        $this->request = $this->getMock('Magento\Framework\App\Request\Http', [], [], '', false);
     }
 
     protected function tearDown()
@@ -93,8 +87,8 @@ class PluginTest extends \PHPUnit_Framework_TestCase
             'product' => 1,
         ];
 
-        $actionFlag = $this->getMock(\Magento\Framework\App\ActionFlag::class, [], [], '', false);
-        $indexController = $this->getMock(\Magento\Wishlist\Controller\Index\Index::class, [], [], '', false);
+        $actionFlag = $this->getMock('Magento\Framework\App\ActionFlag', [], [], '', false);
+        $indexController = $this->getMock('Magento\Wishlist\Controller\Index\Index', [], [], '', false);
 
         $actionFlag
             ->expects($this->once())

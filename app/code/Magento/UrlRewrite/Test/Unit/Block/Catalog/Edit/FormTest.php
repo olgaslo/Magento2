@@ -10,9 +10,6 @@ namespace Magento\UrlRewrite\Test\Unit\Block\Catalog\Edit;
 
 use Magento\Framework\TestFramework\Unit\Helper\ObjectManager;
 
-/**
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
- */
 class FormTest extends \PHPUnit_Framework_TestCase
 {
     /** @var \Magento\UrlRewrite\Block\Edit\Form */
@@ -35,23 +32,18 @@ class FormTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->layout = $this->getMock(\Magento\Framework\View\LayoutInterface::class);
-        $this->formFactory = $this->getMock(\Magento\Framework\Data\FormFactory::class, ['create'], [], '', false);
+        $this->layout = $this->getMock('Magento\Framework\View\LayoutInterface');
+        $this->formFactory = $this->getMock('Magento\Framework\Data\FormFactory', ['create'], [], '', false);
         $this->urlRewriteFactory = $this->getMock(
-            \Magento\UrlRewrite\Model\UrlRewriteFactory::class, ['create'], [], '', false
+            'Magento\UrlRewrite\Model\UrlRewriteFactory', ['create'], [], '', false
         );
         $this->urlRewriteFactory->expects($this->once())->method('create')
-            ->willReturn($this->getMock(\Magento\UrlRewrite\Model\UrlRewrite::class, [], [], '', false));
-        $this->categoryFactory = $this->getMock(
-            \Magento\Catalog\Model\CategoryFactory::class,
-            ['create'],
-            [],
-            '',
-            false
-        );
-        $this->productFactory = $this->getMock(\Magento\Catalog\Model\ProductFactory::class, ['create'], [], '', false);
+            ->willReturn($this->getMock('Magento\UrlRewrite\Model\UrlRewrite', [], [], '', false));
+        $this->categoryFactory = $this->getMock('Magento\Catalog\Model\CategoryFactory', ['create'], [], '', false);
+        $this->productFactory = $this->getMock('Magento\Catalog\Model\ProductFactory', ['create'], [], '', false);
 
-        $this->form = (new ObjectManager($this))->getObject(\Magento\UrlRewrite\Block\Catalog\Edit\Form::class,
+        $this->form = (new ObjectManager($this))->getObject(
+            'Magento\UrlRewrite\Block\Catalog\Edit\Form',
             [
                 'layout' => $this->layout,
                 'productFactory' => $this->productFactory,
@@ -65,19 +57,19 @@ class FormTest extends \PHPUnit_Framework_TestCase
 
     public function testAddErrorMessageWhenProductWithoutStores()
     {
-        $form = $this->getMock(\Magento\Framework\Data\Form::class, [], [], '', false);
+        $form = $this->getMock('Magento\Framework\Data\Form', [], [], '', false);
         $form->expects($this->any())->method('getElement')->will($this->returnValue(
-            $this->getMockForAbstractClass(\Magento\Framework\Data\Form\Element\AbstractElement::class, [], '', false))
+            $this->getMockForAbstractClass('\Magento\Framework\Data\Form\Element\AbstractElement', [], '', false))
         );
         $this->formFactory->expects($this->once())
             ->method('create')
             ->will($this->returnValue($form));
-        $fieldset = $this->getMock(\Magento\Framework\Data\Form\Element\Fieldset::class, [], [], '', false);
+        $fieldset = $this->getMock('Magento\Framework\Data\Form\Element\Fieldset', [], [], '', false);
         $form->expects($this->once())
             ->method('addFieldset')
             ->will($this->returnValue($fieldset));
         $storeElement = $this->getMock(
-            \Magento\Framework\Data\Form\Element\AbstractElement::class,
+            'Magento\Framework\Data\Form\Element\AbstractElement',
             ['setAfterElementHtml', 'setValues'],
             [],
             '',
@@ -98,18 +90,18 @@ class FormTest extends \PHPUnit_Framework_TestCase
             )
             ->willReturn($storeElement);
 
-        $product = $this->getMock(\Magento\Catalog\Model\Product::class, [], [], '', false);
+        $product = $this->getMock('Magento\Catalog\Model\Product', [], [], '', false);
         $product->expects($this->any())->method('getId')->willReturn('product_id');
         $product->expects($this->once())->method('getStoreIds')->willReturn([]);
         $this->productFactory->expects($this->once())->method('create')->willReturn($product);
         $this->categoryFactory->expects($this->once())->method('create')
-            ->willReturn($this->getMock(\Magento\Catalog\Model\Category::class, [], [], '', false));
+            ->willReturn($this->getMock('Magento\Catalog\Model\Category', [], [], '', false));
 
         $storeElement->expects($this->once())->method('setAfterElementHtml');
         $storeElement->expects($this->once())->method('setValues')->with([]);
 
         $this->layout->expects($this->once())->method('createBlock')
-            ->willReturn($this->getMock(\Magento\Framework\Data\Form\Element\Renderer\RendererInterface::class));
+            ->willReturn($this->getMock('Magento\Framework\Data\Form\Element\Renderer\RendererInterface'));
 
         $this->form->toHtml();
     }

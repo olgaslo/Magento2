@@ -19,20 +19,20 @@ class JsTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->_urlBuilder = $this->getMock(\Magento\Backend\Model\Url::class, [], [], '', false);
+        $this->_urlBuilder = $this->getMock('Magento\Backend\Model\Url', [], [], '', false);
 
         $objectManagerHelper = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
         $constructArguments = $objectManagerHelper->getConstructArguments(
-            \Magento\Theme\Block\Adminhtml\System\Design\Theme\Edit\Tab\Js::class,
+            'Magento\Theme\Block\Adminhtml\System\Design\Theme\Edit\Tab\Js',
             [
-                'formFactory' => $this->getMock(\Magento\Framework\Data\FormFactory::class, [], [], '', false),
-                'objectManager' => $this->getMock(\Magento\Framework\ObjectManagerInterface::class),
+                'formFactory' => $this->getMock('Magento\Framework\Data\FormFactory', [], [], '', false),
+                'objectManager' => $this->getMock('Magento\Framework\ObjectManagerInterface'),
                 'urlBuilder' => $this->_urlBuilder
             ]
         );
 
         $this->_model = $this->getMock(
-            \Magento\Theme\Block\Adminhtml\System\Design\Theme\Edit\Tab\Js::class,
+            'Magento\Theme\Block\Adminhtml\System\Design\Theme\Edit\Tab\Js',
             ['_getCurrentTheme'],
             $constructArguments,
             '',
@@ -51,7 +51,7 @@ class JsTest extends \PHPUnit_Framework_TestCase
      */
     protected function _getMethod($name)
     {
-        $class = new \ReflectionClass(\Magento\Theme\Block\Adminhtml\System\Design\Theme\Edit\Tab\Js::class);
+        $class = new \ReflectionClass('Magento\Theme\Block\Adminhtml\System\Design\Theme\Edit\Tab\Js');
         $method = $class->getMethod($name);
         $method->setAccessible(true);
         return $method;
@@ -62,7 +62,7 @@ class JsTest extends \PHPUnit_Framework_TestCase
         $method = $this->_getMethod('_getAdditionalElementTypes');
         $result = $method->invokeArgs($this->_model, []);
         $expectedResult = [
-            'js_files' => \Magento\Theme\Block\Adminhtml\System\Design\Theme\Edit\Form\Element\File::class,
+            'js_files' => 'Magento\Theme\Block\Adminhtml\System\Design\Theme\Edit\Form\Element\File',
         ];
         $this->assertEquals($expectedResult, $result);
     }
@@ -77,7 +77,7 @@ class JsTest extends \PHPUnit_Framework_TestCase
         $themeId = 2;
         $uploadUrl = 'upload_url';
         $themeMock = $this->getMock(
-            \Magento\Theme\Model\Theme::class,
+            'Magento\Theme\Model\Theme',
             ['isVirtual', 'getId', '__wakeup'],
             [],
             '',

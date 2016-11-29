@@ -31,16 +31,16 @@ class ViewTest extends \PHPUnit_Framework_TestCase
         $objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
 
         $this->orderCollectionFactory = $this->getMock(
-            \Magento\Sales\Model\ResourceModel\Order\CollectionFactory::class,
+            'Magento\Sales\Model\ResourceModel\Order\CollectionFactory',
             ['create'],
             [],
             '',
             false
         );
-        $this->orderConfig = $this->getMock(\Magento\Sales\Model\Order\Config::class, [], [], '', false);
+        $this->orderConfig = $this->getMock('Magento\Sales\Model\Order\Config', [], [], '', false);
 
         $this->block = $objectManager->getObject(
-            \Magento\Paypal\Block\Billing\Agreement\View::class,
+            'Magento\Paypal\Block\Billing\Agreement\View',
             [
                 'orderCollectionFactory' => $this->orderCollectionFactory,
                 'orderConfig' => $this->orderConfig,
@@ -53,7 +53,7 @@ class ViewTest extends \PHPUnit_Framework_TestCase
         $visibleStatuses = [];
 
         $orderCollection = $this->getMock(
-            \Magento\Sales\Model\ResourceModel\Order\Collection::class,
+            'Magento\Sales\Model\ResourceModel\Order\Collection',
             ['addFieldToSelect', 'addFieldToFilter', 'setOrder'],
             [],
             '',

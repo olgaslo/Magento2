@@ -47,6 +47,11 @@ class CurrencyTest extends \PHPUnit_Framework_TestCase
      */
     protected $_row;
 
+    /*
+     * @var \PHPUnit_Framework_MockObject_MockObject
+     */
+    protected $priceCurrencyMock;
+
     protected function setUp()
     {
         $this->_storeManagerMock = $this->getMock(\Magento\Store\Model\StoreManagerInterface::class);
@@ -80,7 +85,7 @@ class CurrencyTest extends \PHPUnit_Framework_TestCase
         );
         $currencyFactoryMock->expects($this->any())->method('create')->will($this->returnValue($this->_currencyMock));
 
-        $this->_row = new \Magento\Framework\DataObject(['columnIndex' => '10']);
+        $this->_row = new \Magento\Framework\DataObject(['columnIndex' => '$10.00']);
 
         $helper = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
         $this->_blockCurrency = $helper->getObject(
@@ -95,6 +100,21 @@ class CurrencyTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->_blockCurrency->setColumn($this->_columnMock);
+
+        $this->priceCurrencyMock = $this->getMockForAbstractClass(
+            \Magento\Framework\Pricing\PriceCurrencyInterface::class,
+            [],
+            '',
+            false,
+            true,
+            true,
+            ['convertAndFormat']
+        );
+        $helper->setBackwardCompatibleProperty(
+            $this->_blockCurrency,
+            'priceCurrency',
+            $this->priceCurrencyMock
+        );
     }
 
     protected function tearDown()
@@ -113,46 +133,11 @@ class CurrencyTest extends \PHPUnit_Framework_TestCase
      */
     public function testRenderWithDefaultCurrency()
     {
-        $this->_currencyMock->expects(
-            $this->once()
-        )->method(
-            'getRate'
-        )->with(
-            'defaultCurrency'
-        )->will(
-            $this->returnValue(1.5)
-        );
+        $this->priceCurrencyMock->expects($this->once())
+            ->method('convertAndFormat')
+            ->with('$10.00', false)
+            ->willReturn('$10.00');
 
-        $this->_curLocatorMock->expects(
-            $this->any()
-        )->method(
-            'getDefaultCurrency'
-        )->with(
-            $this->_requestMock
-        )->will(
-            $this->returnValue('defaultCurrency')
-        );
-
-        $currLocaleMock = $this->getMock(\Zend_Currency::class, [], [], '', false);
-        $currLocaleMock->expects(
-            $this->once()
-        )->method(
-            'toCurrency'
-        )->with(
-            15.0000
-        )->will(
-            $this->returnValue('15USD')
-        );
-        $this->_localeMock->expects(
-            $this->once()
-        )->method(
-            'getCurrency'
-        )->with(
-            'defaultCurrency'
-        )->will(
-            $this->returnValue($currLocaleMock)
-        );
-
-        $this->assertEquals('15USD', $this->_blockCurrency->render($this->_row));
+        $this->assertEquals('$10.00', $this->_blockCurrency->render($this->_row));
     }
 }

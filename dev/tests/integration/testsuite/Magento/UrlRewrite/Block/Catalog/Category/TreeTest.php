@@ -24,9 +24,9 @@ class TreeTest extends \PHPUnit_Framework_TestCase
     {
         parent::setUp();
         $this->_treeBlock = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->get(
-            \Magento\Framework\View\LayoutInterface::class
+            'Magento\Framework\View\LayoutInterface'
         )->createBlock(
-            \Magento\UrlRewrite\Block\Catalog\Category\Tree::class
+            'Magento\UrlRewrite\Block\Catalog\Category\Tree'
         );
     }
 
@@ -63,6 +63,6 @@ class TreeTest extends \PHPUnit_Framework_TestCase
     public function testGetCategoryCollection()
     {
         $collection = $this->_treeBlock->getCategoryCollection();
-        $this->assertInstanceOf(\Magento\Catalog\Model\ResourceModel\Category\Collection::class, $collection);
+        $this->assertInstanceOf('Magento\Catalog\Model\ResourceModel\Category\Collection', $collection);
     }
 }

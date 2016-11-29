@@ -71,7 +71,7 @@ class ActivityTest extends \PHPUnit_Framework_TestCase
         $this->objectManager = new ObjectManager($this);
 
         $this->sessionsInfoCollection =  $this->getMock(
-            \Magento\Security\Model\ResourceModel\AdminSessionInfo\CollectionFactory::class,
+            '\Magento\Security\Model\ResourceModel\AdminSessionInfo\CollectionFactory',
             ['create'],
             [],
             '',
@@ -79,7 +79,7 @@ class ActivityTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->sessionsManager =  $this->getMock(
-            \Magento\Security\Model\AdminSessionsManager::class,
+            '\Magento\Security\Model\AdminSessionsManager',
             ['getSessionsForCurrentUser'],
             [],
             '',
@@ -91,7 +91,7 @@ class ActivityTest extends \PHPUnit_Framework_TestCase
             ->getMock();
 
         $this->sessionMock =  $this->getMock(
-            \Magento\Security\Model\AdminSessionInfo::class,
+            '\Magento\Security\Model\AdminSessionInfo',
             [],
             [],
             '',
@@ -99,14 +99,14 @@ class ActivityTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->localeDate = $this->getMockForAbstractClass(
-            \Magento\Framework\Stdlib\DateTime\TimezoneInterface::class,
+            '\Magento\Framework\Stdlib\DateTime\TimezoneInterface',
             ['formatDateTime'],
             '',
             false
         );
 
         $this->collectionMock =  $this->getMock(
-            \Magento\Security\Model\ResourceModel\AdminSessionInfo\Collection::class,
+            '\Magento\Security\Model\ResourceModel\AdminSessionInfo\Collection',
             ['count', 'is_null'],
             [],
             '',
@@ -137,7 +137,7 @@ class ActivityTest extends \PHPUnit_Framework_TestCase
             ->method('getSessionsForCurrentUser')
             ->willReturn($this->collectionMock);
         $this->assertInstanceOf(
-            \Magento\Security\Model\ResourceModel\AdminSessionInfo\Collection::class,
+            '\Magento\Security\Model\ResourceModel\AdminSessionInfo\Collection',
             $this->block->getSessionInfoCollection()
         );
     }

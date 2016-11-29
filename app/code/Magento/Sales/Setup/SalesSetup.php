@@ -15,30 +15,9 @@ use Magento\Framework\Setup\ModuleDataSetupInterface;
 /**
  * Setup Model of Sales Module
  * @codeCoverageIgnore
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
 class SalesSetup extends \Magento\Eav\Setup\EavSetup
 {
-    /**
-     * This should be set explicitly
-     */
-    const ORDER_ENTITY_TYPE_ID = 5;
-
-    /**
-     * This should be set explicitly
-     */
-    const INVOICE_PRODUCT_ENTITY_TYPE_ID = 6;
-
-    /**
-     * This should be set explicitly
-     */
-    const CREDITMEMO_PRODUCT_ENTITY_TYPE_ID = 7;
-
-    /**
-     * This should be set explicitly
-     */
-    const SHIPMENT_PRODUCT_ENTITY_TYPE_ID = 8;
-
     /**
      * @var ScopeConfigInterface
      */
@@ -48,11 +27,6 @@ class SalesSetup extends \Magento\Eav\Setup\EavSetup
      * @var EncryptorInterface
      */
     protected $encryptor;
-
-    /**
-     * @var string
-     */
-    private static $connectionName = 'sales';
 
     /**
      * @param ModuleDataSetupInterface $setup
@@ -111,11 +85,8 @@ class SalesSetup extends \Magento\Eav\Setup\EavSetup
      */
     protected function _flatTableExist($table)
     {
-        $tablesList = $this->getSetup()->getConnection(self::$connectionName)->listTables();
-        return in_array(
-            strtoupper($this->getSetup()->getTable($table, self::$connectionName)),
-            array_map('strtoupper', $tablesList)
-        );
+        $tablesList = $this->getSetup()->getConnection()->listTables();
+        return in_array(strtoupper($this->getSetup()->getTable($table)), array_map('strtoupper', $tablesList));
     }
 
     /**
@@ -152,15 +123,13 @@ class SalesSetup extends \Magento\Eav\Setup\EavSetup
      */
     protected function _addFlatAttribute($table, $attribute, $attr)
     {
-        $tableInfo = $this->getSetup()
-            ->getConnection(self::$connectionName)
-            ->describeTable($this->getSetup()->getTable($table, self::$connectionName));
+        $tableInfo = $this->getSetup()->getConnection()->describeTable($this->getSetup()->getTable($table));
         if (isset($tableInfo[$attribute])) {
             return $this;
         }
         $columnDefinition = $this->_getAttributeColumnDefinition($attribute, $attr);
-        $this->getSetup()->getConnection(self::$connectionName)->addColumn(
-            $this->getSetup()->getTable($table, self::$connectionName),
+        $this->getSetup()->getConnection()->addColumn(
+            $this->getSetup()->getTable($table),
             $attribute,
             $columnDefinition
         );
@@ -180,8 +149,8 @@ class SalesSetup extends \Magento\Eav\Setup\EavSetup
     {
         if (in_array($entityTypeId, $this->_flatEntitiesGrid) && !empty($attr['grid'])) {
             $columnDefinition = $this->_getAttributeColumnDefinition($attribute, $attr);
-            $this->getSetup()->getConnection(self::$connectionName)->addColumn(
-                $this->getSetup()->getTable($table . '_grid', self::$connectionName),
+            $this->getSetup()->getConnection()->addColumn(
+                $this->getSetup()->getTable($table . '_grid'),
                 $attribute,
                 $columnDefinition
             );
@@ -245,34 +214,34 @@ class SalesSetup extends \Magento\Eav\Setup\EavSetup
     {
         $entities = [
             'order' => [
-                'entity_type_id' => self::ORDER_ENTITY_TYPE_ID,
-                'entity_model' => \Magento\Sales\Model\ResourceModel\Order::class,
+                'entity_type_id' => 5,
+                'entity_model' => 'Magento\Sales\Model\ResourceModel\Order',
                 'table' => 'sales_order',
-                'increment_model' => \Magento\Eav\Model\Entity\Increment\NumericValue::class,
+                'increment_model' => 'Magento\Eav\Model\Entity\Increment\NumericValue',
                 'increment_per_store' => true,
                 'attributes' => [],
             ],
             'invoice' => [
-                'entity_type_id' => self::INVOICE_PRODUCT_ENTITY_TYPE_ID,
-                'entity_model' => \Magento\Sales\Model\ResourceModel\Order\Invoice::class,
+                'entity_type_id' => 6,
+                'entity_model' => 'Magento\Sales\Model\ResourceModel\Order\Invoice',
                 'table' => 'sales_invoice',
-                'increment_model' => \Magento\Eav\Model\Entity\Increment\NumericValue::class,
+                'increment_model' => 'Magento\Eav\Model\Entity\Increment\NumericValue',
                 'increment_per_store' => true,
                 'attributes' => [],
             ],
             'creditmemo' => [
-                'entity_type_id' => self::CREDITMEMO_PRODUCT_ENTITY_TYPE_ID,
-                'entity_model' => \Magento\Sales\Model\ResourceModel\Order\Creditmemo::class,
+                'entity_type_id' => 7,
+                'entity_model' => 'Magento\Sales\Model\ResourceModel\Order\Creditmemo',
                 'table' => 'sales_creditmemo',
-                'increment_model' => \Magento\Eav\Model\Entity\Increment\NumericValue::class,
+                'increment_model' => 'Magento\Eav\Model\Entity\Increment\NumericValue',
                 'increment_per_store' => true,
                 'attributes' => [],
             ],
             'shipment' => [
-                'entity_type_id' => self::SHIPMENT_PRODUCT_ENTITY_TYPE_ID,
-                'entity_model' => \Magento\Sales\Model\ResourceModel\Order\Shipment::class,
+                'entity_type_id' => 8,
+                'entity_model' => 'Magento\Sales\Model\ResourceModel\Order\Shipment',
                 'table' => 'sales_shipment',
-                'increment_model' => \Magento\Eav\Model\Entity\Increment\NumericValue::class,
+                'increment_model' => 'Magento\Eav\Model\Entity\Increment\NumericValue',
                 'increment_per_store' => true,
                 'attributes' => [],
             ],

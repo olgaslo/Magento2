@@ -44,19 +44,19 @@ class LoggerTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->connection = $this->getMock(
-            \Magento\Framework\DB\Adapter\Pdo\Mysql::class,
+            'Magento\Framework\DB\Adapter\Pdo\Mysql',
             ['select', 'insertOnDuplicate', 'fetchRow'],
             [],
             '',
             false
         );
-        $this->resource = $this->getMock(\Magento\Framework\App\ResourceConnection::class, [], [], '', false);
-        $this->logFactory = $this->getMock(\Magento\Customer\Model\LogFactory::class, ['create'], [], '', false);
+        $this->resource = $this->getMock('Magento\Framework\App\ResourceConnection', [], [], '', false);
+        $this->logFactory = $this->getMock('\Magento\Customer\Model\LogFactory', ['create'], [], '', false);
 
         $objectManagerHelper = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
 
         $this->logger = $objectManagerHelper->getObject(
-            \Magento\Customer\Model\Logger::class,
+            '\Magento\Customer\Model\Logger',
             [
                 'resource' => $this->resource,
                 'logFactory' => $this->logFactory
@@ -121,7 +121,7 @@ class LoggerTest extends \PHPUnit_Framework_TestCase
             'lastVisitAt' => $data['last_visit_at']
         ];
 
-        $select = $this->getMock(\Magento\Framework\DB\Select::class, [], [], '', false);
+        $select = $this->getMock('Magento\Framework\DB\Select', [], [], '', false);
 
         $select->expects($this->any())->method('from')->willReturnSelf();
         $select->expects($this->any())->method('joinLeft')->willReturnSelf();
@@ -142,7 +142,7 @@ class LoggerTest extends \PHPUnit_Framework_TestCase
             ->willReturn($data);
 
         $log = $this->getMock(
-            \Magento\Customer\Model\Log::class,
+            'Magento\Customer\Model\Log',
             [],
             $logArguments
         );

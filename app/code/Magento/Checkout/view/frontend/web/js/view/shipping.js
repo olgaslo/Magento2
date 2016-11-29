@@ -79,6 +79,7 @@ define(
                     fieldsetName = 'checkout.steps.shipping-step.shippingAddress.shipping-address-fieldset';
 
                 this._super();
+                shippingRatesValidator.initFields(fieldsetName);
 
                 if (!quote.isVirtual()) {
                     stepNavigator.registerStep(
@@ -119,7 +120,6 @@ define(
                     checkoutProvider.on('shippingAddress', function (shippingAddressData) {
                         checkoutData.setShippingAddressFromData(shippingAddressData);
                     });
-                    shippingRatesValidator.initFields(fieldsetName);
                 });
 
                 return this;
@@ -179,7 +179,7 @@ define(
                     newShippingAddress;
 
                 this.source.set('params.invalid', false);
-                this.triggerShippingDataValidateEvent();
+                this.source.trigger('shippingAddress.data.validate');
 
                 if (!this.source.get('params.invalid')) {
                     addressData = this.source.get('shippingAddress');
@@ -242,7 +242,7 @@ define(
                     emailValidationResult = customer.isLoggedIn();
 
                 if (!quote.shippingMethod()) {
-                    this.errorValidationMessage($.mage.__('Please specify a shipping method.'));
+                    this.errorValidationMessage('Please specify a shipping method.');
 
                     return false;
                 }
@@ -254,14 +254,17 @@ define(
 
                 if (this.isFormInline) {
                     this.source.set('params.invalid', false);
-                    this.triggerShippingDataValidateEvent();
-                    if (emailValidationResult &&
-                        this.source.get('params.invalid') ||
-                        !quote.shippingMethod().method_code ||
-                        !quote.shippingMethod().carrier_code
-                    ) {
-                        this.focusInvalid();
+                    this.source.trigger('shippingAddress.data.validate');
 
+                    if (this.source.get('shippingAddress.custom_attributes')) {
+                        this.source.trigger('shippingAddress.custom_attributes.data.validate');
+                    }
+
+                    if (this.source.get('params.invalid') ||
+                        !quote.shippingMethod().method_code ||
+                        !quote.shippingMethod().carrier_code ||
+                        !emailValidationResult
+                    ) {
                         return false;
                     }
 
@@ -299,18 +302,6 @@ define(
                 }
 
                 return true;
-            },
-
-            /**
-             * Trigger Shipping data Validate Event.
-             *
-             * @return {void}
-             */
-            triggerShippingDataValidateEvent: function () {
-                this.source.trigger('shippingAddress.data.validate');
-                if (this.source.get('shippingAddress.custom_attributes')) {
-                    this.source.trigger('shippingAddress.custom_attributes.data.validate');
-                }
             }
         });
     }

@@ -44,15 +44,15 @@ class SalesTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $objectManager = Bootstrap::getObjectManager();
-        $objectManager->get(\Magento\Framework\App\State::class)->setAreaCode('adminhtml');
+        $objectManager->get('Magento\Framework\App\State')->setAreaCode('adminhtml');
 
-        $this->coreRegistry = $objectManager->get(\Magento\Framework\Registry::class);
+        $this->coreRegistry = $objectManager->get('Magento\Framework\Registry');
         $this->coreRegistry->register(RegistryConstants::CURRENT_CUSTOMER_ID, 1);
 
         $this->block = $objectManager->get(
-            \Magento\Framework\View\LayoutInterface::class
+            'Magento\Framework\View\LayoutInterface'
         )->createBlock(
-            \Magento\Customer\Block\Adminhtml\Edit\Tab\View\Sales::class,
+            'Magento\Customer\Block\Adminhtml\Edit\Tab\View\Sales',
             'sales_' . mt_rand(),
             ['coreRegistry' => $this->coreRegistry]
         )->setTemplate(
