@@ -1,21 +1,25 @@
 <?php
 /**
- * Copyright © 2016 Magento. All rights reserved.
+ * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
 namespace Magento\Braintree\Test\Unit\Gateway\Validator;
 
+use Braintree\Result\Successful;
 use Braintree\Transaction;
+use Magento\Braintree\Gateway\SubjectReader;
+use Magento\Braintree\Gateway\Validator\ErrorCodeValidator;
+use Magento\Braintree\Gateway\Validator\ResponseValidator;
 use Magento\Framework\Phrase;
+use Magento\Payment\Gateway\Validator\Result;
 use Magento\Payment\Gateway\Validator\ResultInterface;
 use Magento\Payment\Gateway\Validator\ResultInterfaceFactory;
-use Magento\Braintree\Gateway\Validator\ResponseValidator;
-use Magento\Braintree\Gateway\Helper\SubjectReader;
+use PHPUnit_Framework_MockObject_MockObject as MockObject;
 
 /**
  * Class ResponseValidatorTest
  */
-class ResponseValidatorTest extends \PHPUnit_Framework_TestCase
+class ResponseValidatorTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var ResponseValidator
@@ -23,14 +27,9 @@ class ResponseValidatorTest extends \PHPUnit_Framework_TestCase
     private $responseValidator;
 
     /**
-     * @var ResultInterfaceFactory|\PHPUnit_Framework_MockObject_MockObject
+     * @var ResultInterfaceFactory|MockObject
      */
-    private $resultInterfaceFactoryMock;
-
-    /**
-     * @var SubjectReader|\PHPUnit_Framework_MockObject_MockObject
-     */
-    private $subjectReaderMock;
+    private $resultInterfaceFactory;
 
     /**
      * Set up
@@ -39,18 +38,15 @@ class ResponseValidatorTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->resultInterfaceFactoryMock = $this->getMockBuilder(
-            'Magento\Payment\Gateway\Validator\ResultInterfaceFactory'
-        )->disableOriginalConstructor()
-            ->setMethods(['create'])
-            ->getMock();
-        $this->subjectReaderMock = $this->getMockBuilder(SubjectReader::class)
+        $this->resultInterfaceFactory = $this->getMockBuilder(ResultInterfaceFactory::class)
             ->disableOriginalConstructor()
+            ->setMethods(['create'])
             ->getMock();
 
         $this->responseValidator = new ResponseValidator(
-            $this->resultInterfaceFactoryMock,
-            $this->subjectReaderMock
+            $this->resultInterfaceFactory,
+            new SubjectReader(),
+            new ErrorCodeValidator()
         );
     }
 
@@ -63,11 +59,6 @@ class ResponseValidatorTest extends \PHPUnit_Framework_TestCase
             'response' => null
         ];
 
-        $this->subjectReaderMock->expects(self::once())
-            ->method('readResponseObject')
-            ->with($validationSubject)
-            ->willThrowException(new \InvalidArgumentException());
-
         $this->responseValidator->validate($validationSubject);
     }
 
@@ -79,11 +70,6 @@ class ResponseValidatorTest extends \PHPUnit_Framework_TestCase
         $validationSubject = [
             'response' => ['object' => null]
         ];
-
-        $this->subjectReaderMock->expects(self::once())
-            ->method('readResponseObject')
-            ->with($validationSubject)
-            ->willThrowException(new \InvalidArgumentException());
 
         $this->responseValidator->validate($validationSubject);
     }
@@ -100,25 +86,15 @@ class ResponseValidatorTest extends \PHPUnit_Framework_TestCase
      */
     public function testValidate(array $validationSubject, $isValid, $messages)
     {
-        /** @var ResultInterface|\PHPUnit_Framework_MockObject_MockObject $resultMock */
-        $resultMock = $this->getMock(ResultInterface::class);
+        /** @var ResultInterface|MockObject $result */
+        $result = new Result($isValid, $messages);
 
-        $this->subjectReaderMock->expects(self::once())
-            ->method('readResponseObject')
-            ->with($validationSubject)
-            ->willReturn($validationSubject['response']['object']);
+        $this->resultInterfaceFactory->method('create')
+            ->willReturn($result);
 
-        $this->resultInterfaceFactoryMock->expects(self::once())
-            ->method('create')
-            ->with([
-                'isValid' => $isValid,
-                'failsDescription' => $messages
-            ])
-            ->willReturn($resultMock);
+        $actual = $this->responseValidator->validate($validationSubject);
 
-        $actualMock = $this->responseValidator->validate($validationSubject);
-
-        self::assertEquals($resultMock, $actualMock);
+        self::assertEquals($result, $actual);
     }
 
     /**
@@ -126,15 +102,15 @@ class ResponseValidatorTest extends \PHPUnit_Framework_TestCase
      */
     public function dataProviderTestValidate()
     {
-        $successTrue = new \stdClass();
+        $successTrue = new Successful();
         $successTrue->success = true;
         $successTrue->transaction = new \stdClass();
         $successTrue->transaction->status = Transaction::AUTHORIZED;
 
-        $successFalse = new \stdClass();
+        $successFalse = new Successful();
         $successFalse->success = false;
 
-        $transactionDeclined = new \stdClass();
+        $transactionDeclined = new Successful();
         $transactionDeclined->success = true;
         $transactionDeclined->transaction = new \stdClass();
         $transactionDeclined->transaction->status = Transaction::SETTLEMENT_DECLINED;

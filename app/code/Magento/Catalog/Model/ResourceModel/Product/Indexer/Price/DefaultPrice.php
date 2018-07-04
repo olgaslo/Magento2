@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright © 2016 Magento. All rights reserved.
+ * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
 namespace Magento\Catalog\Model\ResourceModel\Product\Indexer\Price;
@@ -11,7 +11,11 @@ use Magento\Catalog\Model\ResourceModel\Product\Indexer\AbstractIndexer;
  * Default Product Type Price Indexer Resource model
  * For correctly work need define product type id
  *
+ * @api
+ *
  * @author      Magento Core Team <core@magentocommerce.com>
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
+ * @since 100.0.2
  */
 class DefaultPrice extends AbstractIndexer implements PriceInterface
 {
@@ -44,14 +48,31 @@ class DefaultPrice extends AbstractIndexer implements PriceInterface
     protected $_eventManager = null;
 
     /**
-     * Class constructor
+     * @var bool|null
+     */
+    private $hasEntity = null;
+
+    /**
+     * @var IndexTableStructureFactory
+     */
+    private $indexTableStructureFactory;
+
+    /**
+     * @var PriceModifierInterface[]
+     */
+    private $priceModifiers = [];
+
+    /**
+     * DefaultPrice constructor.
      *
      * @param \Magento\Framework\Model\ResourceModel\Db\Context $context
      * @param \Magento\Framework\Indexer\Table\StrategyInterface $tableStrategy
      * @param \Magento\Eav\Model\Config $eavConfig
      * @param \Magento\Framework\Event\ManagerInterface $eventManager
      * @param \Magento\Framework\Module\Manager $moduleManager
-     * @param string $connectionName
+     * @param string|null $connectionName
+     * @param IndexTableStructureFactory $indexTableStructureFactory
+     * @param PriceModifierInterface[] $priceModifiers
      */
     public function __construct(
         \Magento\Framework\Model\ResourceModel\Db\Context $context,
@@ -59,11 +80,25 @@ class DefaultPrice extends AbstractIndexer implements PriceInterface
         \Magento\Eav\Model\Config $eavConfig,
         \Magento\Framework\Event\ManagerInterface $eventManager,
         \Magento\Framework\Module\Manager $moduleManager,
-        $connectionName = null
+        $connectionName = null,
+        IndexTableStructureFactory $indexTableStructureFactory = null,
+        array $priceModifiers = []
     ) {
         $this->_eventManager = $eventManager;
         $this->moduleManager = $moduleManager;
         parent::__construct($context, $tableStrategy, $eavConfig, $connectionName);
+
+        $this->indexTableStructureFactory = $indexTableStructureFactory ?:
+            \Magento\Framework\App\ObjectManager::getInstance()->get(IndexTableStructureFactory::class);
+        foreach ($priceModifiers as $priceModifier) {
+            if (!($priceModifier instanceof PriceModifierInterface)) {
+                throw new \InvalidArgumentException(
+                    'Argument \'priceModifiers\' must be of the type ' . PriceModifierInterface::class . '[]'
+                );
+            }
+
+            $this->priceModifiers[] = $priceModifier;
+        }
     }
 
     /**
@@ -199,11 +234,39 @@ class DefaultPrice extends AbstractIndexer implements PriceInterface
      * Prepare final price temporary index table
      *
      * @return $this
+     * @deprecated
+     * @see prepareFinalPriceTable()
      */
     protected function _prepareDefaultFinalPriceTable()
     {
         $this->getConnection()->delete($this->_getDefaultFinalPriceTable());
         return $this;
+    }
+
+    /**
+     * Create (if needed), clean and return structure of final price table
+     *
+     * @return IndexTableStructure
+     */
+    private function prepareFinalPriceTable()
+    {
+        $tableName = $this->_getDefaultFinalPriceTable();
+        $this->getConnection()->delete($tableName);
+
+        $finalPriceTable = $this->indexTableStructureFactory->create([
+            'tableName' => $tableName,
+            'entityField' => 'entity_id',
+            'customerGroupField' => 'customer_group_id',
+            'websiteField' => 'website_id',
+            'taxClassField' => 'tax_class_id',
+            'originalPriceField' => 'orig_price',
+            'finalPriceField' => 'price',
+            'minPriceField' => 'min_price',
+            'maxPriceField' => 'max_price',
+            'tierPriceField' => 'tier_price',
+        ]);
+
+        return $finalPriceTable;
     }
 
     /**
@@ -235,11 +298,34 @@ class DefaultPrice extends AbstractIndexer implements PriceInterface
      * @param string|null $type product type, all if null
      * @return $this
      * @throws \Magento\Framework\Exception\LocalizedException
-     * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
      */
     protected function prepareFinalPriceDataForType($entityIds, $type)
     {
-        $this->_prepareDefaultFinalPriceTable();
+        $finalPriceTable = $this->prepareFinalPriceTable();
+
+        $select = $this->getSelect($entityIds, $type);
+        $query = $select->insertFromSelect($finalPriceTable->getTableName(), [], false);
+        $this->getConnection()->query($query);
+
+        $this->applyDiscountPrices($finalPriceTable);
+
+        return $this;
+    }
+
+    /**
+     * Forms Select for collecting price related data for final price index table
+     * Next types of prices took into account: default, special, tier price
+     * Moved to protected for possible reusing
+     *
+     * @param int|array $entityIds Ids for filtering output result
+     * @param string|null $type Type for filtering output result by specified product type (all if null)
+     * @return \Magento\Framework\DB\Select
+     * @throws \Magento\Framework\Exception\LocalizedException
+     * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
+     * @since 101.0.8
+     */
+    protected function getSelect($entityIds = null, $type = null)
+    {
         $metadata = $this->getMetadataPool()->getMetadata(\Magento\Catalog\Api\Data\ProductInterface::class);
         $connection = $this->getConnection();
         $select = $connection->select()->from(
@@ -329,20 +415,28 @@ class DefaultPrice extends AbstractIndexer implements PriceInterface
             'e.' . $metadata->getLinkField(),
             'cs.store_id'
         );
-        $currentDate = $connection->getDatePartSql('cwd.website_date');
+        $currentDate = 'cwd.website_date';
 
+        $maxUnsignedBigint = '~0';
         $specialFromDate = $connection->getDatePartSql($specialFrom);
         $specialToDate = $connection->getDatePartSql($specialTo);
-
-        $specialFromUse = $connection->getCheckSql("{$specialFromDate} <= {$currentDate}", '1', '0');
-        $specialToUse = $connection->getCheckSql("{$specialToDate} >= {$currentDate}", '1', '0');
-        $specialFromHas = $connection->getCheckSql("{$specialFrom} IS NULL", '1', "{$specialFromUse}");
-        $specialToHas = $connection->getCheckSql("{$specialTo} IS NULL", '1', "{$specialToUse}");
-        $finalPrice = $connection->getCheckSql(
-            "{$specialFromHas} > 0 AND {$specialToHas} > 0" . " AND {$specialPrice} < {$price}",
+        $specialFromExpr = "{$specialFrom} IS NULL OR {$specialFromDate} <= {$currentDate}";
+        $specialToExpr = "{$specialTo} IS NULL OR {$specialToDate} >= {$currentDate}";
+        $specialPriceExpr = $connection->getCheckSql(
+            "{$specialPrice} IS NOT NULL AND {$specialFromExpr} AND {$specialToExpr}",
             $specialPrice,
-            $price
+            $maxUnsignedBigint
         );
+        $tierPrice = new \Zend_Db_Expr('tp.min_price');
+        $tierPriceExpr = $connection->getIfNullSql(
+            $tierPrice,
+            $maxUnsignedBigint
+        );
+        $finalPrice = $connection->getLeastSql([
+            $price,
+            $specialPriceExpr,
+            $tierPriceExpr,
+        ]);
 
         $select->columns(
             [
@@ -350,8 +444,8 @@ class DefaultPrice extends AbstractIndexer implements PriceInterface
                 'price' => $connection->getIfNullSql($finalPrice, 0),
                 'min_price' => $connection->getIfNullSql($finalPrice, 0),
                 'max_price' => $connection->getIfNullSql($finalPrice, 0),
-                'tier_price' => new \Zend_Db_Expr('tp.min_price'),
-                'base_tier' => new \Zend_Db_Expr('tp.min_price'),
+                'tier_price' => $tierPrice,
+                'base_tier' => $tierPrice,
             ]
         );
 
@@ -368,13 +462,11 @@ class DefaultPrice extends AbstractIndexer implements PriceInterface
                 'select' => $select,
                 'entity_field' => new \Zend_Db_Expr('e.entity_id'),
                 'website_field' => new \Zend_Db_Expr('cw.website_id'),
-                'store_field' => new \Zend_Db_Expr('cs.store_id')
+                'store_field' => new \Zend_Db_Expr('cs.store_id'),
             ]
         );
 
-        $query = $select->insertFromSelect($this->_getDefaultFinalPriceTable(), [], false);
-        $connection->query($query);
-        return $this;
+        return $select;
     }
 
     /**
@@ -420,6 +512,19 @@ class DefaultPrice extends AbstractIndexer implements PriceInterface
     }
 
     /**
+     * Apply discount prices to final price index table.
+     *
+     * @param IndexTableStructure $finalPriceTable
+     * @return void
+     */
+    private function applyDiscountPrices(IndexTableStructure $finalPriceTable)
+    {
+        foreach ($this->priceModifiers as $priceModifier) {
+            $priceModifier->modifyPrice($finalPriceTable);
+        }
+    }
+
+    /**
      * Apply custom option minimal and maximal price to temporary final price index table
      *
      * @return $this
@@ -428,15 +533,21 @@ class DefaultPrice extends AbstractIndexer implements PriceInterface
     protected function _applyCustomOption()
     {
         $connection = $this->getConnection();
+        $finalPriceTable = $this->_getDefaultFinalPriceTable();
         $coaTable = $this->_getCustomOptionAggregateTable();
         $copTable = $this->_getCustomOptionPriceTable();
+        $metadata = $this->getMetadataPool()->getMetadata(\Magento\Catalog\Api\Data\ProductInterface::class);
 
         $this->_prepareCustomOptionAggregateTable();
         $this->_prepareCustomOptionPriceTable();
 
         $select = $connection->select()->from(
-            ['i' => $this->_getDefaultFinalPriceTable()],
+            ['i' => $finalPriceTable],
             ['entity_id', 'customer_group_id', 'website_id']
+        )->join(
+            ['e' => $this->getTable('catalog_product_entity')],
+            'e.entity_id = i.entity_id',
+            []
         )->join(
             ['cw' => $this->getTable('store_website')],
             'cw.website_id = i.website_id',
@@ -451,7 +562,7 @@ class DefaultPrice extends AbstractIndexer implements PriceInterface
             []
         )->join(
             ['o' => $this->getTable('catalog_product_option')],
-            'o.product_id = i.entity_id',
+            'o.product_id = e.' . $metadata->getLinkField(),
             ['option_id']
         )->join(
             ['ot' => $this->getTable('catalog_product_option_type_value')],
@@ -502,8 +613,12 @@ class DefaultPrice extends AbstractIndexer implements PriceInterface
         $connection->query($query);
 
         $select = $connection->select()->from(
-            ['i' => $this->_getDefaultFinalPriceTable()],
+            ['i' => $finalPriceTable],
             ['entity_id', 'customer_group_id', 'website_id']
+        )->join(
+            ['e' => $this->getTable('catalog_product_entity')],
+            'e.entity_id = i.entity_id',
+            []
         )->join(
             ['cw' => $this->getTable('store_website')],
             'cw.website_id = i.website_id',
@@ -518,7 +633,7 @@ class DefaultPrice extends AbstractIndexer implements PriceInterface
             []
         )->join(
             ['o' => $this->getTable('catalog_product_option')],
-            'o.product_id = i.entity_id',
+            'o.product_id = e.' . $metadata->getLinkField(),
             ['option_id']
         )->join(
             ['opd' => $this->getTable('catalog_product_option_price')],
@@ -535,13 +650,13 @@ class DefaultPrice extends AbstractIndexer implements PriceInterface
 
         $minPriceRound = new \Zend_Db_Expr("ROUND(i.price * ({$optPriceValue} / 100), 4)");
         $priceExpr = $connection->getCheckSql("{$optPriceType} = 'fixed'", $optPriceValue, $minPriceRound);
-        $minPrice = $connection->getCheckSql("{$priceExpr} > 0 AND o.is_require > 1", $priceExpr, 0);
+        $minPrice = $connection->getCheckSql("{$priceExpr} > 0 AND o.is_require = 1", $priceExpr, 0);
 
         $maxPrice = $priceExpr;
 
         $tierPriceRound = new \Zend_Db_Expr("ROUND(i.base_tier * ({$optPriceValue} / 100), 4)");
         $tierPriceExpr = $connection->getCheckSql("{$optPriceType} = 'fixed'", $optPriceValue, $tierPriceRound);
-        $tierPriceValue = $connection->getCheckSql("{$tierPriceExpr} > 0 AND o.is_require > 0", $tierPriceExpr, 0);
+        $tierPriceValue = $connection->getCheckSql("{$tierPriceExpr} > 0 AND o.is_require = 1", $tierPriceExpr, 0);
         $tierPrice = $connection->getCheckSql("i.base_tier IS NOT NULL", $tierPriceValue, "NULL");
 
         $select->columns(
@@ -571,7 +686,7 @@ class DefaultPrice extends AbstractIndexer implements PriceInterface
         $query = $select->insertFromSelect($copTable);
         $connection->query($query);
 
-        $table = ['i' => $this->_getDefaultFinalPriceTable()];
+        $table = ['i' => $finalPriceTable];
         $select = $connection->select()->join(
             ['io' => $copTable],
             'i.entity_id = io.entity_id AND i.customer_group_id = io.customer_group_id' .
@@ -661,16 +776,19 @@ class DefaultPrice extends AbstractIndexer implements PriceInterface
      */
     protected function hasEntity()
     {
-        $reader = $this->getConnection();
+        if ($this->hasEntity === null) {
+            $reader = $this->getConnection();
 
-        $select = $reader->select()->from(
-            [$this->getTable('catalog_product_entity')],
-            ['count(entity_id)']
-        )->where(
-            'type_id=?',
-            $this->getTypeId()
-        );
+            $select = $reader->select()->from(
+                [$this->getTable('catalog_product_entity')],
+                ['count(entity_id)']
+            )->where(
+                'type_id=?',
+                $this->getTypeId()
+            );
+            $this->hasEntity = (int)$reader->fetchOne($select) > 0;
+        }
 
-        return (int)$reader->fetchOne($select) > 0;
+        return $this->hasEntity;
     }
 }

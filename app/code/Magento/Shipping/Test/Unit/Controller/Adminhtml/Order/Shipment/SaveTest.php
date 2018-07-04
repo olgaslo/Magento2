@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright © 2016 Magento. All rights reserved.
+ * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
 
@@ -9,6 +9,7 @@
 namespace Magento\Shipping\Test\Unit\Controller\Adminhtml\Order\Shipment;
 
 use Magento\Backend\App\Action;
+use Magento\Sales\Model\ValidatorResultInterface;
 use Magento\Sales\Model\Order\Email\Sender\ShipmentSender;
 use Magento\Framework\TestFramework\Unit\Helper\ObjectManager as ObjectManagerHelper;
 use Magento\Sales\Model\Order\Shipment\ShipmentValidatorInterface;
@@ -18,8 +19,9 @@ use Magento\Sales\Model\Order\Shipment\Validation\QuantityValidator;
  * Class SaveTest
  *
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
+ * @SuppressWarnings(PHPMD.TooManyFields)
  */
-class SaveTest extends \PHPUnit_Framework_TestCase
+class SaveTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var \Magento\Shipping\Controller\Adminhtml\Order\ShipmentLoader|\PHPUnit_Framework_MockObject_MockObject
@@ -97,6 +99,11 @@ class SaveTest extends \PHPUnit_Framework_TestCase
     private $shipmentValidatorMock;
 
     /**
+     * @var ValidatorResultInterface|\PHPUnit_Framework_MockObject_MockObject
+     */
+    private $validationResult;
+
+    /**
      * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
      */
     protected function setUp()
@@ -105,7 +112,10 @@ class SaveTest extends \PHPUnit_Framework_TestCase
         $this->shipmentLoader = $this->getMockBuilder(
             \Magento\Shipping\Controller\Adminhtml\Order\ShipmentLoader::class)
             ->disableOriginalConstructor()
-            ->setMethods([])
+            ->setMethods(['setShipmentId', 'setOrderId', 'setShipment', 'setTracking', 'load'])
+            ->getMock();
+        $this->validationResult = $this->getMockBuilder(ValidatorResultInterface::class)
+            ->disableOriginalConstructor()
             ->getMock();
         $this->labelGenerator = $this->getMockBuilder(\Magento\Shipping\Model\Shipping\LabelGenerator::class)
             ->disableOriginalConstructor()
@@ -115,80 +125,32 @@ class SaveTest extends \PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->setMethods([])
             ->getMock();
-        $this->objectManager = $this->getMock(\Magento\Framework\ObjectManagerInterface::class);
-        $this->context = $this->getMock(
-            \Magento\Backend\App\Action\Context::class,
-            [
+        $this->objectManager = $this->createMock(\Magento\Framework\ObjectManagerInterface::class);
+        $this->context = $this->createPartialMock(\Magento\Backend\App\Action\Context::class, [
                 'getRequest', 'getResponse', 'getMessageManager', 'getRedirect',
                 'getObjectManager', 'getSession', 'getActionFlag', 'getHelper',
                 'getResultRedirectFactory', 'getFormKeyValidator'
-            ],
-            [],
-            '',
-            false
-        );
-        $this->response = $this->getMock(
-            \Magento\Framework\App\ResponseInterface::class,
-            ['setRedirect', 'sendResponse'],
-            [],
-            '',
-            false
-        );
+            ]);
+        $this->response = $this->createPartialMock(\Magento\Framework\App\ResponseInterface::class, ['setRedirect', 'sendResponse']);
         $this->request = $this->getMockBuilder(\Magento\Framework\App\Request\Http::class)
             ->disableOriginalConstructor()->getMock();
-        $this->objectManager = $this->getMock(
-            \Magento\Framework\ObjectManager\ObjectManager::class,
-            ['create', 'get'],
-            [],
-            '',
-            false
-        );
-        $this->messageManager = $this->getMock(
-            \Magento\Framework\Message\Manager::class,
-            ['addSuccess', 'addError'],
-            [],
-            '',
-            false
-        );
-        $this->session = $this->getMock(
-            \Magento\Backend\Model\Session::class,
-            ['setIsUrlNotice', 'getCommentText'],
-            [],
-            '',
-            false
-        );
-        $this->actionFlag = $this->getMock(\Magento\Framework\App\ActionFlag::class, ['get'], [], '', false);
-        $this->helper = $this->getMock(\Magento\Backend\Helper\Data::class, ['getUrl'], [], '', false);
+        $this->objectManager = $this->createPartialMock(\Magento\Framework\ObjectManager\ObjectManager::class, ['create', 'get']);
+        $this->messageManager = $this->createPartialMock(\Magento\Framework\Message\Manager::class, ['addSuccess', 'addError']);
+        $this->session = $this->createPartialMock(\Magento\Backend\Model\Session::class, ['setIsUrlNotice', 'getCommentText']);
+        $this->actionFlag = $this->createPartialMock(\Magento\Framework\App\ActionFlag::class, ['get']);
+        $this->helper = $this->createPartialMock(\Magento\Backend\Helper\Data::class, ['getUrl']);
 
-        $this->resultRedirect = $this->getMock(
-            \Magento\Framework\Controller\Result\Redirect::class,
-            ['setPath'],
-            [],
-            '',
-            false
-        );
+        $this->resultRedirect = $this->createPartialMock(\Magento\Framework\Controller\Result\Redirect::class, ['setPath']);
         $this->resultRedirect->expects($this->any())
             ->method('setPath')
             ->willReturn($this->resultRedirect);
 
-        $resultRedirectFactory = $this->getMock(
-            \Magento\Framework\Controller\Result\RedirectFactory::class,
-            ['create'],
-            [],
-            '',
-            false
-        );
+        $resultRedirectFactory = $this->createPartialMock(\Magento\Framework\Controller\Result\RedirectFactory::class, ['create']);
         $resultRedirectFactory->expects($this->once())
             ->method('create')
             ->willReturn($this->resultRedirect);
 
-        $this->formKeyValidator = $this->getMock(
-            \Magento\Framework\Data\Form\FormKey\Validator::class,
-            ['validate'],
-            [],
-            '',
-            false
-        );
+        $this->formKeyValidator = $this->createPartialMock(\Magento\Framework\Data\Form\FormKey\Validator::class, ['validate']);
 
         $this->context->expects($this->once())
             ->method('getMessageManager')
@@ -251,6 +213,7 @@ class SaveTest extends \PHPUnit_Framework_TestCase
         $this->request->expects($this->any())
             ->method('isPost')
             ->willReturn($isPost);
+
         if (!$formKeyIsValid || !$isPost) {
             $this->messageManager->expects($this->once())
                 ->method('addError');
@@ -268,20 +231,8 @@ class SaveTest extends \PHPUnit_Framework_TestCase
             $orderId = 10003;
             $tracking = [];
             $shipmentData = ['items' => [], 'send_email' => ''];
-            $shipment = $this->getMock(
-                \Magento\Sales\Model\Order\Shipment::class,
-                ['load', 'save', 'register', 'getOrder', 'getOrderId', '__wakeup'],
-                [],
-                '',
-                false
-            );
-            $order = $this->getMock(
-                \Magento\Sales\Model\Order::class,
-                ['setCustomerNoteNotify', '__wakeup'],
-                [],
-                '',
-                false
-            );
+            $shipment = $this->createPartialMock(\Magento\Sales\Model\Order\Shipment::class, ['load', 'save', 'register', 'getOrder', 'getOrderId', '__wakeup']);
+            $order = $this->createPartialMock(\Magento\Sales\Model\Order::class, ['setCustomerNoteNotify', '__wakeup']);
 
             $this->request->expects($this->any())
                 ->method('getParam')
@@ -342,16 +293,15 @@ class SaveTest extends \PHPUnit_Framework_TestCase
             $this->session->expects($this->once())
                 ->method('getCommentText')
                 ->with(true);
+
             $this->objectManager->expects($this->once())
                 ->method('create')
                 ->with(\Magento\Framework\DB\Transaction::class)
                 ->will($this->returnValue($saveTransaction));
-            $this->objectManager->expects($this->exactly(1))
+            $this->objectManager->expects($this->once())
                 ->method('get')
-                ->withConsecutive(
-                    [\Magento\Backend\Model\Session::class]
-                )
-                ->willReturnOnConsecutiveCalls($this->session);
+                ->with(\Magento\Backend\Model\Session::class)
+                ->will($this->returnValue($this->session));
             $path = 'sales/order/view';
             $arguments = ['order_id' => $orderId];
             $shipment->expects($this->once())
@@ -362,7 +312,11 @@ class SaveTest extends \PHPUnit_Framework_TestCase
             $this->shipmentValidatorMock->expects($this->once())
                 ->method('validate')
                 ->with($shipment, [QuantityValidator::class])
-                ->willReturn([]);
+                ->willReturn($this->validationResult);
+
+            $this->validationResult->expects($this->once())
+                ->method('hasMessages')
+                ->willReturn(false);
 
             $this->saveAction->execute();
             $this->assertEquals($this->response, $this->saveAction->getResponse());

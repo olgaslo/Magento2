@@ -1,10 +1,11 @@
 <?php
 /**
- * Copyright © 2016 Magento. All rights reserved.
+ * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
 namespace Magento\Wishlist\CustomerData;
 
+use Magento\Catalog\Model\Product\Image\NotLoadInfoImageException;
 use Magento\Customer\CustomerData\SectionSourceInterface;
 
 /**
@@ -154,15 +155,19 @@ class Wishlist implements SectionSourceInterface
             ? 'Magento_Catalog/product/image'
             : 'Magento_Catalog/product/image_with_borders';
 
-        $imagesize = $helper->getResizedImageInfo();
+        try {
+            $imagesize = $helper->getResizedImageInfo();
+        } catch (NotLoadInfoImageException $exception) {
+            $imagesize = [$helper->getWidth(), $helper->getHeight()];
+        }
 
         $width = $helper->getFrame()
             ? $helper->getWidth()
-            : (!empty($imagesize[0]) ? $imagesize[0] : $helper->getWidth());
+            : $imagesize[0];
 
         $height = $helper->getFrame()
             ? $helper->getHeight()
-            : (!empty($imagesize[1]) ? $imagesize[1] : $helper->getHeight());
+            : $imagesize[1];
 
         return [
             'template' => $template,

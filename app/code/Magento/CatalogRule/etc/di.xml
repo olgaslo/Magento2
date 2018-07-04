@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!--
 /**
- * Copyright © 2016 Magento. All rights reserved.
+ * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
 -->
@@ -123,6 +123,14 @@
         <arguments>
             <argument name="linkedProductSelectBuilder" xsi:type="array">
                 <item name="catalogRulePrice" xsi:type="object">Magento\CatalogRule\Model\ResourceModel\Product\LinkedProductSelectBuilderByCatalogRulePrice</item>
+            </argument>
+        </arguments>
+    </type>
+    <preference for="Magento\CatalogRule\Model\Indexer\IndexerTableSwapperInterface" type="Magento\CatalogRule\Model\Indexer\IndexerTableSwapper" />
+    <type name="Magento\Catalog\Model\ResourceModel\Product\Indexer\Price\PriceInterface">
+        <arguments>
+            <argument name="priceModifiers" xsi:type="array">
+                <item name="catalogRulePriceModifier" xsi:type="object">Magento\CatalogRule\Model\Indexer\ProductPriceIndexModifier</item>
             </argument>
         </arguments>
     </type>

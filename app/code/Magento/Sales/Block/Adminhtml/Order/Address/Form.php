@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright © 2016 Magento. All rights reserved.
+ * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
 namespace Magento\Sales\Block\Adminhtml\Order\Address;
@@ -134,5 +134,21 @@ class Form extends \Magento\Sales\Block\Adminhtml\Order\Create\Form\Address
     public function getFormValues()
     {
         return $this->_getAddress()->getData();
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function processCountryOptions(
+        \Magento\Framework\Data\Form\Element\AbstractElement $countryElement,
+        $storeId = null
+    ) {
+        /** @var \Magento\Sales\Model\Order\Address $address */
+        $address = $this->_coreRegistry->registry('order_address');
+        if ($address !== null) {
+            $storeId = $address->getOrder()->getStoreId();
+        }
+
+        parent::processCountryOptions($countryElement, $storeId);
     }
 }

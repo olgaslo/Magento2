@@ -1,46 +1,42 @@
 <?php
 /**
- * Copyright © 2016 Magento. All rights reserved.
+ * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
 namespace Magento\Braintree\Test\Unit\Model\Ui;
 
 use Magento\Braintree\Gateway\Config\Config;
 use Magento\Braintree\Model\Adapter\BraintreeAdapter;
+use Magento\Braintree\Model\Adapter\BraintreeAdapterFactory;
 use Magento\Braintree\Model\Ui\ConfigProvider;
-use Magento\Braintree\Gateway\Config\PayPal\Config as PayPalConfig;
-use Magento\Framework\Locale\ResolverInterface;
+use Magento\Customer\Model\Session;
+use PHPUnit_Framework_MockObject_MockObject as MockObject;
 
 /**
  * Class ConfigProviderTest
  *
  * Test for class \Magento\Braintree\Model\Ui\ConfigProvider
  */
-class ConfigProviderTest extends \PHPUnit_Framework_TestCase
+class ConfigProviderTest extends \PHPUnit\Framework\TestCase
 {
     const SDK_URL = 'https://js.braintreegateway.com/v2/braintree.js';
-
     const CLIENT_TOKEN = 'token';
+    const MERCHANT_ACCOUNT_ID = '245345';
 
     /**
-     * @var Config|\PHPUnit_Framework_MockObject_MockObject
+     * @var Config|MockObject
      */
     private $config;
 
     /**
-     * @var PayPalConfig|\PHPUnit_Framework_MockObject_MockObject
-     */
-    private $payPalConfig;
-
-    /**
-     * @var BraintreeAdapter|\PHPUnit_Framework_MockObject_MockObject
+     * @var BraintreeAdapter|MockObject
      */
     private $braintreeAdapter;
 
     /**
-     * @var ResolverInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var Session|MockObject
      */
-    private $localeResolver;
+    private $session;
 
     /**
      * @var ConfigProvider
@@ -53,21 +49,27 @@ class ConfigProviderTest extends \PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->payPalConfig = $this->getMockBuilder(PayPalConfig::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
         $this->braintreeAdapter = $this->getMockBuilder(BraintreeAdapter::class)
             ->disableOriginalConstructor()
             ->getMock();
+        /** @var BraintreeAdapterFactory|MockObject $adapterFactory */
+        $adapterFactory = $this->getMockBuilder(BraintreeAdapterFactory::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $adapterFactory->method('create')
+            ->willReturn($this->braintreeAdapter);
 
-        $this->localeResolver = $this->getMockForAbstractClass(ResolverInterface::class);
+        $this->session = $this->getMockBuilder(Session::class)
+            ->disableOriginalConstructor()
+            ->setMethods(['getStoreId'])
+            ->getMock();
+        $this->session->method('getStoreId')
+            ->willReturn(null);
 
         $this->configProvider = new ConfigProvider(
             $this->config,
-            $this->payPalConfig,
-            $this->braintreeAdapter,
-            $this->localeResolver
+            $adapterFactory,
+            $this->session
         );
     }
 
@@ -80,49 +82,30 @@ class ConfigProviderTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetConfig($config, $expected)
     {
-        $this->braintreeAdapter->expects(static::once())
-            ->method('generate')
+        $this->braintreeAdapter->method('generate')
             ->willReturn(self::CLIENT_TOKEN);
 
         foreach ($config as $method => $value) {
-            $this->config->expects(static::once())
-                ->method($method)
+            $this->config->method($method)
                 ->willReturn($value);
         }
 
-        $this->payPalConfig->expects(static::once())
-            ->method('isActive')
-            ->willReturn(true);
-
-        $this->payPalConfig->expects(static::once())
-            ->method('isAllowToEditShippingAddress')
-            ->willReturn(true);
-
-        $this->payPalConfig->expects(static::once())
-            ->method('getMerchantName')
-            ->willReturn('Test');
-
-        $this->payPalConfig->expects(static::once())
-            ->method('getTitle')
-            ->willReturn('Payment Title');
-
-        $this->localeResolver->expects(static::once())
-            ->method('getLocale')
-            ->willReturn('en_US');
-
-        static::assertEquals($expected, $this->configProvider->getConfig());
+        self::assertEquals($expected, $this->configProvider->getConfig());
     }
 
     /**
-     * @covers \Magento\Braintree\Model\Ui\ConfigProvider::getClientToken
+     * @dataProvider getClientTokenDataProvider
      */
-    public function testGetClientToken()
+    public function testGetClientToken($merchantAccountId, $params)
     {
-        $this->braintreeAdapter->expects(static::once())
-            ->method('generate')
+        $this->config->method('getMerchantAccountId')
+            ->willReturn($merchantAccountId);
+
+        $this->braintreeAdapter->method('generate')
+            ->with($params)
             ->willReturn(self::CLIENT_TOKEN);
 
-        static::assertEquals(self::CLIENT_TOKEN, $this->configProvider->getClientToken());
+        self::assertEquals(self::CLIENT_TOKEN, $this->configProvider->getClientToken());
     }
 
     /**
@@ -173,18 +156,26 @@ class ConfigProviderTest extends \PHPUnit_Framework_TestCase
                             'enabled' => true,
                             'thresholdAmount' => 20,
                             'specificCountries' => ['GB', 'US', 'CA']
-                        ],
-                        ConfigProvider::PAYPAL_CODE => [
-                            'isActive' => true,
-                            'title' => 'Payment Title',
-                            'isAllowShippingAddressOverride' => true,
-                            'merchantName' => 'Test',
-                            'locale' => 'en_us',
-                            'paymentAcceptanceMarkSrc' =>
-                                'https://www.paypalobjects.com/webstatic/en_US/i/buttons/pp-acceptance-medium.png'
                         ]
                     ]
                 ]
+            ]
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function getClientTokenDataProvider()
+    {
+        return [
+            [
+                'merchantAccountId' => '',
+                'params' => []
+            ],
+            [
+                'merchantAccountId' => self::MERCHANT_ACCOUNT_ID,
+                'params' => ['merchantAccountId' => self::MERCHANT_ACCOUNT_ID]
             ]
         ];
     }

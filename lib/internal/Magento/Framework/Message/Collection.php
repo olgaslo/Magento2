@@ -1,12 +1,14 @@
 <?php
 /**
- * Copyright © 2016 Magento. All rights reserved.
+ * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
 namespace Magento\Framework\Message;
 
 /**
  * Messages collection
+ *
+ * @api
  */
 class Collection
 {
@@ -33,8 +35,14 @@ class Collection
         if (!isset($this->messages[$message->getType()])) {
             $this->messages[$message->getType()] = [];
         }
-        $this->messages[$message->getType()][] = $message;
-        $this->lastAddedMessage = $message;
+        // Prevent adding duplicate messages.
+        $foundIndex = array_search($message, $this->messages[$message->getType()], false);
+        if (false === $foundIndex) {
+            $this->messages[$message->getType()][] = $message;
+            $this->lastAddedMessage = $message;
+        } else {
+            $this->lastAddedMessage = $this->messages[$message->getType()][$foundIndex];
+        }
         return $this;
     }
 

@@ -1,31 +1,24 @@
 <?php
 /**
- * Copyright © 2016 Magento. All rights reserved.
+ * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
 namespace Magento\Braintree\Model\Ui;
 
-use Magento\Checkout\Model\ConfigProviderInterface;
 use Magento\Braintree\Gateway\Config\Config;
-use Magento\Braintree\Gateway\Config\PayPal\Config as PayPalConfig;
-use Magento\Braintree\Model\Adapter\BraintreeAdapter;
-use Magento\Framework\Locale\ResolverInterface;
+use Magento\Braintree\Gateway\Request\PaymentDataBuilder;
+use Magento\Braintree\Model\Adapter\BraintreeAdapterFactory;
+use Magento\Checkout\Model\ConfigProviderInterface;
+use Magento\Framework\Session\SessionManagerInterface;
 
 /**
  * Class ConfigProvider
  */
-final class ConfigProvider implements ConfigProviderInterface
+class ConfigProvider implements ConfigProviderInterface
 {
     const CODE = 'braintree';
 
-    const PAYPAL_CODE = 'braintree_paypal';
-
     const CC_VAULT_CODE = 'braintree_cc_vault';
-
-    /**
-     * @var ResolverInterface
-     */
-    private $localeResolver;
 
     /**
      * @var Config
@@ -33,14 +26,9 @@ final class ConfigProvider implements ConfigProviderInterface
     private $config;
 
     /**
-     * @var PayPalConfig
+     * @var BraintreeAdapterFactory
      */
-    private $payPalConfig;
-
-    /**
-     * @var BraintreeAdapter
-     */
-    private $adapter;
+    private $adapterFactory;
 
     /**
      * @var string
@@ -48,23 +36,25 @@ final class ConfigProvider implements ConfigProviderInterface
     private $clientToken = '';
 
     /**
+     * @var SessionManagerInterface
+     */
+    private $session;
+
+    /**
      * Constructor
      *
      * @param Config $config
-     * @param PayPalConfig $payPalConfig;
-     * @param BraintreeAdapter $adapter
-     * @param ResolverInterface $localeResolver
+     * @param BraintreeAdapterFactory $adapterFactory
+     * @param SessionManagerInterface $session
      */
     public function __construct(
         Config $config,
-        PayPalConfig $payPalConfig,
-        BraintreeAdapter $adapter,
-        ResolverInterface $localeResolver
+        BraintreeAdapterFactory $adapterFactory,
+        SessionManagerInterface $session
     ) {
         $this->config = $config;
-        $this->payPalConfig = $payPalConfig;
-        $this->adapter = $adapter;
-        $this->localeResolver = $localeResolver;
+        $this->adapterFactory = $adapterFactory;
+        $this->session = $session;
     }
 
     /**
@@ -74,37 +64,28 @@ final class ConfigProvider implements ConfigProviderInterface
      */
     public function getConfig()
     {
-        $isPayPalActive = $this->payPalConfig->isActive();
+        $storeId = $this->session->getStoreId();
         return [
             'payment' => [
                 self::CODE => [
-                    'isActive' => $this->config->isActive(),
+                    'isActive' => $this->config->isActive($storeId),
                     'clientToken' => $this->getClientToken(),
                     'ccTypesMapper' => $this->config->getCctypesMapper(),
                     'sdkUrl' => $this->config->getSdkUrl(),
-                    'countrySpecificCardTypes' => $this->config->getCountrySpecificCardTypeConfig(),
-                    'availableCardTypes' => $this->config->getAvailableCardTypes(),
-                    'useCvv' => $this->config->isCvvEnabled(),
-                    'environment' => $this->config->getEnvironment(),
-                    'kountMerchantId' => $this->config->getKountMerchantId(),
-                    'hasFraudProtection' => $this->config->hasFraudProtection(),
-                    'merchantId' => $this->config->getMerchantId(),
-                    'ccVaultCode' => static::CC_VAULT_CODE
+                    'countrySpecificCardTypes' => $this->config->getCountrySpecificCardTypeConfig($storeId),
+                    'availableCardTypes' => $this->config->getAvailableCardTypes($storeId),
+                    'useCvv' => $this->config->isCvvEnabled($storeId),
+                    'environment' => $this->config->getEnvironment($storeId),
+                    'kountMerchantId' => $this->config->getKountMerchantId($storeId),
+                    'hasFraudProtection' => $this->config->hasFraudProtection($storeId),
+                    'merchantId' => $this->config->getMerchantId($storeId),
+                    'ccVaultCode' => self::CC_VAULT_CODE
                 ],
                 Config::CODE_3DSECURE => [
-                    'enabled' => $this->config->isVerify3DSecure(),
-                    'thresholdAmount' => $this->config->getThresholdAmount(),
-                    'specificCountries' => $this->config->get3DSecureSpecificCountries()
+                    'enabled' => $this->config->isVerify3DSecure($storeId),
+                    'thresholdAmount' => $this->config->getThresholdAmount($storeId),
+                    'specificCountries' => $this->config->get3DSecureSpecificCountries($storeId)
                 ],
-                self::PAYPAL_CODE => [
-                    'isActive' => $isPayPalActive,
-                    'title' => $this->payPalConfig->getTitle(),
-                    'isAllowShippingAddressOverride' => $this->payPalConfig->isAllowToEditShippingAddress(),
-                    'merchantName' => $this->payPalConfig->getMerchantName(),
-                    'locale' => strtolower($this->localeResolver->getLocale()),
-                    'paymentAcceptanceMarkSrc' =>
-                        'https://www.paypalobjects.com/webstatic/en_US/i/buttons/pp-acceptance-medium.png',
-                ]
             ]
         ];
     }
@@ -116,7 +97,16 @@ final class ConfigProvider implements ConfigProviderInterface
     public function getClientToken()
     {
         if (empty($this->clientToken)) {
-            $this->clientToken = $this->adapter->generate();
+            $params = [];
+
+            $storeId = $this->session->getStoreId();
+            $merchantAccountId = $this->config->getMerchantAccountId($storeId);
+            if (!empty($merchantAccountId)) {
+                $params[PaymentDataBuilder::MERCHANT_ACCOUNT_ID] = $merchantAccountId;
+            }
+
+            $this->clientToken = $this->adapterFactory->create($storeId)
+                ->generate($params);
         }
 
         return $this->clientToken;
